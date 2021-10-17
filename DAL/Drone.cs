@@ -10,10 +10,10 @@ namespace IDAL
     {
         struct Drone
         {
-            public int Id;
-            public int SenderId;
-            public int TargetId;
-            public WEIGHT wh        
+            public int Id (get,set);
+            public int SenderId (get,set);
+            public int TargetId (get,set);
+            public WEIGHT whight;        
         }
     }
 }

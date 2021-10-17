@@ -8,5 +8,7 @@ namespace DAL
 {
     class DroneCharge
     {
+        public int DroneId (get,set);
+        public int StationId (get,set);
     }
 }
