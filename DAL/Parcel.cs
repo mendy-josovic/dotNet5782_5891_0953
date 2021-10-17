@@ -15,8 +15,11 @@ namespace IDAL
             public int TargetId;
             public WEIGHT Weigh;
             public PRIORITY Priority;
+            public DateTime Requsted;
             public int DroneId;
-            public 
+            public DateTime Scheduled;
+            public DateTime PickedUp;
+            public DateTime Deliverd;
         }
 
     }
