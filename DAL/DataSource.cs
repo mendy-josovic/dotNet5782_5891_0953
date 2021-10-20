@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using IDAL.DO;
 namespace DalObject
 {
   public  class DataSource
@@ -12,13 +12,14 @@ namespace DalObject
         internal static IDAL.DO.Station[] Stations = new IDAL.DO.Station[5];
         internal static IDAL.DO.Customer[] Customers = new IDAL.DO.Customer[100];
         internal static IDAL.DO.Parcel[] Parcels = new IDAL.DO.Parcel[1000];
+
         internal class Config
         {
             internal static int DronesIndex { set; get; } = 0;
             internal static int StationsIndex { set; get; } = 0;
             internal static int ParcelsIndex { set; get; } = 0;
             internal static int CustomersIndex { set; get; } = 0;
-            internal static int num { set; get; }
+            internal static int ParcelCounter { set; get; } = 0;
 
         }
         public static Random r = new Random();
@@ -33,12 +34,11 @@ namespace DalObject
             }
             Stations[0].Name = "The centrial station";
             Stations[1].Name = "The 'HERTZEL' station";
-            Customers[5].Name = "Nachman";
             String[] names = new String[] { "Moshe", "Aharon", "David", "Yosef", "Reuven", "Nachman", "Avraham", "lot", "Moav", "Amon" };
             String[] phones = new String[] { "051-123456", "052-123456", "053-123456", "054-123456", "055-123456", "056-123456", "057-123456", "058-123456", "059-123456", "050-123456" };
             for (int i = 0; i < 10; i++)
             {
-                Customers[i].Id = r.Next(1, 10000);
+                Customers[i].ID = r.Next(1, 10000);
                 Customers[i].Lattitude = r.NextDouble() / 1.234;
                 Customers[i].Longitute= r.NextDouble() / 1.234;
                 Customers[i].Name = names[i];
@@ -60,10 +60,49 @@ namespace DalObject
             Drones[3].Model = "GH123";
             Drones[4].Status = IDAL.DO.STATUS.AVAILABLE;
             Drones[4].Model = "IJ123";
-            for (int i = 0; i <10; i++)
+            for (int i = 0; i <10; i++)//creating id and a counter
             {
-                Parcels[i].Id = r.Next(1, 1000);
+                Parcels[i].ID = r.Next(1, 1000);
+                Config.ParcelCounter++;
             }
+            for (int i = 0; i < 10; i++)//every sender sends to the customer in the arry in index  9-i
+            {
+                Parcels[i].SenderId = Customers[i].ID;
+                Parcels[i].TargetId = Customers[9 - i].ID;
+                Parcels[i].Requested = new DateTime(2021, 10, i + 1,(i*35)/24,(i*65)/60,(i*102)/60);
+            }
+            for (int i=0;i<10;i++)
+            {
+                Parcels[i].Priority = ((IDAL.DO.PRIORITY)r.Next(0, 3));
+                Parcels[i].Weigh = ((IDAL.DO.WEIGHT)r.Next(0, 3));
+            }
+            for (int i = 0; i < 5; i++)//5 parcels alredy  done and dilivred
+            {
+                TimeSpan time = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
+                Parcels[i].SchedulId =Parcels[i].Requested+time;
+                time = new TimeSpan(r.Next(0, 2), r.Next(0, 60), r.Next(0, 60));
+                Parcels[i].PickedUp = Parcels[i].SchedulId + time;
+                time = new TimeSpan(0, r.Next(15, 30), r.Next(0, 60));
+                Parcels[i].Delivered = Parcels[i].PickedUp + time;
+                Parcels[i].DroneId = Drones[i].Id;
+            }
+            for (int i = 5; i < 8; i++)
+            {
+                TimeSpan time = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
+                Parcels[i].SchedulId = Parcels[i].Requested + time;
+                time = new TimeSpan(r.Next(0, 2), r.Next(0, 60), r.Next(0, 60));
+                Parcels[i].PickedUp = Parcels[i].SchedulId + time;
+                Parcels[i].DroneId = Drones[i - 4].Id;
+            }
+            TimeSpan t = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
+            Parcels[8].SchedulId = Parcels[8].Requested + t;
+            Parcels[8].DroneId = Drones[4].Id;
+
+            for (int i = 0; i < 10; i++)
+            {
+                Customers[i].ID = r.Next(1, 1000);
+            }
+
         }
     }
 }

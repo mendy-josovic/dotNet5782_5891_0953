@@ -13,8 +13,8 @@ namespace IDAL
             public int ID { get; set; }
             public int SenderId { get; set; }
             public int TargetId { get; set; }
-            public WEIGHT Weigh;
-            public PRIORITY Priority;
+            public WEIGHT Weigh { set; get; }
+            public PRIORITY Priority { set; get; }
             public int DroneId { get; set; }
             public DateTime Requested;
             public DateTime SchedulId;
