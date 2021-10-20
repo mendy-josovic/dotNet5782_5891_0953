@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace IDAL
 {
-    class DroneCharge
+    namespace DO
     {
+        class DroneCharge
+        {
+            public int DroneId { get; set; }
+            public int StationId { get; set; }
+        }
     }
 }
