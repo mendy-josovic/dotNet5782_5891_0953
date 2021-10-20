@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    class DataSource
+  public  class DataSource
     {
         internal static IDAL.DO.Drone[] Drones = new IDAL.DO.Drone[10];
         internal static IDAL.DO.Station[] Stations = new IDAL.DO.Station[5];
