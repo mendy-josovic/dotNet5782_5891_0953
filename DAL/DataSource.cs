@@ -19,7 +19,7 @@ namespace DalObject
             internal static int StationsIndex { set; get; } = 0;
             internal static int ParcelsIndex { set; get; } = 0;
             internal static int CustomersIndex { set; get; } = 0;
-            internal static int ParcelCounter { set; get; } = 0;
+            internal static int RuningNumber { set; get; } = 1000;
 
         }
         public static Random r = new Random();
@@ -62,8 +62,7 @@ namespace DalObject
             Drones[4].Model = "IJ123";
             for (int i = 0; i <10; i++)//creating id and a counter
             {
-                Parcels[i].ID = r.Next(1, 1000);
-                Config.ParcelCounter++;
+                Parcels[i].ID = Config.RuningNumber++;
             }
             for (int i = 0; i < 10; i++)//every sender sends to the customer in the arry in index  9-i
             {
@@ -88,7 +87,7 @@ namespace DalObject
             }
             for (int i = 5; i < 8; i++)
             {
-                TimeSpan time = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
+                TimeSpan time=new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
                 Parcels[i].SchedulId = Parcels[i].Requested + time;
                 time = new TimeSpan(r.Next(0, 2), r.Next(0, 60), r.Next(0, 60));
                 Parcels[i].PickedUp = Parcels[i].SchedulId + time;
