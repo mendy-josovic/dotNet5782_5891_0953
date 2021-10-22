@@ -19,7 +19,7 @@ namespace DalObject
             internal static int StationsIndex { set; get; } = 0;
             internal static int ParcelsIndex { set; get; } = 0;
             internal static int CustomersIndex { set; get; } = 0;
-            internal static int ParcelCounter { set; get; } = 0;
+            internal static int ParcelCounter { set; get; } = 1000;
 
         }
         public static Random r = new Random();
