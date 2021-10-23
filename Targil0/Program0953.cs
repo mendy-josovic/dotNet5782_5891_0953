@@ -8,9 +8,6 @@ namespace Targil0
 {
     partial class Program
     {
-        static partial void Welcome0953()
-        {
-            Console.WriteLine("I'm here");
-        }
+
     }
 }
