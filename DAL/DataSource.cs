@@ -28,7 +28,7 @@ namespace DalObject
         public static Random r = new Random();
         internal static void Initialize()
         {
-            for(int i=0;i<2;i++)///initielizeing Stations
+            for(int i=0;i<2;i++)///initielizeing Stations 
             {
                 Stations[i].Id = r.Next(1,501);
                 Stations[i].Lattitude = r.NextDouble() / 1.234;
@@ -39,15 +39,15 @@ namespace DalObject
             Stations[1].Name = "The 'HERTZEL' station";
             String[] names = new String[] { "Moshe", "Aharon", "David", "Yosef", "Reuven", "Nachman", "Avraham", "lot", "Moav", "Amon" };
             String[] phones = new String[] { "051-123456", "052-123456", "053-123456", "054-123456", "055-123456", "056-123456", "057-123456", "058-123456", "059-123456", "050-123456" };
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)//initlize the customer
             {
                 Customers[i].Id = r.Next(1, 10000);
-                Customers[i].Lattitude = r.NextDouble() / 1.234;
+                Customers[i].Lattitute = r.NextDouble() / 1.234;
                 Customers[i].Longitute= r.NextDouble() / 1.234;
                 Customers[i].Name = names[i];
                 Customers[i].Phone = phones[i];
             }
-            for(int i=0;i<5;i++)
+            for(int i=0;i<5;i++)//we have 5 drons 1 in MAINTENANSE 3 in DELIVERY and 1 in AVAILABLE
             {
                 Drones[i].Id = r.Next(1, 1000);
                 Drones[i].MaxWeight = IDAL.DO.WEIGHT.HEAVY;
