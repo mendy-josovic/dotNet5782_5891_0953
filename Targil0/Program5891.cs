@@ -8,6 +8,7 @@ namespace Targil0
             Welcome5891();
             Welcome0953();
             Console.ReadKey();
+
         }
         static partial void Welcome0953();
         private static void Welcome5891()
