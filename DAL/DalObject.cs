@@ -129,12 +129,13 @@ namespace DalObject
 
         public IDAL.DO.Parcel[] PrintUnassignedParcels()
         {
-            
+            IDAL.DO.Parcel[] arr = (IDAL.DO.Parcel[])DataSource.Parcels.Where((Parcel) => Parcel.DroneId != 0);
+            return arr;
         }
         public IDAL.DO.Station[] PrintAvailableChargingStations()
         {
-            where p->
-            print $"{num, -10}"
+            IDAL.DO.Station[] arr = (IDAL.DO.Station[])DataSource.Stations.Where((Station) => Station.ReadyChargeStands != 0);
+            return arr;
         }
     }
 }
