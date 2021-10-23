@@ -15,6 +15,10 @@ namespace IDAL
             public STATUS Status { set; get; }
             public WEIGHT MaxWeight  {set; get;}  
             public double Battery { set; get; }
+            public override string ToString()
+            {
+                return "ID: " + Id + "\nModel: " + Model + "\nStatus: " + Status + "\nMaxWeight: " + MaxWeight + "\nBattery: " + Battery;
+            }
         }
     }
 }

@@ -38,31 +38,39 @@ namespace DalObject
 
         public void AssignDrone(int prcId, int drnId)
         {
-            drn.Status = IDAL.DO.STATUS.DELIVERY;
-            prc.SchedulId = DateTime.Now;
+            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
+            DataSource.Drones[i].Status = IDAL.DO.STATUS.DELIVERY;
+            i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
+            DataSource.Parcels[i].SchedulId = DateTime.Now;
         }
         public void PickUp(int prcId)
         {
-            prc.PickedUp = DateTime.Now;
+            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
+            DataSource.Parcels[i].PickedUp = DateTime.Now;
         }
 
        public void Supplied(int prcId, int drnId)
         {
-            prc.Delivered = DateTime.Now;
-            drn.Status = IDAL.DO.STATUS.AVAILABLE;
+            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
+            DataSource.Parcels[i].Delivered = DateTime.Now;
+            i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
+            DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;
         }
 
         public void SendToCharge(int staId, int drnId)
         {
-            drn.Status = IDAL.DO.STATUS.MAINTENANSE;
-            sta.ReadyChargeStands--;
-            DataSource.DroneCharges[DataSource.Config.DroneChargesIndex] = new IDAL.DO.DroneCharge(drn.Id, sta.Id);
+            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
+            DataSource.Drones[i].Status = IDAL.DO.STATUS.MAINTENANSE;
+            i = Array.FindIndex(DataSource.Stations, w => w.Id == staId);
+            DataSource.Stations[i].ReadyChargeStands--;
+            DataSource.DroneCharges[DataSource.Config.DroneChargesIndex] = new IDAL.DO.DroneCharge(drnId, staId);
         }
 
         public void EndCharge(int drnId)
         {
-            drn.Status = IDAL.DO.STATUS.AVAILABLE;
-            int i = Array.FindIndex(DataSource.DroneCharges, w => w.DroneId == drn.Id);
+            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
+            DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;
+            i = Array.FindIndex(DataSource.DroneCharges, w => w.DroneId == drnId);
             DataSource.DroneCharges[i].DroneId = 0;
             DataSource.DroneCharges[i].StationId = 0;
             if (DataSource.Config.DroneChargesIndex > i)
@@ -70,78 +78,63 @@ namespace DalObject
         }
 
 
-        public void PrintStation(int Id)
+        public IDAL.DO.Station PrintStation(int Id)
         {
-            for (int i = 0; i < DataSource.Config.StationsIndex; i++)
-            {
-                if (Id == DataSource.Stations[i].Id)
-                {
-                    Console.WriteLine(DataSource.Stations[i].ToString());
-                    return;
-                }
-            }
+            int i = Array.FindIndex(DataSource.Stations, w => w.Id == Id);
+            return (DataSource.Stations[i]);
+        }
+    
+
+        public IDAL.DO.Drone PrintDrone(int Id)
+        {
+          int i = Array.FindIndex(DataSource.Drones, w => w.Id == Id);
+          return (DataSource.Drones[i]);
         }
 
-        public void PrintDrone(int Id)
+        public IDAL.DO.Customer PrintCustomer(int Id)
         {
-            for (int i = 0; i < DataSource.Config.DronesIndex; i++)
-            {
-                if (Id == DataSource.Drones[i].Id)
-                {
-                    Console.WriteLine(DataSource.Drones[i].ToString());
-                    return;
-                }
-            }
+            int i = Array.FindIndex(DataSource.Stations, w => w.Id == Id);
+            return (DataSource.Customers[i]);
         }
-        public void PrintCustomer(int Id)
-        {
-            for (int i = 0; i < DataSource.Config.CustomersIndex; i++)
-            {
-                if (Id == DataSource.Customers[i].Id)
-                {
-                    Console.WriteLine(DataSource.Customers[i].ToString());
-                    return;
-                }
-            }
-        }
-        public void PrintParcel(int Id)
-        {
-            for (int i = 0; i < DataSource.Config.ParcelsIndex; i++)
-            {
-                if (Id == DataSource.Parcels[i].Id)
-                {
-                    Console.WriteLine(DataSource.Parcels[i].ToString());
-                    return;
-                }
-            }
-        }
-        public void PrintStationList()
-        {
-            for (int i = 0; i < DataSource.Config.ParcelsIndex; i++)
-            { 
-                    Console.WriteLine(DataSource.Parcels[i].ToString());
-                    return;
-            }
-        }
-        public void PrintDroneList()
-        {
 
-        }
-        public void PrintCustomerList()
+        public IDAL.DO.Parcel PrintParcel(int Id)
         {
-
+            int i = Array.FindIndex(DataSource.Stations, w => w.Id == Id);
+            return (DataSource.Parcels[i]);
         }
-        public void PrintParcelList()
+
+        public IDAL.DO.Station[] PrintStationList()
         {
-
+            IDAL.DO.Station[] arr = (IDAL.DO.Station[])DataSource.Stations.Take(DataSource.Config.StationsIndex);
+            return arr;
         }
-        public void PrintUnassignedParcels()
+
+        public IDAL.DO.Drone[] PrintDroneList()
         {
+            IDAL.DO.Drone[] arr = (IDAL.DO.Drone[])DataSource.Drones.Take(DataSource.Config.DronesIndex);
+            return arr;
+         }
 
+        public IDAL.DO.Customer[] PrintCustomerList()
+        {
+            IDAL.DO.Customer[] arr = (IDAL.DO.Customer[])DataSource.Customers.Take(DataSource.Config.CustomersIndex);
+            return arr;
         }
-        public void PrintAvailableChargingStations()
+
+        public IDAL.DO.Parcel[] PrintParcelList()
+        {
+            IDAL.DO.Parcel[] arr = (IDAL.DO.Parcel[])DataSource.Parcels.Take(DataSource.Config.ParcelsIndex);
+            return arr;
+        }
+
+        public IDAL.DO.Parcel[] PrintUnassignedParcels()
         {
             
+        }
+        public IDAL.DO.Station[] PrintAvailableChargingStations()
+        {
+            where p->
+            print $"{num, -10}"
         }
     }
 }
