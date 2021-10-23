@@ -20,7 +20,7 @@ namespace IDAL
             public DateTime SchedulId { set; get; }
             public DateTime PickedUp { set; get; }
             public DateTime Delivered { set; get; }
-            public override string ToString()//override the to string to print it nice
+            public override string ToString()//override the to-string to print it nice
             {
                 return "Id: " + Id + "\n " + "SenderId: " + SenderId + " \n" + "TargetId: " + TargetId + " \n" + " Weigh: " + Weigh + " \n" + "Priority: " + Priority + " \n" + "DroneId: " + DroneId + "\n" + "Requested: " + Requested + "\n" + "SchedulId: " + SenderId + "\n" + "PickedUp: " + PickedUp + " \n" + "Delivered: " + Delivered + "\n";
             }
