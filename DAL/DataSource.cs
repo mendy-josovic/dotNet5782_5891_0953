@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
+
 namespace DalObject
 {
-  public  class DataSource
+  public class DataSource
     {
         internal static IDAL.DO.Drone[] Drones = new IDAL.DO.Drone[10];
         internal static IDAL.DO.Station[] Stations = new IDAL.DO.Station[5];
         internal static IDAL.DO.Customer[] Customers = new IDAL.DO.Customer[100];
         internal static IDAL.DO.Parcel[] Parcels = new IDAL.DO.Parcel[1000];
+        internal static IDAL.DO.DroneCharge[] DroneCharges = new IDAL.DO.DroneCharge[35];
+
 
         internal class Config
         {
@@ -20,6 +22,7 @@ namespace DalObject
             internal static int ParcelsIndex { set; get; } = 0;
             internal static int CustomersIndex { set; get; } = 0;
             internal static int RuningNumber { set; get; } = 1000;
+            internal static int DroneChargesIndex { set; get; } = 0;
 
         }
         public static Random r = new Random();
@@ -30,7 +33,7 @@ namespace DalObject
                 Stations[i].Id = r.Next(1,501);
                 Stations[i].Lattitude = r.NextDouble() / 1.234;
                 Stations[i].Longitude = r.NextDouble() / 1.234;
-                Stations[i].ChargeSlots = 5;
+                Stations[i].ReadyChargeStands = r.Next(3,7);
             }
             Stations[0].Name = "The centrial station";
             Stations[1].Name = "The 'HERTZEL' station";
@@ -38,7 +41,7 @@ namespace DalObject
             String[] phones = new String[] { "051-123456", "052-123456", "053-123456", "054-123456", "055-123456", "056-123456", "057-123456", "058-123456", "059-123456", "050-123456" };
             for (int i = 0; i < 10; i++)
             {
-                Customers[i].ID = r.Next(1, 10000);
+                Customers[i].Id = r.Next(1, 10000);
                 Customers[i].Lattitude = r.NextDouble() / 1.234;
                 Customers[i].Longitute= r.NextDouble() / 1.234;
                 Customers[i].Name = names[i];
@@ -62,12 +65,12 @@ namespace DalObject
             Drones[4].Model = "IJ123";
             for (int i = 0; i <10; i++)//creating id and a counter
             {
-                Parcels[i].ID = Config.RuningNumber++;
+                Parcels[i].Id = Config.RuningNumber++;
             }
             for (int i = 0; i < 10; i++)//every sender sends to the customer in the arry in index  9-i
             {
-                Parcels[i].SenderId = Customers[i].ID;
-                Parcels[i].TargetId = Customers[9 - i].ID;
+                Parcels[i].SenderId = Customers[i].Id;
+                Parcels[i].TargetId = Customers[9 - i].Id;
                 Parcels[i].Requested = new DateTime(2021, 10, i + 1,(i*35)/24,(i*65)/60,(i*102)/60);
             }
             for (int i=0;i<10;i++)
@@ -99,7 +102,7 @@ namespace DalObject
 
             for (int i = 0; i < 10; i++)
             {
-                Customers[i].ID = r.Next(1, 1000);
+                Customers[i].Id = r.Next(1, 1000);
             }
 
         }

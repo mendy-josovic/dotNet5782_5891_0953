@@ -8,10 +8,15 @@ namespace IDAL
 {
     namespace DO
     {
-        class DroneCharge
+        public class DroneCharge
         {
             public int DroneId { get; set; }
             public int StationId { get; set; }
+            public DroneCharge(int drone, int station)
+            {
+                DroneId = drone;
+                StationId = station;
+            }
         }
     }
 }

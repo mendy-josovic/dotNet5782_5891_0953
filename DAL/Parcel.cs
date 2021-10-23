@@ -10,7 +10,7 @@ namespace IDAL
     {
         public struct Parcel
         {
-            public int ID { get; set; }
+            public int Id { get; set; }
             public int SenderId { get; set; }
             public int TargetId { get; set; }
             public WEIGHT Weigh { set; get; }
