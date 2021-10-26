@@ -9,73 +9,61 @@ namespace ConsoleUI
             Console.WriteLine(@"Welcome:
             Enter 'A' to add
             Enter 'B' to update
-            Enter 'C' for a diplay of a element
-            Enter 'D' for a display of the data
+            Enter 'C' to diplay an element
+            Enter 'D' to display data
             Enter 'E' to exit
             ");
-            char ch;
-            char.TryParse(Console.ReadLine(),out ch);
+            char.TryParse(Console.ReadLine(), out char ch);
             DalObject.DalObject dalObject1 = new DalObject.DalObject();
-            while(ch!='E')
+            while(ch != 'E')
             {
                 switch (ch)
                 {
                     case 'A':
                         {
-                            Console.WriteLine(@"Enter 'a' to add a station
+                            Console.WriteLine(@"
+                            Enter 'a' to add a station
                             Enter 'b' to add a drone
                             Enter 'c' to add a customer
                             Enter 'd' to add a parcel 
-                            Enter 'e' to exit");
-                            char ch1;
-                            char.TryParse(Console.ReadLine(), out ch1);
+                            Enter 'e' to exit");                            
+                            char.TryParse(Console.ReadLine(), out char ch1);
                             while (ch1 != 'e')
                             {
                                 switch (ch1)
                                 {
                                     case 'a':
                                         {
-
-                                            IDAL.DO.Station station = new IDAL.DO.Station();//gets all the elements for the new station
-
-                                            Console.WriteLine("Enter station id");
-                                            int x;
-                                            Int32.TryParse(Console.ReadLine(),out x );
+                                            
+                                            IDAL.DO.Station station = new IDAL.DO.Station();  //gets all the elements for a new station
+                                            Console.WriteLine("Enter station ID");                                     
+                                            Int32.TryParse(Console.ReadLine(), out int x);
                                             station.Id = x;
                                             Console.WriteLine("Enter station name");
                                             station.Name = Console.ReadLine();
-                                            Console.WriteLine("Enter longitud");
-                                            double y;
-                                            double.TryParse(Console.ReadLine(),out y);
+                                            Console.WriteLine("Enter longitud");                                           
+                                            double.TryParse(Console.ReadLine(), out double y);
                                             station.Longitude = y;
-                                            Console.WriteLine("Enter lattitude ");
-                                            double z;
-                                            double.TryParse(Console.ReadLine(), out z);
-                                            station.Longitude = z;
-                                            Console.WriteLine("Enter amount of charging slats");
-                                            int a;
-                                            Int32.TryParse(Console.ReadLine(), out a);
-                                            station.ReadyChargeStands = a;
+                                            Console.WriteLine("Enter lattitude");                                           
+                                            double.TryParse(Console.ReadLine(), out y);
+                                            station.Longitude = y;
+                                            Console.WriteLine("Enter amount of charging slats");                                            
+                                            Int32.TryParse(Console.ReadLine(), out x);
+                                            station.ReadyChargeStands = x;
                                             dalObject1.AddStation(station);
-
                                             break;
                                         }
                                     case 'b':
                                         {
-                                            IDAL.DO.Drone drone = new IDAL.DO.Drone();//gets all the elements for the new drone
-
-                                            Console.WriteLine("Enter drone id");
-                                            int x;
-                                            Int32.TryParse(Console.ReadLine(), out x);
-
+                                            IDAL.DO.Drone drone = new IDAL.DO.Drone();  //gets all the elements for a new drone
+                                            Console.WriteLine("Enter drone ID");                                            
+                                            Int32.TryParse(Console.ReadLine(), out int x);
                                             drone.Id = x;
-                                            Console.WriteLine("Enter Dron model");
-
+                                            Console.WriteLine("Enter drone model");
                                             drone.Model = Console.ReadLine();
-                                            Console.WriteLine("Enter Drone max-whight");
-                                            int y;
-                                            Int32.TryParse(Console.ReadLine(), out y);
-                                            drone.MaxWeight =(IDAL.DO.WEIGHT) y;
+                                            Console.WriteLine("Enter drone max-whight");                                           
+                                            Int32.TryParse(Console.ReadLine(), out x);
+                                            drone.MaxWeight = (IDAL.DO.WEIGHT)x;
                                             drone.Status = IDAL.DO.STATUS.AVAILABLE;
                                             drone.Battery = 100;                              
                                             dalObject1.AddDrone(drone);
@@ -83,191 +71,173 @@ namespace ConsoleUI
                                         }
                                     case 'c':
                                         {
-                                            IDAL.DO.Customer customer = new IDAL.DO.Customer();//gets all the elements for the new customer
-                                            Console.WriteLine("Enter customer id");
-                                            int x;
-                                            int.TryParse(Console.ReadLine(), out x);
+                                            IDAL.DO.Customer customer = new IDAL.DO.Customer();  //gets all the elements for a new customer
+                                            Console.WriteLine("Enter customer ID");                                           
+                                            int.TryParse(Console.ReadLine(), out int x);
                                             customer.Id =x;
                                             Console.WriteLine("Enter customer name");
                                             customer.Name = Console.ReadLine();
                                             Console.WriteLine("Enter customer phone");
                                             customer.Phone = Console.ReadLine();
-                                            Console.WriteLine("Enter longitud");
-                                            double y;
+                                            Console.WriteLine("Enter longitud");                                            
+                                            double.TryParse(Console.ReadLine(), out double y);
+                                            customer.Longitute = y;
+                                            Console.WriteLine("Enter lattitude");                                            
                                             double.TryParse(Console.ReadLine(), out y);
                                             customer.Longitute = y;
-                                            Console.WriteLine("Enter lattitude ");
-                                            double z;
-                                            double.TryParse(Console.ReadLine(), out z);
-                                            customer.Longitute = z;
-                                           // DalObject.DalObject dalObject = new DalObject.DalObject();
-                                            dalObject1.AddCustomer(customer);//sends to the func
+                                            dalObject1.AddCustomer(customer);  //sends to the func
                                             break;
                                         }
                                     case 'd':
                                         {
-                                            IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();//gets all the elements for the new parcel
-                                            Console.WriteLine("Enter parcel id");
-                                            int x;
-                                            int.TryParse(Console.ReadLine(), out x);
+                                            IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();  //gets all the elements for a new parcel
+                                            Console.WriteLine("Enter parcel ID");                                            
+                                            int.TryParse(Console.ReadLine(), out int x);
                                             parcel.Id = x;
-                                            Console.WriteLine("Enter sender id");
-                                            int y;
-                                            int.TryParse(Console.ReadLine(), out y);
-                                            parcel.SenderId = y;
-                                            Console.WriteLine("Enter target id");
-                                            int z;
-                                            int.TryParse(Console.ReadLine(), out z);
-                                            parcel.TargetId = z;
-                                            Console.WriteLine("Enter parcel weight");
-                                            int a;
-                                            int.TryParse(Console.ReadLine(), out a);
-                                            parcel.Weigh = (IDAL.DO.WEIGHT)a;
-                                            Console.WriteLine("Enter parcel Priority");
-                                            int b;
-                                            int.TryParse(Console.ReadLine(), out b);
-                                            parcel.Priority = (IDAL.DO.PRIORITY)b;
+                                            Console.WriteLine("Enter sender ID");                                            
+                                            int.TryParse(Console.ReadLine(), out x);
+                                            parcel.SenderId = x;
+                                            Console.WriteLine("Enter target ID");                                            
+                                            int.TryParse(Console.ReadLine(), out x);
+                                            parcel.TargetId = x;
+                                            Console.WriteLine("Enter parcel weight");                                            
+                                            int.TryParse(Console.ReadLine(), out x);
+                                            parcel.Weigh = (IDAL.DO.WEIGHT)x;
+                                            Console.WriteLine("Enter parcel Priority");                                           
+                                            int.TryParse(Console.ReadLine(), out x);
+                                            parcel.Priority = (IDAL.DO.PRIORITY)x;
                                             parcel.Requested = DateTime.Now;
                                             parcel.DroneId = 0;                             
                                             dalObject1.AddSParcel(parcel);
                                             break;
                                         }
                                 }
-                                Console.WriteLine("Enter your next choice");
+                                Console.WriteLine("Enter your next choice in add menu");
                                 char.TryParse(Console.ReadLine(), out ch1);
                             }
                             break;
                         }
                     case 'B':
                         {
-                            Console.WriteLine(@"Enter 'a to assing a drone to a parcel
+                            Console.WriteLine(@"
+                            Enter 'a' to assign a drone to a parcel
                             Enter 'b' to update a pickup for a parcel
-                            Enter 'c' to send a  drone to charg
+                            Enter 'c' to send a drone to charg
                             Enter 'd' to to return a drone from chargeing
-                            Enter 'e' to exit");
-                            char ch2;
-                            char.TryParse(Console.ReadLine(), out ch2);
+                            Enter 'e' to exit");                       
+                            char.TryParse(Console.ReadLine(), out char ch2);
                             while (ch2 != 'e')
                             {
                                 switch (ch2)
                                 {
                                     case 'a':
                                         {
-                                            Console.WriteLine("Enter drone id");//gets the ids and sends to the right place
-                                            int droneid;
-                                            int.TryParse(Console.ReadLine(),out droneid);
-                                            Console.WriteLine("Enter parcel id");
-                                            int parcelid;
-                                            int.TryParse(Console.ReadLine(), out parcelid);
-                                          
-                                            dalObject1.AssignDrone(parcelid, droneid);
-
+                                            Console.WriteLine("Enter drone ID");  //gets the IDs and sends to the right place
+                                            int.TryParse(Console.ReadLine(), out int ID);
+                                            dalObject1.DroneStatusDelivery(ID);
+                                            Console.WriteLine("Enter parcel ID");
+                                            int.TryParse(Console.ReadLine(), out ID);
+                                            dalObject1.ParcelScheduled(ID);
                                             break;
                                         }
                                     case 'b':
                                         {
-                                            Console.WriteLine("Enter parcel id");//sends the parcel to update
-                                            int parcelid;
-                                            int.TryParse(Console.ReadLine(),out parcelid);
-                                           
-                                            dalObject1.PickUp(parcelid);
+                                            Console.WriteLine("Enter parcel ID");  //sends the parcel to update                             
+                                            int.TryParse(Console.ReadLine(), out int parcelId);                                        
+                                            dalObject1.PickUp(parcelId);
                                             break;
                                         }
                                     case 'c':
                                         {                                           
-                                            Console.WriteLine("Enter drone id");
-                                            int droneid;
-                                            int.TryParse(Console.ReadLine(),out droneid);
-
-                                            Console.WriteLine("Enter a id  of a station from the list");
+                                            Console.WriteLine("Enter drone ID");                                           
+                                            int.TryParse(Console.ReadLine(), out int dtoneId);
+                                            dalObject1.DroneStatusMaintenanse(dtoneId);
+                                            Console.WriteLine("Enter ID of a station from the list:");
                                             dalObject1.PrintAvailableChargingStations();
-                                            int stationid;
-                                            int.TryParse(Console.ReadLine(), out stationid);
-                                            dalObject1.SendToCharge( stationid,droneid);
+                                            int.TryParse(Console.ReadLine(), out int stationId);
+                                            dalObject1.UpdateReadyStandsInStation(stationId);
+                                            dalObject1.CreateANewDroneCharge(stationId, dtoneId);
                                             break;
                                         }
                                     case 'd':
                                         {
-                                            Console.WriteLine("Enter drone id");
-                                            int droneid;
-                                            int.TryParse(Console.ReadLine(),out  droneid);                                     
-                                            dalObject1.EndCharge(droneid);
+                                            Console.WriteLine("Enter drone ID");
+                                            int.TryParse(Console.ReadLine(), out int droneId);                        
+                                            dalObject1.DroneStatusAvailable(droneId);
+                                            dalObject1.ClearDroneCharge(droneId);
+                                            dalObject1.UpdateDroneChargesIndex(droneId);
                                             break;
                                         }
                                 }
-                                Console.WriteLine("Enter your next choice");
-                                char.TryParse(Console.ReadLine(), out ch); 
+                                Console.WriteLine("Enter your next choice in update menu");
+                                char.TryParse(Console.ReadLine(), out ch2); 
                             }
                             break;
 
                         }
                     case 'C':
                         {
-                            Console.WriteLine(@"Enter 'a'to display a station
+                            Console.WriteLine(@"
+                            Enter 'a' to display a station
                             Enter 'b' to display a drone 
                             Enter 'c' to display a customer
                             Enter 'd' to display a parcel
-                            Enter 'e' to exit");
-                            char ch3;
-                            char.TryParse(Console.ReadLine(), out ch3);
+                            Enter 'e' to exit");                           
+                            char.TryParse(Console.ReadLine(), out char ch3);
                             while (ch3 != 'e')
                             {
                                 switch (ch3)
                                 {
                                     case 'a':
                                         {                     
-                                            Console.WriteLine("Enter station id");
-                                            int stationid;
-                                            int.TryParse(Console.ReadLine(), out stationid);
-                                          IDAL.DO.Station st= dalObject1.PrintStation(stationid);
+                                            Console.WriteLine("Enter station ID");                                           
+                                            int.TryParse(Console.ReadLine(), out int stationId);
+                                            IDAL.DO.Station st = dalObject1.PrintStation(stationId);
                                             Console.WriteLine(st);
                                             break;
                                         }
                                     case 'b':
                                         {
-                                            Console.WriteLine("Enter drone id");
-                                            int droneid;
-                                            int.TryParse(Console.ReadLine(), out droneid);
-                                           IDAL.DO.Drone dr= dalObject1.PrintDrone(droneid);
+                                            Console.WriteLine("Enter drone ID");                                            
+                                            int.TryParse(Console.ReadLine(), out int droneId);
+                                            IDAL.DO.Drone dr = dalObject1.PrintDrone(droneId);
                                             Console.WriteLine(dr);
                                             break;
                                         }
                                     case 'c':
                                         {                                      
-                                            Console.WriteLine("Enter customer id");
-                                            int customerid;
-                                            int.TryParse(Console.ReadLine(), out customerid);
-                                           IDAL.DO.Customer cm= dalObject1.PrintCustomer(customerid);
+                                            Console.WriteLine("Enter customer ID");                                            
+                                            int.TryParse(Console.ReadLine(), out int customerId);
+                                            IDAL.DO.Customer cm = dalObject1.PrintCustomer(customerId);
                                             Console.WriteLine(cm);
                                             break;
 
                                         }
                                     case 'd':
                                         {
-                                            Console.WriteLine("Enter parcel id");
-                                            int parcelid;
-                                            int.TryParse(Console.ReadLine(), out parcelid);
-                                          IDAL.DO.Parcel pr=  dalObject1.PrintParcel(parcelid);
+                                            Console.WriteLine("Enter parcel ID");                                             
+                                            int.TryParse(Console.ReadLine(), out int parcelId);
+                                            IDAL.DO.Parcel pr = dalObject1.PrintParcel(parcelId);
                                             Console.WriteLine(pr);
                                             break;
                                         }
                                 }
-                                Console.WriteLine("Enter your next choice");
+                                Console.WriteLine("Enter your next choice in 'diplay an element' menu");
                                 char.TryParse(Console.ReadLine(), out ch3);
                             }
                             break;
                         }
                     case 'D':
                         {
-                            Console.WriteLine(@"Enter 'a'to display the station-list
+                            Console.WriteLine(@"
+                            Enter 'a' to display the station-list
                             Enter 'b' to display the drone-list 
                             Enter 'c' to display the customer-list
                             Enter 'd' to display the parcel-list
                             Enter 'f' to display unassinged parcels
                             Enter 'g' to disply stations with available charging slots
                             Enter 'e' to exit");
-                            char ch4;
-                            char.TryParse(Console.ReadLine(), out ch4);
+                            char.TryParse(Console.ReadLine(), out char ch4);
                             while (ch4 != 'e')
                             {
                                 switch (ch4)
@@ -275,17 +245,16 @@ namespace ConsoleUI
                                     case 'a':
                                         {
                                             IDAL.DO.Station[] station = dalObject1.PrintStationList();
-                                            for(int i=0;i<station.Length;i++)
+                                            for(int i = 0; i < station.Length; i++)
                                             {
                                                 Console.WriteLine(station[i]);
-                                            }
-                                              
+                                            }               
                                             break;
                                         }
                                     case 'b':
                                         {
                                             IDAL.DO.Drone[] drones = dalObject1.PrintDroneList();
-                                            for(int i=0;i<drones.Length;i++)
+                                            for(int i = 0; i < drones.Length; i++)
                                             {
                                                 Console.WriteLine(drones[i]);
                                             }
@@ -328,13 +297,13 @@ namespace ConsoleUI
                                             break;
                                         }
                                 }
-                                Console.WriteLine("Enter your next choice");
+                                Console.WriteLine("Enter your next choice in 'display data' menu");
                                 char.TryParse(Console.ReadLine(), out ch4);
                             }
                             break;
                         }
                 }
-                Console.WriteLine("Enter your next choice");
+                Console.WriteLine("Enter your next choice (in the main menu)");
                 char.TryParse(Console.ReadLine(), out ch);
             }
         }

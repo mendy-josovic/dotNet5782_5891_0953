@@ -18,7 +18,7 @@ namespace IDAL
             public override string ToString()//override the to string to print it nice
             {
 
-                return "id: "+Id+"\n"+"Name: " +Name+"\n"+"Fhone: "+Phone+"\n"+ " Longitute: "+Longitute+"\n"+ " Latitute: "+Lattitute;
+                return "ID: " + Id + "\nName: " + Name + "\nFhone: " + Phone + "\nLongitute: " + Longitute + "\nLatitute: " + Lattitute + "\n";
             }
         }
     }

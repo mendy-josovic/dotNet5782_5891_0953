@@ -17,7 +17,7 @@ namespace IDAL
             public int ReadyChargeStands { get; set; }
             public override string ToString()
             {
-                return "ID: " + Id + "\nName: " + Name + "\nLongitude: " + Longitude + "\nLattitude: " + Lattitude + "\nReady charge stands: " + ReadyChargeStands;
+                return "ID: " + Id + "\nName: " + Name + "\nLongitude: " + Longitude + "\nLattitude: " + Lattitude + "\nReady charging stands: " + ReadyChargeStands + "\n";
             }
         }
     }
