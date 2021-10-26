@@ -15,7 +15,7 @@ namespace ConsoleUI
             ");
             char ch;
             char.TryParse(Console.ReadLine(),out ch);
-            DalObject.DalObject dalObject1 = new DalObject.DalObject();
+            DalObject.DalObject dalObject1 = new DalObject.DalObject();//creating  the class for all the funcs
             while(ch!='E')
             {
                 switch (ch)
@@ -100,7 +100,6 @@ namespace ConsoleUI
                                             double z;
                                             double.TryParse(Console.ReadLine(), out z);
                                             customer.Longitute = z;
-                                           // DalObject.DalObject dalObject = new DalObject.DalObject();
                                             dalObject1.AddCustomer(customer);//sends to the func
                                             break;
                                         }
@@ -160,7 +159,7 @@ namespace ConsoleUI
                                             int parcelid;
                                             int.TryParse(Console.ReadLine(), out parcelid);
                                           
-                                            dalObject1.AssignDrone(parcelid, droneid);
+                                            dalObject1.AssignDrone(parcelid, droneid);//assign gets pacel and drone
 
                                             break;
                                         }
@@ -179,8 +178,7 @@ namespace ConsoleUI
                                             int droneid;
                                             int.TryParse(Console.ReadLine(),out droneid);
 
-                                            Console.WriteLine("Enter a id  of a station from the list");
-                                            dalObject1.PrintAvailableChargingStations();
+                                            Console.WriteLine("Ente station id");                                      
                                             int stationid;
                                             int.TryParse(Console.ReadLine(), out stationid);
                                             dalObject1.SendToCharge( stationid,droneid);
@@ -196,7 +194,7 @@ namespace ConsoleUI
                                         }
                                 }
                                 Console.WriteLine("Enter your next choice");
-                                char.TryParse(Console.ReadLine(), out ch); 
+                                char.TryParse(Console.ReadLine(), out ch2); 
                             }
                             break;
 
@@ -274,7 +272,7 @@ namespace ConsoleUI
                                 {
                                     case 'a':
                                         {
-                                            IDAL.DO.Station[] station = dalObject1.PrintStationList();
+                                            IDAL.DO.Station[] station = dalObject1.PrintStationList();//prints all the objets
                                             for(int i=0;i<station.Length;i++)
                                             {
                                                 Console.WriteLine(station[i]);

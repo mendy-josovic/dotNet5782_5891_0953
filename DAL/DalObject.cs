@@ -13,24 +13,24 @@ namespace DalObject
             DataSource.Initialize();
         }
 
-        public void AddStation(IDAL.DO.Station sta)
+        public void AddStation(IDAL.DO.Station sta)//jest adding in the last place
         {
             DataSource.Stations[DataSource.Config.StationsIndex] = sta;
             DataSource.Config.StationsIndex++;
         }
-        public void AddDrone(IDAL.DO.Drone dro)
+        public void AddDrone(IDAL.DO.Drone dro)//same
         {
             DataSource.Drones[DataSource.Config.DronesIndex] = dro;
             DataSource.Config.DronesIndex++;
         }
 
-        public void AddCustomer(IDAL.DO.Customer cst)
+        public void AddCustomer(IDAL.DO.Customer cst)//same
         {
             DataSource.Customers[DataSource.Config.CustomersIndex] = cst;
             DataSource.Config.CustomersIndex++;
         }
 
-        public void AddSParcel(IDAL.DO.Parcel prc)
+        public void AddSParcel(IDAL.DO.Parcel prc)//same
         {
             DataSource.Parcels[DataSource.Config.ParcelsIndex] = prc;
             DataSource.Config.ParcelsIndex++;
@@ -38,39 +38,39 @@ namespace DalObject
 
         public void AssignDrone(int prcId, int drnId)
         {
-            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
+            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);//find the drone to assign 
             DataSource.Drones[i].Status = IDAL.DO.STATUS.DELIVERY;
-            i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
-            DataSource.Parcels[i].Scheduled = DateTime.Now;
+            i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);//find the parcel to aasign
+            DataSource.Parcels[i].Scheduled = DateTime.Now;//get assigning time
         }
         public void PickUp(int prcId)
         {
-            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
-            DataSource.Parcels[i].PickedUp = DateTime.Now;
+            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);//fine the carcel that was picked up
+            DataSource.Parcels[i].PickedUp = DateTime.Now;//update the pickup time
         }
 
        public void Supplied(int prcId, int drnId)
         {
-            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
-            DataSource.Parcels[i].Delivered = DateTime.Now;
-            i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
-            DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;
+            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);//find the parcel theat was supplied 
+            DataSource.Parcels[i].Delivered = DateTime.Now;//update that it was dilivered
+            i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);//find the drone that was supplied the parcel
+            DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;//update that now the drone is avalable
         }
 
         public void SendToCharge(int staId, int drnId)
         {
-            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
+            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);// fines the drone and update that noe its not avalable
             DataSource.Drones[i].Status = IDAL.DO.STATUS.MAINTENANSE;
-            i = Array.FindIndex(DataSource.Stations, w => w.Id == staId);
+            i = Array.FindIndex(DataSource.Stations, w => w.Id == staId);//changes the station charging slots that are avalable
             DataSource.Stations[i].ReadyChargeStands--;
             DataSource.DroneCharges[DataSource.Config.DroneChargesIndex] = new IDAL.DO.DroneCharge(drnId, staId);
         }
 
         public void EndCharge(int drnId)
         {
-            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
+            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);//fines the drone and update that  its avalable
             DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;
-            i = Array.FindIndex(DataSource.DroneCharges, w => w.DroneId == drnId);
+            i = Array.FindIndex(DataSource.DroneCharges, w => w.DroneId == drnId); //fines the drond-chage and update that no
             DataSource.DroneCharges[i].DroneId = 0;
             DataSource.DroneCharges[i].StationId = 0;
             if (DataSource.Config.DroneChargesIndex > i)
@@ -78,69 +78,69 @@ namespace DalObject
         }
 
 
-        public IDAL.DO.Station PrintStation(int Id)
+        public IDAL.DO.Station PrintStation(int Id)//finds the station and sends a replica
         {
             int i = Array.FindIndex(DataSource.Stations, w => w.Id == Id);
             return (DataSource.Stations[i]);
         }
     
 
-        public IDAL.DO.Drone PrintDrone(int Id)
+        public IDAL.DO.Drone PrintDrone(int Id)//finds the drone and sends a replica
         {
           int i = Array.FindIndex(DataSource.Drones, w => w.Id == Id);
           return (DataSource.Drones[i]);
         }
 
-        public IDAL.DO.Customer PrintCustomer(int Id)
+        public IDAL.DO.Customer PrintCustomer(int Id)//finds the customer and sends a replica
         {
             int i = Array.FindIndex(DataSource.Stations, w => w.Id == Id);
             return (DataSource.Customers[i]);
         }
 
-        public IDAL.DO.Parcel PrintParcel(int Id)
+        public IDAL.DO.Parcel PrintParcel(int Id)//finds the station and sends a replica
         {
             int i = Array.FindIndex(DataSource.Stations, w => w.Id == Id);
             return (DataSource.Parcels[i]);
         }
 
-        public IDAL.DO.Station[] PrintStationList()
+        public IDAL.DO.Station[] PrintStationList()//creats a new array and returns that
         {
             Station[] arr = new Station[DataSource.Config.StationsIndex];
             Array.Copy(DataSource.Stations, arr, DataSource.Config.StationsIndex);
             return arr;
         }
 
-        public Drone[] PrintDroneList()
+        public Drone[] PrintDroneList()//creats a new array and returns that
         {
             Drone[] arr = new Drone[DataSource.Config.DronesIndex];
             Array.Copy(DataSource.Drones,arr, DataSource.Config.DronesIndex);
             return arr;
          }
 
-        public IDAL.DO.Customer[] PrintCustomerList()
+        public IDAL.DO.Customer[] PrintCustomerList()//creats a new array and returns that
         {
             Customer[] arr = new Customer[DataSource.Config.CustomersIndex];
             Array.Copy(DataSource.Customers, arr, DataSource.Config.CustomersIndex);
             return arr;
         }
 
-        public IDAL.DO.Parcel[] PrintParcelList()
+        public IDAL.DO.Parcel[] PrintParcelList()//creats a new array and returns that
         {
             Parcel[] arr = new Parcel[DataSource.Config.ParcelsIndex];
             Array.Copy(DataSource.Parcels, arr, DataSource.Config.ParcelsIndex);
             return arr;
         }
 
-        public IDAL.DO.Parcel[] PrintUnassignedParcels()
+        public IDAL.DO.Parcel[] PrintUnassignedParcels()//creats a new array with the condition and returns that
         {
             Parcel[] arr = new Parcel[DataSource.Config.ParcelsIndex];
             arr = Array.FindAll(DataSource.Parcels, x => x.DroneId == 0&& x.Id!=0);//find all the parcels that are not assigned and are initlized.
             return arr;
         }
-        public IDAL.DO.Station[] PrintAvailableChargingStations()
+        public IDAL.DO.Station[] PrintAvailableChargingStations()//creats a new array of avalable charging slots and returns that
         {
             Station[] arr = new Station[DataSource.Config.StationsIndex];
-            arr = Array.FindAll(DataSource.Stations, x => x.ReadyChargeStands > 0&& x.Id!=0);
+            arr = Array.FindAll(DataSource.Stations, x => x.ReadyChargeStands > 0&& x.Id!=0);//finds all stations that are intitlized and stil have avalable charging slots
             return arr;
         }
     }
