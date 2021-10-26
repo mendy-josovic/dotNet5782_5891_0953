@@ -34,9 +34,12 @@ namespace DalObject
                 Stations[i].Lattitude = r.NextDouble() / 1.234;
                 Stations[i].Longitude = r.NextDouble() / 1.234;
                 Stations[i].ReadyChargeStands = r.Next(3,7);
+                Config.StationsIndex++;
             }
             Stations[0].Name = "The centrial station";
+            Config.StationsIndex++;
             Stations[1].Name = "The 'HERTZEL' station";
+            Config.StationsIndex++;
             String[] names = new String[] { "Moshe", "Aharon", "David", "Yosef", "Reuven", "Nachman", "Avraham", "lot", "Moav", "Amon" };
             String[] phones = new String[] { "051-123456", "052-123456", "053-123456", "054-123456", "055-123456", "056-123456", "057-123456", "058-123456", "059-123456", "050-123456" };
             for (int i = 0; i < 10; i++)//initlize the customer
@@ -46,12 +49,14 @@ namespace DalObject
                 Customers[i].Longitute= r.NextDouble() / 1.234;
                 Customers[i].Name = names[i];
                 Customers[i].Phone = phones[i];
+                Config.CustomersIndex++;
             }
             for(int i=0;i<5;i++)//we have 5 drons 1 in MAINTENANSE 3 in DELIVERY and 1 in AVAILABLE
             {
                 Drones[i].Id = r.Next(1, 1000);
                 Drones[i].MaxWeight = IDAL.DO.WEIGHT.HEAVY;
                 Drones[i].Battery = r.Next(1, 100) / 5.5;
+                Config.DronesIndex++;
             }
             Drones[0].Model = "AB123";
             Drones[0].Status = IDAL.DO.STATUS.MAINTENANSE;
@@ -72,6 +77,7 @@ namespace DalObject
                 Parcels[i].SenderId = Customers[i].Id;
                 Parcels[i].TargetId = Customers[9 - i].Id;
                 Parcels[i].Requested = new DateTime(2021, 10, i + 1,(i*35)/24,(i*65)/60,(i*102)/60);
+                Config.ParcelsIndex++;
             }
             for (int i=0;i<10;i++)
             {
@@ -81,9 +87,9 @@ namespace DalObject
             for (int i = 0; i < 5; i++)//5 parcels alredy  done and dilivred
             {
                 TimeSpan time = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
-                Parcels[i].SchedulId =Parcels[i].Requested+time;
+                Parcels[i].Scheduled =Parcels[i].Requested+time;
                 time = new TimeSpan(r.Next(0, 2), r.Next(0, 60), r.Next(0, 60));
-                Parcels[i].PickedUp = Parcels[i].SchedulId + time;
+                Parcels[i].PickedUp = Parcels[i].Scheduled + time;
                 time = new TimeSpan(0, r.Next(15, 30), r.Next(0, 60));
                 Parcels[i].Delivered = Parcels[i].PickedUp + time;
                 Parcels[i].DroneId = Drones[i].Id;
@@ -91,13 +97,13 @@ namespace DalObject
             for (int i = 5; i < 8; i++)
             {
                 TimeSpan time=new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
-                Parcels[i].SchedulId = Parcels[i].Requested + time;
+                Parcels[i].Scheduled = Parcels[i].Requested + time;
                 time = new TimeSpan(r.Next(0, 2), r.Next(0, 60), r.Next(0, 60));
-                Parcels[i].PickedUp = Parcels[i].SchedulId + time;
+                Parcels[i].PickedUp = Parcels[i].Scheduled + time;
                 Parcels[i].DroneId = Drones[i - 4].Id;
             }
             TimeSpan t = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
-            Parcels[8].SchedulId = Parcels[8].Requested + t;
+            Parcels[8].Scheduled = Parcels[8].Requested + t;
             Parcels[8].DroneId = Drones[4].Id;
 
             for (int i = 0; i < 10; i++)
