@@ -35,15 +35,6 @@ namespace DalObject
             DataSource.Parcels[DataSource.Config.ParcelsIndex] = prc;
             DataSource.Config.ParcelsIndex++;
         }
-
-        //public void AssignDrone(int prcId, int drnId)
-        //{
-        //    int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
-        //    DataSource.Drones[i].Status = IDAL.DO.STATUS.DELIVERY;
-        //    i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
-        //    DataSource.Parcels[i].Scheduled = DateTime.Now;
-        //}
-
         public void DroneStatusDelivery(int drnId)
         {
             int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);  //find the drone to assign 
@@ -90,15 +81,6 @@ namespace DalObject
             DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;  //update that now the drone is availabl
         }
 
-        //public void SendToCharge(int staId, int drnId)
-        //{
-        //    int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
-        //    DataSource.Drones[i].Status = IDAL.DO.STATUS.MAINTENANSE;
-        //    i = Array.FindIndex(DataSource.Stations, w => w.Id == staId);
-        //    DataSource.Stations[i].ReadyChargeStands--;
-        //    DataSource.DroneCharges[DataSource.Config.DroneChargesIndex] = new IDAL.DO.DroneCharge(drnId, staId);
-        //}
-
         public void DroneStatusMaintenanse(int drnId)
         {
             int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);  //finds the drone and update that it's not available
@@ -115,18 +97,6 @@ namespace DalObject
         {
             DataSource.DroneCharges[DataSource.Config.DroneChargesIndex] = new IDAL.DO.DroneCharge(drnId, staId);
         }
-
-        //public void EndCharge(int drnId)
-        //{
-        //    int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);
-        //    DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;
-        //    i = Array.FindIndex(DataSource.DroneCharges, w => w.DroneId == drnId);
-        //    DataSource.DroneCharges[i].DroneId = 0;
-        //    DataSource.DroneCharges[i].StationId = 0;
-        //    if (DataSource.Config.DroneChargesIndex > i)
-        //        DataSource.Config.DroneChargesIndex = i;
-        //}
-
         public void DroneStatusAvailable(int drnId)
         {
             int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);  //finds the drone and update that it's available
@@ -162,7 +132,7 @@ namespace DalObject
 
         public IDAL.DO.Customer PrintCustomer(int id)  //finds the customer and sends a replica
         {
-            int i = Array.FindIndex(DataSource.Stations, w => w.Id == id);
+            int i = Array.FindIndex(DataSource.Customers, w => w.Id == id);
             return (DataSource.Customers[i]);
         }
 
