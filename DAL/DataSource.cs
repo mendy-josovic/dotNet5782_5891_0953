@@ -14,7 +14,6 @@ namespace DalObject
         internal static IDAL.DO.Parcel[] Parcels = new IDAL.DO.Parcel[1000];
         internal static IDAL.DO.DroneCharge[] DroneCharges = new IDAL.DO.DroneCharge[35];
 
-
         internal class Config
         {
             internal static int DronesIndex { set; get; } = 0;
@@ -31,7 +30,7 @@ namespace DalObject
             for (int i = 0; i < 2; i++)  //initializing a stations 
             {
                 Stations[i].Id = r.Next(1, 501);
-                Stations[i].Lattitude = r.NextDouble() / 1.234;
+                Stations[i].Latitude = r.NextDouble() / 1.234;
                 Stations[i].Longitude = r.NextDouble() / 1.234;
                 Stations[i].ReadyChargeStands = r.Next(3, 7);
                 Config.StationsIndex++;
@@ -45,13 +44,13 @@ namespace DalObject
             for (int i = 0; i < 10; i++)  //initializing a customer
             {
                 Customers[i].Id = r.Next(1, 10000);
-                Customers[i].Lattitute = r.NextDouble() / 1.234;
-                Customers[i].Longitute= r.NextDouble() / 1.234;
+                Customers[i].Latitude = r.NextDouble() / 1.234;
+                Customers[i].Longitude= r.NextDouble() / 1.234;
                 Customers[i].Name = names[i];
                 Customers[i].Phone = phones[i];
                 Config.CustomersIndex++;
             }
-            for (int i = 0; i < 5; i++)  //we have 5 drons 1 in MAINTENANSE 3 in DELIVERY and 1 in AVAILABLE
+            for (int i = 0; i < 6; i++)  //we have 5 drons 1 in MAINTENANSE 3 in DELIVERY and 1 in AVAILABLE
             {
                 Drones[i].Id = r.Next(1, 1000);
                 Drones[i].MaxWeight = IDAL.DO.WEIGHT.HEAVY;
@@ -66,8 +65,10 @@ namespace DalObject
             Drones[2].Model = "EF123";
             Drones[3].Status = IDAL.DO.STATUS.DELIVERY;
             Drones[3].Model = "GH123";
-            Drones[4].Status = IDAL.DO.STATUS.AVAILABLE;
+            Drones[4].Status = IDAL.DO.STATUS.DELIVERY;
             Drones[4].Model = "IJ123";
+            Drones[5].Status = IDAL.DO.STATUS.AVAILABLE;
+            Drones[5].Model = "KL123";
             for (int i = 0; i < 10; i++)  //creating ID and a counter
             {
                 Parcels[i].Id = Config.RuningNumber++;

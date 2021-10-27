@@ -13,11 +13,11 @@ namespace IDAL
             public int Id { get; set; }
             public String Name { get; set; }
             public double Longitude { get; set; }
-            public double Lattitude { get; set; }
+            public double Latitude { get; set; }
             public int ReadyChargeStands { get; set; }
             public override string ToString()
             {
-                return "ID: " + Id + "\nName: " + Name + "\nLongitude: " + Longitude + "\nLattitude: " + Lattitude + "\nReady charging stands: " + ReadyChargeStands + "\n";
+                return "ID: " + Id + "\nName: " + Name + "\nLongitude: " + Longitude + "\nLatitude: " + Latitude + "\nReady charging stands: " + ReadyChargeStands + "\n";
             }
         }
     }

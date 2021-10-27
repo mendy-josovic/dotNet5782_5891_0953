@@ -56,18 +56,38 @@ namespace DalObject
             DataSource.Parcels[i].Scheduled = DateTime.Now;  //get assigning time
         }
 
+        public void DroneIdOfPArcel(int prcId, int drnId)
+        {
+            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
+            DataSource.Parcels[i].DroneId = drnId;
+        }
+
         public void PickUp(int prcId)
         {
             int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);  //find the parcel that was picked up
             DataSource.Parcels[i].PickedUp = DateTime.Now;  //update the pickup time
         }
 
-        public void Supplied(int prcId, int drnId)
+        //public void Supplied(int prcId, int drnId)
+        //{
+        //    int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);  //find the parcel that was supplied 
+        //    DataSource.Parcels[i].Delivered = DateTime.Now;  //update that it was delivered
+        //    i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);  //find the drone that was supplied the parcel
+        //    DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;  //update that now the drone is available
+        //}
+
+        public void UpdateTimeOfSupplied(int prcId)
         {
             int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);  //find the parcel that was supplied 
             DataSource.Parcels[i].Delivered = DateTime.Now;  //update that it was delivered
+        }
+
+        public void DroneStatusAvailable1(int prcId)
+        {
+            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);
+            int drnId = DataSource.Parcels[i].DroneId;
             i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);  //find the drone that was supplied the parcel
-            DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;  //update that now the drone is available
+            DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;  //update that now the drone is availabl
         }
 
         //public void SendToCharge(int staId, int drnId)
@@ -148,7 +168,7 @@ namespace DalObject
 
         public IDAL.DO.Parcel PrintParcel(int id)  //finds the station and sends a replica
         {
-            int i = Array.FindIndex(DataSource.Stations, w => w.Id == id);
+            int i = Array.FindIndex(DataSource.Parcels, w => w.Id == id);
             return (DataSource.Parcels[i]);
         }
 

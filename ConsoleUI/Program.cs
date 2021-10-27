@@ -79,12 +79,12 @@ namespace ConsoleUI
                                             customer.Name = Console.ReadLine();
                                             Console.WriteLine("Enter customer phone");
                                             customer.Phone = Console.ReadLine();
-                                            Console.WriteLine("Enter longitud");                                            
+                                            Console.WriteLine("Enter longitude");                                            
                                             double.TryParse(Console.ReadLine(), out double y);
-                                            customer.Longitute = y;
-                                            Console.WriteLine("Enter lattitude");                                            
+                                            customer.Longitude = y;
+                                            Console.WriteLine("Enter latitude");                                            
                                             double.TryParse(Console.ReadLine(), out y);
-                                            customer.Longitute = y;
+                                            customer.Latitude = y;
                                             dalObject1.AddCustomer(customer);  //sends to the func
                                             break;
                                         }
@@ -122,8 +122,9 @@ namespace ConsoleUI
                             Console.WriteLine(@"
                             Enter 'a' to assign a drone to a parcel
                             Enter 'b' to update a pickup for a parcel
-                            Enter 'c' to send a drone to charg
-                            Enter 'd' to to return a drone from chargeing
+                            Enter 'c' to send a drone to charge
+                            Enter 'd' to return a drone from charging
+                            Enter 'f' to supply a parcel to the customer
                             Enter 'e' to exit");                       
                             char.TryParse(Console.ReadLine(), out char ch2);
                             while (ch2 != 'e')
@@ -133,11 +134,12 @@ namespace ConsoleUI
                                     case 'a':
                                         {
                                             Console.WriteLine("Enter drone ID");  //gets the IDs and sends to the right place
-                                            int.TryParse(Console.ReadLine(), out int ID);
-                                            dalObject1.DroneStatusDelivery(ID);
+                                            int.TryParse(Console.ReadLine(), out int droneId);
+                                            dalObject1.DroneStatusDelivery(droneId);
                                             Console.WriteLine("Enter parcel ID");
-                                            int.TryParse(Console.ReadLine(), out ID);
-                                            dalObject1.ParcelScheduled(ID);
+                                            int.TryParse(Console.ReadLine(), out int parcelId);
+                                            dalObject1.ParcelScheduled(parcelId);
+                                            dalObject1.DroneIdOfPArcel(parcelId, droneId);
                                             break;
                                         }
                                     case 'b':
@@ -166,6 +168,14 @@ namespace ConsoleUI
                                             dalObject1.DroneStatusAvailable(droneId);
                                             dalObject1.ClearDroneCharge(droneId);
                                             dalObject1.UpdateDroneChargesIndex(droneId);
+                                            break;
+                                        }
+                                    case 'f':
+                                        {
+                                            Console.WriteLine("Enter parcel ID");
+                                            int.TryParse(Console.ReadLine(), out int parcelId);
+                                            dalObject1.UpdateTimeOfSupplied(parcelId);
+                                            dalObject1.DroneStatusAvailable1(parcelId);
                                             break;
                                         }
                                 }
