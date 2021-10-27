@@ -4,7 +4,7 @@ namespace ConsoleUI
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args)//good
         {
             Console.WriteLine(@"Welcome:
             Enter 'A' to add
