@@ -36,10 +36,8 @@ namespace DalObject
                 Stations[i].ReadyChargeStands = r.Next(3, 7);
                 Config.StationsIndex++;
             }
-            Stations[0].Name = "The centrial station";
-            Config.StationsIndex++;
+            Stations[0].Name = "The centrial station";  
             Stations[1].Name = "The 'HERTZEL' station";
-            Config.StationsIndex++;
             String[] names = new String[] { "Moshe", "Aharon", "David", "Yosef", "Reuven", "Nachman", "Avraham", "lot", "Moav", "Amon" };
             String[] phones = new String[] { "051-123456", "052-123456", "053-123456", "054-123456", "055-123456", "056-123456", "057-123456", "058-123456", "059-123456", "050-123456" };
             for (int i = 0; i < 10; i++)  //initializing a customer

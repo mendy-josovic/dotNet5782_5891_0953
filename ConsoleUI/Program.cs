@@ -79,12 +79,12 @@ namespace ConsoleUI
                                             customer.Name = Console.ReadLine();
                                             Console.WriteLine("Enter customer phone");
                                             customer.Phone = Console.ReadLine();
-                                            Console.WriteLine("Enter longitud");                                            
+                                            Console.WriteLine("Enter longitude");                                            
                                             double.TryParse(Console.ReadLine(), out double y);
                                             customer.Longitute = y;
-                                            Console.WriteLine("Enter lattitude");                                            
+                                            Console.WriteLine("Enter latitude");                                            
                                             double.TryParse(Console.ReadLine(), out y);
-                                            customer.Longitute = y;
+                                            customer.Lattitute = y;
                                             dalObject1.AddCustomer(customer);  //sends to the func
                                             break;
                                         }
@@ -133,11 +133,11 @@ namespace ConsoleUI
                                     case 'a':
                                         {
                                             Console.WriteLine("Enter drone ID");  //gets the IDs and sends to the right place
-                                            int.TryParse(Console.ReadLine(), out int ID);
-                                            dalObject1.DroneStatusDelivery(ID);
+                                            int.TryParse(Console.ReadLine(), out int id);
+                                            dalObject1.DroneStatusDelivery(id);
                                             Console.WriteLine("Enter parcel ID");
-                                            int.TryParse(Console.ReadLine(), out ID);
-                                            dalObject1.ParcelScheduled(ID);
+                                            int.TryParse(Console.ReadLine(), out id);
+                                            dalObject1.ParcelScheduled(id);
                                             break;
                                         }
                                     case 'b':
