@@ -59,14 +59,6 @@ namespace DalObject
             DataSource.Parcels[i].PickedUp = DateTime.Now;  //update the pickup time
         }
 
-        //public void Supplied(int prcId, int drnId)
-        //{
-        //    int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);  //find the parcel that was supplied 
-        //    DataSource.Parcels[i].Delivered = DateTime.Now;  //update that it was delivered
-        //    i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);  //find the drone that was supplied the parcel
-        //    DataSource.Drones[i].Status = IDAL.DO.STATUS.AVAILABLE;  //update that now the drone is available
-        //}
-
         public void UpdateTimeOfSupplied(int prcId)
         {
             int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);  //find the parcel that was supplied 
