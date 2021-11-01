@@ -8,52 +8,50 @@ namespace DalObject
 {
   public class DataSource
     {
-        internal List<Drone> drones = new List<Drone>();
-        internal List<Station> stations = new List<Station>();
-        internal List<> parce = new List<Parcel>();
-        internal List<Drone> drones = new List<Drone>();
-        internal List<Drone> drones = new List<Drone>();
+        internal static List<Drone> drones = new List<Drone>();
+        internal static List<Station> stations = new List<Station>();
+        internal static List<Parcel> parcels = new List<Parcel>();
+        internal static List<Customer> customers = new List<Customer>();
+        internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
 
-        internal class Config
-        {
-            internal static int DronesIndex { set; get; } = 0;
-            internal static int StationsIndex { set; get; } = 0;
-            internal static int ParcelsIndex { set; get; } = 0;
-            internal static int CustomersIndex { set; get; } = 0;
-            internal static int RuningNumber { set; get; } = 1000;
-            internal static int DroneChargesIndex { set; get; } = 0;
-
-        }
         public static Random r = new Random();
         internal static void Initialize()
         {
-            for (int i = 0; i < 2; i++)  //initializing a stations 
+            for (int i = 0; i < 2; i++)  //initializing the stations
             {
-                Stations[i].Id = r.Next(1, 501);
-                Stations[i].Latitude = r.NextDouble() / 1.234;
-                Stations[i].Longitude = r.NextDouble() / 1.234;
-                Stations[i].ReadyChargeStands = r.Next(3, 7);
-                Config.StationsIndex++;
+                Station sta = new Station();
+                sta.Id = r.Next(1, 501);
+                sta.Latitude = r.Next(1, 501);
+                sta.Longitude = r.NextDouble() / 1.234;
+                sta.ReadyChargeStands = r.Next(3, 7);
+                stations.Add(sta);
             }
-            Stations[0].Name = "The centrial station";  
-            Stations[1].Name = "The 'HERTZEL' station";
+            Station tempStation = stations[0];
+            tempStation.Name = "The centrial station";
+            stations[0] = tempStation;
+            tempStation = stations[1];
+            tempStation.Name = "The 'HERTZEL' station";
+            stations[1] = tempStation;
+
             String[] names = new String[] { "Moshe", "Aharon", "David", "Yosef", "Reuven", "Nachman", "Avraham", "lot", "Moav", "Amon" };
             String[] phones = new String[] { "051-123456", "052-123456", "053-123456", "054-123456", "055-123456", "056-123456", "057-123456", "058-123456", "059-123456", "050-123456" };
             for (int i = 0; i < 10; i++)  //initializing a customer
             {
-                Customers[i].Id = r.Next(1, 10000);
-                Customers[i].Latitude = r.NextDouble() / 1.234;
-                Customers[i].Longitude= r.NextDouble() / 1.234;
-                Customers[i].Name = names[i];
-                Customers[i].Phone = phones[i];
-                Config.CustomersIndex++;
+                Customer cst = new Customer();
+                cst.Id = r.Next(1, 10000);
+                cst.Latitude = r.NextDouble() / 1.234;
+                cst.Longitude = r.NextDouble() / 1.234;
+                cst. Name = names[i];
+                cst.Phone = phones[i];
             }
-            for (int i = 0; i < 6; i++)  //we have 5 drons 1 in MAINTENANSE 3 in DELIVERY and 1 in AVAILABLE
+
+            for (int i = 0; i < 6; i++)  //we have 5 drones 1 in MAINTENANSE 3 in DELIVERY and 1 in AVAILABLE
             {
-                Drones[i].Id = r.Next(1, 1000);
-                Drones[i].MaxWeight = IDAL.DO.WEIGHT.HEAVY;
-                Config.DronesIndex++;
+                Drone drn = new Drone();
+                drn.Id = r.Next(1, 1000);
+                drn.MaxWeight = WEIGHT.HEAVY;
             }
+            Drone tempDrone = drones[0];
             Drones[0].Model = "AB123";
             Drones[1].Model = "CD123";
             Drones[2].Model = "EF123";
