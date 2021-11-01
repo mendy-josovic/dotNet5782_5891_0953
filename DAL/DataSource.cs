@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using IDAL.DO;
 namespace DalObject
 {
   public class DataSource
     {
-        internal static IDAL.DO.Drone[] Drones = new IDAL.DO.Drone[10];
-        internal static IDAL.DO.Station[] Stations = new IDAL.DO.Station[5];
-        internal static IDAL.DO.Customer[] Customers = new IDAL.DO.Customer[100];
-        internal static IDAL.DO.Parcel[] Parcels = new IDAL.DO.Parcel[1000];
-        internal static IDAL.DO.DroneCharge[] DroneCharges = new IDAL.DO.DroneCharge[35];
+        internal List<Drone> drones = new List<Drone>();
+        internal List<Station> stations = new List<Station>();
+        internal List<> parce = new List<Parcel>();
+        internal List<Drone> drones = new List<Drone>();
+        internal List<Drone> drones = new List<Drone>();
 
         internal class Config
         {
@@ -52,20 +52,13 @@ namespace DalObject
             {
                 Drones[i].Id = r.Next(1, 1000);
                 Drones[i].MaxWeight = IDAL.DO.WEIGHT.HEAVY;
-                Drones[i].Battery = r.Next(1, 100) / 5.5;
                 Config.DronesIndex++;
             }
             Drones[0].Model = "AB123";
-            Drones[0].Status = IDAL.DO.STATUS.MAINTENANSE;
             Drones[1].Model = "CD123";
-            Drones[1].Status = IDAL.DO.STATUS.DELIVERY;
-            Drones[2].Status = IDAL.DO.STATUS.DELIVERY;
             Drones[2].Model = "EF123";
-            Drones[3].Status = IDAL.DO.STATUS.DELIVERY;
             Drones[3].Model = "GH123";
-            Drones[4].Status = IDAL.DO.STATUS.DELIVERY;
             Drones[4].Model = "IJ123";
-            Drones[5].Status = IDAL.DO.STATUS.AVAILABLE;
             Drones[5].Model = "KL123";
             for (int i = 0; i < 10; i++)  //creating ID and a counter
             {

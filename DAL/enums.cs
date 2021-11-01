@@ -5,6 +5,5 @@ namespace IDAL
     {
         public enum WEIGHT { LIGHT, MEDIUM, HEAVY };
         public enum PRIORITY { REGULAR, FAST, EMERGENCY };
-        public enum STATUS { AVAILABLE, MAINTENANSE, DELIVERY }
     }
 }

@@ -12,12 +12,10 @@ namespace IDAL
         {
             public int Id { get; set; }
             public String Model { set; get; }
-            public STATUS Status { set; get; }
             public WEIGHT MaxWeight  {set; get;}  
-            public double Battery { set; get; }
             public override string ToString()
             {
-                return "ID: " + Id + "\nModel: " + Model + "\nStatus: " + Status + "\nMaximum weight: " + MaxWeight + "\nBattery: " + Battery + "\n";
+                return "ID: " + Id + "\nModel: " + Model  + "\nMaximum weight: " + MaxWeight + "\n";
             }
         }
     }
