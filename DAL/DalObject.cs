@@ -15,25 +15,22 @@ namespace DalObject
 
         public void AddStation(IDAL.DO.Station sta)  //just adding to the last place
         {
-            DataSource.Stations[DataSource.Config.StationsIndex] = sta;
-            DataSource.Config.StationsIndex++;
+            DataSource.stations.Add(sta);
         }
         public void AddDrone(IDAL.DO.Drone dro)  //same
         {
-            DataSource.Drones[DataSource.Config.DronesIndex] = dro;
-            DataSource.Config.DronesIndex++;
+
+            DataSource.drones.Add(dro);
         }
 
         public void AddCustomer(IDAL.DO.Customer cst)  //same
         {
-            DataSource.Customers[DataSource.Config.CustomersIndex] = cst;
-            DataSource.Config.CustomersIndex++;
+            DataSource.customers.Add(cst);
         }
 
         public void AddSParcel(IDAL.DO.Parcel prc)  //same
         {
-            DataSource.Parcels[DataSource.Config.ParcelsIndex] = prc;
-            DataSource.Config.ParcelsIndex++;
+            DataSource.parcels.Add(prc);
         }
         public void DroneStatusDelivery(int drnId)
         {

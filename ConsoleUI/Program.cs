@@ -63,9 +63,8 @@ namespace ConsoleUI
                                             drone.Model = Console.ReadLine();
                                             Console.WriteLine("Enter drone max-whight");                                           
                                             Int32.TryParse(Console.ReadLine(), out x);
-                                            drone.MaxWeight = (IDAL.DO.WEIGHT)x;
-                                            drone.Status = IDAL.DO.STATUS.AVAILABLE;
-                                            drone.Battery = 100;                              
+                                            drone.MaxWeight = (IDAL.DO.WEIGHT)x;                                        
+                                                              
                                             dalObject1.AddDrone(drone);
                                             break;
                                         }
