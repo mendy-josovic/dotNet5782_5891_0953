@@ -9,96 +9,121 @@ namespace DalObject
   public class DataSource
     {
         internal static List<Drone> drones = new List<Drone>();
-        internal List<Station> stations = new List<Station>();
-    
+        internal static List<Station> stations = new List<Station>();
+        internal static List<Parcel> parcels = new List<Parcel>();
+        internal static List<Customer> customers = new List<Customer>();
+        internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
         internal class Config
         {
-            internal static int DronesIndex { set; get; } = 0;
-            internal static int StationsIndex { set; get; } = 0;
-            internal static int ParcelsIndex { set; get; } = 0;
-            internal static int CustomersIndex { set; get; } = 0;
-            internal static int RuningNumber { set; get; } = 1000;
-            internal static int DroneChargesIndex { set; get; } = 0;
-
-        }
+            public static int RuningNumbe { get; set; } = 1000;
+        };
         public static Random r = new Random();
         internal static void Initialize()
         {
-            for (int i = 0; i < 2; i++)  //initializing a stations 
+            for (int i = 0; i < 2; i++)  //initializing the stations
             {
-                Stations[i].Id = r.Next(1, 501);
-                Stations[i].Latitude = r.NextDouble() / 1.234;
-                Stations[i].Longitude = r.NextDouble() / 1.234;
-                Stations[i].ReadyChargeStands = r.Next(3, 7);
-                Config.StationsIndex++;
+                Station sta = new Station();
+                sta.Id = r.Next(1, 501);
+                sta.Latitude = r.Next(1, 501);
+                sta.Longitude = r.NextDouble() / 1.234;
+                sta.ReadyChargeStands = r.Next(3, 7);
+                stations.Add(sta);
             }
-            Stations[0].Name = "The centrial station";  
-            Stations[1].Name = "The 'HERTZEL' station";
+            Station tempStation = stations[0];
+            tempStation.Name = "The centrial station";
+            stations[0] = tempStation;
+            tempStation = stations[1];
+            tempStation.Name = "The 'HERTZEL' station";
+            stations[1] = tempStation;
+
             String[] names = new String[] { "Moshe", "Aharon", "David", "Yosef", "Reuven", "Nachman", "Avraham", "lot", "Moav", "Amon" };
             String[] phones = new String[] { "051-123456", "052-123456", "053-123456", "054-123456", "055-123456", "056-123456", "057-123456", "058-123456", "059-123456", "050-123456" };
             for (int i = 0; i < 10; i++)  //initializing a customer
             {
-                Customers[i].Id = r.Next(1, 10000);
-                Customers[i].Latitude = r.NextDouble() / 1.234;
-                Customers[i].Longitude= r.NextDouble() / 1.234;
-                Customers[i].Name = names[i];
-                Customers[i].Phone = phones[i];
-                Config.CustomersIndex++;
+                Customer cst = new Customer();
+                cst.Id = r.Next(1, 10000);
+                cst.Latitude = r.NextDouble() / 1.234;
+                cst.Longitude = r.NextDouble() / 1.234;
+                cst. Name = names[i];
+                cst.Phone = phones[i];
+                customers.Add(cst);
             }
-            for (int i = 0; i < 6; i++)  //we have 5 drons 1 in MAINTENANSE 3 in DELIVERY and 1 in AVAILABLE
+
+            for (int i = 0; i < 6; i++)  //we have 5 drones 
             {
-                Drones[i].Id = r.Next(1, 1000);
-                Drones[i].MaxWeight = IDAL.DO.WEIGHT.HEAVY;
-                Config.DronesIndex++;
+                Drone drn = new Drone();
+                drn.Id = r.Next(1, 1000);
+                drn.MaxWeight = WEIGHT.HEAVY;
+                drones.Add(drn);
             }
-            Drones[0].Model = "AB123";
-            Drones[1].Model = "CD123";
-            Drones[2].Model = "EF123";
-            Drones[3].Model = "GH123";
-            Drones[4].Model = "IJ123";
-            Drones[5].Model = "KL123";
-            for (int i = 0; i < 10; i++)  //creating ID and a counter
-            {
-                Parcels[i].Id = Config.RuningNumber++;
+            Drone tempDrone = drones[0];
+            tempDrone.Model = "AB123";
+            drones[0] = tempDrone;
+            tempDrone = drones[1];
+            tempDrone.Model = "CD123";
+            drones[1] = tempDrone;
+            tempDrone = drones[2];
+            tempDrone.Model = "EF123";
+            drones[2] = tempDrone;
+            tempDrone = drones[3];
+            tempDrone.Model = "GH123";
+            drones[3] = tempDrone;
+            tempDrone = drones[4];
+            tempDrone.Model = "IJ123";
+            drones[4] = tempDrone;
+            Parcel tempParcel = new Parcel();
+            for (int i = 0; i < 10; i++)  //creating ID and a counter for 10 parcels
+            { 
+                tempParcel.Id = Config.RuningNumbe++;
+                parcels.Add(tempParcel);
             }
+            Customer tempcustomer = new Customer();
             for (int i = 0; i < 10; i++)  //every sender sends to the customer in the arry in index 9-i
             {
-                Parcels[i].SenderId = Customers[i].Id;
-                Parcels[i].TargetId = Customers[9 - i].Id;
-                Parcels[i].Requested = new DateTime(2021, 10, i + 1, (i * 35) / 24, (i * 65) / 60, (i * 102) / 60);
-                Config.ParcelsIndex++;
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                Parcels[i].Priority = ((IDAL.DO.PRIORITY)r.Next(0, 3));
-                Parcels[i].Weigh = ((IDAL.DO.WEIGHT)r.Next(0, 3));
+                tempParcel = parcels[i];
+                tempcustomer = customers[i];
+                tempParcel.SenderId = tempcustomer.Id;
+                tempcustomer = customers[9 - i];
+                tempParcel.TargetId = tempcustomer.Id; 
+                tempParcel.Priority = ((IDAL.DO.PRIORITY)r.Next(0, 3));
+                tempParcel.Weigh = ((IDAL.DO.WEIGHT)r.Next(0, 3));
+                tempParcel.Requested = new DateTime(2021, 10, i + 1, (i * 35) / 24, (i * 65) / 60, (i * 102) / 60);
+                parcels.Add(tempParcel);
             }
             for (int i = 0; i < 5; i++)  //5 parcels alredy done and delivered
             {
                 TimeSpan time = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
-                Parcels[i].Scheduled = Parcels[i].Requested + time;
+                tempParcel = parcels[i];
+                tempParcel.Scheduled = tempParcel.Requested + time;
                 time = new TimeSpan(r.Next(0, 2), r.Next(0, 60), r.Next(0, 60));
-                Parcels[i].PickedUp = Parcels[i].Scheduled + time;
+                tempParcel.PickedUp =tempParcel.Scheduled + time;
                 time = new TimeSpan(0, r.Next(15, 30), r.Next(0, 60));
-                Parcels[i].Delivered = Parcels[i].PickedUp + time;
-                Parcels[i].DroneId = Drones[i].Id;
+                tempParcel.Delivered = tempParcel.PickedUp + time;
+                tempDrone = drones[i];
+                tempParcel.DroneId = tempDrone.Id;
+                parcels[i] = tempParcel;
             }
-            for (int i = 5; i < 8; i++)
+            for (int i = 5; i < 8; i++)//3 are on the way 
             {
                 TimeSpan time = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
-                Parcels[i].Scheduled = Parcels[i].Requested + time;
+                tempParcel = parcels[i];
+                tempParcel.Scheduled = tempParcel.Requested + time;
                 time = new TimeSpan(r.Next(0, 2), r.Next(0, 60), r.Next(0, 60));
-                Parcels[i].PickedUp = Parcels[i].Scheduled + time;
-                Parcels[i].DroneId = Drones[i - 4].Id;
+                tempParcel.PickedUp = tempParcel.Scheduled + time;
+                tempDrone = drones[i - 4];
+                tempParcel.DroneId = tempDrone.Id;
+                parcels[i] = tempParcel;
             }
             TimeSpan t = new TimeSpan(0, r.Next(1, 11), r.Next(0, 60));
-            Parcels[8].Scheduled = Parcels[8].Requested + t;
-            Parcels[8].DroneId = Drones[4].Id;
-
-            for (int i = 0; i < 10; i++)
-            {
-                Customers[i].Id = r.Next(1, 1000);
-            }
+            tempParcel = parcels[8];
+            tempParcel.Scheduled = tempParcel.Requested + t;
+            tempDrone = drones[4];
+            tempParcel.DroneId = tempDrone.Id;
+            parcels[8] = tempParcel;
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    Customers[i].Id = r.Next(1, 1000);
+            //}
 
         }
     }

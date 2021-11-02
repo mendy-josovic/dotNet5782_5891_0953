@@ -14,7 +14,7 @@ namespace ConsoleUI
             Enter 'E' to exit
             ");
             char.TryParse(Console.ReadLine(), out char ch);
-            DalObject.DalObject dalObject1 = new DalObject.DalObject();  //creating  the class for all the funcs
+            DalObject.DalObject dalObject1 = new DalObject.DalObject();//creating  the class for all the funcs
             while (ch != 'E')
             {
                 switch (ch)
