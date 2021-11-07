@@ -134,7 +134,7 @@ namespace ConsoleUI
                                         {
                                             Console.WriteLine("Enter drone ID");  //gets the IDs and sends to the right place
                                             int.TryParse(Console.ReadLine(), out int droneId);
-                                            dalObject1.DroneStatusDelivery(droneId);
+                                            //dalObject1.DroneStatusDelivery(droneId);
                                             Console.WriteLine("Enter parcel ID");
                                             int.TryParse(Console.ReadLine(), out int parcelId);
                                             dalObject1.ParcelScheduled(parcelId);

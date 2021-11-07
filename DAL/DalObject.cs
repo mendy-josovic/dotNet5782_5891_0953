@@ -32,14 +32,15 @@ namespace DalObject
         {
             DataSource.parcels.Add(prc);
         }
-        public void DroneStatusDelivery(int drnId)
-        {
-            int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);  //find the drone to assign 
-            DataSource.Drones[i].Status = IDAL.DO.STATUS.DELIVERY;
+        //public void DroneStatusDelivery(int drnId)
+        //{
+        //    int i = Array.FindIndex(DataSource.Drones, w => w.Id == drnId);  //find the drone to assign 
+        //    DataSource.Drones[i].Status = IDAL.DO.STATUS.DELIVERY;
         }
 
         public void ParcelScheduled(int prcId)
         { 
+            DataSource.parcels.FindIndex()
             int i = Array.FindIndex(DataSource.Parcels, w => w.Id == prcId);  //find the parcel to assign
             DataSource.Parcels[i].Scheduled = DateTime.Now;  //get assigning time
         }
