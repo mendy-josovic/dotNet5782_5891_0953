@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace IDal
 {
@@ -28,7 +29,7 @@ namespace IDal
         public IDAL.DO.Drone PrintDrone(int id);
         public IDAL.DO.Customer PrintCustomer(int id);
         public IDAL.DO.Parcel PrintParcel(int id);
-        public IDAL.DO.Station[] PrintStationList();
+        public IEnumeralble PrintStationList();
         public Drone[] PrintDroneList();
         public IDAL.DO.Customer[] PrintCustomerList();
         public IDAL.DO.Parcel[] PrintParcelList();

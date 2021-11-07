@@ -1,5 +1,7 @@
 ﻿using System;
 using DalObject;
+using IDAL.DO;
+using System.Collections.Generic;
 namespace ConsoleUI
 {
     class Program
@@ -253,55 +255,55 @@ namespace ConsoleUI
                                 {
                                     case 'a':
                                         {
-                                            IDAL.DO.Station[] station = dalObject1.PrintStationList();
-                                            for(int i = 0; i < station.Length; i++)
+                                            List<Station> Stations = new List<Station>(dalObject1.PrintStationList());                                         
+                                           foreach (Station item in Stations)
                                             {
-                                                Console.WriteLine(station[i]);
-                                            }               
+                                                Console.WriteLine();
+                                            }
                                             break;
                                         }
                                     case 'b':
                                         {
-                                            IDAL.DO.Drone[] drones = dalObject1.PrintDroneList();
-                                            for(int i = 0; i < drones.Length; i++)
+                                            List<Drone> Drones = new List<Drone>(dalObject1.PrintDroneList());
+                                            foreach (Drone item in Drones)
                                             {
-                                                Console.WriteLine(drones[i]);
+                                                Console.WriteLine();
                                             }
                                             break;
                                         }
                                     case 'c':
-                                        {
-                                            IDAL.DO.Customer[] customer = dalObject1.PrintCustomerList();
-                                            for (int i = 0; i < customer.Length; i++)
+                                        { 
+                                            List<Customer> Customers= new List<Customer>(dalObject1.PrintCustomerList());
+                                            foreach (Customer item in Customers)
                                             {
-                                                Console.WriteLine(customer[i]);
+                                                Console.WriteLine();
                                             }
                                             break;
                                         }
                                     case 'd':
                                         {
-                                            IDAL.DO.Parcel[] parcel = dalObject1.PrintParcelList();
-                                            for (int i = 0; i <parcel.Length; i++)
+                                            List<Parcel> Parcels = new List<Parcel>(dalObject1.PrintParcelList());
+                                            foreach (Parcel item in Parcels)
                                             {
-                                                Console.WriteLine(parcel[i]);
+                                                Console.WriteLine();
                                             }
                                             break;
                                         }
                                     case 'f':
                                         {
-                                            IDAL.DO.Parcel[] parcel = dalObject1.PrintUnassignedParcels();
-                                            for (int i = 0; i < parcel.Length; i++)
+                                            List<Parcel> Parcels = new List<Parcel>(dalObject1.PrintUnassignedParcels());
+                                            foreach (Parcel item in Parcels)
                                             {
-                                                Console.WriteLine(parcel[i]);
+                                                Console.WriteLine();
                                             }
                                             break;
                                         }
                                     case 'g':
                                         {
-                                            IDAL.DO.Station[] station = dalObject1.PrintAvailableChargingStations();
-                                            for (int i = 0; i < station.Length; i++)
+                                            List<Station> Stations = new List<Station>(dalObject1.PrintAvailableChargingStations());
+                                            foreach (Station item in Stations)
                                             {
-                                                Console.WriteLine(station[i]);
+                                                Console.WriteLine();
                                             }
                                             break;
                                         }
