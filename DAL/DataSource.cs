@@ -120,11 +120,6 @@ namespace DalObject
             tempDrone = drones[4];
             tempParcel.DroneId = tempDrone.Id;
             parcels[8] = tempParcel;
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Customers[i].Id = r.Next(1, 1000);
-            //}
-
         }
     }
 }
