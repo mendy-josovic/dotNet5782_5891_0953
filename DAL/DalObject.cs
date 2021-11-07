@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using IDAL.DO;
+using IDAL;
 namespace DalObject
 {
-    public class DalObject
+    public class DalObject: IDal
     {
         public DalObject() 
         {
@@ -16,9 +17,10 @@ namespace DalObject
 
         public void AddStation(Station sta)  //just adding to the last place
         {
-            //if (DataSource.stations.Equals(sta))
-            //    throw "ERROR: This station is already exists";
-            DataSource.stations.Add(sta);
+            if (DataSource.stations.Equals(sta))
+                throw "ERROR: This station is already exists";
+                DataSource.stations.Add(sta);
+            
         }
         public void AddDrone(Drone dro)  //same
         {

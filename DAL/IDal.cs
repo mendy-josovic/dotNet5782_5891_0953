@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-
-namespace IDal
+using IDAL.DO;
+namespace IDAL
 {
-    interface IDal
+   public interface IDal
     {
         public void AddStation(IDAL.DO.Station sta);
         public void AddDrone(IDAL.DO.Drone dro);

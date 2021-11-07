@@ -154,7 +154,6 @@ namespace ConsoleUI
                                         {                                           
                                             Console.WriteLine("Enter drone ID");                                           
                                             int.TryParse(Console.ReadLine(), out int dtoneId);
-                                            dalObject1.DroneStatusMaintenanse(dtoneId);
                                             Console.WriteLine("Enter ID of a station from the list:");
                                             dalObject1.PrintAvailableChargingStations();
                                             int.TryParse(Console.ReadLine(), out int stationId);
@@ -166,17 +165,14 @@ namespace ConsoleUI
                                         {
                                             Console.WriteLine("Enter drone ID");
                                             int.TryParse(Console.ReadLine(), out int droneId);                        
-                                            dalObject1.DroneStatusAvailable(droneId);
                                             dalObject1.ClearDroneCharge(droneId);
-                                            dalObject1.UpdateDroneChargesIndex(droneId);
                                             break;
                                         }
                                     case 'f':
                                         {
                                             Console.WriteLine("Enter parcel ID");
                                             int.TryParse(Console.ReadLine(), out int parcelId);
-                                            dalObject1.UpdateTimeOfSupplied(parcelId);
-                                            dalObject1.DroneStatusAvailable1(parcelId);
+                                            dalObject1.UpdateTimeOfSupplied(parcelId);                                     
                                             break;
                                         }
                                 }
