@@ -15,7 +15,12 @@ namespace DalObject
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
         internal class Config
         {
-            public static int RuningNumbe { get; set; } = 1000;
+            public static int RuningNumber { get; set; } = 1000;
+            public static double vacant { get; set; } = 10;
+            public static double LightWeightCarrier { get; set; } = 20;
+            public static double MediumWeightCarrier { get; set; } = 30;
+            public static double HeavyWeightCarrier  { get; set; } = 40;
+            public static double ChargingRate { get; set; } = 20;
         };
         public static Random r = new Random();
         internal static void Initialize()
@@ -74,7 +79,7 @@ namespace DalObject
             Parcel tempParcel = new Parcel();
             for (int i = 0; i < 10; i++)  //creating ID and a counter for 10 parcels
             { 
-                tempParcel.Id = Config.RuningNumbe++;
+                tempParcel.Id = Config.RuningNumber++;
                 parcels.Add(tempParcel);
             }
             Customer tempcustomer = new Customer();
