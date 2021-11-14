@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using IDAL.DO;
 using IDAL;
+
 namespace DalObject
 {
     public class DalObject: IDal
@@ -90,48 +91,48 @@ namespace DalObject
         }
 
 
-        public IDAL.DO.Station PrintStation(int id)  //finds the station and sends a replica
+        public Station PrintStation(int id)  //finds the station and sends a replica
         {
-           return (DataSource.stations.Find(w => w.Id == id));
+            return (DataSource.stations.Find(w => w.Id == id));
         }
     
 
-        public IDAL.DO.Drone PrintDrone(int id)  //finds the drone and sends a replica
+        public Drone PrintDrone(int id)  //finds the drone and sends a replica
         {
             return (DataSource.drones.Find(w => w.Id == id));
         }
 
-        public IDAL.DO.Customer PrintCustomer(int id)  //finds the customer and sends a replica
+        public Customer PrintCustomer(int id)  //finds the customer and sends a replica
         {
             return (DataSource.customers.Find(w => w.Id == id));
         }
 
-        public IDAL.DO.Parcel PrintParcel(int id)  //finds the station and sends a replica
+        public Parcel PrintParcel(int id)  //finds the station and sends a replica
         {
             return (DataSource.parcels.Find(w => w.Id == id));
         }
 
-        public IEnumerable<Station> PrintStationList()  //creates a new array and returns that
+        public IEnumerable<Station> PrintStationList()  //returns a new list of stations
         {
             return DataSource.stations;
         }
-        public IEnumerable<Drone> PrintDroneList()  //creates a new array and returns that
+        public IEnumerable<Drone> PrintDroneList()  //returns a new list of drones
         {
             return DataSource.drones;
         }
-        public IEnumerable<Customer> PrintCustomerList()  //creates a new array and returns that
+        public IEnumerable<Customer> PrintCustomerList()  //returns a new list of customers
         {
             return DataSource.customers;
         }
-        public IEnumerable<Parcel> PrintParcelList()  //creates a new array and returns that
+        public IEnumerable<Parcel> PrintParcelList()  //returns a new list of parcels
         {
             return DataSource.parcels;
         }
-        public IEnumerable<Parcel> PrintUnassignedParcels()  //creates a new array with the condition and returns that
+        public IEnumerable<Parcel> PrintUnassignedParcels()  //returns a new list of parcels with the condition
         {
           return  (DataSource.parcels.FindAll(w=>w.DroneId==0));
         }
-        public IEnumerable<Station> PrintAvailableChargingStations()  //creates a new array of available charging slots and returns that
+        public IEnumerable<Station> PrintAvailableChargingStations()  //returns a new list of available charging slots
         {
             return DataSource.stations.FindAll(w => w.ReadyChargeStands > 0);
         }

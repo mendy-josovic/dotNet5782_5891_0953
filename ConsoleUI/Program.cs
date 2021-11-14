@@ -172,7 +172,7 @@ namespace ConsoleUI
                                         {
                                             Console.WriteLine("Enter parcel ID");
                                             int.TryParse(Console.ReadLine(), out int parcelId);
-                                            dalObject1.UpdateTimeOfSupplied(parcelId);                                     
+                                            dalObject1.UpdateTimeOfSupplied(parcelId);
                                             break;
                                         }
                                 }
