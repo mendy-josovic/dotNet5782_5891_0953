@@ -6,7 +6,7 @@ namespace IBL
 {
     namespace BO
     {
-        class CustomerInParcel
+        public class CustomerInParcel
         {
             public int Id { get; set; }
             public String Name { get; set; }

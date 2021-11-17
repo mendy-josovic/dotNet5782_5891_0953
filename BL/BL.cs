@@ -4,10 +4,11 @@ using System.Text;
 using IDAL;
 using IBL.BO;
 using System.Collections;
+using IBL;
 
 namespace BL
 {
-    public partial class BL: IBL
+    public partial class BL:IBl
     {
         List<DroneToList> DroneList;
         List<Station> StationsList;
@@ -21,7 +22,7 @@ namespace BL
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static double GetDistance(Location a, Location b)
+        public double GetDistance(Location a, Location b)
         {
             return Math.Sqrt((Math.Pow(a.Longitude - b.Longitude, 2) + Math.Pow(a.Latitude - b.Latitude, 2)));
         }

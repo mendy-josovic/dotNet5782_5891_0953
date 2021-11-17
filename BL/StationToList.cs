@@ -6,7 +6,7 @@ namespace IBL
 {
     namespace BO
     {
-        class StationToList
+        public class StationToList
         {
             public int Id { get; set; }
             public String Name { get; set; }
