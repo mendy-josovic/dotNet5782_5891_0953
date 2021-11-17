@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace BL
 {
-    public partial class BL: IBL
+    public partial class BL : IBL
     {
         public void AddDroneToList(DroneToList drt)
         {
