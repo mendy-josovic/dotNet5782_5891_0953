@@ -17,7 +17,7 @@ namespace DalObject
         {
             public static int RuningNumber { get; set; } = 1000;
             public static double vacant { get; set; } = 1;
-            public static double LightWeightCarrier { get; set; } =2;
+            public static double LightWeightCarrier { get; set; } = 2;
             public static double MediumWeightCarrier { get; set; } = 3;
             public static double HeavyWeightCarrier  { get; set; } = 4;
             public static double ChargingRate { get; set; } = 20;

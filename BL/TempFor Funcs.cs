@@ -13,12 +13,9 @@ namespace BL
         {
 
         }
-
-
+        public int Consumption(Location a, Location b, MODE_OF_DRONE_IN_MOVING mode)
+        {
+            return (int)(GetDistance(a, b) * batteryConfig[(int)mode]);
+        }
     }
-
-
-
-
-
 }
