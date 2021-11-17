@@ -44,6 +44,8 @@ namespace ConsoleUI
                                                 IDAL.DO.Station station = new IDAL.DO.Station();  //gets all the elements for a new station
                                                 Console.WriteLine("Enter station ID");
                                                 Int32.TryParse(Console.ReadLine(), out int x);
+                                                if (x <= 0)
+                                                    throw new ConsoleException();
                                                 station.Id = x;
                                                 Console.WriteLine("Enter station name");
                                                 station.Name = Console.ReadLine();
@@ -318,6 +320,10 @@ namespace ConsoleUI
                     Console.WriteLine("Enter your next choice (in the main menu)");
                     char.TryParse(Console.ReadLine(), out ch);
                 }
+            }
+            catch(ConsoleException c)
+            {
+                Console.WriteLine(c);
             }
             catch (IDAL.DO.DalExceptions exc)
             {

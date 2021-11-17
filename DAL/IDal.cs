@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using IDAL.DO;
-
 namespace IDAL
 {
     public interface IDal

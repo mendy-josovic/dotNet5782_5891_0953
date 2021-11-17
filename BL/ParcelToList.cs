@@ -6,7 +6,7 @@ namespace IBL
 {
     namespace BO
     {
-        class ParcelToList
+        public class ParcelToList
         {
             public int Id { get; set; }
             public String Sender { get; set; }

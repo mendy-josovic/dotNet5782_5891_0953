@@ -4,10 +4,11 @@ using System.Text;
 using IDAL;
 using IBL.BO;
 using System.Collections;
+using IBL;
 
 namespace BL
 {
-    public partial class BL: IBL
+    public partial class BL:IBl
     {
         List<DroneToList> DroneList;
         List<Station> StationsList;
@@ -21,7 +22,7 @@ namespace BL
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static double GetDistance(Location a, Location b)
+        public double GetDistance(Location a, Location b)
         {
             return Math.Sqrt((Math.Pow(a.Longitude - b.Longitude, 2) + Math.Pow(a.Latitude - b.Latitude, 2)));
         }
@@ -31,66 +32,34 @@ namespace BL
         /// <param name="a"></param> 
         /// <param name="stations"></param>
         /// <returns></returns>
-        public  Location GetMinimumDistance(Location a, List<Station> stations)
-        {
-            Location loc;
-            if (stations.Count == 0)
-            {
-                loc.Longitude = -1;
-                loc.Latitude = -1;
-                return loc;
-            }
-            double minimum = GetDistance(a, stations[0].location);
-            loc = stations[0].location;
-            for (int i = 1; i < stations.Count; i++)
-            {
-                if (minimum < GetDistance(a, stations[i].location))
-                {
-                    minimum = GetDistance(a, stations[i].location);
-                    loc = stations[i].location;
-                }
-                Math.Min(minimum, GetDistance(a, stations[i].location));
-            }
-            return loc;
-        }
-        public double DistanceOfRout(Location lo, List<Location> lislo)
-        {
-            double distance =GetDistance(lo,lislo[0]);
-            Location tl = lislo[0];
-            foreach(Location item in lislo)
-            {
-                distance += GetDistance(tl, item);
-                tl = item;
-            }
-            return distance;
-        }
+      
 
-        template<class T>
-        public static Location GetMinimumDistance1(Location a, List<T> myList)
-        {
-            Location loc;
-            if (myList.Count == 0)
-            {
-                loc.Longitude = -1;
-                loc.Latitude = -1;
-                return loc;
-            }
-            double minimum = GetDistance(a, myList[0].location);
-            loc = myList[0].location;
-            for (int i = 1; i < myList.Count; i++)
-            {
-                if (minimum < GetDistance(a, myList[i].location))
-                {
-                    minimum = GetDistance(a, myList[i].location);
-                    loc = myList[i].location;
-                }
-                Math.Min(minimum, GetDistance(a, myList[i].location));
-            }
-            return loc;
-        }
+        //template<class T>
+        //public static Location GetMinimumDistance1(Location a, List<T> myList)
+        //{
+        //    Location loc;
+        //    if (myList.Count == 0)
+        //    {
+        //        loc.Longitude = -1;
+        //        loc.Latitude = -1;
+        //        return loc;
+        //    }
+        //    double minimum = GetDistance(a, myList[0].location);
+        //    loc = myList[0].location;
+        //    for (int i = 1; i < myList.Count; i++)
+        //    {
+        //        if (minimum < GetDistance(a, myList[i].location))
+        //        {
+        //            minimum = GetDistance(a, myList[i].location);
+        //            loc = myList[i].location;
+        //        }
+        //        Math.Min(minimum, GetDistance(a, myList[i].location));
+        //    }
+        //    return loc;
+        //}
 
 
-        BL()
+        public BL()
         {
             batteryConfig = Data.Consumption();
             List<IDAL.DO.Drone> tempDataDrone = new List<IDAL.DO.Drone>(Data.PrintDroneList());
@@ -126,30 +95,7 @@ namespace BL
                  }             
            
             }
- 
-            for (int i = 0; i < DroneList.Count; i++)
-            {
-           
-                }
-                switch ()
-
-                {
-                    case STATUS_OF_DRONE.IN_MAINTENANCE:
-                        {
-                            DroneList[i].ThisLocation.Longitude = r.Next(0, 30);
-                            DroneList[i].ThisLocation.Latitude = r.Next(0, 30);
-                            DroneList[i].Battery = r.Next(0, 20);
-                            break;
-                        }
-                    case STATUS_OF_DRONE.AVAILABLE:
-                        {
-                            DroneList[i].ThisLocation = r.Next;
-
-                            DroneList[i].Battery = r.Next(, 100);
-                            break;
-                        }
-                }
-            }
+      
         }
     }
 }
