@@ -33,7 +33,7 @@ namespace BL
         /// <param name="a"></param> 
         /// <param name="stations"></param>
         /// <returns></returns>
-        public  Location GetMinimumDistance(Location a, List<Station> stations)
+        public Location GetMinimumDistance(Location a, List<Station> stations)
         {
             Location loc = new Location(-1, -1);
             if (stations.Count == 0)
@@ -50,18 +50,6 @@ namespace BL
                 Math.Min(minimum, GetDistance(a, stations[i].location));
             }
             return loc;
-        }
-
-        public double DistanceOfRout(Location loc, List<Location> listOfLocations)
-        {
-            double distance = GetDistance(loc, listOfLocations[0]);
-            Location tl = listOfLocations[0];
-            foreach(Location item in listOfLocations)
-            {
-                distance += GetDistance(tl, item);
-                tl = item;
-            }
-            return distance;
         }
 
         public BL()
