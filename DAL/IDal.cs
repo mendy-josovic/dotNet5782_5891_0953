@@ -10,10 +10,10 @@ namespace IDAL
 {
     public interface IDal
     {
-        public void AddStation(IDAL.DO.Station sta);
-        public void AddDrone(IDAL.DO.Drone dro);
-        public void AddCustomer(IDAL.DO.Customer cst);
-        public void AddSParcel(IDAL.DO.Parcel prc);
+        public void AddStation(Station sta);
+        public void AddDrone(Drone dro);
+        public void AddCustomer(Customer cst);
+        public void AddSParcel(Parcel prc);
         public void ParcelScheduled(int prcId);
         public void DroneIdOfPArcel(int prcId, int drnId);
         public void PickUp(int prcId);
@@ -31,6 +31,6 @@ namespace IDAL
         public IEnumerable<Parcel> PrintParcelList();
         public IEnumerable<Parcel> PrintUnassignedParcels();
         public IEnumerable<Station> PrintAvailableChargingStations();
-
+        public double[] Consumption();
     }
 }

@@ -2,6 +2,7 @@
 using DalObject;
 using IDAL.DO;
 using System.Collections.Generic;
+using IDAL;
 namespace ConsoleUI
 {
     class Program
@@ -16,7 +17,7 @@ namespace ConsoleUI
             Enter 'E' to exit
             ");
             char.TryParse(Console.ReadLine(), out char ch);
-            DalObject.DalObject dalObject1 = new DalObject.DalObject();//creating  the class for all the funcs
+            IDal dalObject1 = new DalObject.DalObject();//creating  the class for all the funcs
             while (ch != 'E')
             {
                 switch (ch)
@@ -252,7 +253,7 @@ namespace ConsoleUI
                                     case 'a':
                                         {
                                             List<Station> Stations = new List<Station>(dalObject1.PrintStationList());                                         
-                                           foreach (Station item in Stations)
+                                            foreach (Station item in Stations)
                                             {
                                                 Console.WriteLine();
                                             }
