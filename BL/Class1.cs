@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using IDAL;
 using IBL.BO;
+using System.Collections;
 
 namespace BL
 {
-    class BL
+   public partial class BL:IBL
     {
-        List<DroneToList> DroneList = new List<DroneToList>();
+        List<DroneToList> DroneList;
         IDal DalObject1 = new DalObject.DalObject();
         //for(iterator<List> it = DalObject1.)
         public static Random r = new Random();
+        public static double[] batteryConfig = new double[] { };
         /// <summary>
         /// return the distance between two locations
         /// </summary>
@@ -79,23 +81,31 @@ namespace BL
 
         BL()
         {
-            for (int i = 0; i < DroneList.Count; i++)
-            {
-                switch (DroneList[i].status)
+            batteryConfig = DalObject1.Consumption();
+            List<IDAL.DO.Drone> tempDataDrone = new List<IDAL.DO.Drone>(DalObject1.PrintDroneList());      
+            foreach(IDAL.DO.Drone item in tempDataDrone )
                 {
-                    case STATUS_OF_DRONE.IN_MAINTENANCE:
-                        {
-                            DroneList[i].ThisLocation.Longitude = r.Next(0, 30);
-                            DroneList[i].ThisLocation.Latitude = r.Next(0, 30);
-                            DroneList[i].Battery = r.Next(0, 20);
-                            break;
-                        }
-                    case STATUS_OF_DRONE.AVAILABLE:
-                        {
-                            DroneList[i].ThisLocation = r.Next;
+                    
+                }
 
-                            DroneList[i].Battery = r.Next(, 100);
-                            break;
+
+            //for (int i = 0; i < DroneList.Count; i++)
+            //{
+            //    switch (DroneList[i].status)
+            //    {
+            //        case STATUS_OF_DRONE.IN_MAINTENANCE:
+            //            {
+            //                DroneList[i].ThisLocation.Longitude = r.Next(0, 30);
+            //                DroneList[i].ThisLocation.Latitude = r.Next(0, 30);
+            //                DroneList[i].Battery = r.Next(0, 20);
+            //                break;
+            //            }
+            //        case STATUS_OF_DRONE.AVAILABLE:
+            //            {
+            //                DroneList[i].ThisLocation = r.Next;
+
+            //                DroneList[i].Battery = r.Next(, 100);
+            //                break;
                         }
                 }
             }
