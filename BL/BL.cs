@@ -7,9 +7,10 @@ using System.Collections;
 
 namespace BL
 {
-    public partial class BL : IBL
+    public partial class BL: IBL
     {
         List<DroneToList> DroneList;
+        List<Station> StationsList;
         IDal Data = new DalObject.DalObject();
         //for(iterator<List> it = DalObject1.)
         public static Random r = new Random();
@@ -30,7 +31,7 @@ namespace BL
         /// <param name="a"></param> 
         /// <param name="stations"></param>
         /// <returns></returns>
-        public static Location GetMinimumDistance(Location a, List<Station> stations)
+        public  Location GetMinimumDistance(Location a, List<Station> stations)
         {
             Location loc;
             if (stations.Count == 0)
@@ -52,7 +53,17 @@ namespace BL
             }
             return loc;
         }
-
+        public double DistanceOfRout(Location lo, List<Location> lislo)
+        {
+            double distance =GetDistance(lo,lislo[0]);
+            Location tl = lislo[0];
+            foreach(Location item in lislo)
+            {
+                distance += GetDistance(tl, item);
+                tl = item;
+            }
+            return distance;
+        }
 
         template<class T>
         public static Location GetMinimumDistance1(Location a, List<T> myList)
@@ -83,13 +94,45 @@ namespace BL
         {
             batteryConfig = Data.Consumption();
             List<IDAL.DO.Drone> tempDataDrone = new List<IDAL.DO.Drone>(Data.PrintDroneList());
+            List<IDAL.DO.Parcel> tempDataParcels = new List<IDAL.DO.Parcel>(Data.PrintParcelList());
+            List<IDAL.DO.Station> tempDataStations = new List<IDAL.DO.Station>(Data.PrintStationList());
+            for(int i=0;i<tempDataStations.Count;i++)
+            {
+                StationsList.Add(new Station(tempDataStations[i]));
+            }
             for (int i = 0; i < tempDataDrone.Count; i++)
             {
                 DroneList.Add(new DroneToList(tempDataDrone[i]));
             }
+            foreach (IDAL.DO.Drone item in tempDataDrone)
+            {
+              
+                 if (tempDataParcels.Exists(w => w.DroneId == (item.Id)&&w.Delivered<DateTime.MinValue))
+                 {
+                        int i = tempDataParcels.FindIndex(w => w.DroneId == (item.Id));
+                        DroneToList dron = new DroneToList(item);
+                        dron.status = IBL.BO.STATUS_OF_DRONE.DELIVERY;
+                        if (tempDataParcels[i].PickedUp < DateTime.MinValue)
+                        {
+                            IDAL.DO.Customer sender = Data.PrintCustomer(tempDataParcels[i].SenderId);
+                            Location corent = new Location(sender.Longitude, sender.Latitude);
+                            Location Loca = GetMinimumDistance(corent, StationsList);
+                            dron.ThisLocation = Loca;
+
+                        }
+
+
+
+                 }             
+           
+            }
+ 
             for (int i = 0; i < DroneList.Count; i++)
             {
-                switch (DroneList[i].status)
+           
+                }
+                switch ()
+
                 {
                     case STATUS_OF_DRONE.IN_MAINTENANCE:
                         {
@@ -109,4 +152,4 @@ namespace BL
             }
         }
     }
-}     
+}
