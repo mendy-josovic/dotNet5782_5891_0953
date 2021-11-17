@@ -83,9 +83,9 @@ namespace BL
         {
             batteryConfig = Data.Consumption();
             List<IDAL.DO.Drone> tempDataDrone = new List<IDAL.DO.Drone>(Data.PrintDroneList());
-            for(int i = 0; i < tempDataDrone.Count; i++)
+            for (int i = 0; i < tempDataDrone.Count; i++)
             {
-                DroneList.Add(new DroneToList(tempDataDrone[i]));              
+                DroneList.Add(new DroneToList(tempDataDrone[i]));
             }
             for (int i = 0; i < DroneList.Count; i++)
             {
@@ -105,5 +105,8 @@ namespace BL
                             DroneList[i].Battery = r.Next(, 100);
                             break;
                         }
+                }
+            }
+        }
     }
 }     
