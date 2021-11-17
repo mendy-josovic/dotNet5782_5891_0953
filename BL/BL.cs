@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using IDAL;
 using IBL.BO;
+using System.Collections;
 
 namespace BL
 {
-    class BL
+    public partial class BL : IBL
     {
-        List<DroneToList> DroneList = new List<DroneToList>();
-        IDal DalObject1 = new DalObject.DalObject();
+        List<DroneToList> DroneList;
+        IDal Data = new DalObject.DalObject();
         //for(iterator<List> it = DalObject1.)
         public static Random r = new Random();
+        public static double[] batteryConfig = new double[] { };
         /// <summary>
         /// return the distance between two locations
         /// </summary>
@@ -32,16 +34,16 @@ namespace BL
         {
             Location loc;
             if (stations.Count == 0)
-            {                
+            {
                 loc.Longitude = -1;
                 loc.Latitude = -1;
                 return loc;
             }
             double minimum = GetDistance(a, stations[0].location);
             loc = stations[0].location;
-            for(int i = 1; i < stations.Count; i++)
+            for (int i = 1; i < stations.Count; i++)
             {
-                if(minimum< GetDistance(a, stations[i].location))
+                if (minimum < GetDistance(a, stations[i].location))
                 {
                     minimum = GetDistance(a, stations[i].location);
                     loc = stations[i].location;
@@ -51,9 +53,9 @@ namespace BL
             return loc;
         }
 
-        
-        template <class T>
-        public static Location GetMinimumDistance(Location a, List<T> myList)
+
+        template<class T>
+        public static Location GetMinimumDistance1(Location a, List<T> myList)
         {
             Location loc;
             if (myList.Count == 0)
@@ -79,7 +81,13 @@ namespace BL
 
         BL()
         {
-            for(int i = 0; i < DroneList.Count; i++)
+            batteryConfig = Data.Consumption();
+            List<IDAL.DO.Drone> tempDataDrone = new List<IDAL.DO.Drone>(Data.PrintDroneList());
+            for(int i = 0; i < tempDataDrone.Count; i++)
+            {
+                DroneList.Add(new DroneToList(tempDataDrone[i]));              
+            }
+            for (int i = 0; i < DroneList.Count; i++)
             {
                 switch (DroneList[i].status)
                 {
@@ -94,11 +102,8 @@ namespace BL
                         {
                             DroneList[i].ThisLocation = r.Next;
 
-                            DroneList[i].Battery = r.Next(,100);
+                            DroneList[i].Battery = r.Next(, 100);
                             break;
                         }
-                }
-            }
-        }
     }
-}
+}     

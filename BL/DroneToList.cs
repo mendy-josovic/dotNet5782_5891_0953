@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using IDAL.DO;
 
 namespace IBL
 {
@@ -15,6 +16,12 @@ namespace IBL
             public STATUS_OF_DRONE status { get; set; }
             public Location ThisLocation { get; set; }
             public int ParcelId { get; set; }
+            public DroneToList(IDAL.DO.Drone dr)
+            {
+                Id = dr.Id;
+                Model = dr.Model;
+                MaxWeight = (WEIGHT)dr.MaxWeight;
+            }
         }
     }
 }
