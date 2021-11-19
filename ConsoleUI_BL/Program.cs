@@ -6,7 +6,7 @@ using BL;
 using System.Runtime.Serialization;
 namespace ConsoleUI_BL
 {
-    public  partial  class ConsoleUI_BL
+    public partial class ConsoleUI_BL
     {
         static void Main(string[] args)
         {
