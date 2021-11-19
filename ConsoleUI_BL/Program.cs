@@ -1,13 +1,13 @@
-﻿using System;
-using IBL.BO;
-using System.Collections.Generic;
+﻿
 using IBL;
-using BL;
+using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 namespace ConsoleUI_BL
 {
-    public  partial  class ConsoleUI_BL
+    public partial class ConsoleUI_BL
     {
+        IBl bl = new BL.BL();
         static void Main(string[] args)
         {
             Console.WriteLine(@"Welcome:
@@ -15,8 +15,7 @@ namespace ConsoleUI_BL
             Enter 'B' to update
             Enter 'C' to Diplay
             Enter 'E' to exit
-            ");
-            IBl bL = new BL.BL();
+            ");                           
             char.TryParse(Console.ReadLine(), out char ch);
             while (ch != 'E')
             {
