@@ -29,6 +29,17 @@ namespace DalObject
         {
             return DataSource.drones;
         }
+        /// <summary>
+        /// the func gets a new name and replaces the name in the func with a new one
+        ///using the library func replace"
+        /// </summary>
+        /// <param name="drnId"></param>
+        /// <param name="Name"></param>
+        public void UpdateDrone(int drnId, string Name)
+        {
+            int i = DataSource.drones.FindIndex(w => w.Id == drnId);
+            DataSource.drones[i].Model.Replace(DataSource.drones[i].Model,Name);
+        }
 
     }
 }

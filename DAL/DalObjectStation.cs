@@ -39,6 +39,24 @@ namespace DalObject
         {
             return DataSource.stations.FindAll(w => w.ReadyChargeStands > 0);
         }
-
+        /// <summary>
+        /// the func gets the id of the statoin and the name and number of cargin slots
+        /// it is with a dfult empty so we can chang only one of the field
+        /// </summary>
+        /// <param name="StationId"></param>
+        /// <param name="Name"></param>
+        /// <param name="NumOfCarg"></param>
+        public void UpdatStation(int StationId, string Name = "", int NumOfCarg = 0)
+        {
+            int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
+            if (!string.IsNullOrEmpty(Name))
+            {
+                DataSource.stations[i].Name.Replace(DataSource.stations[i].Name, Name);
+            }
+            if (!(NumOfCarg==0))
+            {
+                DataSource.customers[i].Id.CompareTo(NumOfCarg);
+            }
+        }
     }
 }

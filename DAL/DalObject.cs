@@ -26,6 +26,24 @@ namespace DalObject
             DroneCharge tempDroneCharge = DataSource.droneCharges[i];
             DataSource.droneCharges.Remove(tempDroneCharge);//removes the drone-charge
         }
+        /// <summary>
+        /// we finde the place with the station and the dronr we need 
+        /// </summary>
+        /// <param name="DroneId"></param>
+        /// <param name="StationId"></param>
+        /// <returns></returns>
+        public DroneCharge PrintDronCarg(int DroneId = 0, int StationId = 0)
+        {
+            int i = 0;
+            if(DroneId!=0)
+              i=  DataSource.droneCharges.FindIndex(w => w.DroneId == DroneId);
+            if(StationId!=0)
+                i= DataSource.droneCharges.FindIndex(w => w.StationId == StationId);
+            if (i == 0)
+                throw "ERROR Cant find (Dron Or Station Not Fuond)\n  ";
+            IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge(DataSource.droneCharges[i].DroneId, DataSource.droneCharges[i].StationId);
+            return droneCharge;
+        }
         public double[] Consumption()
         {
             double[] arr = new double[]{ DataSource.Config.vacant,  DataSource.Config.LightWeightCarrier,  DataSource.Config.MediumWeightCarrier,  DataSource.Config.HeavyWeightCarrier,  DataSource.Config.ChargingRate };

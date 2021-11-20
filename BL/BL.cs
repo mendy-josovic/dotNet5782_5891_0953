@@ -8,7 +8,7 @@ using IBL;
 
 namespace BL
 {
-    public partial class BL: IBl
+    public partial class BL:IBl
     {
         List<DroneToList> DroneList;
         List<Station> StationsList;
