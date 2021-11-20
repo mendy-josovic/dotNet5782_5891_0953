@@ -14,6 +14,11 @@ namespace IBL
             public WEIGHT Weight { get; set; }
             public PRIORITY Priority { get; set; }
             public STATUS_OF_PARCEL Status { get; set; }
+            public override string ToString()//override the to-string to print it nice
+            {
+                return "Parcel:\nID: " + Id + "\nSender:\n" + Sender + "\nRecipient:\n" + Recipient +
+                    "\nWeigh: " + Weight + "\nPriority: " + Priority + "\nStatus: " + Status + "\n";
+            }
         }
     }
 }

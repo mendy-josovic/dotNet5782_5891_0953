@@ -13,6 +13,10 @@ namespace IBL
             public PRIORITY Priority { get; set; }
             public STATUS_OF_PARCEL Status { get; set; }
             public CustomerInParcel TheOther { get; set; }
+            public override string ToString()//override the to-string to print it nice
+            {
+                return "Parcel ID: " + Id + "\nWeigh of parcel: " + Weight + "\nPriority: " + Priority + "\nStatus: " + Status + "\nThe other person: " + TheOther + "\n";
+            }
         }
     }
 }

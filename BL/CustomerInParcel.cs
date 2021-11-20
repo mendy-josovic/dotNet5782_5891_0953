@@ -10,6 +10,10 @@ namespace IBL
         {
             public int Id { get; set; }
             public String Name { get; set; }
+            public override string ToString()//override the to-string to print it nice
+            {
+                return "Customer ID: " + Id + "\nName: " + Name + "\n";
+            }
         }
     }
 }

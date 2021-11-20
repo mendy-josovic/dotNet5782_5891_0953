@@ -8,7 +8,7 @@ using IDAL.DO;
 using IDAL;
 namespace DalObject
 {
-  public partial  class DalObject:IDal
+  public partial class DalObject: IDal
     {
         public DalObject() 
         {
@@ -19,7 +19,7 @@ namespace DalObject
         {
             DataSource.droneCharges.Add(new DroneCharge(drnId, staId));
         }
-
+        
         public void ClearDroneCharge(int drnId)
         {
             int i = DataSource.droneCharges.FindIndex(w => w.DroneId == drnId);  //find the parcel that was supplied
