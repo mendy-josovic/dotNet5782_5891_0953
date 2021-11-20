@@ -2,7 +2,7 @@
 using IBL.BO;
 using IBL;
 namespace ConsoleUI_BL
-{ 
+{
     public partial class ConsoleUI_BL
     {
         public static void add()
@@ -33,7 +33,7 @@ namespace ConsoleUI_BL
                                     station.Id = x;
                                     Console.WriteLine("\nEnter a name for the station: ");
                                     station.Name = Console.ReadLine();
-                                    Console.WriteLine("\nEnter longitude: ");
+                                    Console.WriteLine("\nLocation:\nEnter longitude: ");
                                     double.TryParse(Console.ReadLine(), out double y);
                                     station.location.Longitude = y;
                                     Console.WriteLine("\nEnter latitude: ");
@@ -64,65 +64,107 @@ namespace ConsoleUI_BL
                                     drone.Id = x;
                                     Console.WriteLine("\nEnter drone model: ");
                                     drone.Model = Console.ReadLine();
-                                    Console.WriteLine("\nEnter the max whight the drone can take: ");
+                                    Console.WriteLine(@"
+                                        Choose the maximum wheit the drone can take:
+                                        Enter 0 for LIGHT
+                                        Enter 1 for MEDIUM
+                                        Enter 2 for HEAVY");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     drone.MaxWeight = (WEIGHT)x;
                                     Console.WriteLine("\nEnter the ID of the station to the first charging");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x <= 0)
-                                        throw "Invalid value\n";                                    
-                                    BLObject.AddDrone(drone);
+                                        throw "Invalid value\n";
+                                    try
+                                    {
+                                        BLObject.AddDrone(drone, x);
+                                    }
+                                    catch ()
+                                    {
+
+                                    }
                                     break;
                                 }
                             case 'c':
                                 {
-                                    IDAL.DO.Customer customer = new IDAL.DO.Customer();  //gets all the elements for a new customer
-                                    Console.WriteLine("Enter customer ID");
-                                    int.TryParse(Console.ReadLine(), out int x);
+                                    Customer customer = new();  //gets all the elements for a new customer
+                                    Console.WriteLine("Enter customer ID: ");
+                                    Int32.TryParse(Console.ReadLine(), out int x);
+                                    if (x <= 0)
+                                        throw "Invalid value\n";
                                     customer.Id = x;
-                                    Console.WriteLine("Enter customer name");
+                                    Console.WriteLine("\nEnter customer name: ");
                                     customer.Name = Console.ReadLine();
-                                    Console.WriteLine("Enter customer phone");
+                                    Console.WriteLine("\nEnter customer phone: ");
                                     customer.Phone = Console.ReadLine();
-                                    Console.WriteLine("Enter longitude");
+                                    Console.WriteLine("\nLocation:\nEnter longitude: ");
                                     double.TryParse(Console.ReadLine(), out double y);
-                                    customer.Longitude = y;
-                                    Console.WriteLine("Enter latitude");
+                                    customer.location.Longitude = y;
+                                    Console.WriteLine("\nEnter latitude: ");
                                     double.TryParse(Console.ReadLine(), out y);
-                                    customer.Latitude = y;
-                                    dalObject1.AddCustomer(customer);  //sends to the func
+                                    customer.location.Latitude = y;
+                                    try
+                                    {
+                                        BLObject.AddCustomer(customer);  //sends to the func
+                                    }
+                                    catch ()
+                                    {
+
+                                    }
                                     break;
                                 }
                             case 'd':
                                 {
-                                    IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();  //gets all the elements for a new parcel
-                                    Console.WriteLine("Enter parcel ID");
-                                    int.TryParse(Console.ReadLine(), out int x);
+                                    Parcel parcel = new();  //gets all the elements for a new parcel
+                                    Console.WriteLine("Enter parcel ID: ");
+                                    Int32.TryParse(Console.ReadLine(), out int x);
+                                    if (x <= 0)
+                                        throw "Invalid value\n";
                                     parcel.Id = x;
-                                    Console.WriteLine("Enter sender ID");
+                                    Console.WriteLine("\nEnter sender ID: ");
+                                    Int32.TryParse(Console.ReadLine(), out x);
+                                    if (x <= 0)
+                                        throw "Invalid value\n";
+                                    parcel.Sender.Id = x;
+                                    Console.WriteLine("\nEnter target ID: ");
+                                    Int32.TryParse(Console.ReadLine(), out x);
+                                    if (x <= 0)
+                                        throw "Invalid value\n";
+                                    parcel.Recipient.Id = x;
+                                    Console.WriteLine(@"
+                                        Choose the wheit of the parcel:
+                                        Enter 0 for LIGHT
+                                        Enter 1 for MEDIUM
+                                        Enter 2 for HEAVY");
                                     int.TryParse(Console.ReadLine(), out x);
-                                    parcel.SenderId = x;
-                                    Console.WriteLine("Enter target ID");
+                                    parcel.Weight = (WEIGHT)x;
+                                    Console.WriteLine(@"
+                                        Choose the priority of the parcel:
+                                        Enter 0 for REGULAR
+                                        Enter 1 for FAST
+                                        Enter 2 for EMERGENCY");
                                     int.TryParse(Console.ReadLine(), out x);
-                                    parcel.TargetId = x;
-                                    Console.WriteLine("Enter parcel weight");
-                                    int.TryParse(Console.ReadLine(), out x);
-                                    parcel.Weigh = (IDAL.DO.WEIGHT)x;
-                                    Console.WriteLine("Enter parcel Priority");
-                                    int.TryParse(Console.ReadLine(), out x);
-                                    parcel.Priority = (IDAL.DO.PRIORITY)x;
-                                    parcel.Requested = DateTime.Now;
-                                    parcel.DroneId = 0;
-                                    dalObject1.AddSParcel(parcel);
+                                    parcel.Priority = (PRIORITY)x;
+                                    try
+                                    {
+                                        BLObject.AddParcel(parcel);
+                                    }
+                                    catch ()
+                                    {
+
+                                    }
                                     break;
                                 }
                         }
                         Console.WriteLine("Enter your next choice in add menu");
                         char.TryParse(Console.ReadLine(), out ch1);
                     }
-                    break;
                 }
             }
-            catch()
+            catch ()
+            {
+
+            }
         }
+    }
 }

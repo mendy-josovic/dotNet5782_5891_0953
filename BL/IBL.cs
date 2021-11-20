@@ -10,10 +10,12 @@ namespace IBL
     public interface IBl
     {
         public void AddStation(Station sta);
-        public void AddDrone(Drone dro);
-        public void AddDroneToList(DroneToList dro);
-        public Location GetMinimumDistance(Location a, List<Station> stations);
+        public void AddDrone(Drone dro, int IDOfStation);
+        public void AddCustomer(Customer cus);
+        public void AddParcel(Parcel par);
+        public int GetClosestStation(Location a);
         public double GetDistance(Location a, Location b);
+        public Location GetLocationOfStation(int ID);
         
     }
 }
