@@ -6,7 +6,7 @@ namespace ConsoleUI_BL
     {
         public static void Update()
         {
-
+            
         }
     }
 }

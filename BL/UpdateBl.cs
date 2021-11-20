@@ -7,7 +7,7 @@ using System.Collections;
 using IBL;
 namespace BL
 {
-    public partial class BL : IBL
+    public partial class BL : IBl
     {
     
     }
