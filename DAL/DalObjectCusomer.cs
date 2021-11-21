@@ -23,6 +23,26 @@ namespace DalObject
         {
             return DataSource.customers;
         }
+       /// <summary>
+       /// the func gets the id of the customer and a new name or phone \
+       /// and it with a defult empty and we use the replace func and null or empty..
+       /// </summary>
+       /// <param name="CusId"></param>
+       /// <param name="Name"></param>
+       /// <param name="phone"></param>
+        public void UpdateCustomer(int CusId, string Name ="", string phone ="")
+        {
+            int i = DataSource.customers.FindIndex(w => w.Id == CusId);
+            if(!string.IsNullOrEmpty(Name))
+            {
+                DataSource.customers[i].Name.Replace(DataSource.customers[i].Name, Name);
+            }
+            if(!string.IsNullOrEmpty(phone))
+            {
+                DataSource.customers[i].Phone.Replace(DataSource.customers[i].Phone, Name);
+            }
+        }
+      
 
 
     }

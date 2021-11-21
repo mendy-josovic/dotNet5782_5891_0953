@@ -8,12 +8,9 @@ using IBL;
 
 namespace BL
 {
-    public partial class BL : IBl
+    public partial class BL:IBl
     {
-        //List<IDAL.DO.Drone> tempDataDrones;
-        //List<IDAL.DO.Parcel> tempDataParcels;
-        //List<IDAL.DO.Station> tempDataStations;
-        public List<DroneToList> DroneList;
+        List<DroneToList> DroneList;
         IDal Data = new DalObject.DalObject();
         public static Random r = new Random();
         public static double[] batteryConfig = new double[] { };
