@@ -10,17 +10,22 @@ namespace BL
     public partial class BL : IBl
     {
         /// <summary>
-        /// the func gets a drone and a parcle and checks if the drone can do the root and if can hoew much is the battery use of this root
-        /// we creat 3 locations strting(the current drone positian)
-        /// staping(the sender)
-        /// finishing(the receiver)
-        /// and if needed the closest charging station
+        /// the func gets the status of the parcel and acourdingly returns the consumption
         /// </summary>
-        /// <param name="dro"></param>
-        /// <param name="prc"></param>
-        /// <returns></returns>
-        public (bool,double) GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro,IDAL.DO.Parcel prc)
-        {                        
+        /// <param name="a">location a</param>
+        /// <param name="b">location b</param>
+        /// <param name="mode">mode of the drone in moving: without a parcel, or with a parcel, and which mode of parcel</param>
+        /// <returns>how much battery this moving need</returns>
+        public double Consumption(Location a, Location b, MODE_OF_DRONE_IN_MOVING mode)
+        {
+            return GetDistance(a, b) * batteryConfig[(int)mode];
+        }
+        public (bool,int) GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro,IDAL.DO.Parcel prc)
+        {
+            IDAL.DO.Customer sender = new IDAL.DO.Customer();
+            sender= Data.PrintCustomer(prc.SenderId);
+            IDAL.DO.Customer Receiver = new IDAL.DO.Customer();
+            Receiver = Data.PrintCustomer(prc.TargetId);
             IDAL.DO.Station closeststation= new IDAL.DO.Station();
             Location startingPiont = dro.ThisLocation;
             Location StapingPiont = GetSenderLo(prc);
@@ -60,7 +65,10 @@ namespace BL
             return newloc;
         }
 
-
+        public IEnumerable<DroneToList> BLDrones()
+        {
+            return DroneList;
+        }
     }
 
 }

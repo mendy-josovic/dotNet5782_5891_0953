@@ -42,13 +42,16 @@ namespace BL
         }
 
         /// <summary>
-        /// return the ID of the closest station to the location
+        /// return the ID of the closest station with ready stands to the location
         /// </summary>
         /// <param name="a">the location we want to get it closest station</param>
         /// <returns>ID of the closest station</returns>
         public int GetClosestStation(Location a)
         {
+            int i = 0;
             int closestID = 0;
+            double minimum = 0;
+            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
             List<Station> stationsBL = new();
             foreach (IDAL.DO.Station station in tempDataStations)
             {
@@ -56,15 +59,23 @@ namespace BL
             }
             if (stationsBL.Count == 0)
                 return closestID;
-            closestID = stationsBL[0].Id;
-            double minimum = GetDistance(a, stationsBL[0].location);
-            foreach (Station station in stationsBL)
+            while (i != stationsBL.Count)
             {
-                minimum = Math.Min(minimum, GetDistance(a, station.location));
-                if (minimum > GetDistance(a, station.location))
+                if(stationsBL[i].ReadyStandsInStation > 0)
                 {
-                    closestID = station.Id;
-                    minimum = GetDistance(a, station.location);
+                    closestID = stationsBL[0].Id;
+                    minimum = GetDistance(a, stationsBL[0].location);
+                    break;
+                }
+            }
+            if (i == stationsBL.Count)
+                throw "There is no station to charge";
+            for(; i < stationsBL.Count; i++)
+            {
+                if (minimum > GetDistance(a, stationsBL[i].location) && stationsBL[i].ReadyStandsInStation > 0)
+                {
+                    closestID = stationsBL[i].Id;
+                    minimum = GetDistance(a, stationsBL[i].location);
                 }
             }
             return closestID;
@@ -77,6 +88,7 @@ namespace BL
         /// <returns>location of station</returns>
         public Location GetLocationOfStation(int ID)
         {
+            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
             int i = tempDataStations.FindIndex(w => w.Id == ID);
             Location loc = new(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
             return loc;
@@ -85,9 +97,9 @@ namespace BL
         public BL()
         {
             batteryConfig = Data.Consumption();
-            tempDataDrones = new List<IDAL.DO.Drone>(Data.PrintDroneList());
-            tempDataParcels = new List<IDAL.DO.Parcel>(Data.PrintParcelList());
-            tempDataStations = new List<IDAL.DO.Station>(Data.PrintStationList());
+            List<IDAL.DO.Drone> tempDataDrones = new(Data.PrintDroneList());
+            List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
+            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
 
             foreach (IDAL.DO.Drone item in tempDataDrones)
             {
