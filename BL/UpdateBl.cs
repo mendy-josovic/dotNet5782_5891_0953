@@ -119,11 +119,7 @@ namespace BL
             int i = DroneList.FindIndex(w => w.Id == DroneId);
             List<IDAL.DO.Parcel> tempDataParcels = new List<IDAL.DO.Parcel>(Data.PrintParcelList());
             tempDataParcels.RemoveAll(w => (int)w.Weigh > (int)DroneList[i].MaxWeight);
-            (bool x,int y)=GetBatteryUseAndRootFeasibility()
-                
+            (bool x,int y)=GetBatteryUseAndRootFeasibility()                
         }
-
-
-    
     }
 }
