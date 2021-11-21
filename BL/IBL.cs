@@ -27,5 +27,6 @@ namespace IBL
         public void ReturnDroneFromeCharging(int DroneId, int Time);
         public void AssignDronToParcel(int DroneId);
         public void PickUp(int DroneId);
+        public Station BLStation(IDAL.DO.Station s);     
     }
 }
