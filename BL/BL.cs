@@ -10,19 +10,34 @@ namespace BL
 {
     public partial class BL:IBl
     {
-        List<DroneToList> DroneList;
+        public List<DroneToList> DroneList;
         IDal Data = new DalObject.DalObject();
         public static Random r = new Random();
         public static double[] batteryConfig = new double[] { };
 
-        /// <summary>
-        /// return the distance between two locations
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public double GetDistance(Location a, Location b)
+/// <summary>
+/// the func hase  a option
+/// to get the distenc with difrrentn pararmeters
+/// </summary>
+/// <param name="a">if its jest a location to a location</param>
+/// <param name="b"></param>
+/// <param name="longA">if we wont to mack the disenc with a long and lat</param>
+/// <param name="latA"></param>
+/// <param name="longB"></param>
+/// <param name="latB"></param>
+/// <returns></returns>
+        public double GetDistance(Location a, Location b,double longA=0,double latA=0, double longB=0, double latB=0)
         {
+            if (a.Latitude == 0)
+            {
+                a.Latitude = latA;
+                a.Longitude = longA;
+            }
+            if (b.Latitude == 0)
+            {
+                b.Latitude = latB;
+                b.Longitude = longB;
+            }
             return Math.Sqrt((Math.Pow(a.Longitude - b.Longitude, 2) + Math.Pow(a.Latitude - b.Latitude, 2)));
         }
 

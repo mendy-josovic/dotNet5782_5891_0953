@@ -40,6 +40,40 @@ namespace DalObject
             int i = DataSource.drones.FindIndex(w => w.Id == drnId);
             DataSource.drones[i].Model.Replace(DataSource.drones[i].Model,Name);
         }
+        /// <summary>
+        /// the funvc gets the updating parameters and fill in acording to what we have
+        /// </summary>
+        /// <param name="parclId"></param>
+        /// <param name="SenderId"></param>
+        /// <param name="TargetId"></param>
+        /// <param name="whihgt"></param>
+        /// <param name="priorty"></param>
+        /// <param name="Updatereqwested"></param>
+        /// <param name="UpdatSchedueld"></param>
+        /// <param name="UpdatPicedup"></param>
+        /// <param name="UpdateDeleverd"></param>
+        public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0,int DroneId=0, WEIGHT whihgt = 0, PRIORITY priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
+        {
+            int i = DataSource.parcels.FindIndex(w => w.Id == parclId);
+            if (SenderId != 0)
+                DataSource.parcels[i].SenderId.CompareTo(SenderId);
+            if (TargetId != 0)
+                DataSource.parcels[i].TargetId.CompareTo(TargetId);
+            if (DroneId != 0)
+                DataSource.parcels[i].DroneId.CompareTo(DroneId);
+            if (whihgt != 0)
+                DataSource.parcels[i].Weigh.CompareTo(whihgt);
+            if (priorty != 0)
+                DataSource.parcels[i].Priority.CompareTo(priorty);
+            if (Updatereqwested != 0)
+                DataSource.parcels[i].Requested.CompareTo(DateTime.Now);
+            if (UpdatSchedueld != 0)
+                DataSource.parcels[i].Scheduled.CompareTo(DateTime.Now);
+            if (UpdatPicedup != 0)
+                DataSource.parcels[i].PickedUp.CompareTo(DateTime.Now);
+            if (UpdateDeleverd != 0)
+                DataSource.parcels[i].Delivered.CompareTo(DateTime.Now);
+        }
 
     }
 }
