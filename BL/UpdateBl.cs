@@ -176,7 +176,6 @@ namespace BL
             DroneList[i].Battery -= batteryuse;
             DroneList[i].ThisLocation = GetSenderLo(parcel);
             Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 0,0,1);
-
         }
     
     }

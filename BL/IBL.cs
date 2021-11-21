@@ -19,8 +19,13 @@ namespace IBL
         public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
         public Location GetLocationOfStation(int ID);
         public (bool, double) GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro, IDAL.DO.Parcel prc);
-
-
-        public IEnumerable<DroneToList> BLDrones();        
+        public IEnumerable<DroneToList> BLDrones();
+        public void UpdatDroneName(int DroneId, string Name);
+        public void UpdateCosomerInfo(int Id, string Name, string Phone);
+        public void UpdateStstion(int Id, string Name, int numofCha);
+        public void SendDroneToCarge(int DronId);
+        public void ReturnDroneFromeCharging(int DroneId, int Time);
+        public void AssignDronToParcel(int DroneId);
+        public void PickUp(int DroneId);
     }
 }

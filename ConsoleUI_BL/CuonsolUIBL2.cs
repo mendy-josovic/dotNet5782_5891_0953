@@ -43,8 +43,7 @@ namespace ConsoleUI_BL
                                                 {
                                                     if (drone.ThisLocation == BLStation.location)
                                                         BLStation.ListOfDrones.Add(new(drone));
-                                                }                                               
-                                                ///צריך ליצור אובייקט מסוג BL עם כל המשתמע ולהציגו
+                                                }                                                                                             
                                                 break;
                                             }
                                     }
