@@ -1,6 +1,7 @@
 ﻿using System;
 using IBL.BO;
 using IBL;
+
 namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
@@ -9,7 +10,6 @@ namespace ConsoleUI_BL
         {
             try
             {
-                char.TryParse(Console.ReadLine(), out char ch);
                 IBl BLObject = new BL.BL(); //creating an object of BL class for all the functions
                 {
                     Console.WriteLine(@"

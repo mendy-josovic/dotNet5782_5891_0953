@@ -14,9 +14,10 @@ namespace IBL
         public void AddDrone(Drone dro, int IDOfStation);
         public void AddCustomer(Customer cus);
         public void AddParcel(Parcel par);
+        public IDAL.DO.Station DisplayStation(int ID);
         public int GetClosestStation(Location a);
         public double GetDistance(Location a, Location b);
         public Location GetLocationOfStation(int ID);
-        
+        public IEnumerable<DroneToList> BLDrones();        
     }
 }

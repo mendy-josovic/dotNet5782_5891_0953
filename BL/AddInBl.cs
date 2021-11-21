@@ -21,7 +21,7 @@ namespace BL
             station.Longitude = sta.location.Longitude;
             station.Latitude = sta.location.Latitude;
             station.ReadyChargeStands = sta.ReadyStandsInStation;
-            List<IDAL.DO.Station> tempDataStations = new List<IDAL.DO.Station>(Data.PrintStationList());
+            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
             foreach(IDAL.DO.Station state in tempDataStations)
             {
                 if (state.Id == station.Id)
@@ -38,6 +38,7 @@ namespace BL
         /// <param name="IDOfStation">ID of station for first charging</param>
         public void AddDrone(Drone dro, int IDOfStation)
         {
+            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
             if (tempDataStations.FindIndex(w => w.Id == IDOfStation) < 0)
                 throw "there is not a station with this ID\n";
             IDAL.DO.Drone drone = new();
@@ -94,9 +95,9 @@ namespace BL
             parcel.Priority = (IDAL.DO.PRIORITY)par.Priority;
             parcel.DroneId = 0;
             par.TimeOfCreation = DateTime.Now;
-            par.Scheduled = new(0, 0, 0, 0, 0, 0);
-            par.PickedUp = new(0, 0, 0, 0, 0, 0);
-            par.Delivered = new(0, 0, 0, 0, 0, 0);
+            par.Scheduled = DateTime.MinValue;
+            par.PickedUp = DateTime.MinValue;
+            par.Delivered = DateTime.MinValue;
             par.Drone = null;
             parcel.Requested = par.TimeOfCreation;
             parcel.Scheduled = par.Scheduled;
