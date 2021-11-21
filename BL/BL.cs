@@ -55,7 +55,7 @@ namespace BL
             List<Station> stationsBL = new();
             foreach (IDAL.DO.Station station in tempDataStations)
             {
-                stationsBL.Add(new Station(station));
+                stationsBL.Add(BLStation(station));
             }
             if (stationsBL.Count == 0)
                 return closestID;

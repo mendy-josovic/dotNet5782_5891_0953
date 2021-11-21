@@ -13,14 +13,6 @@ namespace IBL
             public Location location { get; set; }
             public int ReadyStandsInStation { get; set; }
             public List<DroneInCharging> ListOfDrones = new List<DroneInCharging>();
-            public Station() { }
-            public Station(IDAL.DO.Station st)
-            {
-                Id = st.Id;
-                Name = st.Name;
-                location.Longitude = st.Longitude;
-                location.Latitude = st.Latitude;
-            }
             public override string ToString()//override the to-string to print it nice
             {
                 return "Station:\nID: " + Id + "\nName: " + Name + "\nLocation: " + location +

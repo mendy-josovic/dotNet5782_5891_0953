@@ -69,6 +69,16 @@ namespace BL
         {
             return DroneList;
         }
+
+        public Station BLStation(IDAL.DO.Station s)
+        {
+            Station station = new();
+            station.Id = s.Id;
+            station.Name = s.Name;
+            station.location.Longitude = s.Longitude;
+            station.location.Latitude = s.Latitude;
+            return station;
+        }
     }
 
 }

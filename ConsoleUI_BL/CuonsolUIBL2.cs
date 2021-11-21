@@ -38,7 +38,7 @@ namespace ConsoleUI_BL
                                                 if (x <= 0)
                                                     throw "Invalid value\n";
                                                 IDAL.DO.Station station = BLObject.DisplayStation(x);
-                                                Station BLStation = new(station);
+                                                Station BLStation = BLObject.BLStation(station);
                                                 foreach(DroneToList drone in BLObject.BLDrones())
                                                 {
                                                     if (drone.ThisLocation == BLStation.location)
