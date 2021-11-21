@@ -22,6 +22,16 @@ namespace IBL
                 Model = dr.Model;
                 MaxWeight = (WEIGHT)dr.MaxWeight;
             }
+            public DroneToList(Drone d)
+            {
+                Id = d.Id;
+                Model = d.Model;
+                MaxWeight = d.MaxWeight;
+                Battery = d.Battery;
+                status = d.status;
+                ThisLocation = d.ThisLocation;
+                ParcelId = d.parcel.Id;
+            }
             public override string ToString()
             {
                 return "Drone:\nID: " + Id + "\nModel: " + Model + "\nMaximum weight: " + MaxWeight

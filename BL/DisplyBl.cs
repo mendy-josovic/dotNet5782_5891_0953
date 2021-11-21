@@ -7,23 +7,18 @@ using System.Collections;
 using IBL;
 namespace BL
 {
-    public partial class BL : IBl
+    public partial class BL : IBL
     {
-        public void AddDroneToList(DroneToList drt)
-        {
-
-        }
         /// <summary>
-        /// the func gets the statis of the parcel and acourdingly 
-        /// returns the consumption
+        /// the func gets the status of the parcel and acourdingly returns the consumption
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="mode"></param>
-        /// <returns></returns>
-        public int Consumption(Location a, Location b, MODE_OF_DRONE_IN_MOVING mode)
+        /// <param name="a">location a</param>
+        /// <param name="b">location b</param>
+        /// <param name="mode">mode of the drone in moving: without a parcel, or with a parcel, and which mode of parcel</param>
+        /// <returns>how much battery this moving need</returns>
+        public double Consumption(Location a, Location b, MODE_OF_DRONE_IN_MOVING mode)
         {
-            return (int)(GetDistance(a, b) * batteryConfig[(int)mode]);
+            return GetDistance(a, b) * batteryConfig[(int)mode];
         }
     }
 }
