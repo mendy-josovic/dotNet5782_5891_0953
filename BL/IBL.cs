@@ -15,8 +15,10 @@ namespace IBL
         public void AddCustomer(Customer cus);
         public void AddParcel(Parcel par);
         public int GetClosestStation(Location a);
-        public double GetDistance(Location a, Location b);
+        public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
         public Location GetLocationOfStation(int ID);
-        
+        public (bool, double) GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro, IDAL.DO.Parcel prc);
+
+
     }
 }

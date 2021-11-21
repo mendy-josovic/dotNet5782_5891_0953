@@ -109,21 +109,75 @@ namespace BL
             Data.ClearDroneCharge(DroneId);              
         }
         /// <summary>
-        /// 
+        /// the func in order to deside witch one to do 
+        /// first removing all the not relevent from the list(to hevy,scheduled alredy,not enough battrey)
+        /// the we sort the list first acording to ditence and then priyoritity
         /// </summary>
         /// <param name="DroneId"></param>
         public void AssignDronToParcel(int DroneId)
         {
             if (!(DroneList.Exists(w => w.Id == DroneId)))
-                throw "Drone dosent exsit\n";          
+                throw "Drone dosent exsit\n";
             int i = DroneList.FindIndex(w => w.Id == DroneId);
             List<IDAL.DO.Parcel> tempDataParcels = new List<IDAL.DO.Parcel>(Data.PrintParcelList());
-            tempDataParcels.RemoveAll(w => (int)w.Weigh > (int)DroneList[i].MaxWeight);
-            (bool x,int y)=GetBatteryUseAndRootFeasibility()
-                
+            tempDataParcels.RemoveAll(w => (int)w.Weigh > (int)DroneList[i].MaxWeight);//removed all that ear not in the weight limit 
+            tempDataParcels.RemoveAll(w => w.Scheduled != DateTime.MinValue);//remove all theat ear alredy scheduled
+            int j = 0;
+            tempDataParcels.RemoveAll(w => GetBatteryUseAndRootFeasibility(DroneList[i], w) == (false, j));//remove all tht cant do the root (because of the battery consemption)
+            if (tempDataParcels.Exists(w => w.Priority == IDAL.DO.PRIORITY.EMERGENCY))
+                tempDataParcels.RemoveAll(w => w.Priority != IDAL.DO.PRIORITY.EMERGENCY);
+            else if(tempDataParcels.Exists(w => w.Priority == IDAL.DO.PRIORITY.FAST))
+                    tempDataParcels.RemoveAll(w => w.Priority != IDAL.DO.PRIORITY.FAST);                              
+            if (tempDataParcels.Exists(w => (int)w.Weigh == (int)DroneList[i].MaxWeight))
+                tempDataParcels.RemoveAll(w => (int)w.Weigh != (int)DroneList[i].MaxWeight);
+            else if(tempDataParcels.Exists(w => (int)w.Weigh == (int)DroneList[i].MaxWeight-1))
+                     tempDataParcels.RemoveAll(w => (int)w.Weigh != (int)DroneList[i].MaxWeight-1);
+            tempDataParcels.Sort((w, x) => GetDistance(DroneList[i].ThisLocation, GetSenderLo(w)).CompareTo(GetDistance(DroneList[i].ThisLocation, GetSenderLo(x))));//sorting the list acording to ditenc
+            tempDataParcels.Sort((w, x) => (int)w.Weigh);
+            tempDataParcels.Sort((w, x) => (int)w.Priority);//sorting acourding to priyuorty
+            if (tempDataParcels.Count == 0)
+                throw "Assignment Not Possble\n";
+            DroneList[i].status = IBL.BO.STATUS_OF_DRONE.DELIVERY;
+            DroneList[i].ParcelId = tempDataParcels[0].Id;
+            Data.UpdatParcel(tempDataParcels[0].Id, 0, 0, DroneList[i].Id, 0, 0, 1);//we updating the first parcel in the list
         }
+        /// <summary>
+        /// the func updats the pich up 
+        /// so first we check that we have the dron and that the dron can pick up this parcel
+        /// and then we judst updat the dton acourdin to 
+        /// </summary>
+        /// <param name="DroneId"></param>
+        public void PickUp(int DroneId)
+        {
+            if (!(DroneList.Exists(w => w.Id == DroneId)))
+                throw "Drone dosent exsit\n";
+            int i = DroneList.FindIndex(w => w.Id == DroneId);
+            IDAL.DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
+            if (parcel.PickedUp != DateTime.MinValue)
+                throw "Parcel Alredy Picked Up\n";
+            double batteryuse = Consumption(DroneList[i].ThisLocation, GetSenderLo(parcel),MODE_OF_DRONE_IN_MOVING.AVAILABLE);
+            DroneList[i].Battery -= batteryuse;
+            DroneList[i].ThisLocation = GetSenderLo(parcel);
+            Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 1);
+        }
+        /// <summary>
+        /// the func gets the status and
+        /// </summary>
+        /// <param name="DroneId"></param>
+        public void Suuply(int DroneId)
+        {
+            if (!(DroneList.Exists(w => w.Id == DroneId)))
+                throw "Drone dosent exsit\n";
+            int i = DroneList.FindIndex(w => w.Id == DroneId);
+            IDAL.DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
+            if (parcel.PickedUp == DateTime.MinValue || parcel.Delivered != DateTime.MinValue)
+                throw "cant suuply\n";
+            double batteryuse = Consumption(DroneList[i].ThisLocation, GetReceiverLo(parcel), (MODE_OF_DRONE_IN_MOVING)parcel.Weigh);
+            DroneList[i].Battery -= batteryuse;
+            DroneList[i].ThisLocation = GetSenderLo(parcel);
+            Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 0,0,1);
 
-
+        }
     
     }
 }

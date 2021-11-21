@@ -7,7 +7,7 @@ using System.Collections;
 using IBL;
 namespace BL
 {
-    public partial class BL : IBL
+    public partial class BL : IBl
     {
         /// <summary>
         /// the func gets the status of the parcel and acourdingly returns the consumption
