@@ -15,11 +15,27 @@ namespace IBL
         public void AddCustomer(Customer cus);
         public void AddParcel(Parcel par);
         public IDAL.DO.Station DisplayStation(int ID);
+        public DroneToList DisplayDrone(int ID);
+        public IDAL.DO.Customer DisplayCustomere(int ID);
+        public IDAL.DO.Parcel DisplayParcel(int ID);
+        public List<StationToList> DisplayStationList();
+        public List<DroneToList> DisplayDroneList();
+        public List<CustomerToList> DisplayCustomerList();
+        public List<ParcelToList> DisplayParcelList();
         public int GetClosestStation(Location a);
         public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
         public Location GetLocationOfStation(int ID);
         public (bool, double) GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro, IDAL.DO.Parcel prc);
         public Station BLStation(IDAL.DO.Station s);
+        public Drone BLDrone(DroneToList d);
+        public Customer BLCustomer(IDAL.DO.Customer c);
+        public Parcel BLParcel(IDAL.DO.Parcel p);
+        public DroneInParcel BLDroneInParcel(Drone d);
+        public ParcelInTransfer BLParcelInTransfer(IDAL.DO.Parcel p);
+        public ParcelAtCustomer BLParcelAtCustomer(IDAL.DO.Parcel p, bool sender);
+        public CustomerInParcel BLCustomerInParcel(IDAL.DO.Customer DalCus);
+        public StationToList BLStationToList(IDAL.DO.Station s);
+        public Location Location(double lon, double lat);
         public IEnumerable<DroneToList> BLDrones();        
     }
 }

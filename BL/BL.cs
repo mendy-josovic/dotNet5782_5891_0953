@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using IDAL;
 using IBL.BO;
 using System.Collections;
@@ -8,24 +9,24 @@ using IBL;
 
 namespace BL
 {
-    public partial class BL:IBl
+    public partial class BL: IBl
     {
         public List<DroneToList> DroneList;
         IDal Data = new DalObject.DalObject();
         public static Random r = new Random();
         public static double[] batteryConfig = new double[] { };
 
-/// <summary>
-/// the func hase  a option
-/// to get the distenc with difrrentn pararmeters
-/// </summary>
-/// <param name="a">if its jest a location to a location</param>
-/// <param name="b"></param>
-/// <param name="longA">if we wont to mack the disenc with a long and lat</param>
-/// <param name="latA"></param>
-/// <param name="longB"></param>
-/// <param name="latB"></param>
-/// <returns></returns>
+        /// <summary>
+        /// the func hase  a option
+        /// to get the distenc with difrrentn pararmeters
+        /// </summary>
+        /// <param name="a">if its jest a location to a location</param>
+        /// <param name="b"></param>
+        /// <param name="longA">if we wont to mack the disenc with a long and lat</param>
+        /// <param name="latA"></param>
+        /// <param name="longB"></param>
+        /// <param name="latB"></param>
+        /// <returns></returns>
         public double GetDistance(Location a, Location b,double longA=0,double latA=0, double longB=0, double latB=0)
         {
             if (a.Latitude == 0)
@@ -109,9 +110,9 @@ namespace BL
                     int i = tempDataParcels.FindIndex(w => w.DroneId == (item.Id));
                     drone.status = IBL.BO.STATUS_OF_DRONE.DELIVERY;
                     var sender = Data.PrintCustomer(tempDataParcels[i].SenderId);
-                    Location locOfSender = new Location(sender.Longitude, sender.Latitude);
+                    Location locOfSender = Location(sender.Longitude, sender.Latitude);
                     var target = Data.PrintCustomer(tempDataParcels[i].TargetId);
-                    Location locOfTarget = new Location(target.Longitude, target.Latitude);
+                    Location locOfTarget = Location(target.Longitude, target.Latitude);
                     double minBattery = Consumption(drone.ThisLocation, locOfSender, MODE_OF_DRONE_IN_MOVING.AVAILABLE)
                         + Consumption(locOfSender, locOfTarget, (MODE_OF_DRONE_IN_MOVING)tempDataParcels[i].Weigh)
                         + Consumption(locOfTarget, GetLocationOfStation(GetClosestStation(locOfTarget)), MODE_OF_DRONE_IN_MOVING.AVAILABLE);
@@ -139,7 +140,7 @@ namespace BL
                                 customers.Add(Data.PrintCustomer(par.TargetId));
                         }
                         int i = r.Next(0, customers.Count);
-                        Location loc = new Location(customers[i].Longitude, customers[i].Latitude);
+                        Location loc = Location(customers[i].Longitude, customers[i].Latitude);
                         drone.ThisLocation = loc;
                         double con = Consumption(drone.ThisLocation, GetLocationOfStation(GetClosestStation(drone.ThisLocation)), MODE_OF_DRONE_IN_MOVING.AVAILABLE);
                         drone.Battery = r.Next((int)(con * 1000), 100 * 1000) / 1000;
@@ -147,7 +148,7 @@ namespace BL
                     else
                     {
                         int i = r.Next(0, tempDataStations.Count);
-                        drone.ThisLocation = new(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
+                        drone.ThisLocation = Location(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
                         drone.Battery = r.Next(0, 20);
                     }
                 }

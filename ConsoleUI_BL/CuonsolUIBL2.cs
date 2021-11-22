@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using IBL.BO;
 using IBL;
 
@@ -38,13 +39,47 @@ namespace ConsoleUI_BL
                                                 if (x <= 0)
                                                     throw "Invalid value\n";
                                                 IDAL.DO.Station station = BLObject.DisplayStation(x);
-                                                Station BLStation = BLObject.BLStation(station);
-                                                foreach(DroneToList drone in BLObject.BLDrones())
+                                                Station BLStation = BLObject.BLStation(station);                                               
+                                                //BLStation.ListOfDrones = BLObject.BLDrones().Where(drone => drone.ThisLocation == BLStation.location); Inumerable
+                                                foreach (DroneToList drone in BLObject.BLDrones())
                                                 {
                                                     if (drone.ThisLocation == BLStation.location)
                                                         BLStation.ListOfDrones.Add(new(drone));
-                                                }                                               
-                                                ///צריך ליצור אובייקט מסוג BL עם כל המשתמע ולהציגו
+                                                }
+                                                Console.WriteLine(BLStation);
+                                                break;
+                                            }
+                                        case 'b':
+                                            {
+                                                Console.WriteLine("Enter drone ID: ");
+                                                Int32.TryParse(Console.ReadLine(), out int x);
+                                                if (x <= 0)
+                                                    throw "Invalid value\n";
+                                                DroneToList drone = BLObject.DisplayDrone(x);
+                                                Drone BLDrone = BLObject.BLDrone(drone);
+                                                Console.WriteLine(BLDrone);
+                                                break;
+                                            }
+                                        case 'c':
+                                            {
+                                                Console.WriteLine("Enter customer ID: ");
+                                                Int32.TryParse(Console.ReadLine(), out int x);
+                                                if (x <= 0)
+                                                    throw "Invalid value\n";
+                                                IDAL.DO.Customer customer = BLObject.DisplayCustomere(x);
+                                                Customer BLCustomer = BLObject.BLCustomer(customer);
+                                                Console.WriteLine(BLCustomer);
+                                                break;
+                                            }
+                                        case 'd':
+                                            {
+                                                Console.WriteLine("Enter parcel ID: ");
+                                                Int32.TryParse(Console.ReadLine(), out int x);
+                                                if (x <= 0)
+                                                    throw "Invalid value\n";
+                                                IDAL.DO.Parcel parcel = BLObject.DisplayParcel(x);
+                                                Parcel BLParcel = BLObject.BLParcel(parcel);
+                                                Console.WriteLine(BLParcel);
                                                 break;
                                             }
                                     }
@@ -68,6 +103,7 @@ namespace ConsoleUI_BL
                                     {
                                         case 'a':
                                             {
+
                                                 break;
                                             }
                                     }
