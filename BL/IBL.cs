@@ -16,7 +16,7 @@ namespace IBL
         public void AddParcel(Parcel par);
         public IDAL.DO.Station DisplayStation(int ID);
         public DroneToList DisplayDrone(int ID);
-        public IDAL.DO.Customer DisplayCustomere(int ID);
+        public IDAL.DO.Customer DisplayCustomer(int ID);
         public IDAL.DO.Parcel DisplayParcel(int ID);
         public List<StationToList> DisplayStationList();
         public List<DroneToList> DisplayDroneList();
@@ -35,16 +35,16 @@ namespace IBL
         public ParcelAtCustomer BLParcelAtCustomer(IDAL.DO.Parcel p, bool sender);
         public CustomerInParcel BLCustomerInParcel(IDAL.DO.Customer DalCus);
         public StationToList BLStationToList(IDAL.DO.Station s);
+        public DroneToList BLDroneToList(Drone d);
+        public CustomerToList BLCustomerToList(IDAL.DO.Customer c);
         public Location Location(double lon, double lat);
         public IEnumerable<DroneToList> BLDrones();        
-        public IEnumerable<DroneToList> BLDrones();
         public void UpdatDroneName(int DroneId, string Name);
         public void UpdateCosomerInfo(int Id, string Name, string Phone);
         public void UpdateStstion(int Id, string Name, int numofCha);
         public void SendDroneToCarge(int DronId);
         public void ReturnDroneFromeCharging(int DroneId, int Time);
         public void AssignDronToParcel(int DroneId);
-        public void PickUp(int DroneId);
-        public Station BLStation(IDAL.DO.Station s);     
+        public void PickUp(int DroneId);   
     }
 }

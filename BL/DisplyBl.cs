@@ -20,7 +20,7 @@ namespace BL
             return DroneList.Find(w => w.Id == id);
         }
 
-        public IDAL.DO.Customer DisplayCustomere(int id)
+        public IDAL.DO.Customer DisplayCustomer(int id)
         {
             List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
             return (tempDataCustomers.Find(w => w.Id == id));
@@ -34,8 +34,34 @@ namespace BL
 
         public List<StationToList> DisplayStationList()
         {
+            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
+            List<StationToList> stationList = new();
+            foreach(IDAL.DO.Station s in tempDataStations)
+            {
+                stationList.Add(BLStationToList(s));
+            }
+            return stationList;
+        }
 
+        public List<DroneToList> DisplayDroneList()
+        {
+            List<DroneToList> droneList = new();
+            foreach(DroneToList drone in DroneList)
+            {
+                droneList.Add(drone);
+            }
+            return droneList;
+        }
 
+        public List<CustomerToList> DisplayCustomerList()
+        {
+            List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+            List<CustomerToList> customerList = new();
+            foreach(IDAL.DO.Customer customer in tempDataCustomers)
+            {
+                customerList.Add(BLCustomerToList(customer));
+            }
+            return customerList;
         }
     }
 }
