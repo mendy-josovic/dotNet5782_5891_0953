@@ -130,7 +130,7 @@ namespace BL
                 List<Station> stationsBL = new();
                 foreach (IDAL.DO.Station station in tempDataStations)
                 {
-                    stationsBL.Add(new Station(station));
+                    stationsBL.Add(BLStation(station));
                 }
                 if (stationsBL.Count == 0)
                     return closestID;
@@ -357,6 +357,26 @@ namespace BL
             var sumOfOnWay = customer.ToCustomer.FindAll(w => w.Status == STATUS_OF_PARCEL.PICKEDUP);
             customerToList.ParcelsOnWayToCustomer = sumOfOnWay.Count;
             return customerToList;
+        }
+
+        public ParcelToList BLParcelToList(IDAL.DO.Parcel c)
+        {
+            ParcelToList parcelToList = new();
+            Parcel parcel = BLParcel(c);
+            parcelToList.Id = parcel.Id;
+            parcelToList.Sender = parcel.Sender.Name;
+            parcelToList.Recipient = parcel.Recipient.Name;
+            parcelToList.Weight = parcel.Weight;
+            parcelToList.Priority = parcel.Priority;
+            if (parcel.Delivered != DateTime.MinValue)
+                parcelToList.Status = STATUS_OF_PARCEL.DELIVERED;
+            else if(parcel.PickedUp!=DateTime.MinValue)
+                parcelToList.Status = STATUS_OF_PARCEL.PICKEDUP;
+            else if(parcel.Scheduled!=DateTime.MinValue)
+                parcelToList.Status = STATUS_OF_PARCEL.ASSOCIATED;
+            else
+                parcelToList.Status = STATUS_OF_PARCEL.CREATED;
+            return parcelToList;
         }
     }
 }

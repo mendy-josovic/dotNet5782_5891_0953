@@ -63,5 +63,16 @@ namespace BL
             }
             return customerList;
         }
+
+        public List<ParcelToList> DisplayParcelList()
+        {
+            List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
+            List<ParcelToList> parcelList = new();
+            foreach (IDAL.DO.Parcel parcel in tempDataParcels)
+            {
+                parcelList.Add(BLParcelToList(parcel));
+            }
+            return parcelList;
+        }
     }
 }
