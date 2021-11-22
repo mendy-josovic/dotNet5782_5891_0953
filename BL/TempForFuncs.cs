@@ -130,7 +130,7 @@ namespace BL
                 List<Station> stationsBL = new();
                 foreach (IDAL.DO.Station station in tempDataStations)
                 {
-                    stationsBL.Add(new Station(station));
+                    stationsBL.Add(BLStation(station));
                 }
                 if (stationsBL.Count == 0)
                     return closestID;
@@ -319,10 +319,64 @@ namespace BL
 
         public StationToList BLStationToList(IDAL.DO.Station s)
         {
-            StationToList station = new();
+            StationToList stationToList = new();
+            Station station = BLStation(s);
+            stationToList.Id = station.Id;
+            stationToList.Name = station.Name;
+            stationToList.ReadyStandsInStation = station.ReadyStandsInStation;
+            stationToList.OccupiedStandsInStation = station.ListOfDrones.Count;
+            return stationToList;
+        }
 
-            return station;
+        public DroneToList BLDroneToList(Drone d)
+        {
+            DroneToList droneToList = new();
+            droneToList.Id = d.Id;
+            droneToList.Model = d.Model;
+            droneToList.MaxWeight = d.MaxWeight;
+            droneToList.Battery = d.Battery;
+            droneToList.status = d.status;
+            droneToList.ThisLocation = d.ThisLocation;
+            droneToList.ParcelId = d.parcel.Id;
+            return droneToList;
+        }
+
+        public CustomerToList BLCustomerToList(IDAL.DO.Customer c)
+        {
+            CustomerToList customerToList = new();
+            Customer customer = BLCustomer(c);
+            customerToList.Id = customer.Id;
+            customerToList.Name = customer.Name;
+            customerToList.Phone = customer.Phone;
+            var sumOfDelivered = customer.FromCustomer.FindAll(w=>w.Status==STATUS_OF_PARCEL.DELIVERED);
+            customerToList.ParcelsSentAndDelivered = sumOfDelivered.Count;
+            var sumOfSendered = customer.FromCustomer.FindAll(w => w.Status == STATUS_OF_PARCEL.PICKEDUP);
+            customerToList.ParcelsSentAndNotDelivered = sumOfSendered.Count;
+            var sumOfgot = customer.ToCustomer.FindAll(w => w.Status == STATUS_OF_PARCEL.DELIVERED);
+            customerToList.ParcelsReceived = sumOfgot.Count;
+            var sumOfOnWay = customer.ToCustomer.FindAll(w => w.Status == STATUS_OF_PARCEL.PICKEDUP);
+            customerToList.ParcelsOnWayToCustomer = sumOfOnWay.Count;
+            return customerToList;
+        }
+
+        public ParcelToList BLParcelToList(IDAL.DO.Parcel c)
+        {
+            ParcelToList parcelToList = new();
+            Parcel parcel = BLParcel(c);
+            parcelToList.Id = parcel.Id;
+            parcelToList.Sender = parcel.Sender.Name;
+            parcelToList.Recipient = parcel.Recipient.Name;
+            parcelToList.Weight = parcel.Weight;
+            parcelToList.Priority = parcel.Priority;
+            if (parcel.Delivered != DateTime.MinValue)
+                parcelToList.Status = STATUS_OF_PARCEL.DELIVERED;
+            else if(parcel.PickedUp!=DateTime.MinValue)
+                parcelToList.Status = STATUS_OF_PARCEL.PICKEDUP;
+            else if(parcel.Scheduled!=DateTime.MinValue)
+                parcelToList.Status = STATUS_OF_PARCEL.ASSOCIATED;
+            else
+                parcelToList.Status = STATUS_OF_PARCEL.CREATED;
+            return parcelToList;
         }
     }
-
 }

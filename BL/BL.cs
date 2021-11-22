@@ -16,7 +16,6 @@ namespace BL
         public static Random r = new Random();
         public static double[] batteryConfig = new double[] { };
 
-
         public BL()
         {
             batteryConfig = Data.Consumption();
@@ -26,7 +25,10 @@ namespace BL
 
             foreach (IDAL.DO.Drone item in tempDataDrones)
             {
-                DroneToList drone = new DroneToList(item);
+                DroneToList drone = new();
+                drone.Id = item.Id;
+                drone.Model = item.Model;
+                drone.MaxWeight = (WEIGHT)item.MaxWeight;
                 if (tempDataParcels.Exists(w => w.DroneId == (item.Id) && w.Delivered < DateTime.MinValue))
                 {
                     int i = tempDataParcels.FindIndex(w => w.DroneId == (item.Id));

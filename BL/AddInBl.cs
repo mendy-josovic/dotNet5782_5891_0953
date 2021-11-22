@@ -65,7 +65,7 @@ namespace BL
                 dro.Battery = r.Next(20, 40);
                 dro.status = STATUS_OF_DRONE.IN_MAINTENANCE;
                 dro.ThisLocation = GetLocationOfStation(IDOfStation);
-                DroneToList d = new(dro);
+                DroneToList d = BLDroneToList(dro);
                 DroneList.Add(d);
             }
             catch (IDAL.DO.DalExceptions ex)

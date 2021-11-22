@@ -34,7 +34,7 @@ namespace BL
             }
         }
 
-        public IDAL.DO.Customer DisplayCustomere(int id)
+        public IDAL.DO.Customer DisplayCustomer(int id)
         {
             try
             {
@@ -62,8 +62,45 @@ namespace BL
 
         public List<StationToList> DisplayStationList()
         {
+            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
+            List<StationToList> stationList = new();
+            foreach(IDAL.DO.Station s in tempDataStations)
+            {
+                stationList.Add(BLStationToList(s));
+            }
+            return stationList;
+        }
 
-            return 
+        public List<DroneToList> DisplayDroneList()
+        {
+            List<DroneToList> droneList = new();
+            foreach(DroneToList drone in DroneList)
+            {
+                droneList.Add(drone);
+            }
+            return droneList;
+        }
+
+        public List<CustomerToList> DisplayCustomerList()
+        {
+            List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+            List<CustomerToList> customerList = new();
+            foreach(IDAL.DO.Customer customer in tempDataCustomers)
+            {
+                customerList.Add(BLCustomerToList(customer));
+            }
+            return customerList;
+        }
+
+        public List<ParcelToList> DisplayParcelList()
+        {
+            List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
+            List<ParcelToList> parcelList = new();
+            foreach (IDAL.DO.Parcel parcel in tempDataParcels)
+            {
+                parcelList.Add(BLParcelToList(parcel));
+            }
+            return parcelList;
         }
     }
 }

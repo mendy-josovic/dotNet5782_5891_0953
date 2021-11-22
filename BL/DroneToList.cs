@@ -16,7 +16,7 @@ namespace IBL
             public STATUS_OF_DRONE status { get; set; }
             public Location ThisLocation { get; set; }
             public int ParcelId { get; set; }
-  
+
             public override string ToString()
             {
                 return "Drone:\nID: " + Id + "\nModel: " + Model + "\nMaximum weight: " + MaxWeight
