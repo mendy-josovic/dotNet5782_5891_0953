@@ -38,7 +38,7 @@ namespace ConsoleUI_BL
                                                 Console.WriteLine("Enter station ID: ");
                                                 Int32.TryParse(Console.ReadLine(), out int x);
                                                 if (x <= 0)
-                                                    throw "Invalid value\n";
+                                                    throw new ConsoleBlException( "Invalid value");
                                                 IDAL.DO.Station station = BLObject.DisplayStation(x);
                                                 Station BLStation = BLObject.BLStation(station);                                               
                                                 //BLStation.ListOfDrones = BLObject.BLDrones().Where(drone => drone.ThisLocation == BLStation.location); Inumerable
@@ -55,7 +55,7 @@ namespace ConsoleUI_BL
                                                 Console.WriteLine("Enter drone ID: ");
                                                 Int32.TryParse(Console.ReadLine(), out int x);
                                                 if (x <= 0)
-                                                    throw "Invalid value\n";
+                                                    throw new ConsoleBlException("Invalid value");
                                                 DroneToList drone = BLObject.DisplayDrone(x);
                                                 Drone BLDrone = BLObject.BLDrone(drone);
                                                 Console.WriteLine(BLDrone);
@@ -66,7 +66,7 @@ namespace ConsoleUI_BL
                                                 Console.WriteLine("Enter customer ID: ");
                                                 Int32.TryParse(Console.ReadLine(), out int x);
                                                 if (x <= 0)
-                                                    throw "Invalid value\n";
+                                                    throw new ConsoleBlException("Invalid value");
                                                 IDAL.DO.Customer customer = BLObject.DisplayCustomere(x);
                                                 Customer BLCustomer = BLObject.BLCustomer(customer);
                                                 Console.WriteLine(BLCustomer);
@@ -77,7 +77,7 @@ namespace ConsoleUI_BL
                                                 Console.WriteLine("Enter parcel ID: ");
                                                 Int32.TryParse(Console.ReadLine(), out int x);
                                                 if (x <= 0)
-                                                    throw "Invalid value\n";
+                                                    throw new ConsoleBlException("Invalid value");
                                                 IDAL.DO.Parcel parcel = BLObject.DisplayParcel(x);
                                                 Parcel BLParcel = BLObject.BLParcel(parcel);
                                                 Console.WriteLine(BLParcel);
@@ -114,9 +114,9 @@ namespace ConsoleUI_BL
                     }
                 }
             }
-            catch ()
+            catch (ConsoleBlException ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
     }

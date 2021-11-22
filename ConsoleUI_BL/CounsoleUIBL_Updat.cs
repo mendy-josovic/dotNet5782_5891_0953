@@ -4,7 +4,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-       
+
         public static void Update()
         {
             Console.WriteLine(@"Welcome:
@@ -23,7 +23,7 @@ namespace ConsoleUI_BL
             {
                 try
                 {
-                    switch(ch1)
+                    switch (ch1)
                     {
                         case 'A':
                             {
@@ -35,7 +35,7 @@ namespace ConsoleUI_BL
                                 string str = Console.ReadLine();
                                 BLObject.UpdatDroneName(x, str);
                                 break;
-                                
+
 
 
                             }
@@ -122,16 +122,17 @@ namespace ConsoleUI_BL
 
                     }
                 }
-                catch(IBL.BO.BlException ex)
+                catch (IBL.BO.BlException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-                catch(ConsoleBlException ex)
+                catch (ConsoleBlException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-            
 
+
+            }
         }
     }
 }
