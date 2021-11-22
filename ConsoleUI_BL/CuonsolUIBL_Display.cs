@@ -48,7 +48,7 @@ namespace ConsoleUI_BL
                                                     foreach (DroneToList drone in BLObject.BLDrones())
                                                     {
                                                         if (drone.ThisLocation == BLStation.location)
-                                                            BLStation.ListOfDrones.Add(new(drone));
+                                                            BLStation.ListOfDrones.Add(BLObject.BLDroneInCharging(drone));
                                                     }
                                                     Console.WriteLine(BLStation);
                                                     break;

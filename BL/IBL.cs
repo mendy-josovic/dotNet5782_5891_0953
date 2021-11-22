@@ -33,6 +33,7 @@ namespace IBL
         public ParcelInTransfer BLParcelInTransfer(IDAL.DO.Parcel p);
         public ParcelAtCustomer BLParcelAtCustomer(IDAL.DO.Parcel p, bool sender);
         public CustomerInParcel BLCustomerInParcel(IDAL.DO.Customer DalCus);
+        public DroneInCharging BLDroneInCharging(DroneToList d);
         public StationToList BLStationToList(IDAL.DO.Station s);
         public DroneToList BLDroneToList(Drone d);
         public CustomerToList BLCustomerToList(IDAL.DO.Customer c);

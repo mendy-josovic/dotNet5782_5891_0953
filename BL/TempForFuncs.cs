@@ -309,6 +309,14 @@ namespace BL
             return c;
         }
 
+        public DroneInCharging BLDroneInCharging(DroneToList d)
+        {
+            DroneInCharging drone = new();
+            drone.Id = d.Id;
+            drone.Battery = d.Battery;
+            return drone;
+        }
+
         public Location Location(double lon, double lat)
         {
             Location l = new();
