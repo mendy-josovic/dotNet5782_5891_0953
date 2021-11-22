@@ -40,7 +40,7 @@ namespace DalObject
             if(StationId!=0)
                 i= DataSource.droneCharges.FindIndex(w => w.StationId == StationId);
             if (i == 0)
-                throw "ERROR Cant find (Dron Or Station Not Fuond)\n  ";
+                throw new DalExceptions("ERROR Cant find (Dron Or Station Not Fuond) ");
             IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge(DataSource.droneCharges[i].DroneId, DataSource.droneCharges[i].StationId);
             return droneCharge;
         }

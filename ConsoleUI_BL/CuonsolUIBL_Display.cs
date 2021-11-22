@@ -8,11 +8,12 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
+       static IBl BLObject = new BL.BL();
         public static void Display()
         {
             try
             {
-                IBl BLObject = new BL.BL(); //creating an object of BL class for all the functions
+      //creating an object of BL class for all the functions
                 {
                     Console.WriteLine(@"
                             Enter 'a' to display a station

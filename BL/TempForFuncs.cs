@@ -19,25 +19,32 @@ namespace BL
         }
         public (bool,double) GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro,IDAL.DO.Parcel prc)
         {
-            IDAL.DO.Customer sender = new IDAL.DO.Customer();
-            sender= Data.PrintCustomer(prc.SenderId);
-            IDAL.DO.Customer Receiver = new IDAL.DO.Customer();
-            Receiver = Data.PrintCustomer(prc.TargetId);
-            IDAL.DO.Station closeststation= new IDAL.DO.Station();
-            Location startingPiont = dro.ThisLocation;
-            Location StapingPiont = GetSenderLo(prc);
-            Location FinishingPiont = GetReceiverLo(prc);
-            closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));
-            Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
-            double batteryUse = Consumption(startingPiont, StapingPiont, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE) + Consumption(StapingPiont, FinishingPiont, (IBL.BO.MODE_OF_DRONE_IN_MOVING)prc.Weigh);
-            if (dro.Battery - batteryUse < 20)
+            try
             {
-                batteryUse += Consumption(FinishingPiont, ClosestCarging, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);
-                if (dro.Battery - batteryUse < 0)
-                    return (false, 0);
+                IDAL.DO.Customer sender = new IDAL.DO.Customer();
+                sender = Data.PrintCustomer(prc.SenderId);
+                IDAL.DO.Customer Receiver = new IDAL.DO.Customer();
+                Receiver = Data.PrintCustomer(prc.TargetId);
+                IDAL.DO.Station closeststation = new IDAL.DO.Station();
+                Location startingPiont = dro.ThisLocation;
+                Location StapingPiont = GetSenderLo(prc);
+                Location FinishingPiont = GetReceiverLo(prc);
+                closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));
+                Location ClosestCarging = new Location(closeststation.Longitude, closeststation.Latitude);
+                double batteryUse = Consumption(startingPiont, StapingPiont, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE) + Consumption(StapingPiont, FinishingPiont, (IBL.BO.MODE_OF_DRONE_IN_MOVING)prc.Weigh);
+                if (dro.Battery - batteryUse < 20)
+                {
+                    batteryUse += Consumption(FinishingPiont, ClosestCarging, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);
+                    if (dro.Battery - batteryUse < 0)
+                        return (false, 0);
+                }
+                return (true, batteryUse);
             }
-            return (true, batteryUse);
-            
+             catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
+
         }
         /// <summary>
         /// the func returns location of thr sender 
@@ -46,9 +53,16 @@ namespace BL
         /// <returns></returns>
         public Location GetSenderLo(IDAL.DO.Parcel pr)
         {
-            IDAL.DO.Customer cs = Data.PrintCustomer(pr.SenderId);
-            Location newloc = Location(cs.Longitude, cs.Latitude);
-            return newloc;
+            try
+            {
+                IDAL.DO.Customer cs = Data.PrintCustomer(pr.SenderId);
+                Location newloc = new Location(cs.Longitude, cs.Latitude);
+                return newloc;
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
         /// <summary>
         /// the func returns location of the rtraget
@@ -57,9 +71,16 @@ namespace BL
         /// <returns></returns>
         public Location GetReceiverLo(IDAL.DO.Parcel pr)
         {
-            IDAL.DO.Customer cs = Data.PrintCustomer(pr.TargetId);
-            Location newloc = new Location(cs.Longitude, cs.Latitude);
-            return newloc;
+            try
+            {
+                IDAL.DO.Customer cs = Data.PrintCustomer(pr.TargetId);
+                Location newloc = new Location(cs.Longitude, cs.Latitude);
+                return newloc;
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
 
         public IEnumerable<DroneToList> BLDrones()
@@ -100,37 +121,44 @@ namespace BL
         /// <returns>ID of the closest station</returns>
         public int GetClosestStation(Location a)
         {
-            int i = 0;
-            int closestID = 0;
-            double minimum = 0;
-            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-            List<Station> stationsBL = new();
-            foreach (IDAL.DO.Station station in tempDataStations)
+            try
             {
-                stationsBL.Add(BLStation(station));
-            }
-            if (stationsBL.Count == 0)
+                int i = 0;
+                int closestID = 0;
+                double minimum = 0;
+                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
+                List<Station> stationsBL = new();
+                foreach (IDAL.DO.Station station in tempDataStations)
+                {
+                    stationsBL.Add(new Station(station));
+                }
+                if (stationsBL.Count == 0)
+                    return closestID;
+                while (i != stationsBL.Count)
+                {
+                    if (stationsBL[i].ReadyStandsInStation > 0)
+                    {
+                        closestID = stationsBL[0].Id;
+                        minimum = GetDistance(a, stationsBL[0].location);
+                        break;
+                    }
+                }
+                if (i == stationsBL.Count)
+                    throw new BlException("There is no station to charge");
+                for (; i < stationsBL.Count; i++)
+                {
+                    if (minimum > GetDistance(a, stationsBL[i].location) && stationsBL[i].ReadyStandsInStation > 0)
+                    {
+                        closestID = stationsBL[i].Id;
+                        minimum = GetDistance(a, stationsBL[i].location);
+                    }
+                }
                 return closestID;
-            while (i != stationsBL.Count)
-            {
-                if (stationsBL[i].ReadyStandsInStation > 0)
-                {
-                    closestID = stationsBL[0].Id;
-                    minimum = GetDistance(a, stationsBL[0].location);
-                    break;
-                }
             }
-            if (i == stationsBL.Count)
-                throw "There is no station to charge";
-            for (; i < stationsBL.Count; i++)
+            catch (IDAL.DO.DalExceptions ex)
             {
-                if (minimum > GetDistance(a, stationsBL[i].location) && stationsBL[i].ReadyStandsInStation > 0)
-                {
-                    closestID = stationsBL[i].Id;
-                    minimum = GetDistance(a, stationsBL[i].location);
-                }
+                throw new BlException(ex.Message);
             }
-            return closestID;
         }
 
         /// <summary>
@@ -140,10 +168,17 @@ namespace BL
         /// <returns>location of station</returns>
         public Location GetLocationOfStation(int ID)
         {
-            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-            int i = tempDataStations.FindIndex(w => w.Id == ID);
-            Location loc = new(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
-            return loc;
+            try
+            {
+                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
+                int i = tempDataStations.FindIndex(w => w.Id == ID);
+                Location loc = new(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
+                return loc;
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
 
         public Station BLStation(IDAL.DO.Station s)

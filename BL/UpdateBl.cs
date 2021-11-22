@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using IDAL;
 using IBL.BO;
+using System.Linq;
 using System.Collections;
 using IBL;
 namespace BL
@@ -18,11 +19,18 @@ namespace BL
         /// <param name="Name"></param>
         public void UpdatDroneName(int DroneId, string Name)
         {
-            if (!DroneList.Exists(w => w.Id == DroneId))
-                throw "Drone doesn't exist\n";
-            int i = DroneList.FindIndex(w => w.Id == DroneId);
-            DroneList[i].Model = Name;
-            Data.UpdateDrone(DroneId, Name);
+            try
+            {
+                if (!DroneList.Exists(w => w.Id == DroneId))
+                    throw new BlException("Drone doesn't exist");
+                int i = DroneList.FindIndex(w => w.Id == DroneId);
+                DroneList[i].Model = Name;
+                Data.UpdateDrone(DroneId, Name);
+            }
+            catch(IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
         /// <summary>
         /// the func gets the id and finds if in exsits (we assume tha the parameters are valid and not a problem (we chack that on the console level) )
@@ -33,11 +41,18 @@ namespace BL
         /// <param name="Phone"></param>
         public void UpdateCosomerInfo(int Id,string Name, string Phone)
         {
-            List<IDAL.DO.Customer> Tempcustomers = new List<IDAL.DO.Customer>(Data.PrintCustomerList());
-            if(!(Tempcustomers.Exists(w=>w.Id==Id)))
-                throw "Customer doesn't exsit\n";
-            Data.UpdateCustomer(Id, Name, Phone);
-        
+            try
+            {
+                List<IDAL.DO.Customer> Tempcustomers = new List<IDAL.DO.Customer>(Data.PrintCustomerList());
+                if (!(Tempcustomers.Exists(w => w.Id == Id)))
+                    throw new BlException("Customer doesn't exsit");
+                Data.UpdateCustomer(Id, Name, Phone);
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
+
         }
         /// <summary>
         /// the func gets the id finsds if it exsits and the changes 
@@ -48,10 +63,17 @@ namespace BL
         /// <param name="numofCha"></param>
         public void UpdateStstion(int Id, string Name,int numofCha)
         {
-            List<IDAL.DO.Station> Tempstation = new List<IDAL.DO.Station>(Data.PrintStationList());
-            if (!(Tempstation.Exists(w => w.Id == Id)))
-                throw "Customer doesn't exsit\n";
-            Data.UpdatStation(Id, Name,numofCha);
+            try
+            {
+                List<IDAL.DO.Station> Tempstation = new List<IDAL.DO.Station>(Data.PrintStationList());
+                if (!(Tempstation.Exists(w => w.Id == Id)))
+                    throw new BlException("Customer doesn't exsit");
+                Data.UpdatStation(Id, Name, numofCha);
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
         /// <summary>
         /// we make 4 initial checks 1. macke sure that the drone exits
@@ -64,25 +86,32 @@ namespace BL
    
         public void SendDroneToCarge(int DronId)
         {
-            int i = DroneList.FindIndex(w => w.Id == DronId);
-            if (i == 0)
-                throw "Drone doesn't exist\n";
-            if (!(DroneList[i].status == STATUS_OF_DRONE.AVAILABLE))
-                throw "Charhing Not Possible (Drone nNot Availble)\n";
+            try
+            {
+                int i = DroneList.FindIndex(w => w.Id == DronId);
+                if (i == 0)
+                    throw new BlException("Drone doesn't exist");
+                if (!(DroneList[i].status == STATUS_OF_DRONE.AVAILABLE))
+                    throw new BlException("Charhing Not Possible (Drone nNot Availble)");
 
-            int j = GetMinimumDistance(DroneList[i].ThisLocation);//geting the id of station that we need to charge
-            IDAL.DO.Station tempstaton = new IDAL.DO.Station();
-            tempstaton = Data.PrintStation(j);//a temporary station (like the one to charg) 
-            if (tempstaton.ReadyChargeStands == 0)
-                throw "Charhing Not Possible (Station Cargin slots are full)\n";
-            Location location = new Location(tempstaton.Longitude, tempstaton.Latitude);//checking that we have enough battery by geting the ditence and the battery cunsomption
-            if (DroneList[i].Battery < Consumption(DroneList[i].ThisLocation, location, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE))
-                throw "Charhing Not Possible (Not Enough Battery)\n";
-            DroneList[i].status = IBL.BO.STATUS_OF_DRONE.IN_MAINTENANCE;//updating the drone status
-            DroneList[i].Battery -= Consumption(DroneList[i].ThisLocation, location, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);//updating the battery
-            DroneList[i].ThisLocation = location;//updating the location
-            Data.UpdatStation(j,"",tempstaton.ReadyChargeStands-1); //updating the redy charging srtands     
-            Data.CreateANewDroneCharge(DronId, j);//creating a new drone-charg
+                int j = GetClosestStation(DroneList[i].ThisLocation);//geting the id of station that we need to charge
+                IDAL.DO.Station tempstaton = new IDAL.DO.Station();
+                tempstaton = Data.PrintStation(j);//a temporary station (like the one to charg) 
+                if (tempstaton.ReadyChargeStands == 0)
+                    throw new BlException("Charhing Not Possible (Station Cargin slots are full)");
+                Location location = new Location(tempstaton.Longitude, tempstaton.Latitude);//checking that we have enough battery by geting the ditence and the battery cunsomption
+                if (DroneList[i].Battery < Consumption(DroneList[i].ThisLocation, location, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE))
+                    throw new BlException("Charhing Not Possible (Not Enough Battery)");
+                DroneList[i].status = IBL.BO.STATUS_OF_DRONE.IN_MAINTENANCE;//updating the drone status
+                DroneList[i].Battery -= Consumption(DroneList[i].ThisLocation, location, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);//updating the battery
+                DroneList[i].ThisLocation = location;//updating the location
+                Data.UpdatStation(j, "", tempstaton.ReadyChargeStands - 1); //updating the redy charging srtands     
+                Data.CreateANewDroneCharge(DronId, j);//creating a new drone-charg]
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
 
         }
         /// <summary>
@@ -96,17 +125,24 @@ namespace BL
         /// <param name="Time"></param>
         public void ReturnDroneFromeCharging(int DroneId,int Time)
         {
-            int i = DroneList.FindIndex(w => w.Id == DroneId);
-            if (i == 0)
-                throw "Drone doesn't exsit\n";
-            if (!(DroneList[i].status == IBL.BO.STATUS_OF_DRONE.IN_MAINTENANCE))
-                throw "ERROR: Dron Not In Cargong Mode\n";
-            DroneList[i].status = IBL.BO.STATUS_OF_DRONE.AVAILABLE;
-            DroneList[i].Battery = Time * batteryConfig[5];
-            IDAL.DO.DroneCharge droneCharge = Data.PrintDronCarg(DroneId);
-            IDAL.DO.Station station = Data.PrintStation(droneCharge.StationId);
-            Data.UpdatStation(station.Id, "", station.ReadyChargeStands + 1);
-            Data.ClearDroneCharge(DroneId);              
+            try
+            {
+                int i = DroneList.FindIndex(w => w.Id == DroneId);
+                if (i == 0)
+                    throw new BlException("Drone doesn't exsit");
+                if (!(DroneList[i].status == IBL.BO.STATUS_OF_DRONE.IN_MAINTENANCE))
+                    throw new BlException("ERROR: Dron Not In Cargong Mode");
+                DroneList[i].status = IBL.BO.STATUS_OF_DRONE.AVAILABLE;
+                DroneList[i].Battery = Time * batteryConfig[5];
+                IDAL.DO.DroneCharge droneCharge = Data.PrintDronCarg(DroneId);
+                IDAL.DO.Station station = Data.PrintStation(droneCharge.StationId);
+                Data.UpdatStation(station.Id, "", station.ReadyChargeStands + 1);
+                Data.ClearDroneCharge(DroneId);
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
         /// <summary>
         /// the func in order to deside witch one to do 
@@ -116,30 +152,28 @@ namespace BL
         /// <param name="DroneId"></param>
         public void AssignDronToParcel(int DroneId)
         {
-            if (!(DroneList.Exists(w => w.Id == DroneId)))
-                throw "Drone dosent exsit\n";
-            int i = DroneList.FindIndex(w => w.Id == DroneId);
-            List<IDAL.DO.Parcel> tempDataParcels = new List<IDAL.DO.Parcel>(Data.PrintParcelList());
-            tempDataParcels.RemoveAll(w => (int)w.Weigh > (int)DroneList[i].MaxWeight);//removed all that ear not in the weight limit 
-            tempDataParcels.RemoveAll(w => w.Scheduled != DateTime.MinValue);//remove all theat ear alredy scheduled
-            int j = 0;
-            tempDataParcels.RemoveAll(w => GetBatteryUseAndRootFeasibility(DroneList[i], w) == (false, j));//remove all tht cant do the root (because of the battery consemption)
-            if (tempDataParcels.Exists(w => w.Priority == IDAL.DO.PRIORITY.EMERGENCY))
-                tempDataParcels.RemoveAll(w => w.Priority != IDAL.DO.PRIORITY.EMERGENCY);
-            else if(tempDataParcels.Exists(w => w.Priority == IDAL.DO.PRIORITY.FAST))
-                    tempDataParcels.RemoveAll(w => w.Priority != IDAL.DO.PRIORITY.FAST);                              
-            if (tempDataParcels.Exists(w => (int)w.Weigh == (int)DroneList[i].MaxWeight))
-                tempDataParcels.RemoveAll(w => (int)w.Weigh != (int)DroneList[i].MaxWeight);
-            else if(tempDataParcels.Exists(w => (int)w.Weigh == (int)DroneList[i].MaxWeight-1))
-                     tempDataParcels.RemoveAll(w => (int)w.Weigh != (int)DroneList[i].MaxWeight-1);
-            tempDataParcels.Sort((w, x) => GetDistance(DroneList[i].ThisLocation, GetSenderLo(w)).CompareTo(GetDistance(DroneList[i].ThisLocation, GetSenderLo(x))));//sorting the list acording to ditenc
-            tempDataParcels.Sort((w, x) => (int)w.Weigh);
-            tempDataParcels.Sort((w, x) => (int)w.Priority);//sorting acourding to priyuorty
-            if (tempDataParcels.Count == 0)
-                throw "Assignment Not Possble\n";
-            DroneList[i].status = IBL.BO.STATUS_OF_DRONE.DELIVERY;
-            DroneList[i].ParcelId = tempDataParcels[0].Id;
-            Data.UpdatParcel(tempDataParcels[0].Id, 0, 0, DroneList[i].Id, 0, 0, 1);//we updating the first parcel in the list
+            try
+            {
+                if (!(DroneList.Exists(w => w.Id == DroneId)))
+                    throw new BlException("Drone dosent exsit");
+                int i = DroneList.FindIndex(w => w.Id == DroneId);
+                List<IDAL.DO.Parcel> tempDataParcels = new List<IDAL.DO.Parcel>(Data.PrintParcelList());
+                tempDataParcels.RemoveAll(w => (int)w.Weigh > (int)DroneList[i].MaxWeight);//removed all that ear not in the weight limit 
+                tempDataParcels.RemoveAll(w => w.Scheduled != DateTime.MinValue);//remove all theat ear alredy scheduled
+                int j = 0;
+                tempDataParcels.RemoveAll(w => GetBatteryUseAndRootFeasibility(DroneList[i], w) == (false, j));//remove all tht cant do the root (because of the battery consemption)
+                tempDataParcels.OrderByDescending(w => w.Priority).ThenByDescending(w => w.Weigh).ThenBy(w => GetDistance(DroneList[i].ThisLocation, GetSenderLo(w)));
+                //sorting acourding to priyuorty
+                if (tempDataParcels.Count == 0)
+                    throw new BlException("Assignment Not Possble");
+                DroneList[i].status = IBL.BO.STATUS_OF_DRONE.DELIVERY;
+                DroneList[i].ParcelId = tempDataParcels[0].Id;
+                Data.UpdatParcel(tempDataParcels[0].Id, 0, 0, DroneList[i].Id, 0, 0, 1);//we updating the first parcel in the list
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
         /// <summary>
         /// the func updats the pich up 
@@ -149,16 +183,23 @@ namespace BL
         /// <param name="DroneId"></param>
         public void PickUp(int DroneId)
         {
-            if (!(DroneList.Exists(w => w.Id == DroneId)))
-                throw "Drone dosent exsit\n";
-            int i = DroneList.FindIndex(w => w.Id == DroneId);
-            IDAL.DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
-            if (parcel.PickedUp != DateTime.MinValue)
-                throw "Parcel Alredy Picked Up\n";
-            double batteryuse = Consumption(DroneList[i].ThisLocation, GetSenderLo(parcel),MODE_OF_DRONE_IN_MOVING.AVAILABLE);
-            DroneList[i].Battery -= batteryuse;
-            DroneList[i].ThisLocation = GetSenderLo(parcel);
-            Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 1);
+            try
+            {
+                if (!(DroneList.Exists(w => w.Id == DroneId)))
+                    throw new BlException("Drone dosent exsit");
+                int i = DroneList.FindIndex(w => w.Id == DroneId);
+                IDAL.DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
+                if (parcel.PickedUp != DateTime.MinValue)
+                    throw new BlException("Parcel Alredy Picked Up");
+                double batteryuse = Consumption(DroneList[i].ThisLocation, GetSenderLo(parcel), MODE_OF_DRONE_IN_MOVING.AVAILABLE);
+                DroneList[i].Battery -= batteryuse;
+                DroneList[i].ThisLocation = GetSenderLo(parcel);
+                Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 1);
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
         /// <summary>
         /// the func gets the status and
@@ -166,16 +207,23 @@ namespace BL
         /// <param name="DroneId"></param>
         public void Suuply(int DroneId)
         {
-            if (!(DroneList.Exists(w => w.Id == DroneId)))
-                throw "Drone dosent exsit\n";
-            int i = DroneList.FindIndex(w => w.Id == DroneId);
-            IDAL.DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
-            if (parcel.PickedUp == DateTime.MinValue || parcel.Delivered != DateTime.MinValue)
-                throw "cant suuply\n";
-            double batteryuse = Consumption(DroneList[i].ThisLocation, GetReceiverLo(parcel), (MODE_OF_DRONE_IN_MOVING)parcel.Weigh);
-            DroneList[i].Battery -= batteryuse;
-            DroneList[i].ThisLocation = GetSenderLo(parcel);
-            Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 0,0,1);
+            try
+            {
+                if (!(DroneList.Exists(w => w.Id == DroneId)))
+                    throw new BlException("Drone dosent exsit");
+                int i = DroneList.FindIndex(w => w.Id == DroneId);
+                IDAL.DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
+                if (parcel.PickedUp == DateTime.MinValue || parcel.Delivered != DateTime.MinValue)
+                    throw new BlException("cant suuply");
+                double batteryuse = Consumption(DroneList[i].ThisLocation, GetReceiverLo(parcel), (MODE_OF_DRONE_IN_MOVING)parcel.Weigh);
+                DroneList[i].Battery -= batteryuse;
+                DroneList[i].ThisLocation = GetSenderLo(parcel);
+                Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+            }
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
     
     }
