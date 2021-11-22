@@ -1,7 +1,6 @@
 ﻿using System;
 using IBL.BO;
 using IBL;
-
 namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
@@ -29,7 +28,7 @@ namespace ConsoleUI_BL
                                     Console.WriteLine("Enter station ID: ");
                                     Int32.TryParse(Console.ReadLine(), out int x);
                                     if (x <= 0)
-                                        throw "Invalid value\n";
+                                        throw new ConsoleBlException ("Invalid value");
                                     station.Id = x;
                                     Console.WriteLine("\nEnter a name for the station: ");
                                     station.Name = Console.ReadLine();
@@ -42,15 +41,19 @@ namespace ConsoleUI_BL
                                     Console.WriteLine("\nEnter amount of charging slats: ");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x < 0)
-                                        throw "Invalid value\n";
+                                        throw new ConsoleBlException("Invalid value");
                                     station.ReadyStandsInStation = x;
                                     try
                                     {
                                         BLObject.AddStation(station);
                                     }
-                                    catch ()
+                                    catch (ConsoleBlException ex)
                                     {
-
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                    catch (IBL.BO.BlException ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
                                     }
                                     break;
                                 }
@@ -60,7 +63,7 @@ namespace ConsoleUI_BL
                                     Console.WriteLine("Enter drone ID: ");
                                     Int32.TryParse(Console.ReadLine(), out int x);
                                     if (x <= 0)
-                                        throw "Invalid value\n";
+                                        throw new ConsoleBlException( "Invalid value");
                                     drone.Id = x;
                                     Console.WriteLine("\nEnter drone model: ");
                                     drone.Model = Console.ReadLine();
@@ -74,14 +77,18 @@ namespace ConsoleUI_BL
                                     Console.WriteLine("\nEnter the ID of the station to the first charging");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x <= 0)
-                                        throw "Invalid value\n";
+                                        throw new ConsoleBlException("Invalid value");
                                     try
                                     {
                                         BLObject.AddDrone(drone, x);
                                     }
-                                    catch ()
+                                    catch (ConsoleBlException ex)
                                     {
-
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                    catch (IBL.BO.BlException ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
                                     }
                                     break;
                                 }
@@ -91,7 +98,7 @@ namespace ConsoleUI_BL
                                     Console.WriteLine("Enter customer ID: ");
                                     Int32.TryParse(Console.ReadLine(), out int x);
                                     if (x <= 0)
-                                        throw "Invalid value\n";
+                                        throw new ConsoleBlException("Invalid value");
                                     customer.Id = x;
                                     Console.WriteLine("\nEnter customer name: ");
                                     customer.Name = Console.ReadLine();
@@ -107,9 +114,13 @@ namespace ConsoleUI_BL
                                     {
                                         BLObject.AddCustomer(customer);  //sends to the func
                                     }
-                                    catch ()
+                                    catch (ConsoleBlException ex)
                                     {
-
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                    catch (IBL.BO.BlException ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
                                     }
                                     break;
                                 }
@@ -119,17 +130,17 @@ namespace ConsoleUI_BL
                                     Console.WriteLine("Enter parcel ID: ");
                                     Int32.TryParse(Console.ReadLine(), out int x);
                                     if (x <= 0)
-                                        throw "Invalid value\n";
+                                        throw new ConsoleBlException("Invalid value");
                                     parcel.Id = x;
                                     Console.WriteLine("\nEnter sender ID: ");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x <= 0)
-                                        throw "Invalid value\n";
+                                        throw new ConsoleBlException("Invalid value");
                                     parcel.Sender.Id = x;
                                     Console.WriteLine("\nEnter target ID: ");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x <= 0)
-                                        throw "Invalid value\n";
+                                        new ConsoleBlException("Invalid value");
                                     parcel.Recipient.Id = x;
                                     Console.WriteLine(@"
                                         Choose the wheit of the parcel:
@@ -149,9 +160,13 @@ namespace ConsoleUI_BL
                                     {
                                         BLObject.AddParcel(parcel);
                                     }
-                                    catch ()
+                                    catch (ConsoleBlException ex)
                                     {
-
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                    catch (IBL.BO.BlException ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
                                     }
                                     break;
                                 }
@@ -161,9 +176,9 @@ namespace ConsoleUI_BL
                     }
                 }
             }
-            catch ()
+            catch (ConsoleBlException ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
     }

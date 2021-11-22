@@ -19,17 +19,24 @@ namespace ConsoleUI_BL
             char.TryParse(Console.ReadLine(), out char ch);
             while (ch != 'E')
             {
-                switch (ch)
+                try
                 {
-                    case'A':
-                        ConsoleUI_BL.add();
-                        break;
-                    case 'B':
-                        ConsoleUI_BL.Update();
-                        break;
-                    case 'C':
-                        ConsoleUI_BL.Display();
-                        break;                     
+                    switch (ch)
+                    {
+                        case 'A':
+                            ConsoleUI_BL.add();
+                            break;
+                        case 'B':
+                            ConsoleUI_BL.Update();
+                            break;
+                        case 'C':
+                            ConsoleUI_BL.Display();
+                            break;
+                    }
+                }
+                catch (ConsoleBlException ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
 

@@ -15,12 +15,14 @@ namespace DalObject
         {
             int i = DataSource.stations.FindIndex(w => w.Equals(sta));
             if (i > 0)
-                throw new IDAL.DO.DalExceptions(1,"ERROR");///theowin the exciption of elerdy exsit
+                throw new DalExceptions("Station Alredy exsits");///theowin the exciption of elerdy exsit
             DataSource.stations.Add(sta);
         }
         public void UpdateReadyStandsInStation(int staId)
         {
             int i = DataSource.stations.FindIndex(w => w.Id == staId);  //find the station
+            if (i < 0)
+                throw new DalExceptions("Station dosent exist");
             Station tempStation = DataSource.stations[i];
             tempStation.ReadyChargeStands--;
             DataSource.stations[i] = tempStation;
@@ -49,6 +51,8 @@ namespace DalObject
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = 0)
         {
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
+            if (i < 0)
+                throw new DalExceptions("Station dosent exist");
             if (!string.IsNullOrEmpty(Name))
             {
                 DataSource.stations[i].Name.Replace(DataSource.stations[i].Name, Name);

@@ -20,7 +20,7 @@ namespace ConsoleUI
         public override string ToString()
         {
            
-            return "impet incorrect"+base.ToString();
+            return "Consol_uI"+base.ToString();
         }
 
     }

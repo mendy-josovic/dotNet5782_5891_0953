@@ -12,11 +12,16 @@ namespace DalObject
     {
         public void AddDrone(Drone dro)  //same
         {
+            int i = DataSource.drones.FindIndex(w => w.Equals(dro));
+            if (i > 0)
+                throw new IDAL.DO.DalExceptions("Drone Alredy exsits");
             DataSource.drones.Add(dro);
         }
         public void DroneIdOfPArcel(int prcId, int drnId)
         {
             int i = DataSource.parcels.FindIndex(w => w.Id == prcId);
+            if (i < 0)
+                throw new IDAL.DO.DalExceptions("Drone Dosen't exsits");
             Parcel tempParcel = DataSource.parcels[i];
             tempParcel.DroneId = drnId;
             DataSource.parcels[i] = tempParcel;
@@ -38,6 +43,8 @@ namespace DalObject
         public void UpdateDrone(int drnId, string Name)
         {
             int i = DataSource.drones.FindIndex(w => w.Id == drnId);
+            if (i < 0)
+                throw new IDAL.DO.DalExceptions("Drone Dosen't exsits");
             DataSource.drones[i].Model.Replace(DataSource.drones[i].Model,Name);
         }
         /// <summary>
@@ -55,6 +62,8 @@ namespace DalObject
         public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0,int DroneId=0, WEIGHT whihgt = 0, PRIORITY priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
         {
             int i = DataSource.parcels.FindIndex(w => w.Id == parclId);
+            if (i < 0)
+                throw new IDAL.DO.DalExceptions("Drone Dosen't exsits");
             if (SenderId != 0)
                 DataSource.parcels[i].SenderId.CompareTo(SenderId);
             if (TargetId != 0)

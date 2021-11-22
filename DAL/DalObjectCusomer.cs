@@ -12,6 +12,10 @@ namespace DalObject
     {
         public void AddCustomer(Customer cst)  //same
         {
+           
+            int i = DataSource.customers.FindIndex(w => w.Equals(cst));
+            if (i > 0)
+                throw new IDAL.DO.DalExceptions("Customer Alredy exsits");
             DataSource.customers.Add(cst);
         }
         public Customer PrintCustomer(int id)  //finds the customer and sends a replica
@@ -33,7 +37,9 @@ namespace DalObject
         public void UpdateCustomer(int CusId, string Name ="", string phone ="")
         {
             int i = DataSource.customers.FindIndex(w => w.Id == CusId);
-            if(!string.IsNullOrEmpty(Name))
+            if (i < 0)
+                throw new IDAL.DO.DalExceptions("Customer Dosen't exsits");
+            if (!string.IsNullOrEmpty(Name))
             {
                 DataSource.customers[i].Name.Replace(DataSource.customers[i].Name, Name);
             }
