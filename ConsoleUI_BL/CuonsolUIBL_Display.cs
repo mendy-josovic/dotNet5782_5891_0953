@@ -8,18 +8,18 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-       static IBl BLObject = new BL.BL();
+        static IBl BLObject = new BL.BL();
         public static void Display()
         {
-            try
+            //creating an object of BL class for all the functions
             {
-      //creating an object of BL class for all the functions
-                {
-                    Console.WriteLine(@"
+                Console.WriteLine(@"
                             Enter 'a' to display a station
                             Enter 'b' to display a drone");
-                    char.TryParse(Console.ReadLine(), out char ch);
-                    while (ch != 'e')
+                char.TryParse(Console.ReadLine(), out char ch);
+                while (ch != 'e')
+                {
+                    try
                     {
                         switch (ch)
                         {
@@ -41,7 +41,7 @@ namespace ConsoleUI_BL
                                                     Console.WriteLine("Enter station ID: ");
                                                     Int32.TryParse(Console.ReadLine(), out int x);
                                                     if (x <= 0)
-                                                        throw "Invalid value\n";
+                                                        throw new ConsoleBlException("Invalid value");
                                                     IDAL.DO.Station station = BLObject.DisplayStation(x);
                                                     Station BLStation = BLObject.BLStation(station);
                                                     //BLStation.ListOfDrones = BLObject.BLDrones().Where(drone => drone.ThisLocation == BLStation.location); Inumerable
@@ -58,7 +58,7 @@ namespace ConsoleUI_BL
                                                     Console.WriteLine("Enter drone ID: ");
                                                     Int32.TryParse(Console.ReadLine(), out int x);
                                                     if (x <= 0)
-                                                        throw "Invalid value\n";
+                                                        throw new ConsoleBlException("Invalid value");
                                                     DroneToList drone = BLObject.DisplayDrone(x);
                                                     Drone BLDrone = BLObject.BLDrone(drone);
                                                     Console.WriteLine(BLDrone);
@@ -69,7 +69,7 @@ namespace ConsoleUI_BL
                                                     Console.WriteLine("Enter customer ID: ");
                                                     Int32.TryParse(Console.ReadLine(), out int x);
                                                     if (x <= 0)
-                                                        throw "Invalid value\n";
+                                                        throw new ConsoleBlException("Invalid value");
                                                     IDAL.DO.Customer customer = BLObject.DisplayCustomer(x);
                                                     Customer BLCustomer = BLObject.BLCustomer(customer);
                                                     Console.WriteLine(BLCustomer);
@@ -80,7 +80,7 @@ namespace ConsoleUI_BL
                                                     Console.WriteLine("Enter parcel ID: ");
                                                     Int32.TryParse(Console.ReadLine(), out int x);
                                                     if (x <= 0)
-                                                        throw "Invalid value\n";
+                                                        throw new ConsoleBlException("Invalid value");
                                                     IDAL.DO.Parcel parcel = BLObject.DisplayParcel(x);
                                                     Parcel BLParcel = BLObject.BLParcel(parcel);
                                                     Console.WriteLine(BLParcel);
@@ -103,75 +103,91 @@ namespace ConsoleUI_BL
                                     char.TryParse(Console.ReadLine(), out char ch2);
                                     while (ch2 != 'e')
                                     {
-                                        switch (ch2)
+                                        try
                                         {
-                                            case 'a':
-                                                {
-                                                    List<StationToList> stations = BLObject.DisplayStationList();
-                                                    foreach (StationToList station in stations)
+                                            switch (ch2)
+                                            {
+                                                case 'a':
                                                     {
-                                                        Console.WriteLine(station + "/n");
+                                                        List<StationToList> stations = BLObject.DisplayStationList();
+                                                        foreach (StationToList station in stations)
+                                                        {
+                                                            Console.WriteLine(station + "/n");
+                                                        }
+                                                        break;
                                                     }
-                                                    break;
-                                                }
-                                            case 'b':
-                                                {
-                                                    List<DroneToList> drones = BLObject.DisplayDroneList();
-                                                    foreach (DroneToList drone in drones)
+                                                case 'b':
                                                     {
-                                                        Console.WriteLine(drone + "/n");
+                                                        List<DroneToList> drones = BLObject.DisplayDroneList();
+                                                        foreach (DroneToList drone in drones)
+                                                        {
+                                                            Console.WriteLine(drone + "/n");
+                                                        }
+                                                        break;
                                                     }
-                                                    break;
-                                                }
-                                            case 'c':
-                                                {
-                                                    List<CustomerToList> customers = BLObject.DisplayCustomerList();
-                                                    foreach (CustomerToList customer in customers)
+                                                case 'c':
                                                     {
-                                                        Console.WriteLine(customer + "/n");
+                                                        List<CustomerToList> customers = BLObject.DisplayCustomerList();
+                                                        foreach (CustomerToList customer in customers)
+                                                        {
+                                                            Console.WriteLine(customer + "/n");
+                                                        }
+                                                        break;
                                                     }
-                                                    break;
-                                                }
-                                            case 'd':
-                                                {
-                                                    List<ParcelToList> parcels = BLObject.DisplayParcelList();
-                                                    foreach (ParcelToList parcel in parcels)
+                                                case 'd':
                                                     {
-                                                        Console.WriteLine(parcel + "/n");
+                                                        List<ParcelToList> parcels = BLObject.DisplayParcelList();
+                                                        foreach (ParcelToList parcel in parcels)
+                                                        {
+                                                            Console.WriteLine(parcel + "/n");
+                                                        }
+                                                        break;
                                                     }
-                                                    break;
-                                                }
-                                            case 'f':
-                                                {
-                                                    List<ParcelToList> parcels = BLObject.DisplayParcelList();
-                                                    var notAssociated = parcels.FindAll(w => w.Status == STATUS_OF_PARCEL.CREATED);
-                                                    foreach (ParcelToList parcel in notAssociated)
+                                                case 'f':
                                                     {
-                                                        Console.WriteLine(parcel + "/n");
+                                                        List<ParcelToList> parcels = BLObject.DisplayParcelList();
+                                                        var notAssociated = parcels.FindAll(w => w.Status == STATUS_OF_PARCEL.CREATED);
+                                                        foreach (ParcelToList parcel in notAssociated)
+                                                        {
+                                                            Console.WriteLine(parcel + "/n");
+                                                        }
+                                                        break;
                                                     }
-                                                    break;
-                                                }
-                                            case 'g':
-                                                {
-                                                    List<StationToList> stations = BLObject.DisplayStationList();
-                                                    var stationsWithReadyStands = stations.FindAll(w => w.ReadyStandsInStation > 0);
-                                                    foreach (StationToList station in stationsWithReadyStands)
+                                                case 'g':
                                                     {
-                                                        Console.WriteLine(station + "/n");
+                                                        List<StationToList> stations = BLObject.DisplayStationList();
+                                                        var stationsWithReadyStands = stations.FindAll(w => w.ReadyStandsInStation > 0);
+                                                        foreach (StationToList station in stationsWithReadyStands)
+                                                        {
+                                                            Console.WriteLine(station + "/n");
+                                                        }
+                                                        break;
                                                     }
-                                                    break;
-                                                }
+                                            }
                                         }
+                                        catch (ConsoleBlException ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                        catch (IBL.BO.BlException ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                        
                                     }
                                     break;
                                 }
                         }
                     }
+                    catch (ConsoleBlException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    catch (IBL.BO.BlException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
-            }
-            catch ()
-            {
-
             }
         }
     }
