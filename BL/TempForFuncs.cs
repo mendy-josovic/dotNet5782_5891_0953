@@ -17,6 +17,8 @@ namespace BL
         {
             return GetDistance(a, b) * batteryConfig[(int)mode];
         }
+
+
         public (bool,double) GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro,IDAL.DO.Parcel prc)
         {
             try
@@ -30,7 +32,7 @@ namespace BL
                 Location StapingPiont = GetSenderLo(prc);
                 Location FinishingPiont = GetReceiverLo(prc);
                 closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));
-                Location ClosestCarging = new Location(closeststation.Longitude, closeststation.Latitude);
+                Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
                 double batteryUse = Consumption(startingPiont, StapingPiont, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE) + Consumption(StapingPiont, FinishingPiont, (IBL.BO.MODE_OF_DRONE_IN_MOVING)prc.Weigh);
                 if (dro.Battery - batteryUse < 20)
                 {
@@ -56,7 +58,7 @@ namespace BL
             try
             {
                 IDAL.DO.Customer cs = Data.PrintCustomer(pr.SenderId);
-                Location newloc = new Location(cs.Longitude, cs.Latitude);
+                Location newloc = Location(cs.Longitude, cs.Latitude);
                 return newloc;
             }
             catch (IDAL.DO.DalExceptions ex)
@@ -74,7 +76,7 @@ namespace BL
             try
             {
                 IDAL.DO.Customer cs = Data.PrintCustomer(pr.TargetId);
-                Location newloc = new Location(cs.Longitude, cs.Latitude);
+                Location newloc = Location(cs.Longitude, cs.Latitude);
                 return newloc;
             }
             catch (IDAL.DO.DalExceptions ex)
@@ -83,6 +85,11 @@ namespace BL
             }
         }
 
+
+        /// <summary>
+        /// turn DroneList into IEnumerable DroneList
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DroneToList> BLDrones()
         {
             return DroneList;
@@ -172,7 +179,7 @@ namespace BL
             {
                 List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
                 int i = tempDataStations.FindIndex(w => w.Id == ID);
-                Location loc = new(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
+                Location loc = Location(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
                 return loc;
             }
             catch (IDAL.DO.DalExceptions ex)
@@ -181,17 +188,28 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// Turn a DAL station into a BL station
+        /// </summary>
+        /// <param name="s">DAL station</param>
+        /// <returns>BL station</returns>
         public Station BLStation(IDAL.DO.Station s)
         {
             Station station = new();
             station.Id = s.Id;
             station.Name = s.Name;
+            station.location = new();
             station.location.Longitude = s.Longitude;
             station.location.Latitude = s.Latitude;
             station.ReadyStandsInStation = s.ReadyChargeStands;
             return station;
         }
 
+        /// <summary>
+        /// Turn a DroneToList drone into a BL Drone
+        /// </summary>
+        /// <param name="d">DroneToList drone</param>
+        /// <returns>BL Drone</returns>
         public Drone BLDrone(DroneToList d)
         {
             Drone drone = new();
@@ -211,6 +229,11 @@ namespace BL
             return drone;
         }
 
+        /// <summary>
+        /// Turn a DAL customer into a BL customer
+        /// </summary>
+        /// <param name="c">DAL customer </param>
+        /// <returns>BL customer</returns>
         public Customer BLCustomer(IDAL.DO.Customer c)
         {
             List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
@@ -234,6 +257,11 @@ namespace BL
             return customer;
         }
 
+        /// <summary>
+        /// Turn a DAL parcel into a BL parcel 
+        /// </summary>
+        /// <param name="p">DAL parcel </param>
+        /// <returns>BL parcel</returns>
         public Parcel BLParcel(IDAL.DO.Parcel p)
         {
             List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
@@ -254,6 +282,11 @@ namespace BL
             return parcel;
         }
 
+        /// <summary>
+        /// Turn a DroneToList drone into a DroneInParcel
+        /// </summary>
+        /// <param name="d">DroneToList</param>
+        /// <returns>DroneInParcel</returns>
         public DroneInParcel BLDroneInParcel(DroneToList d)
         {
             DroneInParcel drone = new();
@@ -263,6 +296,12 @@ namespace BL
             return drone;
         }
 
+        /// <summary>
+        /// Turn a DAL parcel into a BL ParcelAtCustomer
+        /// </summary>
+        /// <param name="p">DAL parcel</param>
+        /// <param name="sender">a flag if the customer of ParcelAtCustomer is the sender or the recipient</param>
+        /// <returns>BL ParcelAtCustomer</returns>
         public ParcelAtCustomer BLParcelAtCustomer(IDAL.DO.Parcel p, bool sender)
         {
             List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
@@ -285,6 +324,11 @@ namespace BL
             return par;
         }
 
+        /// <summary>
+        /// Turn a DAL parcel into a BL ParcelInTransfer
+        /// </summary>
+        /// <param name="p">DAL parcel</param>
+        /// <returns>BL ParcelInTransfer</returns>
         public ParcelInTransfer BLParcelInTransfer(IDAL.DO.Parcel p)
         {
             List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
@@ -301,6 +345,11 @@ namespace BL
             return par;
         }
 
+        /// <summary>
+        /// Turn a DAL customer into a BL CustomerInParcel
+        /// </summary>
+        /// <param name="DalCus">DAL customer</param>
+        /// <returns>BL CustomerInParcel</returns>
         public CustomerInParcel BLCustomerInParcel(IDAL.DO.Customer DalCus)
         {
             CustomerInParcel c = new();
@@ -309,6 +358,11 @@ namespace BL
             return c;
         }
 
+        /// <summary>
+        /// Turn a DroneToList into a BL DroneInCharging
+        /// </summary>
+        /// <param name="d">DroneToList</param>
+        /// <returns>DroneInCharging</returns>
         public DroneInCharging BLDroneInCharging(DroneToList d)
         {
             DroneInCharging drone = new();
@@ -317,6 +371,12 @@ namespace BL
             return drone;
         }
 
+        /// <summary>
+        /// create a Location
+        /// </summary>
+        /// <param name="lon">longitude point value</param>
+        /// <param name="lat">latitude point value</param>
+        /// <returns>Location</returns>
         public Location Location(double lon, double lat)
         {
             Location l = new();
@@ -325,6 +385,12 @@ namespace BL
             return l;
         }
 
+        /// <summary>
+        /// Turn a DAL station into a BL StationToList
+        /// </summary>
+        /// <param name="s">DAL station</param>
+        /// <param name="s">DAL station</param>
+        /// <returns>StationToList</returns>
         public StationToList BLStationToList(IDAL.DO.Station s)
         {
             StationToList stationToList = new();
@@ -336,6 +402,11 @@ namespace BL
             return stationToList;
         }
 
+        /// <summary>
+        /// Turn a BL Drone into a DroneToList
+        /// </summary>
+        /// <param name="d"> BL Drone</param>
+        /// <returns>DroneToList</returns>
         public DroneToList BLDroneToList(Drone d)
         {
             DroneToList droneToList = new();
@@ -345,10 +416,16 @@ namespace BL
             droneToList.Battery = d.Battery;
             droneToList.status = d.status;
             droneToList.ThisLocation = d.ThisLocation;
-            droneToList.ParcelId = d.parcel.Id;
+            if(d.parcel!=null)
+                droneToList.ParcelId = d.parcel.Id;
             return droneToList;
         }
 
+        /// <summary>
+        /// Turn a DAL customer into a CustomerToList
+        /// </summary>
+        /// <param name="c">DAL customer</param>
+        /// <returns>CustomerToList</returns>
         public CustomerToList BLCustomerToList(IDAL.DO.Customer c)
         {
             CustomerToList customerToList = new();
@@ -367,6 +444,11 @@ namespace BL
             return customerToList;
         }
 
+        /// <summary>
+        /// Turn a DAL parcel into a ParcelToList
+        /// </summary>
+        /// <param name="c">DAL parcel</param>
+        /// <returns>ParcelToList</returns>
         public ParcelToList BLParcelToList(IDAL.DO.Parcel c)
         {
             ParcelToList parcelToList = new();

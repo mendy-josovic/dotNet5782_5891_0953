@@ -38,6 +38,8 @@ namespace ConsoleUI_BL
                 {
                     Console.WriteLine(ex.Message);
                 }
+                Console.WriteLine("Enter your next choice in the main menu");
+                char.TryParse(Console.ReadLine(), out ch);
             }
 
         }

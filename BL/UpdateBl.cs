@@ -99,7 +99,7 @@ namespace BL
                 tempstaton = Data.PrintStation(j);//a temporary station (like the one to charg) 
                 if (tempstaton.ReadyChargeStands == 0)
                     throw new BlException("Charhing Not Possible (Station Cargin slots are full)");
-                Location location = new Location(tempstaton.Longitude, tempstaton.Latitude);//checking that we have enough battery by geting the ditence and the battery cunsomption
+                Location location = Location(tempstaton.Longitude, tempstaton.Latitude);//checking that we have enough battery by geting the ditence and the battery cunsomption
                 if (DroneList[i].Battery < Consumption(DroneList[i].ThisLocation, location, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE))
                     throw new BlException("Charhing Not Possible (Not Enough Battery)");
                 DroneList[i].status = IBL.BO.STATUS_OF_DRONE.IN_MAINTENANCE;//updating the drone status

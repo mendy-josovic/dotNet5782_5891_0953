@@ -7,7 +7,7 @@ namespace ConsoleUI_BL
 
         public static void Update()
         {
-            Console.WriteLine(@"Welcome:
+            Console.WriteLine(@"
             Enter 'A' to Update drone 
             Enter 'B' to Update station
             Enter 'C' to Update customer
@@ -35,9 +35,6 @@ namespace ConsoleUI_BL
                                 string str = Console.ReadLine();
                                 BLObject.UpdatDroneName(x, str);
                                 break;
-
-
-
                             }
                         case 'B':
                             {
@@ -52,7 +49,6 @@ namespace ConsoleUI_BL
                                     throw new ConsoleBlException("Invalid Imput");
                                 BLObject.UpdateStstion(x, str, j);
                                 break;
-
                             }
                         case 'C':
                             {
@@ -67,7 +63,6 @@ namespace ConsoleUI_BL
                                     throw new ConsoleBlException("Invalid Imput");
                                 BLObject.UpdateCosomerInfo(x, str, j);
                                 break;
-
                             }
                         case 'D':
                             {
@@ -118,9 +113,14 @@ namespace ConsoleUI_BL
                                 BLObject.Suuply(x);
                                 break;
                             }
-
-
+                        default:
+                            {
+                                Console.WriteLine("Wrong choice\n");
+                                break;
+                            }
                     }
+                    Console.WriteLine("Enter your next choice in update menu");
+                    char.TryParse(Console.ReadLine(), out ch1);
                 }
                 catch (IBL.BO.BlException ex)
                 {
@@ -130,8 +130,6 @@ namespace ConsoleUI_BL
                 {
                     Console.WriteLine(ex.Message);
                 }
-
-
             }
         }
     }
