@@ -7,7 +7,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-        IBl bl = new BL.BL();
+        static IBl BLObject = new BL.BL();
         static void Main(string[] args)
         {
             Console.WriteLine(@"Welcome:

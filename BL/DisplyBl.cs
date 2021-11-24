@@ -24,14 +24,9 @@ namespace BL
 
         public DroneToList DisplayDrone(int id)
         {
-            try
-            {
+                if (!(DroneList.Exists(w => w.Id == id)))
+                    throw new BlException("Drone does not exixt");
                 return DroneList.Find(w => w.Id == id);
-            }
-            catch (IDAL.DO.DalExceptions ex)
-            {
-                throw new BlException(ex.Message);
-            }
         }
 
         public IDAL.DO.Customer DisplayCustomer(int id)

@@ -16,7 +16,7 @@ namespace IBL
             {
                 return "Station:\nID: " + Id + "\nName: " + Name
                     + "\nNumber of stands that are ready in station: " + ReadyStandsInStation
-                    + "\nNumber of stands that are occupied in station: " + ReadyStandsInStation + "\n";
+                    + "\nNumber of stands that are occupied in station: " + OccupiedStandsInStation + "\n";
             }
         }
     }

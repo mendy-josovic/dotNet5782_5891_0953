@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace ConsoleUI_BL
 {
     [Serializable]
-    public  class ConsoleBlException : Exception
+    public class ConsoleBlException : Exception
     {
         public string[] violations { get; private set; }
         public int type { get; set; }

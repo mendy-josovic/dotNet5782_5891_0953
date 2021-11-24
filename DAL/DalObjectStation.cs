@@ -53,14 +53,17 @@ namespace DalObject
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
             if (i < 0)
                 throw new DalExceptions("Station dosent exist");
+            IDAL.DO.Station temp = PrintStation(StationId);
             if (!string.IsNullOrEmpty(Name))
             {
-                DataSource.stations[i].Name.Replace(DataSource.stations[i].Name, Name);
+                temp.Name = Name;
             }
             if (!(NumOfCarg==0))
             {
-                DataSource.customers[i].Id.CompareTo(NumOfCarg);
+                temp.ReadyChargeStands = NumOfCarg;
             }
+            DataSource.stations.RemoveAt(i);
+            DataSource.stations.Insert(i, temp);
         }
     }
 }
