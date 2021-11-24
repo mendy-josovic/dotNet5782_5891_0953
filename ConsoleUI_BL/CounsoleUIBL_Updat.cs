@@ -59,8 +59,6 @@ namespace ConsoleUI_BL
                                 Console.WriteLine("Enter A new Customer Name And Phone (Choos one or two)");
                                 string str = Console.ReadLine();
                                 string j = Console.ReadLine();
-                                if (j == string.Empty)
-                                    throw new ConsoleBlException("Invalid Imput");
                                 BLObject.UpdateCosomerInfo(x, str, j);
                                 break;
                             }
@@ -119,8 +117,6 @@ namespace ConsoleUI_BL
                                 break;
                             }
                     }
-                    Console.WriteLine("Enter your next choice in update menu");
-                    char.TryParse(Console.ReadLine(), out ch1);
                 }
                 catch (IBL.BO.BlException ex)
                 {
@@ -130,6 +126,8 @@ namespace ConsoleUI_BL
                 {
                     Console.WriteLine(ex.Message);
                 }
+                Console.WriteLine("Enter your next choice in update menu");
+                char.TryParse(Console.ReadLine(), out ch1);
             }
         }
     }

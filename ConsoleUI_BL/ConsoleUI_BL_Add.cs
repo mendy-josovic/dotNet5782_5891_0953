@@ -9,7 +9,6 @@ namespace ConsoleUI_BL
         {
             try
             {
-                IBl BLObject = new BL.BL(); //creating an object of BL class for all the functions
                 {
                     Console.WriteLine(@"
                             Enter 'a' to add a station

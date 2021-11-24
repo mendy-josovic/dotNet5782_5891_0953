@@ -32,6 +32,7 @@ namespace BL
                 throw new BlException(ex.Message);
             }
         }
+
         /// <summary>
         /// the func gets the id and finds if in exsits (we assume tha the parameters are valid and not a problem (we chack that on the console level) )
         /// ane use the updat func
@@ -54,6 +55,7 @@ namespace BL
             }
 
         }
+
         /// <summary>
         /// the func gets the id finsds if it exsits and the changes 
         /// are with the pararmtets
@@ -75,6 +77,7 @@ namespace BL
                 throw new BlException(ex.Message);
             }
         }
+
         /// <summary>
         /// we make 4 initial checks 1. macke sure that the drone exits
         /// 2. checkinfg if the drone is availble 
@@ -112,8 +115,8 @@ namespace BL
             {
                 throw new BlException(ex.Message);
             }
-
         }
+
         /// <summary>
         /// the func gets the drone id
         /// we mack 2 inital chacks
@@ -144,6 +147,7 @@ namespace BL
                 throw new BlException(ex.Message);
             }
         }
+
         /// <summary>
         /// the func in order to deside witch one to do 
         /// first removing all the not relevent from the list(to hevy,scheduled alredy,not enough battrey)
@@ -175,6 +179,7 @@ namespace BL
                 throw new BlException(ex.Message);
             }
         }
+
         /// <summary>
         /// the func updats the pich up 
         /// so first we check that we have the dron and that the dron can pick up this parcel
@@ -201,6 +206,7 @@ namespace BL
                 throw new BlException(ex.Message);
             }
         }
+
         /// <summary>
         /// the func gets the status and
         /// </summary>
@@ -224,7 +230,6 @@ namespace BL
             {
                 throw new BlException(ex.Message);
             }
-        }
-    
+        }    
     }
 }
