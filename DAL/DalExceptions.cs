@@ -17,7 +17,7 @@ namespace IDAL.DO
             protected DalExceptions(SerializationInfo info, StreamingContext context) : base(info, context) { }
             public override string ToString()
             {
-                return "ERROR: " +this.violations[type];
+                return "Dal_Object_Exception" +this.violations[type];
             }
         }
 }

@@ -20,7 +20,7 @@ namespace ConsoleUI
         public override string ToString()
         {
            
-            return "Consol_uI"+base.ToString();
+            return "Consol_Ui_Exception"+base.ToString();
         }
 
     }

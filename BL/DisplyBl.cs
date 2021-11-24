@@ -14,7 +14,9 @@ namespace BL
             try
             {
                 List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-                return (tempDataStations.Find(w => w.Id == id));
+                if (!(tempDataStations.Exists(w => w.Id == id)))
+                    throw new BlException("Station does not exists");
+                    return (tempDataStations.Find(w => w.Id == id));
             }
             catch (IDAL.DO.DalExceptions ex)
             {
@@ -34,7 +36,9 @@ namespace BL
             try
             {
                 List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
-                return (tempDataCustomers.Find(w => w.Id == id));
+                if (!(tempDataCustomers.Exists(w => w.Id == id)))
+                    throw new BlException("Customer does not exixt");
+                    return (tempDataCustomers.Find(w => w.Id == id));
             }
             catch (IDAL.DO.DalExceptions ex)
             {
