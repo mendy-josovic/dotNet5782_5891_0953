@@ -8,7 +8,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-     
+        static IBl BLObject = new BL.BL();
         public static void Display()
         {
             //creating an object of BL class for all the functions
@@ -48,7 +48,7 @@ namespace ConsoleUI_BL
                                                     foreach (DroneToList drone in BLObject.BLDrones())
                                                     {
                                                         if (drone.ThisLocation == BLStation.location)
-                                                            BLStation.ListOfDrones.Add(Bl(drone));
+                                                            BLStation.ListOfDrones.Add(new(drone));
                                                     }
                                                     Console.WriteLine(BLStation);
                                                     break;
