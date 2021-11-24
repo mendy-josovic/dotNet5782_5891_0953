@@ -9,6 +9,7 @@ namespace ConsoleUI_BL
         {
             try
             {
+                
                 {
                     Console.WriteLine(@"
                             Enter 'a' to add a station
@@ -33,7 +34,6 @@ namespace ConsoleUI_BL
                                     station.Name = Console.ReadLine();
                                     Console.WriteLine("\nLocation:\nEnter longitude: ");
                                     double.TryParse(Console.ReadLine(), out double y);
-                                    station.location = new();
                                     station.location.Longitude = y;
                                     Console.WriteLine("\nEnter latitude: ");
                                     double.TryParse(Console.ReadLine(), out y);
@@ -106,7 +106,6 @@ namespace ConsoleUI_BL
                                     customer.Phone = Console.ReadLine();
                                     Console.WriteLine("\nLocation:\nEnter longitude: ");
                                     double.TryParse(Console.ReadLine(), out double y);
-                                    customer.location = new();
                                     customer.location.Longitude = y;
                                     Console.WriteLine("\nEnter latitude: ");
                                     double.TryParse(Console.ReadLine(), out y);
@@ -137,13 +136,11 @@ namespace ConsoleUI_BL
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x <= 0)
                                         throw new ConsoleBlException("Invalid value");
-                                    parcel.Sender = new();
                                     parcel.Sender.Id = x;
                                     Console.WriteLine("\nEnter target ID: ");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x <= 0)
                                         new ConsoleBlException("Invalid value");
-                                    parcel.Recipient = new();
                                     parcel.Recipient.Id = x;
                                     Console.WriteLine(@"
                                         Choose the wheit of the parcel:
@@ -171,11 +168,6 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
-                                    break;
-                                }
-                            default:
-                                {
-                                    Console.WriteLine("Wrong choice\n");
                                     break;
                                 }
                         }

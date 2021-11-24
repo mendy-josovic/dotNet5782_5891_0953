@@ -7,7 +7,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-        static IBl BLObject = new BL.BL();
+       static IBl BLObject = new BL.BL();
         static void Main(string[] args)
         {
             Console.WriteLine(@"Welcome:
@@ -38,8 +38,6 @@ namespace ConsoleUI_BL
                 {
                     Console.WriteLine(ex.Message);
                 }
-                Console.WriteLine("Enter your next choice in the main menu");
-                char.TryParse(Console.ReadLine(), out ch);
             }
 
         }

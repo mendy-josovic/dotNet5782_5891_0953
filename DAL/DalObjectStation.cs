@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using IDAL.DO;
 using IDAL;
+using System.Linq;
 namespace DalObject
 {
     public partial class DalObject : IDal
@@ -51,19 +52,18 @@ namespace DalObject
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = 0)
         {
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
+            IDAL.DO.Station sta = PrintStation(StationId);
             if (i < 0)
                 throw new DalExceptions("Station dosent exist");
-            IDAL.DO.Station temp = PrintStation(StationId);
             if (!string.IsNullOrEmpty(Name))
             {
-                temp.Name = Name;
+                DataSource.stations
+
             }
             if (!(NumOfCarg==0))
             {
-                temp.ReadyChargeStands = NumOfCarg;
+                DataSource.customers[i].Id.CompareTo(NumOfCarg);
             }
-            DataSource.stations.RemoveAt(i);
-            DataSource.stations.Insert(i, temp);
         }
     }
 }
