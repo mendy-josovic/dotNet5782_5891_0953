@@ -32,12 +32,19 @@ namespace ConsoleUI_BL
                         case 'C':
                             ConsoleUI_BL.Display();
                             break;
+                        default:
+                            {
+                                Console.WriteLine("Wrong choice\n");
+                                break;
+                            }
                     }
                 }
                 catch (ConsoleBlException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
+                Console.WriteLine("Enter your next choice in main menu");
+                char.TryParse(Console.ReadLine(), out ch);
             }
 
         }

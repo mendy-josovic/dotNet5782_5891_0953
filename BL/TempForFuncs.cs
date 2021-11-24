@@ -242,12 +242,14 @@ namespace BL
             customer.Phone = c.Phone;
             customer.Name = c.Name;
             customer.location = Location(c.Longitude, c.Latitude);
+            //From - a list okf parcels that sendered by this customer
             var From = tempDataParcels.FindAll(w => w.SenderId == customer.Id);
             customer.FromCustomer = new();
             foreach (IDAL.DO.Parcel p in From)
             {
                 customer.FromCustomer.Add(BLParcelAtCustomer(p, true));
             }
+            //To - a list okf parcels that sendered to this customer
             var To = tempDataParcels.FindAll(w => w.TargetId == customer.Id);
             customer.ToCustomer = new();
             foreach(IDAL.DO.Parcel p in To)

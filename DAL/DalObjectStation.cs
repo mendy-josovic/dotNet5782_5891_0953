@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Collections;
 using IDAL.DO;
 using IDAL;
-using System.Linq;
 namespace DalObject
 {
     public partial class DalObject : IDal
@@ -42,6 +41,7 @@ namespace DalObject
         {
             return DataSource.stations.FindAll(w => w.ReadyChargeStands > 0);
         }
+
         /// <summary>
         /// the func gets the id of the statoin and the name and number of cargin slots
         /// it is with a dfult empty so we can chang only one of the field

@@ -19,7 +19,7 @@ namespace IBL
             {
                 return "Drone:\nID: " + Id + "\nModel: " + Model + "\nMaximum weight: " + MaxWeight
                     + "\nBattery percentages available: " + Battery + "\nStatus: " + status
-                    + "\nParcel in transfer: " + parcel + "\nLocation of the drone: " + ThisLocation + "\n";
+                    + "\nParcel in transfer: " + parcel + "\nLocation of the drone:\n" + ThisLocation + "\n";
             }
         }
     }

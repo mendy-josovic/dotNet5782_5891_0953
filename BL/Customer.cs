@@ -16,7 +16,19 @@ namespace IBL
             public List<ParcelAtCustomer> ToCustomer { get; set; }
             public override string ToString()//override the to-string to print it nice
             {
-                return "Customer:\nID: " + Id + "\nName: " + Name + "\nPhone" + Phone + "\nLocation" + location + "\nA list of parcels that sendered from the customer:\n" + FromCustomer + "\nA list of parcels that sendered to the customer:\n" + ToCustomer + "\n";
+                if (FromCustomer != null && ToCustomer != null)
+                    return "Customer:\nID: " + Id + "\nName: " + Name + "\nPhone" + Phone + "\nLocation"
+                        + location + "A list of parcels that sendered from the customer:\n" + FromCustomer
+                        + "\nA list of parcels that sendered to the customer:\n" + ToCustomer + "\n";
+                else if (FromCustomer != null)
+                    return "Customer:\nID: " + Id + "\nName: " + Name + "\nPhone" + Phone + "\nLocation"
+                        + location + "A list of parcels that sendered from the customer:\n" + FromCustomer + "\n";
+                else if (ToCustomer != null)
+                    return "Customer:\nID: " + Id + "\nName: " + Name + "\nPhone" + Phone + "\nLocation"
+                        + location + "A list of parcels that sendered to the customer:\n" + ToCustomer + "\n";
+                else
+                    return "Customer:\nID: " + Id + "\nName: " + Name + "\nPhone" + Phone + "\nLocation"
+                        + location;
             }
         }
     }

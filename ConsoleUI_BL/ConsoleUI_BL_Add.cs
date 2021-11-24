@@ -8,8 +8,7 @@ namespace ConsoleUI_BL
         public static void add()
         {
             try
-            {
-                
+            {                
                 {
                     Console.WriteLine(@"
                             Enter 'a' to add a station
@@ -34,10 +33,11 @@ namespace ConsoleUI_BL
                                     station.Name = Console.ReadLine();
                                     Console.WriteLine("\nLocation:\nEnter longitude: ");
                                     double.TryParse(Console.ReadLine(), out double y);
+                                    station.location = new();
                                     station.location.Longitude = y;
                                     Console.WriteLine("\nEnter latitude: ");
                                     double.TryParse(Console.ReadLine(), out y);
-                                    station.location.Longitude = y;
+                                    station.location.Latitude = y;
                                     Console.WriteLine("\nEnter amount of charging slats: ");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x < 0)
@@ -106,6 +106,7 @@ namespace ConsoleUI_BL
                                     customer.Phone = Console.ReadLine();
                                     Console.WriteLine("\nLocation:\nEnter longitude: ");
                                     double.TryParse(Console.ReadLine(), out double y);
+                                    customer.location = new();
                                     customer.location.Longitude = y;
                                     Console.WriteLine("\nEnter latitude: ");
                                     double.TryParse(Console.ReadLine(), out y);
@@ -168,6 +169,11 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
+                                    break;
+                                }
+                            default:
+                                {
+                                    Console.WriteLine("Wrong choice\n");
                                     break;
                                 }
                         }
