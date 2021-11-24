@@ -62,13 +62,20 @@ namespace BL
 
         public List<StationToList> DisplayStationList()
         {
-            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-            List<StationToList> stationList = new();
-            foreach(IDAL.DO.Station s in tempDataStations)
+            try
             {
-                stationList.Add(BLStationToList(s));
+                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
+                List<StationToList> stationList = new();
+                foreach (IDAL.DO.Station s in tempDataStations)
+                {
+                    stationList.Add(BLStationToList(s));
+                }
+                return stationList;
             }
-            return stationList;
+            catch (IDAL.DO.DalExceptions ex)
+            {
+                throw new BlException(ex.Message);
+            }
         }
 
         public List<DroneToList> DisplayDroneList()
