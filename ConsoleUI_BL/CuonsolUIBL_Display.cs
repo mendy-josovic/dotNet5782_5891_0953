@@ -35,8 +35,6 @@ namespace ConsoleUI_BL
                                     {
                                         try
                                         {
-
-
                                             switch (ch1)
                                             {
                                                 case 'a':
