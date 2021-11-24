@@ -8,13 +8,14 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
+     
         public static void Display()
         {
             //creating an object of BL class for all the functions
             {
                 Console.WriteLine(@"
-                            Enter 'a' to display an element
-                            Enter 'b' to display a list");
+                            Enter 'a' to display a station
+                            Enter 'b' to display a drone");
                 char.TryParse(Console.ReadLine(), out char ch);
                 while (ch != 'e')
                 {
@@ -101,8 +102,6 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
-                    Console.WriteLine("Enter your next choice in display element menu");
-                                        char.TryParse(Console.ReadLine(), out ch1);
                                     }
                                     break;
                                 }
@@ -118,7 +117,7 @@ namespace ConsoleUI_BL
                                 Enter 'e' to exit");
                                     char.TryParse(Console.ReadLine(), out char ch2);
                                     while (ch2 != 'e')
-                                    {                  
+                                    {
                                         try
                                         {
                                             switch (ch2)
@@ -128,7 +127,7 @@ namespace ConsoleUI_BL
                                                         List<StationToList> stations = BLObject.DisplayStationList();
                                                         foreach (StationToList station in stations)
                                                         {
-                                                            Console.WriteLine(station + "\n");
+                                                            Console.WriteLine(station + "/n");
                                                         }
                                                         break;
                                                     }
@@ -137,7 +136,7 @@ namespace ConsoleUI_BL
                                                         List<DroneToList> drones = BLObject.DisplayDroneList();
                                                         foreach (DroneToList drone in drones)
                                                         {
-                                                            Console.WriteLine(drone + "\n");
+                                                            Console.WriteLine(drone + "/n");
                                                         }
                                                         break;
                                                     }
@@ -146,7 +145,7 @@ namespace ConsoleUI_BL
                                                         List<CustomerToList> customers = BLObject.DisplayCustomerList();
                                                         foreach (CustomerToList customer in customers)
                                                         {
-                                                            Console.WriteLine(customer + "\n");
+                                                            Console.WriteLine(customer + "/n");
                                                         }
                                                         break;
                                                     }
@@ -155,7 +154,7 @@ namespace ConsoleUI_BL
                                                         List<ParcelToList> parcels = BLObject.DisplayParcelList();
                                                         foreach (ParcelToList parcel in parcels)
                                                         {
-                                                            Console.WriteLine(parcel + "\n");
+                                                            Console.WriteLine(parcel + "/n");
                                                         }
                                                         break;
                                                     }
@@ -165,7 +164,7 @@ namespace ConsoleUI_BL
                                                         var notAssociated = parcels.FindAll(w => w.Status == STATUS_OF_PARCEL.CREATED);
                                                         foreach (ParcelToList parcel in notAssociated)
                                                         {
-                                                            Console.WriteLine(parcel + "\n");
+                                                            Console.WriteLine(parcel + "/n");
                                                         }
                                                         break;
                                                     }
@@ -175,13 +174,8 @@ namespace ConsoleUI_BL
                                                         var stationsWithReadyStands = stations.FindAll(w => w.ReadyStandsInStation > 0);
                                                         foreach (StationToList station in stationsWithReadyStands)
                                                         {
-                                                            Console.WriteLine(station + "\n");
+                                                            Console.WriteLine(station + "/n");
                                                         }
-                                                        break;
-                                                    }                                               
-                                                default:
-                                                    {
-                                                        Console.WriteLine("Wrong choice\n");
                                                         break;
                                                     }
                                             }
@@ -194,14 +188,8 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
-                                        Console.WriteLine("Enter your next choice in display list menu");
-                                        char.TryParse(Console.ReadLine(), out ch2);
+                                        
                                     }
-                                    break;
-                                }
-                            default:
-                                {
-                                    Console.WriteLine("Wrong choice\n");
                                     break;
                                 }
                         }
@@ -214,8 +202,6 @@ namespace ConsoleUI_BL
                     {
                         Console.WriteLine(ex.Message);
                     }
-                    Console.WriteLine("Enter your next choice in display menu");
-                    char.TryParse(Console.ReadLine(), out ch);
                 }
             }
         }
