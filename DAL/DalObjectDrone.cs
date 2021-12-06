@@ -30,10 +30,12 @@ namespace DalObject
         {
             return (DataSource.drones.Find(w => w.Id == id));
         }
-        public IEnumerable<Drone> PrintDroneList()  //returns a new list of drones
+        public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null)  //returns a new list of drones
         {
-            return DataSource.drones;
+            return DataSource.drones.FindAll(x => predicate == null ? true : predicate(x));
         }
+
+
         /// <summary>
         /// the func gets a new name and replaces the name in the func with a new one
         ///using the library func replace"
@@ -45,7 +47,9 @@ namespace DalObject
             int i = DataSource.drones.FindIndex(w => w.Id == drnId);
             if (i < 0)
                 throw new IDAL.DO.DalExceptions("Drone Dosen't exsits");
-            DataSource.drones[i].Model.Replace(DataSource.drones[i].Model,Name);
+            Drone tempdrone = DataSource.drones[i];
+            tempdrone.Model = Name;
+            DataSource.drones[i] = tempdrone;
         }
         /// <summary>
         /// the funvc gets the updating parameters and fill in acording to what we have
@@ -59,29 +63,34 @@ namespace DalObject
         /// <param name="UpdatSchedueld"></param>
         /// <param name="UpdatPicedup"></param>
         /// <param name="UpdateDeleverd"></param>
-        public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0,int DroneId=0, WEIGHT whihgt = 0, PRIORITY priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
+        public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0, int DroneId = 0, WEIGHT whihgt = 0, PRIORITY priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
         {
-            int i = DataSource.parcels.FindIndex(w => w.Id == parclId);
-            if (i < 0)
+            int index = DataSource.parcels.FindIndex(w => w.Id == parclId);
+
+            if (index == -1)
                 throw new IDAL.DO.DalExceptions("Drone Dosen't exsits");
+
+            Parcel parcel = DataSource.parcels[index];
+
             if (SenderId != 0)
-                DataSource.parcels[i].SenderId.CompareTo(SenderId);
+                parcel.SenderId = SenderId;
             if (TargetId != 0)
-                DataSource.parcels[i].TargetId.CompareTo(TargetId);
+                parcel.TargetId = TargetId; 
             if (DroneId != 0)
-                DataSource.parcels[i].DroneId.CompareTo(DroneId);
+                parcel.DroneId = DroneId;
             if (whihgt != 0)
-                DataSource.parcels[i].Weigh.CompareTo(whihgt);
+                parcel.Weigh = whihgt;
             if (priorty != 0)
-                DataSource.parcels[i].Priority.CompareTo(priorty);
+                parcel.Priority = priorty;
             if (Updatereqwested != 0)
-                DataSource.parcels[i].Requested.CompareTo(DateTime.Now);
-            if (UpdatSchedueld != 0)
-                DataSource.parcels[i].Scheduled.CompareTo(DateTime.Now);
+                parcel.Requested = DateTime.Now;
             if (UpdatPicedup != 0)
-                DataSource.parcels[i].PickedUp.CompareTo(DateTime.Now);
+                parcel.PickedUp = DateTime.Now;
+            if (UpdatSchedueld != 0)
+                parcel.Scheduled = DateTime.Now;
             if (UpdateDeleverd != 0)
-                DataSource.parcels[i].Delivered.CompareTo(DateTime.Now);
+                parcel.Delivered = DateTime.Now;
+            DataSource.parcels[index] = parcel;
         }
 
     }

@@ -51,10 +51,10 @@ namespace DalObject
         {
             return (DataSource.parcels.Find(w => w.Id == id));
         }
-
-        public IEnumerable<Parcel> PrintParcelList()  //returns a new list of parcels
+        
+        public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null)  //returns a new list of parcels
         {
-            return DataSource.parcels;
+            return DataSource.parcels.FindAll(x => predicate == null ? true : predicate(x));
         }
         public IEnumerable<Parcel> PrintUnassignedParcels()  //returns a new list of parcels with the condition
         {

@@ -18,21 +18,16 @@ namespace BL
         {
             try
             {
+                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList(w => w.Id == sta.Id));//if elredy exsits we want to stop
+                if(tempDataStations.Count!=0)
+                    throw new BlException("The station is already exists");
                 IDAL.DO.Station station = new();
                 station.Id = sta.Id;
                 station.Name = sta.Name;
                 station.Longitude = sta.location.Longitude;
                 station.Latitude = sta.location.Latitude;
-                station.ReadyChargeStands = sta.ReadyStandsInStation;
-                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-                foreach (IDAL.DO.Station state in tempDataStations)
-                {
-                    if (state.Id == station.Id)
-                        throw new BlException("The station is already exists");
-                }
-
-                Data.AddStation(station);
-                tempDataStations.Add(station);
+                station.ReadyChargeStands = sta.ReadyStandsInStation;               
+                Data.AddStation(station);     
             }
             catch(IDAL.DO.DalExceptions ex)
             {
@@ -49,18 +44,16 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-                if (tempDataStations.FindIndex(w => w.Id == IDOfStation) < 0)
+                List<IDAL.DO.Station> tempDataStations =new (Data.PrintStationList(w=>w.Id==IDOfStation));
+                if (tempDataStations.Count==0)
                     throw new BlException("there is not a station with this ID");
                 IDAL.DO.Drone drone = new();
                 drone.Id = dro.Id;
                 drone.Model = dro.Model;
                 drone.MaxWeight = (IDAL.DO.WEIGHT)dro.MaxWeight;
-                foreach (DroneToList drn in DroneList)
-                {
-                    if (dro.Id == drn.Id)
-                        throw new BlException("The drone is already exists");
-                }
+                int i = DroneList.FindIndex(w => w.Id == dro.Id);
+                    if(i>=0)
+                        throw new BlException("The drone is already exists");     
                 Data.AddDrone(drone);
                 dro.Battery = r.Next(20, 40);
                 dro.status = STATUS_OF_DRONE.IN_MAINTENANCE;
@@ -82,12 +75,9 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
-                foreach (IDAL.DO.Customer c in tempDataCustomers)
-                {
-                    if (c.Id == cus.Id)
-                        throw new BlException("The station is already exists");
-                }
+                List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w=>w.Id==cus.Id));
+             if(tempDataCustomers.Count!=0)
+                        throw new BlException("The station is already exists");               
                 IDAL.DO.Customer customer = new();
                 customer.Id = cus.Id;
                 customer.Name = cus.Name;
@@ -95,7 +85,6 @@ namespace BL
                 customer.Longitude = cus.location.Longitude;
                 customer.Latitude = cus.location.Latitude;
                 Data.AddCustomer(customer);
-                tempDataCustomers.Add(customer);
             }
             catch (IDAL.DO.DalExceptions ex)
             {

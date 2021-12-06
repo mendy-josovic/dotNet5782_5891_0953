@@ -14,10 +14,10 @@ namespace IBL
             public WEIGHT Weight { get; set; }
             public PRIORITY Priority { get; set; }
             public DroneInParcel Drone { get; set; }
-            public DateTime TimeOfCreation = DateTime.Now;
-            public DateTime Scheduled { set; get; }
-            public DateTime PickedUp { set; get; }
-            public DateTime Delivered { set; get; }
+            public DateTime? TimeOfCreation = DateTime.Now;
+            public DateTime? Scheduled { set; get; }
+            public DateTime? PickedUp { set; get; }
+            public DateTime? Delivered { set; get; }
             public override string ToString()//override the to-string to print it nice
             {
                 return "Parcel:\nID: " + Id + "\nSender:\n" + Sender + "\nRecipient:\n" + Recipient +

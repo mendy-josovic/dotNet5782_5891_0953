@@ -20,12 +20,12 @@ namespace DalObject
         }
         public Customer PrintCustomer(int id)  //finds the customer and sends a replica
         {
-            return (DataSource.customers.Find(w => w.Id == id));
+            return DataSource.customers.Find(w => w.Id == id);
         }
 
-        public IEnumerable<Customer> PrintCustomerList()  //returns a new list of customers
+        public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null)  //returns a new list of customers
         {
-            return DataSource.customers;
+            return DataSource.customers.FindAll(x => predicate == null ? true : predicate(x));
         }
        /// <summary>
        /// the func gets the id of the customer and a new name or phone \
@@ -39,14 +39,16 @@ namespace DalObject
             int i = DataSource.customers.FindIndex(w => w.Id == CusId);
             if (i < 0)
                 throw new IDAL.DO.DalExceptions("Customer Dosen't exsits");
+          Customer Tempcustomer = DataSource.customers[i];
             if (!string.IsNullOrEmpty(Name))
             {
-                DataSource.customers[i].Name.Replace(DataSource.customers[i].Name, Name);
+                Tempcustomer.Name = Name;
             }
             if(!string.IsNullOrEmpty(phone))
             {
-                DataSource.customers[i].Phone.Replace(DataSource.customers[i].Phone, Name);
+                Tempcustomer.Phone = phone;
             }
+            DataSource.customers[i] = Tempcustomer;
         }
       
 

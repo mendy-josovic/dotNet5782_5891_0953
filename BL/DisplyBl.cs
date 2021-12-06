@@ -13,10 +13,10 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-                if (!(tempDataStations.Exists(w => w.Id == id)))
+                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList(w=>w.Id==id));
+                if (tempDataStations.Count==0)
                     throw new BlException("Station does not exists");
-                    return (tempDataStations.Find(w => w.Id == id));
+                    return (Data.PrintStation(id));
             }
             catch (IDAL.DO.DalExceptions ex)
             {
@@ -35,10 +35,10 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
-                if (!(tempDataCustomers.Exists(w => w.Id == id)))
+                List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w=>w.Id==id));
+                if (tempDataCustomers.Count==0)
                     throw new BlException("Customer does not exixt");
-                    return (tempDataCustomers.Find(w => w.Id == id));
+                    return Data.PrintCustomer(id);
             }
             catch (IDAL.DO.DalExceptions ex)
             {
@@ -50,8 +50,10 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
-                return (tempDataParcels.Find(w => w.Id == id));
+                List<IDAL.DO.Parcel> tempDataParcel= new(Data.PrintParcelList(w => w.Id == id));
+                if (tempDataParcel.Count == 0)
+                    throw new BlException("parcel does not exixt");
+                return Data.PrintParcel(id);
             }
             catch (IDAL.DO.DalExceptions ex)
             {
@@ -59,7 +61,7 @@ namespace BL
             }
         }
 
-        public List<StationToList> DisplayStationList()
+        public List<StationToList> DisplayStationList(Predicate<StationToList> predicate = null)
         {
             try
             {
@@ -69,7 +71,7 @@ namespace BL
                 {
                     stationList.Add(BLStationToList(s));
                 }
-                return stationList;
+                return stationList.FindAll(x => predicate == null ? true : predicate(x));
             }
             catch (IDAL.DO.DalExceptions ex)
             {
@@ -77,17 +79,17 @@ namespace BL
             }
         }
 
-        public List<DroneToList> DisplayDroneList()
+        public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null)
         {
             List<DroneToList> droneList = new();
             foreach(DroneToList drone in DroneList)
             {
                 droneList.Add(drone);
             }
-            return droneList;
+            return droneList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        public List<CustomerToList> DisplayCustomerList()
+        public List<CustomerToList> DisplayCustomerList(Predicate<CustomerToList> predicate = null)
         {
             List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
             List<CustomerToList> customerList = new();
@@ -95,10 +97,10 @@ namespace BL
             {
                 customerList.Add(BLCustomerToList(customer));
             }
-            return customerList;
+            return customerList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        public List<ParcelToList> DisplayParcelList()
+        public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null)
         {
             List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
             List<ParcelToList> parcelList = new();
@@ -106,7 +108,7 @@ namespace BL
             {
                 parcelList.Add(BLParcelToList(parcel));
             }
-            return parcelList;
+            return parcelList.FindAll(x => predicate == null ? true : predicate(x));
         }
     }
 }

@@ -71,7 +71,7 @@ namespace ConsoleUI_BL
                                 BLObject.SendDroneToCarge(x);
                                 break;
                             }
-                        case 'E':
+                        case 'F':
                             {
                                 Console.WriteLine("Enter Drone Id: ");
                                 Int32.TryParse(Console.ReadLine(), out int x);
@@ -84,7 +84,7 @@ namespace ConsoleUI_BL
                                 BLObject.ReturnDroneFromeCharging(x, j);
                                 break;
                             }
-                        case 'F':
+                        case 'G':
                             {
                                 Console.WriteLine("Enter Drone Id: ");
                                 Int32.TryParse(Console.ReadLine(), out int x);

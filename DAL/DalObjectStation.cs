@@ -31,9 +31,9 @@ namespace DalObject
         {
             return (DataSource.stations.Find(w => w.Id == id));
         }
-        public IEnumerable<Station> PrintStationList()  //returns a new list of stations
+        public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null)  //returns a new list of stations
         {
-            return DataSource.stations;
+            return DataSource.stations.FindAll(x => predicate == null ? true : predicate(x));
         }
 
 
@@ -52,10 +52,9 @@ namespace DalObject
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = 0)
         {
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
-            IDAL.DO.Station sta = PrintStation(StationId);
             if (i < 0)
                 throw new DalExceptions("Station dosent exist");
-            IDAL.DO.Station temp = PrintStation(StationId);
+           Station temp = PrintStation(StationId);
             if (!string.IsNullOrEmpty(Name))
             {
                 temp.Name = Name;
@@ -64,8 +63,8 @@ namespace DalObject
             {
                 temp.ReadyChargeStands = NumOfCarg;
             }
-            DataSource.stations.RemoveAt(i);
-            DataSource.stations.Insert(i, temp);
+            DataSource.stations[i] = temp;
+
         }
     }
 }
