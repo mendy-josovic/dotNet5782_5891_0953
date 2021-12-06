@@ -271,7 +271,7 @@ namespace BL
             parcel.Delivered = p.Delivered;
             parcel.Sender = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
             parcel.Recipient = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
-            if(p.Scheduled != DateTime.MinValue)
+            if(p.Scheduled != null)
             {
                 parcel.Drone = BLDroneInParcel(DroneList.Find(w => w.Id == p.DroneId));
             }
@@ -305,11 +305,11 @@ namespace BL
             par.Id = p.Id;
             par.Weight = (WEIGHT)p.Weigh;
             par.Priority = (PRIORITY)p.Priority;
-            if (p.Scheduled == DateTime.MinValue)
+            if (p.Scheduled == null)
                 par.Status = STATUS_OF_PARCEL.CREATED;
-            else if (p.PickedUp == DateTime.MinValue)
+            else if (p.PickedUp == null)
                 par.Status = STATUS_OF_PARCEL.ASSOCIATED;
-            else if (p.Delivered == DateTime.MinValue)
+            else if (p.Delivered == null)
                 par.Status = STATUS_OF_PARCEL.PICKEDUP;
             else
                 par.Status = STATUS_OF_PARCEL.DELIVERED;
@@ -330,7 +330,7 @@ namespace BL
             List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
             ParcelInTransfer par = new();
             par.Id = p.Id;
-            par.PickedUp = p.PickedUp != DateTime.MinValue;
+            par.PickedUp = p.PickedUp != null;
             par.Priority = (PRIORITY)p.Priority;
             par.Weight = (WEIGHT)p.Weigh;
             par.Sender = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
