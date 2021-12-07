@@ -39,7 +39,7 @@ namespace IBL
         public CustomerToList BLCustomerToList(IDAL.DO.Customer c);
         public ParcelToList BLParcelToList(IDAL.DO.Parcel c);
         public Location Location(double lon, double lat);
-        public IEnumerable<DroneToList> BLDrones();        
+        public IEnumerable<DroneToList> BLDrones(Predicate<DroneToList> predicate = null);        
         public void UpdatDroneName(int DroneId, string Name);
         public void UpdateCosomerInfo(int Id, string Name, string Phone);
         public void UpdateStstion(int Id, string Name, int numofCha);

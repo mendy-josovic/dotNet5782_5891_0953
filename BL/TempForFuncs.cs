@@ -23,15 +23,12 @@ namespace BL
         {
             try
             {
-                IDAL.DO.Customer sender = new IDAL.DO.Customer();
-                sender = Data.PrintCustomer(prc.SenderId);
-                IDAL.DO.Customer Receiver = new IDAL.DO.Customer();
-                Receiver = Data.PrintCustomer(prc.TargetId);
-                IDAL.DO.Station closeststation = new IDAL.DO.Station();
                 Location startingPiont = dro.ThisLocation;
                 Location StapingPiont = GetSenderLo(prc);
                 Location FinishingPiont = GetReceiverLo(prc);
-                closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));
+                IDAL.DO.Customer sender = Data.PrintCustomer(prc.SenderId);                
+                IDAL.DO.Customer Receiver = Data.PrintCustomer(prc.TargetId);        
+                IDAL.DO.Station closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));          
                 Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
                 double batteryUse = Consumption(startingPiont, StapingPiont, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE) + Consumption(StapingPiont, FinishingPiont, (IBL.BO.MODE_OF_DRONE_IN_MOVING)prc.Weigh);
                 if (dro.Battery - batteryUse < 20)
@@ -90,9 +87,9 @@ namespace BL
         /// turn DroneList into IEnumerable DroneList
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<DroneToList> BLDrones()
+        public IEnumerable<DroneToList> BLDrones(Predicate<DroneToList> predicate = null)
         {
-            return DroneList;
+            return DroneList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
         /// <summary>
@@ -177,9 +174,8 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-                int i = tempDataStations.FindIndex(w => w.Id == ID);
-                Location loc = Location(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
+                IDAL.DO.Station tempDataStations = Data.PrintStation(ID);            
+                Location loc = Location(tempDataStations.Longitude, tempDataStations.Latitude);
                 return loc;
             }
             catch (IDAL.DO.DalExceptions ex)
@@ -220,10 +216,8 @@ namespace BL
             drone.ThisLocation = d.ThisLocation;
             drone.status = d.status;
             if (drone.status == STATUS_OF_DRONE.DELIVERY)
-            {
-                List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
-                IDAL.DO.Parcel p = tempDataParcels.Find(w => w.Id == d.ParcelId);
-                drone.parcel = new();
+            {             
+                IDAL.DO.Parcel p = Data.PrintParcel(d.ParcelId);
                 drone.parcel = BLParcelInTransfer(p);
             }
             return drone;

@@ -30,10 +30,10 @@ namespace IDAL
         public Customer PrintCustomer(int id);
         public Parcel PrintParcel(int id);
         public DroneCharge PrintDronCarg(int DroneId = 0, int StationId = 0);
-        public IEnumerable<Station> PrintStationList();
+        public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null);
         public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null);
-        public IEnumerable<Customer> PrintCustomerList();
-        public IEnumerable<Parcel> PrintParcelList();
+        public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null);
+        public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null);
         public IEnumerable<Parcel> PrintUnassignedParcels();
         public IEnumerable<Station> PrintAvailableChargingStations();
         public double[] Consumption();
