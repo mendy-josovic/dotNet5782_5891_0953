@@ -19,7 +19,7 @@ namespace IBL
         public IDAL.DO.Customer DisplayCustomer(int ID);
         public IDAL.DO.Parcel DisplayParcel(int ID);
         public List<StationToList> DisplayStationList();
-        public List<DroneToList> DisplayDroneList();
+        public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null);
         public List<CustomerToList> DisplayCustomerList();
         public List<ParcelToList> DisplayParcelList();
         public int GetClosestStation(Location a);

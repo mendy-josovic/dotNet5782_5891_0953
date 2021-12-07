@@ -5,21 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Name="MainGrid" Margin="-275,-91,0,-135" HorizontalAlignment="Left" Width="1288">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="400*"/>
-        </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-        </Grid>
-
+        Title="MainWindow" Height="640" Width="800">
+    <Grid Name="MainGrid">
+        <Button x:Name="DroneListButton" Content="Show Drone List" Click="DroneListButton_Click" Margin="276,245,322,282" />
     </Grid>
+
 </Window>

@@ -77,14 +77,9 @@ namespace BL
             }
         }
 
-        public List<DroneToList> DisplayDroneList()
+        public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null)
         {
-            List<DroneToList> droneList = new();
-            foreach(DroneToList drone in DroneList)
-            {
-                droneList.Add(drone);
-            }
-            return droneList;
+            return DroneList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
         public List<CustomerToList> DisplayCustomerList()

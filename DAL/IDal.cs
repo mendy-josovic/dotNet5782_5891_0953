@@ -31,7 +31,7 @@ namespace IDAL
         public Parcel PrintParcel(int id);
         public DroneCharge PrintDronCarg(int DroneId = 0, int StationId = 0);
         public IEnumerable<Station> PrintStationList();
-        public IEnumerable<Drone> PrintDroneList();
+        public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null);
         public IEnumerable<Customer> PrintCustomerList();
         public IEnumerable<Parcel> PrintParcelList();
         public IEnumerable<Parcel> PrintUnassignedParcels();

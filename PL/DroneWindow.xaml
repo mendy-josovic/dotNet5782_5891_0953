@@ -1,0 +1,28 @@
+﻿<Window x:Class="PL.DroneWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="DroneWindow" Height="450" Width="800">
+    <Grid x:Name="AddDrone">
+        <Label x:Name="IDLabel"  Content="ID" HorizontalAlignment="Left" Margin="165,85,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
+        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="IDTextBox_MouseEnter"/>
+        <Label x:Name="BatteryLabel" Content="Battery" HorizontalAlignment="Left" Margin="165,120,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="BatteryTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Battery, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="BatteryTextBox_MouseEnter"/>
+        <Label x:Name="MaxWeightLabel" Content="Max weight" HorizontalAlignment="Left" Margin="165,155,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label x:Name="ModelLabel" Content="Model" HorizontalAlignment="Left" Margin="165,190,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
+        <Label x:Name="StatusLabel" Content="Status" HorizontalAlignment="Left" Margin="165,225,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label x:Name="DeliveryLabel" Content="Delivery" HorizontalAlignment="Left" Margin="165,260,0,0" VerticalAlignment="Top" FontSize="16" />
+        <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" MouseEnter="DeliveryTextBox_MouseEnter" IsReadOnly="true "/>
+        <Label x:Name="LatitudeLabel" Content="Latitude" HorizontalAlignment="Left" Margin="165,295,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="LatitudeTextBox" HorizontalAlignment="Left" Margin="300,301,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"/>
+        <Label x:Name="LongitudeLabel" Content="Longitude" HorizontalAlignment="Left" Margin="165,330,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox HorizontalAlignment="Left" Margin="300,336,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"/>
+        <ComboBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="300,158,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+        <ComboBox x:Name="StatusSelector" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+        <Label x:Name="AddDroneLabel" Content="Add a drone" HorizontalAlignment="Left" Margin="300,38,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
+    </Grid>
+</Window>

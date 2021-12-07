@@ -30,9 +30,9 @@ namespace DalObject
         {
             return (DataSource.drones.Find(w => w.Id == id));
         }
-        public IEnumerable<Drone> PrintDroneList()  //returns a new list of drones
+        public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null)  //returns a new list of drones
         {
-            return DataSource.drones;
+            return DataSource.drones.FindAll(x => predicate == null ? true : predicate(x));
         }
         /// <summary>
         /// the func gets a new name and replaces the name in the func with a new one
@@ -74,14 +74,14 @@ namespace DalObject
                 DataSource.parcels[i].Weigh.CompareTo(whihgt);
             if (priorty != 0)
                 DataSource.parcels[i].Priority.CompareTo(priorty);
-            if (Updatereqwested != 0)
-                DataSource.parcels[i].Requested.CompareTo(DateTime.Now);
-            if (UpdatSchedueld != 0)
-                DataSource.parcels[i].Scheduled.CompareTo(DateTime.Now);
-            if (UpdatPicedup != 0)
-                DataSource.parcels[i].PickedUp.CompareTo(DateTime.Now);
-            if (UpdateDeleverd != 0)
-                DataSource.parcels[i].Delivered.CompareTo(DateTime.Now);
+            //if (Updatereqwested != 0)
+            //    DataSource.parcels[i].Requested=DateTime.Now;
+            //if (UpdatSchedueld != 0)
+            //    DataSource.parcels[i].Scheduled.CompareTo(DateTime.Now);
+            //if (UpdatPicedup != 0)
+            //    DataSource.parcels[i].PickedUp.CompareTo(DateTime.Now);
+            //if (UpdateDeleverd != 0)
+            //    DataSource.parcels[i].Delivered.CompareTo(DateTime.Now);
         }
 
     }
