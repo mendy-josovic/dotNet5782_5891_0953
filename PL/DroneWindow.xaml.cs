@@ -24,6 +24,7 @@ namespace PL
     public partial class DroneWindow : Window
     {
         IBl blObject;
+        Drone drone = new();
         public DroneWindow(IBl blObject)
         {
             InitializeComponent();
@@ -32,9 +33,12 @@ namespace PL
             
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WEIGHT));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(STATUS_OF_DRONE));
-            Drone drone = new();
-            AddDrone.DataContext = drone;
+            
+           
+            //AddDroneLabel.Visibility = Visibility.Hidden;
         }
+
+        
 
         private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -67,6 +71,13 @@ namespace PL
                 tt.Content = "This file does not initialize here";
                 t.ToolTip = tt;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddDrone.DataContext = drone;
+            int idOfStation = 4;
+            blObject.AddDrone(drone, idOfStation);
         }
 
         //private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

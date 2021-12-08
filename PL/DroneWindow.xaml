@@ -8,7 +8,7 @@
         Title="DroneWindow" Height="450" Width="800">
     <Grid x:Name="AddDrone">
         <Label x:Name="IDLabel"  Content="ID" HorizontalAlignment="Left" Margin="165,85,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
-        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="IDTextBox_MouseEnter"/>
+        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="False"/>
         <Label x:Name="BatteryLabel" Content="Battery" HorizontalAlignment="Left" Margin="165,120,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="BatteryTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Battery, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="BatteryTextBox_MouseEnter"/>
         <Label x:Name="MaxWeightLabel" Content="Max weight" HorizontalAlignment="Left" Margin="165,155,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -24,5 +24,6 @@
         <ComboBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="300,158,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
         <ComboBox x:Name="StatusSelector" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
         <Label x:Name="AddDroneLabel" Content="Add a drone" HorizontalAlignment="Left" Margin="300,38,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
+        <Button Content="Add your drone" HorizontalAlignment="Left" Margin="469,346,0,0" VerticalAlignment="Top" Height="35" Width="147" FontSize="16" FontWeight="Bold" Click="Button_Click"/>
     </Grid>
 </Window>
