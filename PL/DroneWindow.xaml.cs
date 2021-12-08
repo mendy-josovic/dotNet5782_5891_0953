@@ -33,12 +33,20 @@ namespace PL
             
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WEIGHT));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(STATUS_OF_DRONE));
-            
-           
+
+
             //AddDroneLabel.Visibility = Visibility.Hidden;
         }
+        public DroneWindow(IBl blObject, Drone dro)
+        {
+            InitializeComponent();
+            AddDrone.DataContext = dro;
 
-        
+
+        }
+
+
+
 
         private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
         {
