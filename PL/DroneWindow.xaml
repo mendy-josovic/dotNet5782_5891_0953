@@ -13,7 +13,7 @@
         <TextBox x:Name="BatteryTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Battery, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="BatteryTextBox_MouseEnter"/>
         <Label x:Name="MaxWeightLabel" Content="Max weight" HorizontalAlignment="Left" Margin="165,155,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="ModelLabel" Content="Model" HorizontalAlignment="Left" Margin="165,190,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
+        <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" TextChanged="ModelTextBox_TextChanged" />
         <Label x:Name="StatusLabel" Content="Status" HorizontalAlignment="Left" Margin="165,225,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="DeliveryOrStationsSLabel" Content="Delivery" HorizontalAlignment="Left" Margin="165,260,0,0" VerticalAlignment="Top" FontSize="16" />
         <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" MouseEnter="DeliveryTextBox_MouseEnter" IsReadOnly="true "/>

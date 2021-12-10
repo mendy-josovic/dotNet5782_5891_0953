@@ -42,14 +42,6 @@ namespace PL
             
         }
 
-        public DroneWindow(IBl blObject, Drone dro)
-        {
-            InitializeComponent();
-            AddDrone.DataContext = dro;
-
-            MaxWeightSelector.IsReadOnly = true;
-        }
-
         private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
         {
             TextBox t = sender as TextBox;
@@ -82,6 +74,8 @@ namespace PL
                 t.ToolTip = tt;
             }
         }
+        private void AddADroneButton_Click(object sender, RoutedEventArgs e)
+        {
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

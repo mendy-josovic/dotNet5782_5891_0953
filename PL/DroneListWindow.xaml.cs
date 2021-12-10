@@ -125,5 +125,11 @@ namespace PL
                 }
             }
         }
+
+        private void DronesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           new DroneWindow(blObject,blObject.BLDrone((DroneToList)DronesListView.SelectedItem)).Show();
+        }
+
     }
 }
