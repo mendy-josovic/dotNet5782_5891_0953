@@ -25,28 +25,30 @@ namespace PL
     {
         IBl blObject;
         Drone drone = new();
+        bool isCloseButtonPressed;
         public DroneWindow(IBl blObject)
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.blObject = blObject;
-            
+            AddDrone.DataContext = drone;
+            DeliveryOrStationsSLabel.Content = "Select a station\nto charge first";
+            DeliveryOrStationsSLabel.FontSize = 14;
+            DeliveryOrStationsSLabel.Margin = new(165, 252, 0, 0);
+            DeliveryTextBox.Visibility = Visibility.Hidden;
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WEIGHT));
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(STATUS_OF_DRONE));
-
-
-            //AddDroneLabel.Visibility = Visibility.Hidden;
+            StatusSelector.Items.Add("IN_MAINTENANCE");
+            ListOfStationsSelector.ItemsSource = this.blObject.DisplayStationList(d => d.ReadyStandsInStation > 0);
+            
         }
+
         public DroneWindow(IBl blObject, Drone dro)
         {
             InitializeComponent();
             AddDrone.DataContext = dro;
 
-
+            MaxWeightSelector.IsReadOnly = true;
         }
-
-
-
 
         private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -65,7 +67,7 @@ namespace PL
             if (t != null)
             {
                 ToolTip tt = new ToolTip();
-                tt.Content = "This file is automatically given";
+                tt.Content = "This fiel is automatically given";
                 t.ToolTip = tt;
             }
         }
@@ -76,22 +78,57 @@ namespace PL
             if (t != null)
             {
                 ToolTip tt = new ToolTip();
-                tt.Content = "This file does not initialize here";
+                tt.Content = "This fiel doesn't initialize here";
                 t.ToolTip = tt;
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddDrone.DataContext = drone;
-            int idOfStation = 4;
-            blObject.AddDrone(drone, idOfStation);
+            StationToList station = ListOfStationsSelector.SelectedItem as StationToList;
+            if (station != null)
+            {
+                try 
+                {
+                    blObject.AddDrone(drone, station.Id);
+                    MessageBox.Show("Successfully added drone!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
+                }
+                catch (IBL.BO.BlException ex)
+                {
+                    String message = String.Format("Something went wrong...\n{0}", ex.Message);
+                    MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }          
         }
 
-        //private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        //{
-        //    Regex regex = new Regex("[^0-9]");
-        //    e.Handled = regex.IsMatch(e.Text);
-        //}
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            isCloseButtonPressed = true;
+            this.Close();
+        }
+
+        private void ListOfStationsSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StationToList s = (StationToList)ListOfStationsSelector.SelectedItem;
+            LongitudeTextBox.Text = blObject.GetLocationOfStation(s).Longitude.ToString();
+            LatitudeTextBox.Text = blObject.GetLocationOfStation(s).Latitude.ToString();
+        }
+
+        private void MaxWeightSelector_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MaxWeightSelector.SelectedIndex = -1;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !isCloseButtonPressed;
+        }
     }
 }

@@ -464,5 +464,12 @@ namespace BL
                 parcelToList.Status = STATUS_OF_PARCEL.CREATED;
             return parcelToList;
         }
+
+        public Location GetLocationOfStation(StationToList s)
+        {           
+            IDAL.DO.Station st = Data.PrintStation(s.Id);
+            Location location = Location(st.Longitude, st.Latitude);
+            return location;
+        }
     }
 }

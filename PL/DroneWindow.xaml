@@ -5,25 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneWindow" Height="450" Width="800">
+        Title="DroneWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid x:Name="AddDrone">
         <Label x:Name="IDLabel"  Content="ID" HorizontalAlignment="Left" Margin="165,85,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
-        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="False"/>
+        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="False"/>
         <Label x:Name="BatteryLabel" Content="Battery" HorizontalAlignment="Left" Margin="165,120,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="BatteryTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Battery, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="BatteryTextBox_MouseEnter"/>
         <Label x:Name="MaxWeightLabel" Content="Max weight" HorizontalAlignment="Left" Margin="165,155,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="ModelLabel" Content="Model" HorizontalAlignment="Left" Margin="165,190,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
         <Label x:Name="StatusLabel" Content="Status" HorizontalAlignment="Left" Margin="165,225,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Label x:Name="DeliveryLabel" Content="Delivery" HorizontalAlignment="Left" Margin="165,260,0,0" VerticalAlignment="Top" FontSize="16" />
+        <Label x:Name="DeliveryOrStationsSLabel" Content="Delivery" HorizontalAlignment="Left" Margin="165,260,0,0" VerticalAlignment="Top" FontSize="16" />
         <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" MouseEnter="DeliveryTextBox_MouseEnter" IsReadOnly="true "/>
         <Label x:Name="LatitudeLabel" Content="Latitude" HorizontalAlignment="Left" Margin="165,295,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="LatitudeTextBox" HorizontalAlignment="Left" Margin="300,301,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"/>
+        <TextBox x:Name="LatitudeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,301,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
         <Label x:Name="LongitudeLabel" Content="Longitude" HorizontalAlignment="Left" Margin="165,330,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox HorizontalAlignment="Left" Margin="300,336,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"/>
-        <ComboBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="300,158,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+        <TextBox x:Name="LongitudeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,336,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
+        <ComboBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="300,158,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding MaxWeight, Mode=TwoWay}" MouseDoubleClick="MaxWeightSelector_MouseDoubleClick"/>
         <ComboBox x:Name="StatusSelector" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
         <Label x:Name="AddDroneLabel" Content="Add a drone" HorizontalAlignment="Left" Margin="300,38,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
-        <Button Content="Add your drone" HorizontalAlignment="Left" Margin="469,346,0,0" VerticalAlignment="Top" Height="35" Width="147" FontSize="16" FontWeight="Bold" Click="Button_Click"/>
+        <Button Content="Add your drone" HorizontalAlignment="Left" Margin="469,286,0,0" VerticalAlignment="Top" Height="35" Width="147" FontSize="16" FontWeight="Bold" Click="Button_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=IDTextBox, Path=Text}" Value="">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=ModelTextBox, Path=Text}" Value="">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=MaxWeightSelector, Path=SelectedIndex}" Value="-1">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=StatusSelector, Path=SelectedIndex}" Value="-1">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=ListOfStationsSelector, Path=SelectedIndex}" Value="-1">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="469,335,0,0" VerticalAlignment="Top" Height="35" Width="147" Click="CloseButton_Click" FontSize="16" FontWeight="Bold"/>
+        <ComboBox x:Name="ListOfStationsSelector" HorizontalAlignment="Left" Margin="300,265,0,0" VerticalAlignment="Top" Width="120" Height="30" SelectionChanged="ListOfStationsSelector_SelectionChanged"/>
+
     </Grid>
 </Window>

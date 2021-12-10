@@ -12,7 +12,8 @@ namespace DalObject
     {
         public void AddDrone(Drone dro)  //same
         {
-            int i = DataSource.drones.FindIndex(w => w.Equals(dro));
+            //int i = DataSource.drones.FindIndex(w => w.Equals(dro));
+            int i = DataSource.drones.FindIndex(w => w.Id == dro.Id);
             if (i > 0)
                 throw new IDAL.DO.DalExceptions("Drone Alredy exsits");
             DataSource.drones.Add(dro);

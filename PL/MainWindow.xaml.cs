@@ -30,8 +30,7 @@ namespace PL
 
         private void DroneListButton_Click(object sender, RoutedEventArgs e)
         {
-            DroneListWindow droneListWindow = new DroneListWindow(blObject);
-            droneListWindow.Show();
+            new DroneListWindow(blObject).Show();
         }
     }
 }
