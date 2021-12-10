@@ -39,7 +39,9 @@ namespace PL
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WEIGHT));
             StatusSelector.Items.Add("IN_MAINTENANCE");
             ListOfStationsSelector.ItemsSource = this.blObject.DisplayStationList(d => d.ReadyStandsInStation > 0);
-            
+            DeliveryButton.Visibility = Visibility.Hidden;
+            ChargingButton.Visibility = Visibility.Hidden;
+            UpdateButton.Visibility = Visibility.Hidden;
         }
 
         private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
@@ -64,20 +66,7 @@ namespace PL
             }
         }
 
-        private void DeliveryTextBox_MouseEnter(object sender, MouseEventArgs e)
-        {
-            TextBox t = sender as TextBox;
-            if (t != null)
-            {
-                ToolTip tt = new ToolTip();
-                tt.Content = "This fiel doesn't initialize here";
-                t.ToolTip = tt;
-            }
-        }
         private void AddADroneButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        private void Button_Click(object sender, RoutedEventArgs e)
         {
             StationToList station = ListOfStationsSelector.SelectedItem as StationToList;
             if (station != null)

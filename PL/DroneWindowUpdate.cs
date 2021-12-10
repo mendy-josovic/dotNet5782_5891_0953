@@ -21,7 +21,7 @@ namespace PL
         public DroneWindow(IBl blObject, Drone dro)
         {
             InitializeComponent();
-            AddADrone.Visibility = Visibility.Hidden;
+            AddADroneButton.Visibility = Visibility.Hidden;
             AddDrone.DataContext = dro;
             IDTextBox.IsReadOnly = true;
             MaxWeightSelector.IsEnabled = false;
@@ -31,32 +31,8 @@ namespace PL
             StatusSelector.ItemsSource = Enum.GetValues(typeof(STATUS_OF_DRONE));
             this.blObject = blObject;
             drone = dro;
-            if (dro.status == STATUS_OF_DRONE.AVAILABLE)
-            {
-                Delivery.Content = "Send to delivery";
-                Charging.Content = "send drone to charge";
-            }
-            if (dro.status == STATUS_OF_DRONE.DELIVERY)
-            {
-                if (!dro.parcel.PickedUp)
-                {
-                    Delivery.Content = "update picke up";
-                    Charging.IsEnabled = true;
-                    UpdateButton.IsEnabled = true;
-                }
-                else
-                {
-                    Delivery.Content = "update dilivery";
-                    Charging.IsEnabled = true;
-                    UpdateButton.IsEnabled = true;
-                }
-            }
-            if (dro.status == STATUS_OF_DRONE.IN_MAINTENANCE)
-            {
-                Charging.Content = "return drone from charging";
-                Delivery.IsEnabled = true;
-                UpdateButton.IsEnabled = true;
-            }
+            InitializeButtons();
+            AddDroneLabel.Content = String.Format("Drone {0}",dro.Id);
         }
         private void Charging_Click(object sender, RoutedEventArgs e)
         {
@@ -77,8 +53,38 @@ namespace PL
 
         private void ModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Delivery.IsEnabled = true;
-            Charging.IsEnabled = true;
+            DeliveryButton.IsEnabled = true;
+            ChargingButton.IsEnabled = true;
+        }
+
+        private void InitializeButtons()
+        {
+            if (drone.status == STATUS_OF_DRONE.AVAILABLE)
+            {
+                DeliveryButton.Content = "Send Drone To Delivery";
+                ChargingButton.Content = "Send Drone to Charge";
+            }
+            if (drone.status == STATUS_OF_DRONE.DELIVERY)
+            {
+                if (!drone.parcel.PickedUp)
+                {
+                    DeliveryButton.Content = "Update Pick-Up";
+                    ChargingButton.IsEnabled = true;
+                    UpdateButton.IsEnabled = true;
+                }
+                else
+                {
+                    DeliveryButton.Content = "Update Delivery";
+                    ChargingButton.IsEnabled = true;
+                    UpdateButton.IsEnabled = true;
+                }
+            }
+            if (drone.status == STATUS_OF_DRONE.IN_MAINTENANCE)
+            {
+                ChargingButton.Content = "Return Drone From Charging";
+                DeliveryButton.IsEnabled = true;
+                UpdateButton.IsEnabled = true;
+            }
         }
     }
 }

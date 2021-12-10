@@ -16,7 +16,7 @@
         <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" TextChanged="ModelTextBox_TextChanged" />
         <Label x:Name="StatusLabel" Content="Status" HorizontalAlignment="Left" Margin="165,225,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="DeliveryOrStationsSLabel" Content="Delivery" HorizontalAlignment="Left" Margin="165,260,0,0" VerticalAlignment="Top" FontSize="16" />
-        <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" MouseEnter="DeliveryTextBox_MouseEnter" IsReadOnly="true "/>
+        <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here" IsReadOnly="true "/>
         <Label x:Name="LatitudeLabel" Content="Latitude" HorizontalAlignment="Left" Margin="165,295,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="LatitudeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,301,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
         <Label x:Name="LongitudeLabel" Content="Longitude" HorizontalAlignment="Left" Margin="165,330,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -24,7 +24,7 @@
         <ComboBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="300,158,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding MaxWeight, Mode=TwoWay}" MouseDoubleClick="MaxWeightSelector_MouseDoubleClick"/>
         <ComboBox x:Name="StatusSelector" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
         <Label x:Name="AddDroneLabel" Content="Add a drone" HorizontalAlignment="Left" Margin="300,38,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
-        <Button Content="Add your drone" HorizontalAlignment="Left" Margin="469,286,0,0" VerticalAlignment="Top" Height="35" Width="147" FontSize="16" FontWeight="Bold" Click="Button_Click">
+        <Button x:Name="AddADroneButton" Content="Add your drone" HorizontalAlignment="Left" Margin="525,286,0,0" VerticalAlignment="Top" Height="35" Width="165" FontSize="16" FontWeight="Bold" Click="AddADroneButton_Click">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="True" />
@@ -48,8 +48,10 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="469,335,0,0" VerticalAlignment="Top" Height="35" Width="147" Click="CloseButton_Click" FontSize="16" FontWeight="Bold"/>
+        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="525,335,0,0" VerticalAlignment="Top" Height="35" Width="169" Click="CloseButton_Click" FontSize="16" FontWeight="Bold"/>
         <ComboBox x:Name="ListOfStationsSelector" HorizontalAlignment="Left" Margin="300,265,0,0" VerticalAlignment="Top" Width="120" Height="30" SelectionChanged="ListOfStationsSelector_SelectionChanged"/>
-
+        <Button x:Name="DeliveryButton" Content="Send Drone To Dilivery" HorizontalAlignment="Left" Margin="525,286,0,0" VerticalAlignment="Top" Width="168" Height="37" Click="Delivery_Click" FontSize="13" FontWeight="Bold"/>
+        <Button x:Name="ChargingButton" Content="Send Drone To Charge" HorizontalAlignment="Left" Margin="525,182,0,0" VerticalAlignment="Top" Height="39" Width="168" Click="Charging_Click" FontWeight="Bold" FontSize="13" />
+        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="525,235,0,0" VerticalAlignment="Top" Height="37" Width="168" Click="UpdateButton_Click" FontWeight="Bold" FontSize="13"/>
     </Grid>
 </Window>
