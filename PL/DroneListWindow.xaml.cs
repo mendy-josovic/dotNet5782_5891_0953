@@ -50,5 +50,11 @@ namespace PL
             DroneWindow droneWindow = new DroneWindow(blObject);
             droneWindow.Show();
         }
+
+        private void DronesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           new DroneWindow(blObject,blObject.BLDrone((DroneToList)DronesListView.SelectedItem)).Show();
+        }
+
     }
 }

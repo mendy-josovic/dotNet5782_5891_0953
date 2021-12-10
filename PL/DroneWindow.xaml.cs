@@ -37,16 +37,6 @@ namespace PL
 
             //AddDroneLabel.Visibility = Visibility.Hidden;
         }
-        public DroneWindow(IBl blObject, Drone dro)
-        {
-            InitializeComponent();
-            AddDrone.DataContext = dro;
-
-
-        }
-
-
-
 
         private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -80,13 +70,13 @@ namespace PL
                 t.ToolTip = tt;
             }
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddADroneButton_Click(object sender, RoutedEventArgs e)
         {
-            AddDrone.DataContext = drone;
-            int idOfStation = 4;
-            blObject.AddDrone(drone, idOfStation);
+
         }
+
+
+     
 
         //private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         //{

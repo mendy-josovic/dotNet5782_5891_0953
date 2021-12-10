@@ -25,7 +25,7 @@ VerticalAlignment="Stretch" Width="auto">
             <ComboBox Name="MaxWeightSelector" Grid.Column="3" Width="120" Margin="40,17,40,17" SelectionChanged="MaxWeightSelector_SelectionChanged"/>
 
         </Grid>
-        <ListView x:Name="DronesListView" Grid.Row="1">
+        <ListView x:Name="DronesListView" Grid.Row="1" MouseDoubleClick="DronesListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
