@@ -7,23 +7,23 @@
         mc:Ignorable="d"
         Title="DroneWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid x:Name="AddDrone">
-        <Label x:Name="IDLabel"  Content="ID" HorizontalAlignment="Left" Margin="165,85,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
+        <Label x:Name="IDLabel" Content="ID" HorizontalAlignment="Left" Margin="165,85,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
         <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="False"/>
         <Label x:Name="BatteryLabel" Content="Battery" HorizontalAlignment="Left" Margin="165,120,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="BatteryTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Battery, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="BatteryTextBox_MouseEnter"/>
         <Label x:Name="MaxWeightLabel" Content="Max weight" HorizontalAlignment="Left" Margin="165,155,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="ModelLabel" Content="Model" HorizontalAlignment="Left" Margin="165,190,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" TextChanged="ModelTextBox_TextChanged" />
+        <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" TextChanged="ModelTextBox_TextChanged" PreviewTextInput="ModelTextBox_PreviewTextInput" />
         <Label x:Name="StatusLabel" Content="Status" HorizontalAlignment="Left" Margin="165,225,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="DeliveryOrStationsSLabel" Content="Delivery" HorizontalAlignment="Left" Margin="165,260,0,0" VerticalAlignment="Top" FontSize="16" />
-        <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here" IsReadOnly="true "/>
+        <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here" IsReadOnly="true "/>
         <Label x:Name="LatitudeLabel" Content="Latitude" HorizontalAlignment="Left" Margin="165,295,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="LatitudeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,301,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
+        <TextBox x:Name="LatitudeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,301,0,0" Text="{Binding ThisLocation.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
         <Label x:Name="LongitudeLabel" Content="Longitude" HorizontalAlignment="Left" Margin="165,330,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="LongitudeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,336,0,0" Text="{Binding Location.latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
+        <TextBox x:Name="LongitudeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,336,0,0" Text="{Binding ThisLocation.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
         <ComboBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="300,158,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding MaxWeight, Mode=TwoWay}" MouseDoubleClick="MaxWeightSelector_MouseDoubleClick"/>
-        <ComboBox x:Name="StatusSelector" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
-        <Label x:Name="AddDroneLabel" Content="Add a drone" HorizontalAlignment="Left" Margin="300,38,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
+        <ComboBox x:Name="StatusSelector" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding status, Mode=TwoWay}"/>
+        <Label x:Name="AddDroneLabel" Content="Add a drone" HorizontalAlignment="Left" Margin="293,31,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
         <Button x:Name="AddADroneButton" Content="Add your drone" HorizontalAlignment="Left" Margin="525,286,0,0" VerticalAlignment="Top" Height="35" Width="165" FontSize="16" FontWeight="Bold" Click="AddADroneButton_Click">
             <Button.Style>
                 <Style TargetType="Button">
@@ -53,5 +53,11 @@
         <Button x:Name="DeliveryButton" Content="Send Drone To Dilivery" HorizontalAlignment="Left" Margin="525,286,0,0" VerticalAlignment="Top" Width="168" Height="37" Click="Delivery_Click" FontSize="13" FontWeight="Bold"/>
         <Button x:Name="ChargingButton" Content="Send Drone To Charge" HorizontalAlignment="Left" Margin="525,182,0,0" VerticalAlignment="Top" Height="39" Width="168" Click="Charging_Click" FontWeight="Bold" FontSize="13" />
         <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="525,235,0,0" VerticalAlignment="Top" Height="37" Width="168" Click="UpdateButton_Click" FontWeight="Bold" FontSize="13"/>
+        <Label x:Name="x1" Content="*" HorizontalAlignment="Left" Margin="285,87,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x2" Content="*" HorizontalAlignment="Left" Margin="285,190,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x3" Content="*" HorizontalAlignment="Left" Margin="285,155,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x4" Content="*" HorizontalAlignment="Left" Margin="285,260,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x5" Content="Fill in the fields marked with *" HorizontalAlignment="Left" Margin="279,61,0,0" VerticalAlignment="Top" Foreground="Red"/>
+        <Label x:Name="x6" Content="*" HorizontalAlignment="Left" Margin="285,224,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
     </Grid>
 </Window>

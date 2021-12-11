@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        
         Title="MainWindow" Height="640" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/DroneInDelivery.JPG"/>
+    </Window.Background>
+    
     <Grid Name="MainGrid">
-        <Button x:Name="DroneListButton" Content="Show Drone List" Click="DroneListButton_Click" Margin="276,245,322,282" />
+        <Button x:Name="DroneListButton" Content="Drones" Click="DroneListButton_Click" Margin="28,492,570,35" FontSize="30" FontWeight="Bold" />
     </Grid>
 
 </Window>

@@ -163,11 +163,10 @@ namespace BL
                 int i = DroneList.FindIndex(w => w.Id == DroneId);
 
                 //get only the relevent for us
-                int j = 0;
                 List<IDAL.DO.Parcel> tempDataParcels = Data.PrintParcelList(w => (int)w.Weigh <= (int)DroneList[i].MaxWeight
-                && w.Scheduled == null && GetBatteryUseAndRootFeasibility(DroneList[i], w) == (true, j)).ToList();           
+                && w.Scheduled == null && GetBatteryUseAndRootFeasibility(DroneList[i], w) == true).ToList();           
                 
-              //remove all tht cant do the root (because of the battery consemption)
+                //remove all tht cant do the root (because of the battery consemption)
                 tempDataParcels.OrderByDescending(w => w.Priority).ThenByDescending(w => w.Weigh).
                     ThenBy(w => GetDistance(DroneList[i].ThisLocation, GetSenderLo(w)));
 
@@ -198,7 +197,7 @@ namespace BL
                     throw new BlException("Drone dosent exsit");
                 int i = DroneList.FindIndex(w => w.Id == DroneId);
                 IDAL.DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
-                if (parcel.PickedUp != DateTime.MinValue)
+                if (parcel.PickedUp != null)
                     throw new BlException("Parcel Alredy Picked Up");
                 double batteryuse = Consumption(DroneList[i].ThisLocation, GetSenderLo(parcel), MODE_OF_DRONE_IN_MOVING.AVAILABLE);
                 DroneList[i].Battery -= batteryuse;

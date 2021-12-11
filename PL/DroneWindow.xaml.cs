@@ -25,7 +25,7 @@ namespace PL
     {
         IBl blObject;
         Drone drone = new();
-        bool isCloseButtonPressed;
+        bool isCloseRequired;
         public DroneWindow(IBl blObject)
         {
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace PL
             ListOfStationsSelector.ItemsSource = this.blObject.DisplayStationList(d => d.ReadyStandsInStation > 0);
             DeliveryButton.Visibility = Visibility.Hidden;
             ChargingButton.Visibility = Visibility.Hidden;
-            UpdateButton.Visibility = Visibility.Hidden;
+            UpdateButton.Visibility = Visibility.Hidden;            
         }
 
         private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
@@ -61,7 +61,7 @@ namespace PL
             if (t != null)
             {
                 ToolTip tt = new ToolTip();
-                tt.Content = "This fiel is automatically given";
+                tt.Content = "This field is automatically given";
                 t.ToolTip = tt;
             }
         }
@@ -69,19 +69,28 @@ namespace PL
         private void AddADroneButton_Click(object sender, RoutedEventArgs e)
         {
             StationToList station = ListOfStationsSelector.SelectedItem as StationToList;
-            if (station != null)
+            if (station != null && isInputValid())
             {
                 try 
                 {
                     blObject.AddDrone(drone, station.Id);
                     MessageBox.Show("Successfully added drone!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    isCloseRequired = true;
                     this.Close();
                 }
-                catch (IBL.BO.BlException ex)
+                catch(IBL.BO.BlException ex)
                 {
-                    String message = String.Format("Something went wrong...\n{0}", ex.Message);
-                    MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                    try
+                    {
+                        throw new PLExceptions(ex.Message);
+                    }
+                    catch (PLExceptions ex2)
+                    {
+                        String message = String.Format("Something went wrong...\n{0}", ex2.Message);
+                        MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
+                
             }          
         }
 
@@ -91,9 +100,15 @@ namespace PL
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        private void ModelTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Z0-9 ]*$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            isCloseButtonPressed = true;
+            isCloseRequired = true;
             this.Close();
         }
 
@@ -111,7 +126,24 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = !isCloseButtonPressed;
+            e.Cancel = !isCloseRequired;
+        }
+
+        private bool isInputValid()
+        {
+            IDTextBox.BorderBrush = Brushes.Black;
+            ModelTextBox.BorderBrush = Brushes.Black;
+
+            bool valid = true;
+            if (drone.Id <= 0)
+            {
+                IDTextBox.BorderBrush = Brushes.Red;
+                MessageBox.Show("ID must be positive", "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                valid = false;
+            }
+
+            return valid;
+            
         }
     }
 }

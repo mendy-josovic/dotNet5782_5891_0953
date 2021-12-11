@@ -19,7 +19,7 @@ namespace BL
         }
 
 
-        public (bool,double) GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro,IDAL.DO.Parcel prc)
+        public bool GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro,IDAL.DO.Parcel prc)
         {
             try
             {
@@ -35,9 +35,9 @@ namespace BL
                 {
                     batteryUse += Consumption(FinishingPiont, ClosestCarging, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);
                     if (dro.Battery - batteryUse < 0)
-                        return (false, 0);
+                        return false;
                 }
-                return (true, batteryUse);
+                return true;
             }
              catch (IDAL.DO.DalExceptions ex)
             {
