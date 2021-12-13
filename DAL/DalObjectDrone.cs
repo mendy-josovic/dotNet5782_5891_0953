@@ -12,17 +12,18 @@ namespace DalObject
     {
         public void AddDrone(Drone dro)  //same
         {
-            //int i = DataSource.drones.FindIndex(w => w.Equals(dro));
             int i = DataSource.drones.FindIndex(w => w.Id == dro.Id);
             if (i > 0)
-                throw new IDAL.DO.DalExceptions("Drone Alredy exsits");
+                throw new IDAL.DO.DalExceptions("Drone Already exists");
+            if(dro.Id<=0)
+                throw new IDAL.DO.DalExceptions("Invalid ID, ID must be positive");
             DataSource.drones.Add(dro);
         }
         public void DroneIdOfPArcel(int prcId, int drnId)
         {
             int i = DataSource.parcels.FindIndex(w => w.Id == prcId);
             if (i < 0)
-                throw new IDAL.DO.DalExceptions("Drone Dosen't exsits");
+                throw new IDAL.DO.DalExceptions("Drone Dosen't exist");
             Parcel tempParcel = DataSource.parcels[i];
             tempParcel.DroneId = drnId;
             DataSource.parcels[i] = tempParcel;

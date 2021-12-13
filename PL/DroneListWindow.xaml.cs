@@ -56,7 +56,8 @@ namespace PL
 
         private void DronesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(blObject, blObject.BLDrone((DroneToList)DronesListView.SelectedItem)).Show();
+            new DroneWindow(blObject, blObject.BLDrone((DroneToList)DronesListView.SelectedItem)).ShowDialog();
+            DisplayListBySelectors();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
