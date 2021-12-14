@@ -45,10 +45,24 @@ namespace PL
         {
             try
             {
-                blObject.SendDroneToCarge(drone.Id);
-                drone = blObject.BLDrone(blObject.DisplayDrone(drone.Id));
-                AddDrone.DataContext = drone;
-                InitializeButtons(drone);
+                Button button = sender as Button;
+                if (button != null)
+                {
+                    if (button.Content == "Send Drone to Charge")
+                    {
+                        blObject.SendDroneToCarge(drone.Id);
+                        drone = blObject.BLDrone(blObject.DisplayDrone(drone.Id));
+                        AddDrone.DataContext = drone;
+                        InitializeButtons(drone);
+                    }
+                    //else
+                    //{
+                    //    blObject.ReturnDroneFromeCharging(drone.Id, );
+                    //    drone = blObject.BLDrone(blObject.DisplayDrone(drone.Id));
+                    //    AddDrone.DataContext = drone;
+                    //    InitializeButtons(drone);
+                    //}
+                }
             }
             catch (IBL.BO.BlException ex)
             {

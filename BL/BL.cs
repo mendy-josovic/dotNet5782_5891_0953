@@ -11,7 +11,7 @@ namespace BL
 {
     public partial class BL: IBl
     {
-        public List<DroneToList> DroneList;
+        private List<DroneToList> DroneList;
         IDal Data;  //object of DAL
         public static Random r = new Random();
         public static double[] batteryConfig = new double[] { };
