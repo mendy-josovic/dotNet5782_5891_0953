@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-using IBL.BO;
-
-namespace IBL
+using BO;
+namespace BlApi
 {
     public interface IBl
     {
@@ -14,10 +13,10 @@ namespace IBL
         public void AddDrone(Drone dro, int IDOfStation);
         public void AddCustomer(Customer cus);
         public void AddParcel(Parcel par);
-        public IDAL.DO.Station DisplayStation(int ID);
+        public DO.Station DisplayStation(int ID);
         public DroneToList DisplayDrone(int ID);
-        public IDAL.DO.Customer DisplayCustomer(int ID);
-        public IDAL.DO.Parcel DisplayParcel(int ID);
+        public DO.Customer DisplayCustomer(int ID);
+        public DO.Parcel DisplayParcel(int ID);
         public List<StationToList> DisplayStationList(Predicate<StationToList> predicate = null);
         public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null);
         public List<CustomerToList> DisplayCustomerList(Predicate<CustomerToList> predicate = null);
@@ -25,19 +24,19 @@ namespace IBL
         public int GetClosestStation(Location a);
         public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
         public Location GetLocationOfStation(int ID);
-        public bool GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro, IDAL.DO.Parcel prc);
-        public Station BLStation(IDAL.DO.Station s);
+        public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc);
+        public Station BLStation(DO.Station s);
         public Drone BLDrone(DroneToList d);
-        public Customer BLCustomer(IDAL.DO.Customer c);
-        public Parcel BLParcel(IDAL.DO.Parcel p);
-        public ParcelInTransfer BLParcelInTransfer(IDAL.DO.Parcel p);
-        public ParcelAtCustomer BLParcelAtCustomer(IDAL.DO.Parcel p, bool sender);
-        public CustomerInParcel BLCustomerInParcel(IDAL.DO.Customer DalCus);
+        public Customer BLCustomer(DO.Customer c);
+        public Parcel BLParcel(DO.Parcel p);
+        public ParcelInTransfer BLParcelInTransfer(DO.Parcel p);
+        public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender);
+        public CustomerInParcel BLCustomerInParcel(DO.Customer DalCus);
         public DroneInCharging BLDroneInCharging(DroneToList d);
-        public StationToList BLStationToList(IDAL.DO.Station s);
+        public StationToList BLStationToList(DO.Station s);
         public DroneToList BLDroneToList(Drone d);
-        public CustomerToList BLCustomerToList(IDAL.DO.Customer c);
-        public ParcelToList BLParcelToList(IDAL.DO.Parcel c);
+        public CustomerToList BLCustomerToList(DO.Customer c);
+        public ParcelToList BLParcelToList(DO.Parcel c);
         public Location Location(double lon, double lat);
         public Location GetLocationOfStation(StationToList s);
         public IEnumerable<DroneToList> BLDrones(Predicate<DroneToList> predicate = null);        

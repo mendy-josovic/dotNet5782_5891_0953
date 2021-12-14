@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IBL
-{
+
     namespace BO
     {
-        public class CustomerInParcel
+       public class Location
         {
-            public int Id { get; set; }
-            public String Name { get; set; }
+            public double Longitude { get; set; }
+            public double Latitude { get; set; }
             public override string ToString()//override the to-string to print it nice
             {
-                return "Customer ID: " + Id + "\nName: " + Name + "\n";
+                return "Longitude: " + Longitude + "\nLatitude: " + Latitude + "\n";
             }
         }
     }
-}
+

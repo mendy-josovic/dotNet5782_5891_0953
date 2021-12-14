@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-using IDAL.DO;
-using IDAL;
+using DO;
+using DalApi;
 namespace DalObject
 {
-    public partial class DalObject:IDal
+    internal partial class DalObject:IDal
     {
         public void AddSParcel(Parcel prc)  //same
         {
             int i = DataSource.parcels.FindIndex(w => w.Equals(prc));
             if (i > 0)
-                throw new IDAL.DO.DalExceptions("Parcel Alredy exsits");
+                throw new DO.DalExceptions("Parcel Alredy exsits");
             DataSource.parcels.Add(prc);
         }
         public void ParcelScheduled(int prcId)

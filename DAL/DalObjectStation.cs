@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-using IDAL.DO;
-using IDAL;
+using DO;
+using DalApi;
 namespace DalObject
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     {
 
         public void AddStation(Station sta)  //just adding to the last place

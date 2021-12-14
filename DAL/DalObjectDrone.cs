@@ -4,26 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-using IDAL.DO;
-using IDAL;
+using DO;
+using DalApi;
 namespace DalObject
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     {
         public void AddDrone(Drone dro)  //same
         {
             int i = DataSource.drones.FindIndex(w => w.Id == dro.Id);
             if (i > 0)
-                throw new IDAL.DO.DalExceptions("Drone Already exists");
+                throw new DO.DalExceptions("Drone Already exists");
             if(dro.Id<=0)
-                throw new IDAL.DO.DalExceptions("Invalid ID, ID must be positive");
+                throw new DO.DalExceptions("Invalid ID, ID must be positive");
             DataSource.drones.Add(dro);
         }
         public void DroneIdOfPArcel(int prcId, int drnId)
         {
             int i = DataSource.parcels.FindIndex(w => w.Id == prcId);
             if (i < 0)
-                throw new IDAL.DO.DalExceptions("Drone Dosen't exist");
+                throw new DO.DalExceptions("Drone Dosen't exist");
             Parcel tempParcel = DataSource.parcels[i];
             tempParcel.DroneId = drnId;
             DataSource.parcels[i] = tempParcel;
@@ -48,7 +48,7 @@ namespace DalObject
         {
             int i = DataSource.drones.FindIndex(w => w.Id == drnId);
             if (i < 0)
-                throw new IDAL.DO.DalExceptions("Drone Dosen't exsits");
+                throw new DO.DalExceptions("Drone Dosen't exsits");
             Drone tempdrone = DataSource.drones[i];
             tempdrone.Model = Name;
             DataSource.drones[i] = tempdrone;
@@ -70,7 +70,7 @@ namespace DalObject
             int index = DataSource.parcels.FindIndex(w => w.Id == parclId);
 
             if (index == -1)
-                throw new IDAL.DO.DalExceptions("Drone Dosen't exsits");
+                throw new DO.DalExceptions("Drone Dosen't exsits");
 
             Parcel parcel = DataSource.parcels[index];
 

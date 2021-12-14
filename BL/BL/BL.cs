@@ -2,45 +2,46 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using BO;
 using System.Collections;
-using IBL;
-
+using BlApi;
+using DO;
 namespace BL
 {
-    public partial class BL: IBl
+   internal partial class BL: IBl
     {
         public List<DroneToList> DroneList;
         IDal Data;  //object of DAL
         public static Random r = new Random();
         public static double[] batteryConfig = new double[] { };
-
+        internal static IBl instance { get; } = new BL();
+        public static IBl Instance { get => instance; }
         /// <summary>
         /// constractor of BL
         /// </summary>
-        public BL()
+       internal BL()
         {
-            Data = new DalObject.DalObject();  
+            Data = DalFactory.GetDal("Object");  
             DroneList = new();
             batteryConfig = Data.Consumption();
             //Copies the lists from DAL
-            List<IDAL.DO.Drone> tempDataDrones = new(Data.PrintDroneList());
-            List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
-            List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
+            List<DO.Drone> tempDataDrones = new(Data.PrintDroneList());
+            List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
+            List<DO.Station> tempDataStations = new(Data.PrintStationList());
 
             //Turns a DAL Drone into a BL Drone
-            foreach (IDAL.DO.Drone item in tempDataDrones)
+            foreach (DO.Drone item in tempDataDrones)
             {
                 DroneToList drone = new();
                 drone.Id = item.Id;
                 drone.Model = item.Model;
-                drone.MaxWeight = (WEIGHT)item.MaxWeight;
+                drone.MaxWeight = (BO.WEIGHT)item.MaxWeight;
                 //for all parcels that didn't delivered but associated to a drone
-                if (tempDataParcels.Exists(w => w.DroneId == (item.Id) && w.Delivered < DateTime.MinValue))
+                if (tempDataParcels.Exists(w => w.DroneId == (item.Id) && w.Delivered ==null))
                 {
                     int i = tempDataParcels.FindIndex(w => w.DroneId == (item.Id));
-                    drone.status = IBL.BO.STATUS_OF_DRONE.DELIVERY;
+                    drone.status = BO.STATUS_OF_DRONE.DELIVERY;
                     var sender = Data.PrintCustomer(tempDataParcels[i].SenderId);
                     Location locOfSender = Location(sender.Longitude, sender.Latitude);
                     var target = Data.PrintCustomer(tempDataParcels[i].TargetId);
@@ -65,8 +66,8 @@ namespace BL
                     drone.status = (STATUS_OF_DRONE)r.Next(0, 1);
                     if (drone.status == STATUS_OF_DRONE.AVAILABLE)
                     {
-                        List<IDAL.DO.Customer> customers = new();
-                        foreach (IDAL.DO.Parcel par in tempDataParcels)  //create a list of parcels that already provided
+                        List<DO.Customer> customers = new();
+                        foreach (DO.Parcel par in tempDataParcels)  //create a list of parcels that already provided
                         {
                             if (par.TargetId > 0 && par.Delivered > DateTime.MinValue)
                                 customers.Add(Data.PrintCustomer(par.TargetId));

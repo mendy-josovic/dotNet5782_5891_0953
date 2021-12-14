@@ -1,8 +1,7 @@
 ﻿using System;
-using DalObject;
-using IDAL.DO;
+using DO;
 using System.Collections.Generic;
-using IDAL;
+using DalApi;
 using System.Runtime.Serialization;
 namespace ConsoleUI
 {
@@ -20,7 +19,7 @@ namespace ConsoleUI
             try
             {
                 char.TryParse(Console.ReadLine(), out char ch);
-                IDal dalObject1 = new DalObject.DalObject();//creating  the class for all the funcs
+                IDal dalObject1 = DalFactory.GetDal("Object");//creating  the class for all the funcs
                 while (ch != 'E')
                 {
                     switch (ch)
@@ -43,7 +42,7 @@ namespace ConsoleUI
                                             case 'a':
                                                 {
 
-                                                    IDAL.DO.Station station = new IDAL.DO.Station();  //gets all the elements for a new station
+                                                    DO.Station station = new DO.Station();  //gets all the elements for a new station
                                                     Console.WriteLine("Enter station ID");
                                                     Int32.TryParse(Console.ReadLine(), out int x);
                                                     if (x <= 0)

@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using DO;
+using BO;
 using System.Collections;
-using IBL;
-
+using BlApi;
 namespace BL
 {
-    public partial class BL :IBl
+    internal partial class BL :IBl
     {
         /// <summary>
         /// gets a station of BL and adds a station to the data
         /// </summary>
         /// <param name="sta">the new station</param>
-        public void AddStation(Station sta)
+        public void AddStation(BO.Station sta)
         {
             try
             {
-                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList(w => w.Id == sta.Id));//if elredy exsits we want to stop
+                List<DO.Station> tempDataStations = new(Data.PrintStationList(w => w.Id == sta.Id));//if elredy exsits we want to stop
                 if(tempDataStations.Count!=0)
                     throw new BlException("The station is already exists");
-                IDAL.DO.Station station = new();
+                DO.Station station = new();
                 station.Id = sta.Id;
                 station.Name = sta.Name;
                 station.Longitude = sta.location.Longitude;
@@ -29,7 +29,7 @@ namespace BL
                 station.ReadyChargeStands = sta.ReadyStandsInStation;               
                 Data.AddStation(station);     
             }
-            catch(IDAL.DO.DalExceptions ex)
+            catch(DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -40,17 +40,17 @@ namespace BL
         /// </summary>
         /// <param name="dro">the new drone</param>
         /// <param name="IDOfStation">ID of station for first charging</param>
-        public void AddDrone(Drone dro, int IDOfStation)
+        public void AddDrone(BO.Drone dro, int IDOfStation)
         {
             try
             {
-                List<IDAL.DO.Station> tempDataStations =new (Data.PrintStationList(w=>w.Id==IDOfStation));
+                List<DO.Station> tempDataStations =new (Data.PrintStationList(w=>w.Id==IDOfStation));
                 if (tempDataStations.Count==0)
                     throw new BlException("there is not a station with this ID");
-                IDAL.DO.Drone drone = new();
+                DO.Drone drone = new();
                 drone.Id = dro.Id;
                 drone.Model = dro.Model;
-                drone.MaxWeight = (IDAL.DO.WEIGHT)dro.MaxWeight;
+                drone.MaxWeight = (DO.WEIGHT)dro.MaxWeight;
                 int i = DroneList.FindIndex(w => w.Id == dro.Id);
                     if(i>=0)
                         throw new BlException("The drone is already exists");     
@@ -61,7 +61,7 @@ namespace BL
                 DroneToList d = BLDroneToList(dro);
                 DroneList.Add(d);
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -71,14 +71,14 @@ namespace BL
         /// gets a customer of BL and adds him to the data
         /// </summary>
         /// <param name="cus">the new customer</param>
-        public void AddCustomer(Customer cus)
+        public void AddCustomer(BO.Customer cus)
         {
             try
             {
-                List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w=>w.Id==cus.Id));
+                List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w=>w.Id==cus.Id));
              if(tempDataCustomers.Count!=0)
                         throw new BlException("The station is already exists");               
-                IDAL.DO.Customer customer = new();
+               DO.Customer customer = new();
                 customer.Id = cus.Id;
                 customer.Name = cus.Name;
                 customer.Phone = cus.Phone;
@@ -86,7 +86,7 @@ namespace BL
                 customer.Latitude = cus.location.Latitude;
                 Data.AddCustomer(customer);
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -96,17 +96,17 @@ namespace BL
         /// gets a parcel of BL and adds it to the data
         /// </summary>
         /// <param name="par">the new parcel</param>
-        public void AddParcel(Parcel par)
+        public void AddParcel(BO.Parcel par)
         {
             try
             {
-                IDAL.DO.Parcel parcel = new();
+                DO.Parcel parcel = new();
                 parcel.Id = par.Id;
                 parcel.SenderId = par.Sender.Id;
                 parcel.TargetId = par.Recipient.Id;
                 parcel.TargetId = par.Recipient.Id;
-                parcel.Weigh = (IDAL.DO.WEIGHT)par.Weight;
-                parcel.Priority = (IDAL.DO.PRIORITY)par.Priority;
+                parcel.Weigh = (DO.WEIGHT)par.Weight;
+                parcel.Priority = (DO.PRIORITY)par.Priority;
                 parcel.DroneId = 0;
                 par.TimeOfCreation = DateTime.Now;
                 par.Scheduled = DateTime.MinValue;
@@ -119,7 +119,7 @@ namespace BL
                 parcel.Delivered = par.Delivered;
                 Data.AddSParcel(parcel);
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }

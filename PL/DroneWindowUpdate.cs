@@ -11,13 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL;
-using IBL.BO;
+using BlApi;
+using BO;
 using System.Text.RegularExpressions;
 namespace PL
 {
     public partial class DroneWindow : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="blObject"></param>
+        /// <param name="dro"></param>
         public DroneWindow(IBl blObject, Drone dro)
         {
             InitializeComponent();
@@ -41,16 +46,26 @@ namespace PL
             InitializeButtons(drone);
             AddDroneLabel.Content = String.Format("Drone {0}",dro.Id);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Charging_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                if(!(drone.status==STATUS_OF_DRONE.IN_MAINTENANCE))
                 blObject.SendDroneToCarge(drone.Id);
+                else
+                {
+                    blObject.ReturnDroneFromeCharging(drone.Id,1);
+                }
                 drone = blObject.BLDrone(blObject.DisplayDrone(drone.Id));
                 AddDrone.DataContext = drone;
                 InitializeButtons(drone);
             }
-            catch (IBL.BO.BlException ex)
+            catch (BO.BlException ex)
             {
                 try
                 {
@@ -94,7 +109,7 @@ namespace PL
                     }
                 }
             }
-            catch (IBL.BO.BlException ex)
+            catch (BO.BlException ex)
             {
                 try
                 {
@@ -117,7 +132,7 @@ namespace PL
                 AddDrone.DataContext = drone;
                 InitializeButtons(drone);
             }
-            catch (IBL.BO.BlException ex)
+            catch (BO.BlException ex)
             {
                 try
                 {
@@ -143,6 +158,9 @@ namespace PL
             {
                 DeliveryButton.Content = "Send Drone To Delivery";
                 ChargingButton.Content = "Send Drone to Charge";
+                DeliveryButton.IsEnabled = true;
+                UpdateButton.IsEnabled = true;
+                ChargingButton.IsEnabled = true;
             }
             if (drone.status == STATUS_OF_DRONE.DELIVERY)
             {
@@ -162,8 +180,8 @@ namespace PL
             if (drone.status == STATUS_OF_DRONE.IN_MAINTENANCE)
             {
                 ChargingButton.Content = "Return Drone From Charging";
-                DeliveryButton.IsEnabled = true;
-                UpdateButton.IsEnabled = true;
+                DeliveryButton.IsEnabled = false;
+                UpdateButton.IsEnabled = false;
             }
         }
     }

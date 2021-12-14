@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-using IDAL.DO;
-using IDAL;
+using DO;
+using DalApi;
 namespace DalObject
 {
-    public partial class DalObject : IDal
+   internal partial class DalObject : IDal
     {
         public void AddCustomer(Customer cst)  //same
         {
            
             int i = DataSource.customers.FindIndex(w => w.Equals(cst));
             if (i > 0)
-                throw new IDAL.DO.DalExceptions("Customer Alredy exsits");
+                throw new DO.DalExceptions("Customer Alredy exsits");
             DataSource.customers.Add(cst);
         }
         public Customer PrintCustomer(int id)  //finds the customer and sends a replica
@@ -38,7 +38,7 @@ namespace DalObject
         {
             int i = DataSource.customers.FindIndex(w => w.Id == CusId);
             if (i < 0)
-                throw new IDAL.DO.DalExceptions("Customer Dosen't exsits");
+                throw new DO.DalExceptions("Customer Dosen't exsits");
           Customer Tempcustomer = DataSource.customers[i];
             if (!string.IsNullOrEmpty(Name))
             {

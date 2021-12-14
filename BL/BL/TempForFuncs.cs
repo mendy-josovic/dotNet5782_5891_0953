@@ -1,10 +1,12 @@
-﻿using IBL;
-using IBL.BO;
+﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
+using DalApi;
+using DO;
 namespace BL
 {
-    public partial class BL : IBl
+    internal partial class BL : IBl
     {
         /// <summary>
         /// the func gets the status of the parcel and acourdingly returns the consumption
@@ -19,27 +21,27 @@ namespace BL
         }
 
 
-        public bool GetBatteryUseAndRootFeasibility(IBL.BO.DroneToList dro,IDAL.DO.Parcel prc)
+        public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc)
         {
             try
             {
                 Location startingPiont = dro.ThisLocation;
                 Location StapingPiont = GetSenderLo(prc);
                 Location FinishingPiont = GetReceiverLo(prc);
-                IDAL.DO.Customer sender = Data.PrintCustomer(prc.SenderId);                
-                IDAL.DO.Customer Receiver = Data.PrintCustomer(prc.TargetId);        
-                IDAL.DO.Station closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));          
+                DO.Customer sender = Data.PrintCustomer(prc.SenderId);                
+                DO.Customer Receiver = Data.PrintCustomer(prc.TargetId);        
+                DO.Station closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));          
                 Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
-                double batteryUse = Consumption(startingPiont, StapingPiont, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE) + Consumption(StapingPiont, FinishingPiont, (IBL.BO.MODE_OF_DRONE_IN_MOVING)prc.Weigh);
+                double batteryUse = Consumption(startingPiont, StapingPiont, BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE) + Consumption(StapingPiont, FinishingPiont, (BO.MODE_OF_DRONE_IN_MOVING)prc.Weigh);
                 if (dro.Battery - batteryUse < 20)
                 {
-                    batteryUse += Consumption(FinishingPiont, ClosestCarging, IBL.BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);
+                    batteryUse += Consumption(FinishingPiont, ClosestCarging,BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);
                     if (dro.Battery - batteryUse < 0)
                         return false;
                 }
                 return true;
             }
-             catch (IDAL.DO.DalExceptions ex)
+             catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -50,15 +52,15 @@ namespace BL
         /// </summary>
         /// <param name="pr"></param>
         /// <returns></returns>
-        public Location GetSenderLo(IDAL.DO.Parcel pr)
+        public Location GetSenderLo(DO.Parcel pr)
         {
             try
             {
-                IDAL.DO.Customer cs = Data.PrintCustomer(pr.SenderId);
+                DO.Customer cs = Data.PrintCustomer(pr.SenderId);
                 Location newloc = Location(cs.Longitude, cs.Latitude);
                 return newloc;
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -68,15 +70,15 @@ namespace BL
         /// </summary>
         /// <param name="pr"></param>
         /// <returns></returns>
-        public Location GetReceiverLo(IDAL.DO.Parcel pr)
+        public Location GetReceiverLo(DO.Parcel pr)
         {
             try
             {
-                IDAL.DO.Customer cs = Data.PrintCustomer(pr.TargetId);
+                DO.Customer cs = Data.PrintCustomer(pr.TargetId);
                 Location newloc = Location(cs.Longitude, cs.Latitude);
                 return newloc;
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -130,9 +132,9 @@ namespace BL
                 int i = 0;
                 int closestID = 0;
                 double minimum = 0;
-                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
-                List<Station> stationsBL = new();
-                foreach (IDAL.DO.Station station in tempDataStations)
+                List<DO.Station> tempDataStations = new(Data.PrintStationList());
+                List<BO.Station> stationsBL = new();
+                foreach (DO.Station station in tempDataStations)
                 {
                     stationsBL.Add(BLStation(station));
                 }
@@ -159,7 +161,7 @@ namespace BL
                 }
                 return closestID;
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -174,11 +176,11 @@ namespace BL
         {
             try
             {
-                IDAL.DO.Station tempDataStations = Data.PrintStation(ID);            
+                DO.Station tempDataStations = Data.PrintStation(ID);            
                 Location loc = Location(tempDataStations.Longitude, tempDataStations.Latitude);
                 return loc;
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -189,9 +191,9 @@ namespace BL
         /// </summary>
         /// <param name="s">DAL station</param>
         /// <returns>BL station</returns>
-        public Station BLStation(IDAL.DO.Station s)
+        public BO.Station BLStation(DO.Station s)
         {
-            Station station = new();
+            BO.Station station = new();
             station.Id = s.Id;
             station.Name = s.Name;
             station.location = new();
@@ -206,9 +208,9 @@ namespace BL
         /// </summary>
         /// <param name="d">DroneToList drone</param>
         /// <returns>BL Drone</returns>
-        public Drone BLDrone(DroneToList d)
+        public BO.Drone BLDrone(DroneToList d)
         {
-            Drone drone = new();
+            BO.Drone drone = new();
             drone.Id = d.Id;
             drone.Model = d.Model;
             drone.MaxWeight = d.MaxWeight;
@@ -217,7 +219,7 @@ namespace BL
             drone.status = d.status;
             if (drone.status == STATUS_OF_DRONE.DELIVERY)
             {             
-                IDAL.DO.Parcel p = Data.PrintParcel(d.ParcelId);
+                DO.Parcel p = Data.PrintParcel(d.ParcelId);
                 drone.parcel = BLParcelInTransfer(p);
             }
             return drone;
@@ -228,10 +230,10 @@ namespace BL
         /// </summary>
         /// <param name="c">DAL customer </param>
         /// <returns>BL customer</returns>
-        public Customer BLCustomer(IDAL.DO.Customer c)
+        public BO.Customer BLCustomer(DO.Customer c)
         {
-            List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
-            Customer customer = new();
+            List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
+            BO.Customer customer = new();
             customer.Id = c.Id;
             customer.Phone = c.Phone;
             customer.Name = c.Name;
@@ -239,14 +241,14 @@ namespace BL
             //From - a list okf parcels that sendered by this customer
             var From = tempDataParcels.FindAll(w => w.SenderId == customer.Id);
             customer.FromCustomer = new();
-            foreach (IDAL.DO.Parcel p in From)
+            foreach (DO.Parcel p in From)
             {
                 customer.FromCustomer.Add(BLParcelAtCustomer(p, true));
             }
             //To - a list okf parcels that sendered to this customer
             var To = tempDataParcels.FindAll(w => w.TargetId == customer.Id);
             customer.ToCustomer = new();
-            foreach(IDAL.DO.Parcel p in To)
+            foreach(DO.Parcel p in To)
             {
                 customer.ToCustomer.Add(BLParcelAtCustomer(p, false));
             }
@@ -258,13 +260,13 @@ namespace BL
         /// </summary>
         /// <param name="p">DAL parcel </param>
         /// <returns>BL parcel</returns>
-        public Parcel BLParcel(IDAL.DO.Parcel p)
+        public BO.Parcel BLParcel(DO.Parcel p)
         {
-            List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
-            Parcel parcel = new();
+            List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+            BO.Parcel parcel = new();
             parcel.Id = p.Id;
-            parcel.Weight = (WEIGHT)p.Weigh;
-            parcel.Priority = (PRIORITY)p.Priority;
+            parcel.Weight = (BO.WEIGHT)p.Weigh;
+            parcel.Priority = (BO.PRIORITY)p.Priority;
             parcel.TimeOfCreation = p.Requested;
             parcel.Scheduled = p.Scheduled;
             parcel.PickedUp = p.PickedUp;
@@ -298,13 +300,13 @@ namespace BL
         /// <param name="p">DAL parcel</param>
         /// <param name="sender">a flag if the customer of ParcelAtCustomer is the sender or the recipient</param>
         /// <returns>BL ParcelAtCustomer</returns>
-        public ParcelAtCustomer BLParcelAtCustomer(IDAL.DO.Parcel p, bool sender)
+        public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender)
         {
-            List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+            List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
             ParcelAtCustomer par = new();
             par.Id = p.Id;
-            par.Weight = (WEIGHT)p.Weigh;
-            par.Priority = (PRIORITY)p.Priority;
+            par.Weight = (BO.WEIGHT)p.Weigh;
+            par.Priority = (BO.PRIORITY)p.Priority;
             if (p.Scheduled == null)
                 par.Status = STATUS_OF_PARCEL.CREATED;
             else if (p.PickedUp == null)
@@ -325,14 +327,14 @@ namespace BL
         /// </summary>
         /// <param name="p">DAL parcel</param>
         /// <returns>BL ParcelInTransfer</returns>
-        public ParcelInTransfer BLParcelInTransfer(IDAL.DO.Parcel p)
+        public ParcelInTransfer BLParcelInTransfer(DO.Parcel p)
         {
-            List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+            List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
             ParcelInTransfer par = new();
             par.Id = p.Id;
             par.PickedUp = p.PickedUp != null;
-            par.Priority = (PRIORITY)p.Priority;
-            par.Weight = (WEIGHT)p.Weigh;
+            par.Priority = (BO.PRIORITY)p.Priority;
+            par.Weight = (BO.WEIGHT)p.Weigh;
             par.Sender = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
             par.Recipient = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
             par.LocationOfPickedUp = Location(tempDataCustomers.Find(w => w.Id == p.SenderId).Longitude, tempDataCustomers.Find(w => w.Id == p.SenderId).Latitude);
@@ -346,7 +348,7 @@ namespace BL
         /// </summary>
         /// <param name="DalCus">DAL customer</param>
         /// <returns>BL CustomerInParcel</returns>
-        public CustomerInParcel BLCustomerInParcel(IDAL.DO.Customer DalCus)
+        public CustomerInParcel BLCustomerInParcel(DO.Customer DalCus)
         {
             CustomerInParcel c = new();
             c.Id = DalCus.Id;
@@ -387,10 +389,10 @@ namespace BL
         /// <param name="s">DAL station</param>
         /// <param name="s">DAL station</param>
         /// <returns>StationToList</returns>
-        public StationToList BLStationToList(IDAL.DO.Station s)
+        public StationToList BLStationToList(DO.Station s)
         {
             StationToList stationToList = new();
-            Station station = BLStation(s);
+            BO.Station station = BLStation(s);
             stationToList.Id = station.Id;
             stationToList.Name = station.Name;
             stationToList.ReadyStandsInStation = station.ReadyStandsInStation;
@@ -403,7 +405,7 @@ namespace BL
         /// </summary>
         /// <param name="d"> BL Drone</param>
         /// <returns>DroneToList</returns>
-        public DroneToList BLDroneToList(Drone d)
+        public DroneToList BLDroneToList(BO.Drone d)
         {
             DroneToList droneToList = new();
             droneToList.Id = d.Id;
@@ -422,10 +424,10 @@ namespace BL
         /// </summary>
         /// <param name="c">DAL customer</param>
         /// <returns>CustomerToList</returns>
-        public CustomerToList BLCustomerToList(IDAL.DO.Customer c)
+        public CustomerToList BLCustomerToList(DO.Customer c)
         {
             CustomerToList customerToList = new();
-            Customer customer = BLCustomer(c);
+            BO.Customer customer = BLCustomer(c);
             customerToList.Id = customer.Id;
             customerToList.Name = customer.Name;
             customerToList.Phone = customer.Phone;
@@ -445,10 +447,10 @@ namespace BL
         /// </summary>
         /// <param name="c">DAL parcel</param>
         /// <returns>ParcelToList</returns>
-        public ParcelToList BLParcelToList(IDAL.DO.Parcel c)
+        public ParcelToList BLParcelToList(DO.Parcel c)
         {
             ParcelToList parcelToList = new();
-            Parcel parcel = BLParcel(c);
+            BO.Parcel parcel = BLParcel(c);
             parcelToList.Id = parcel.Id;
             parcelToList.Sender = parcel.Sender.Name;
             parcelToList.Recipient = parcel.Recipient.Name;
@@ -467,7 +469,7 @@ namespace BL
 
         public Location GetLocationOfStation(StationToList s)
         {           
-            IDAL.DO.Station st = Data.PrintStation(s.Id);
+            DO.Station st = Data.PrintStation(s.Id);
             Location location = Location(st.Longitude, st.Latitude);
             return location;
         }

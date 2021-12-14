@@ -11,8 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL;
-using IBL.BO;
+using BlApi;
+using BO;
 using System.Text.RegularExpressions;
 
 
@@ -78,7 +78,7 @@ namespace PL
                     isCloseRequired = true;
                     this.Close();
                 }
-                catch(IBL.BO.BlException ex)
+                catch(BO.BlException ex)
                 {
                     try
                     {

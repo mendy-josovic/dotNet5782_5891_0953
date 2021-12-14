@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IBL
-{
     namespace BO
     {
         public enum WEIGHT { LIGHT, MEDIUM, HEAVY };
@@ -12,4 +10,3 @@ namespace IBL
         public enum STATUS_OF_DRONE { AVAILABLE, IN_MAINTENANCE, DELIVERY }
         public enum MODE_OF_DRONE_IN_MOVING { LIGHT, MEDIUM, HEAVY, AVAILABLE }
     }
-}

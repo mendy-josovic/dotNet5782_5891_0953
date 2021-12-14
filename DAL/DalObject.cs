@@ -4,22 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-using IDAL.DO;
-using IDAL;
+using DO;
+using DalApi;
 namespace DalObject
 {
-  public partial class DalObject: IDal
+    internal partial class DalObject : IDal
     {
-        public DalObject() 
+         internal static IDal instance { get; } = new DalObject();
+        public static IDal Instance { get => instance; }
+
+
+       private DalObject() 
         {
             DataSource.Initialize();
         }
-
         public void CreateANewDroneCharge(int staId, int drnId)
         {
             DataSource.droneCharges.Add(new DroneCharge(drnId, staId));
-        }
-        
+        }        
         public void ClearDroneCharge(int drnId)
         {
             int i = DataSource.droneCharges.FindIndex(w => w.DroneId == drnId);  //find the parcel that was supplied
@@ -41,7 +43,7 @@ namespace DalObject
                 i= DataSource.droneCharges.FindIndex(w => w.StationId == StationId);
             if (i<0)
                 throw new DalExceptions("ERROR Cant find (Dron Or Station Not Fuond) ");
-            IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge(DataSource.droneCharges[i].DroneId, DataSource.droneCharges[i].StationId);
+            DO.DroneCharge droneCharge = new DO.DroneCharge(DataSource.droneCharges[i].DroneId, DataSource.droneCharges[i].StationId);
             return droneCharge;
         }
         public double[] Consumption()

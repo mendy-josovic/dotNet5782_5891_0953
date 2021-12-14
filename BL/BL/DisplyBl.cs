@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using BO;
 using System.Collections;
-using IBL;
+using BlApi;
+using DO;
 namespace BL
 {
-    public partial class BL : IBl
+    internal partial class BL : IBl
     {
-        public IDAL.DO.Station DisplayStation(int id)
+        public DO.Station DisplayStation(int id)
         {
             try
             {
-                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList(w=>w.Id==id));
+                List<DO.Station> tempDataStations = new(Data.PrintStationList(w=>w.Id==id));
                 if (tempDataStations.Count==0)
                     throw new BlException("Station does not exists");
                     return (Data.PrintStation(id));
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -31,31 +32,31 @@ namespace BL
                 return DroneList.Find(w => w.Id == id);
         }
 
-        public IDAL.DO.Customer DisplayCustomer(int id)
+        public DO.Customer DisplayCustomer(int id)
         {
             try
             {
-                List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w=>w.Id==id));
+                List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w=>w.Id==id));
                 if (tempDataCustomers.Count==0)
                     throw new BlException("Customer does not exixt");
                     return Data.PrintCustomer(id);
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
         }
 
-        public IDAL.DO.Parcel DisplayParcel(int id)
+        public DO.Parcel DisplayParcel(int id)
         {
             try
             {
-                List<IDAL.DO.Parcel> tempDataParcel= new(Data.PrintParcelList(w => w.Id == id));
+                List<DO.Parcel> tempDataParcel= new(Data.PrintParcelList(w => w.Id == id));
                 if (tempDataParcel.Count == 0)
                     throw new BlException("parcel does not exixt");
                 return Data.PrintParcel(id);
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -65,15 +66,15 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Station> tempDataStations = new(Data.PrintStationList());
+                List<DO.Station> tempDataStations = new(Data.PrintStationList());
                 List<StationToList> stationList = new();
-                foreach (IDAL.DO.Station s in tempDataStations)
+                foreach (DO.Station s in tempDataStations)
                 {
                     stationList.Add(BLStationToList(s));
                 }
                 return stationList.FindAll(x => predicate == null ? true : predicate(x));
             }
-            catch (IDAL.DO.DalExceptions ex)
+            catch (DO.DalExceptions ex)
             {
                 throw new BlException(ex.Message);
             }
@@ -86,9 +87,9 @@ namespace BL
 
         public List<CustomerToList> DisplayCustomerList(Predicate<CustomerToList> predicate = null)
         {
-            List<IDAL.DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+            List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
             List<CustomerToList> customerList = new();
-            foreach(IDAL.DO.Customer customer in tempDataCustomers)
+            foreach(DO.Customer customer in tempDataCustomers)
             {
                 customerList.Add(BLCustomerToList(customer));
             }
@@ -97,9 +98,9 @@ namespace BL
 
         public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null)
         {
-            List<IDAL.DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
+            List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
             List<ParcelToList> parcelList = new();
-            foreach (IDAL.DO.Parcel parcel in tempDataParcels)
+            foreach (DO.Parcel parcel in tempDataParcels)
             {
                 parcelList.Add(BLParcelToList(parcel));
             }

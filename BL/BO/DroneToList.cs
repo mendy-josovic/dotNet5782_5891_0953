@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using IDAL.DO;
 
-namespace IBL
-{
+
     namespace BO
     {
         public class DroneToList
@@ -25,4 +24,4 @@ namespace IBL
             }
         }
     }
-}
+

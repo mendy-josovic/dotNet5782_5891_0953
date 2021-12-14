@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
+using DO;
 namespace DalObject
 {
   public class DataSource
@@ -20,7 +20,7 @@ namespace DalObject
             public static double LightWeightCarrier { get; set; } = 2;
             public static double MediumWeightCarrier { get; set; } = 3;
             public static double HeavyWeightCarrier  { get; set; } = 4;
-            public static double ChargingRate { get; set; } = 20;
+            public static double ChargingRate { get; set; } = 25;
         };
         public static Random r = new Random();
         internal static void Initialize()
@@ -82,8 +82,8 @@ namespace DalObject
                 tempParcel.Id = Config.RuningNumber++;                                     
                 tempParcel.SenderId = customers[i].Id;   
                 tempParcel.TargetId = customers[9 - i].Id;                 
-                tempParcel.Priority = ((IDAL.DO.PRIORITY)r.Next(0, 3));
-                tempParcel.Weigh = ((IDAL.DO.WEIGHT)r.Next(0, 3));
+                tempParcel.Priority = ((DO.PRIORITY)r.Next(0, 3));
+                tempParcel.Weigh = ((DO.WEIGHT)r.Next(0, 3));
                 tempParcel.Requested = new();
                 parcels.Add(tempParcel);
             }         

@@ -11,7 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL;
+using BlApi;
+using BO;
 
 namespace PL
 {
@@ -25,7 +26,7 @@ namespace PL
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            blObject = new BL.BL();
+            blObject = BlFactory.GetBl();
         }
 
         private void DroneListButton_Click(object sender, RoutedEventArgs e)
