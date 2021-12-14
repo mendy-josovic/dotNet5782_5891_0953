@@ -64,7 +64,7 @@ namespace ConsoleUI
                                                 }
                                             case 'b':
                                                 {
-                                                    IDAL.DO.Drone drone = new IDAL.DO.Drone();  //gets all the elements for a new drone
+                                                    DO.Drone drone = new DO.Drone();  //gets all the elements for a new drone
                                                     Console.WriteLine("Enter drone ID");
                                                     Int32.TryParse(Console.ReadLine(), out int x);
                                                     drone.Id = x;
@@ -74,14 +74,14 @@ namespace ConsoleUI
                                                     drone.Model = Console.ReadLine();
                                                     Console.WriteLine("Enter drone max-whight");
                                                     Int32.TryParse(Console.ReadLine(), out x);
-                                                    drone.MaxWeight = (IDAL.DO.WEIGHT)x;
+                                                    drone.MaxWeight = (DO.WEIGHT)x;
 
                                                     dalObject1.AddDrone(drone);
                                                     break;
                                                 }
                                             case 'c':
                                                 {
-                                                    IDAL.DO.Customer customer = new IDAL.DO.Customer();  //gets all the elements for a new customer
+                                                    DO.Customer customer = new DO.Customer();  //gets all the elements for a new customer
                                                     Console.WriteLine("Enter customer ID");
                                                     int.TryParse(Console.ReadLine(), out int x);
                                                     customer.Id = x;
@@ -102,7 +102,7 @@ namespace ConsoleUI
                                                 }
                                             case 'd':
                                                 {
-                                                    IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();  //gets all the elements for a new parcel
+                                                    DO.Parcel parcel = new DO.Parcel();  //gets all the elements for a new parcel
                                                     Console.WriteLine("Enter parcel ID");
                                                     int.TryParse(Console.ReadLine(), out int x);
                                                     parcel.Id = x;
@@ -116,10 +116,10 @@ namespace ConsoleUI
                                                     parcel.TargetId = x;
                                                     Console.WriteLine("Enter parcel weight");
                                                     int.TryParse(Console.ReadLine(), out x);
-                                                    parcel.Weigh = (IDAL.DO.WEIGHT)x;
+                                                    parcel.Weigh = (DO.WEIGHT)x;
                                                     Console.WriteLine("Enter parcel Priority");
                                                     int.TryParse(Console.ReadLine(), out x);
-                                                    parcel.Priority = (IDAL.DO.PRIORITY)x;
+                                                    parcel.Priority = (DO.PRIORITY)x;
                                                     parcel.Requested = DateTime.Now;
                                                     parcel.DroneId = 0;
                                                     dalObject1.AddSParcel(parcel);
@@ -242,7 +242,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int stationId);
                                                     if (stationId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    IDAL.DO.Station st = dalObject1.PrintStation(stationId);
+                                                    DO.Station st = dalObject1.PrintStation(stationId);
                                                     Console.WriteLine(st);
                                                     break;
                                                 }
@@ -252,7 +252,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int droneId);
                                                     if (droneId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    IDAL.DO.Drone dr = dalObject1.PrintDrone(droneId);
+                                                    DO.Drone dr = dalObject1.PrintDrone(droneId);
                                                     Console.WriteLine(dr);
                                                     break;
                                                 }
@@ -262,7 +262,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int customerId);
                                                     if (customerId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    IDAL.DO.Customer cm = dalObject1.PrintCustomer(customerId);
+                                                    DO.Customer cm = dalObject1.PrintCustomer(customerId);
                                                     Console.WriteLine(cm);
                                                     break;
 
@@ -273,7 +273,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int parcelId);
                                                     if (parcelId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    IDAL.DO.Parcel pr = dalObject1.PrintParcel(parcelId);
+                                                    DO.Parcel pr = dalObject1.PrintParcel(parcelId);
                                                     Console.WriteLine(pr);
                                                     break;
                                                 }
@@ -373,7 +373,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine(c);
             }
-            catch (IDAL.DO.DalExceptions exc)
+            catch (DO.DalExceptions exc)
             {
                 Console.WriteLine(exc);
             }
