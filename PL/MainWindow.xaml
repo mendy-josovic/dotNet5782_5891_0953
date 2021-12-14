@@ -6,13 +6,15 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         
-        Title="MainWindow" Height="640" Width="800">
+        Title="MainWindow" Height="589" Width="1100">
     <Window.Background>
-        <ImageBrush ImageSource="Images/DroneInDelivery.JPG"/>
+       
+        <ImageBrush ImageSource="Images/DroneInDelivery.JPG" Stretch="Uniform"/>
+
     </Window.Background>
     
     <Grid Name="MainGrid">
-        <Button x:Name="DroneListButton" Content="Drones" Click="DroneListButton_Click" Margin="28,492,570,35" FontSize="30" FontWeight="Bold" />
+        <Button x:Name="DroneListButton" Content="Drones" Click="DroneListButton_Click" Margin="76,407,845,58" FontSize="30" FontWeight="Bold" />
     </Grid>
 
 </Window>
