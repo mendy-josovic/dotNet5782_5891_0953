@@ -17,19 +17,34 @@ using BO;
 namespace PL
 {
     /// <summary>
+    /// a class for the grooping... its a class from twe typs
+    /// </summary>
+    public class STATUS_OF_DRONE_And_WEIGHT
+    {
+        public WEIGHT Weight { get; set; }
+        public STATUS_OF_DRONE status { get; set; }
+    }
+    /// <summary>
     /// Interaction logic for DroneList.xaml
     /// </summary>
     public partial class DroneListWindow : Window
     {
         IBl blObject;
         bool isCloseButtonPressed;
+        /// <summary>
+        /// elemnt named dronetolists tha is alredy grooped
+        /// </summary>
+      public  IEnumerable<IGrouping<STATUS_OF_DRONE_And_WEIGHT, DroneToList>> droneToLists;
         public DroneListWindow(IBl blObject)
         {
             InitializeComponent();
+         
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.blObject = blObject;
+            droneToLists = from l in blObject.DisplayDroneList()
+                       group l by new STATUS_OF_DRONE_And_WEIGHT { status = l.status, Weight = l.MaxWeight } ;
 
-            DronesListView.ItemsSource = this.blObject.DisplayDroneList();
+            DronesListView.ItemsSource = droneToLists.SelectMany(x => x);
             StatusSelector.ItemsSource = Enum.GetValues(typeof(STATUS_OF_DRONE));
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WEIGHT));
             ClearButton1.Content = "Clear\nyour\nchoice";
@@ -97,17 +112,18 @@ namespace PL
 
         /// <summary>
         /// display list of drones by selection of selectors
+        /// and its doing it thruh grooping
         /// </summary>
         private void DisplayListBySelectors()
         {
             if (MaxWeightSelector.SelectedIndex == -1)
             {
                 if (StatusSelector.SelectedIndex == -1)
-                    DronesListView.ItemsSource = this.blObject.DisplayDroneList();
+                    DronesListView.ItemsSource = droneToLists.SelectMany(x => x);
                 else
                 {
                     STATUS_OF_DRONE selectedStatus = (STATUS_OF_DRONE)StatusSelector.SelectedItem;
-                    DronesListView.ItemsSource = this.blObject.DisplayDroneList(d => d.status == selectedStatus);
+                    DronesListView.ItemsSource = droneToLists.Where(x => x.Key.status == selectedStatus).SelectMany(x => x);
                 }
             }
             else
@@ -115,14 +131,13 @@ namespace PL
                 if (StatusSelector.SelectedIndex == -1)
                 {
                     WEIGHT selectedMaxWeight = (WEIGHT)MaxWeightSelector.SelectedItem;
-                    DronesListView.ItemsSource = this.blObject.DisplayDroneList(d => d.MaxWeight == selectedMaxWeight);
+                    DronesListView.ItemsSource = droneToLists.Where(x => x.Key.Weight == selectedMaxWeight).SelectMany(x => x);
                 }
                 else
                 {
                     WEIGHT selectedMaxWeight = (WEIGHT)MaxWeightSelector.SelectedItem;
                     STATUS_OF_DRONE selectedStatus = (STATUS_OF_DRONE)StatusSelector.SelectedItem;
-                    DronesListView.ItemsSource = this.blObject.DisplayDroneList(d => d.status == selectedStatus && d.MaxWeight == selectedMaxWeight);
-
+                    DronesListView.ItemsSource = droneToLists.Where(x => x.Key.status == selectedStatus && x.Key.Weight == selectedMaxWeight).SelectMany(x => x);
                 }
             }
         }

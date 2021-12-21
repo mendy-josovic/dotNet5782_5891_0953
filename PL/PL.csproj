@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\drone.jpg" />
     <None Remove="Images\DroneInDelivery.jpg" />
   </ItemGroup>
 
@@ -15,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\drone.jpg" />
     <Resource Include="Images\DroneInDelivery.jpg" />
   </ItemGroup>
 
