@@ -34,7 +34,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
 
         </ListView>
-        <Button x:Name="AddDrone" Content="Add new drone" Height="40" Width="140" Grid.Row="1" Margin="616,381,44,134" FontSize="16" Click="AddDrone_Click"/>
+        <Button x:Name="AddDrone" Content="Add new drone" Height="40" Width="140" Grid.Row="1" Margin="616,381,44,134" FontSize="16" FontWeight="Bold" Click="AddDrone_Click"/>
         <Button x:Name="CloseButton" Content="Close" Height="40" Width="140" Grid.Row="1" Margin="618,438,42,77" FontSize="16" FontWeight="Bold" Click="CloseButton_Click" />
         <Grid Grid.Row="1">
             <Image Margin="229,116,0,343" Stretch="Fill" Source="pack://siteoforigin:,,,/DroneInDelivery.jpg" HorizontalAlignment="Left" Width="329"/>
