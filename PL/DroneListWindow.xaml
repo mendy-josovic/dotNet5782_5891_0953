@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+         Icon="/Images/drone.jpg"
         Title="DroneListWindow" Height="700" Width="840" Closing="Window_Closing">
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
