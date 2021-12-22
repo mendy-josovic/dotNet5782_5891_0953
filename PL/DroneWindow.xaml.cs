@@ -145,5 +145,10 @@ namespace PL
             return valid;
             
         }
+
+        private void DeliveryTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
