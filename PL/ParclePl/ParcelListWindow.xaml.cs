@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for ParcelListWindow.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class ParcelListWindow : Window
     {
-        public Page1()
+        public ParcelListWindow()
         {
             InitializeComponent();
         }
