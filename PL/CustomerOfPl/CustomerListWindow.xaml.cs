@@ -15,7 +15,7 @@ using BlApi;
 using BO;
 
 
-namespace PL.CustomerOfPl
+namespace PL
 {
     /// <summary>
     /// Interaction logic for CustomerListWindow.xaml
