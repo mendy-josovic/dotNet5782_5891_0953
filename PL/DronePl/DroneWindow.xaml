@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-         Icon="/Images/drone.jpg"
+        Icon="/Images/drone.jpg"
         Title="DroneWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid x:Name="AddDrone">
         <Label x:Name="IDLabel" Content="ID" HorizontalAlignment="Left" Margin="165,85,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
@@ -17,7 +17,7 @@
         <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" TextChanged="ModelTextBox_TextChanged" PreviewTextInput="ModelTextBox_PreviewTextInput" />
         <Label x:Name="StatusLabel" Content="Status" HorizontalAlignment="Left" Margin="165,225,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="DeliveryOrStationsSLabel" Content="Delivery" HorizontalAlignment="Left" Margin="165,260,0,0" VerticalAlignment="Top" FontSize="16" />
-        <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here" IsReadOnly="true "/>
+        <TextBox x:Name="DeliveryTextBox" HorizontalAlignment="Left" Margin="300,267,0,0" Text="{Binding parcel.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here" IsReadOnly="true " MouseDoubleClick="DeliveryTextBox_MouseDoubleClick"/>
         <Label x:Name="LatitudeLabel" Content="Latitude" HorizontalAlignment="Left" Margin="165,295,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="LatitudeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,301,0,0" Text="{Binding ThisLocation.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
         <Label x:Name="LongitudeLabel" Content="Longitude" HorizontalAlignment="Left" Margin="165,330,0,0" VerticalAlignment="Top" FontSize="16"/>

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.CustomerPl
+namespace PL
 {
     /// <summary>
     /// Interaction logic for CustomerWindow.xaml
@@ -22,6 +22,26 @@ namespace PL.CustomerPl
         public CustomerWindow()
         {
             InitializeComponent();
+        }
+
+        private void MaxWeightSelector_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void IDTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
+
+        private void PaecelsentAndDTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
+
+        private void Phone_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

@@ -11,17 +11,24 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BlApi;
+using BO;
+
 
 namespace PL
 {
-    /// <summary>   
-    /// Interaction logic for Window1.xaml
+    /// <summary>
+    /// Interaction logic for CustomerListWindow.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class CustomerListWindow : Window
     {
-        public Window1()
+        IBl blObject;
+
+        public CustomerListWindow(IBl blObject)
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.blObject = blObject;
         }
 
         private void CustomerListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -29,9 +36,10 @@ namespace PL
 
         }
 
-        private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
     }
 }

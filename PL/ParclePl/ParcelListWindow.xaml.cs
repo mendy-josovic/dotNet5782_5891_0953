@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BlApi;
+using BO;
 
 namespace PL
 {
@@ -19,7 +21,7 @@ namespace PL
     /// </summary>
     public partial class ParcelListWindow : Window
     {
-        public ParcelListWindow()
+        public ParcelListWindow(IBl blObject)
         {
             InitializeComponent();
         }

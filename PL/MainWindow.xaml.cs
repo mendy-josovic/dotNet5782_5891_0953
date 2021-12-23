@@ -36,17 +36,17 @@ namespace PL
 
         private void CustomersListButton_Click(object sender, RoutedEventArgs e)
         {
-            //new CustomerListWindow(blObject).show();
+            new CustomerListWindow(blObject).Show();
         }
 
         private void StationsListButton_Click(object sender, RoutedEventArgs e)
         {
-            //new StationListWindow(blObject).show();
+            //new StationListWindow(blObject).Show();
         }
 
         private void ParcelsListButton_Click(object sender, RoutedEventArgs e)
         {
-            //new ParcelListWindow(blObject).show();
+            new ParcelListWindow(blObject).Show();
         }
     }
 }
