@@ -16,6 +16,7 @@ using BO;
 
 namespace PL
 {
+
     /// <summary>
     /// a class for the grooping... its a class from twe typs
     /// </summary>
@@ -24,6 +25,7 @@ namespace PL
         public WEIGHT Weight { get; set; }
         public STATUS_OF_DRONE status { get; set; }
     }
+
     /// <summary>
     /// Interaction logic for DroneList.xaml
     /// </summary>
@@ -34,15 +36,20 @@ namespace PL
         /// <summary>
         /// elemnt named dronetolists tha is alredy grooped
         /// </summary>
-      public  IEnumerable<IGrouping<STATUS_OF_DRONE_And_WEIGHT, DroneToList>> droneToLists;
+        public IEnumerable<IGrouping<STATUS_OF_DRONE_And_WEIGHT, DroneToList>> droneToLists;
+
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="blObject"></param>
         public DroneListWindow(IBl blObject)
         {
             InitializeComponent();
-         
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.blObject = blObject;
             droneToLists = from l in blObject.DisplayDroneList()
-                       group l by new STATUS_OF_DRONE_And_WEIGHT { status = l.status, Weight = l.MaxWeight } ;
+                           group l by new STATUS_OF_DRONE_And_WEIGHT { status = l.status, Weight = l.MaxWeight };
 
             DronesListView.ItemsSource = droneToLists.SelectMany(x => x);
             StatusSelector.ItemsSource = Enum.GetValues(typeof(STATUS_OF_DRONE));
@@ -140,6 +147,11 @@ namespace PL
                     DronesListView.ItemsSource = droneToLists.Where(x => x.Key.status == selectedStatus && x.Key.Weight == selectedMaxWeight).SelectMany(x => x);
                 }
             }
+        }
+
+        private void RefreshListButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayListBySelectors();
         }
     }
 }

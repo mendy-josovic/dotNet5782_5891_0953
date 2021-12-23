@@ -41,7 +41,7 @@ namespace PL
             ListOfStationsSelector.ItemsSource = this.blObject.DisplayStationList(d => d.ReadyStandsInStation > 0);
             DeliveryButton.Visibility = Visibility.Hidden;
             ChargingButton.Visibility = Visibility.Hidden;
-            UpdateButton.Visibility = Visibility.Hidden;            
+            UpdateButton.Visibility = Visibility.Hidden;
         }
 
         private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
@@ -71,14 +71,14 @@ namespace PL
             StationToList station = ListOfStationsSelector.SelectedItem as StationToList;
             if (station != null && isInputValid())
             {
-                try 
+                try
                 {
                     blObject.AddDrone(drone, station.Id);
                     MessageBox.Show("Successfully added drone!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
                     isCloseRequired = true;
                     this.Close();
                 }
-                catch(BO.BlException ex)
+                catch (BO.BlException ex)
                 {
                     try
                     {
@@ -90,8 +90,8 @@ namespace PL
                         MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                
-            }          
+
+            }
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -143,7 +143,12 @@ namespace PL
             }
 
             return valid;
-            
+
+        }
+
+        private void DeliveryTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
