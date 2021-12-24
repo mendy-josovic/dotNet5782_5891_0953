@@ -118,7 +118,7 @@ namespace PL
         }
 
         /// <summary>
-        /// display list of drones by selection of selectors
+        /// display list of drones by selection of sel67ectors
         /// and its doing it thruh grooping
         /// </summary>
         private void DisplayListBySelectors()

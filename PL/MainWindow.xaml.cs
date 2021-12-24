@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using BO;
-
+using Microsoft.Toolkit.Wpf.UI.Controls;
 namespace PL
 {
     /// <summary>
@@ -27,6 +27,7 @@ namespace PL
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             blObject = BlFactory.GetBl();
+           
         }
 
         private void DroneListButton_Click(object sender, RoutedEventArgs e)

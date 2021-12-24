@@ -22,13 +22,15 @@ namespace PL
     /// </summary>
     public partial class CustomerListWindow : Window
     {
-        IBl blObject;
-
+        IBl blObjects;
+        IEnumerable<BO.CustomerToList> CustomerLists;
         public CustomerListWindow(IBl blObject)
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.blObject = blObject;
+            this.blObjects = blObject;
+            CustomerLists = blObjects.DisplayCustomerList();
+            CustomerListView.ItemsSource = this.blObjects.DisplayCustomerList();
         }
 
         private void CustomerListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -41,5 +43,6 @@ namespace PL
 
         }
 
+        
     }
 }
