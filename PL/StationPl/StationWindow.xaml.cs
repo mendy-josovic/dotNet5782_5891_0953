@@ -11,27 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BO;
-using BlApi;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for ParcelWindow.xaml
+    /// Interaction logic for StationWindow.xaml
     /// </summary>
-    public partial class ParcelWindow : Window
+    public partial class StationWindow : Window
     {
-        IBl blObject;
-
-        public ParcelWindow(IBl blObject)
+        public StationWindow()
         {
             InitializeComponent();
-        }
-
-        public ParcelWindow(IBl blObject, int Id)
-        {
-            InitializeComponent();
-
         }
     }
 }
