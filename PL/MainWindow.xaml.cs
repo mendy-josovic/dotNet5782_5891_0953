@@ -22,6 +22,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBl blObject;
+        bool isExitPressed;
         public MainWindow()
         {
             InitializeComponent();
@@ -42,12 +43,23 @@ namespace PL
 
         private void StationsListButton_Click(object sender, RoutedEventArgs e)
         {
-            //new StationListWindow(blObject).Show();
+            new StationListWindow(blObject).Show();
         }
 
         private void ParcelsListButton_Click(object sender, RoutedEventArgs e)
         {
             new ParcelListWindow(blObject).Show();
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            isExitPressed = true;
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !isExitPressed;
         }
     }
 }

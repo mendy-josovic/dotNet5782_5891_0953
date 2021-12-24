@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Icon="/Images/drone.jpg"
-        Title="MainWindow" Height="589" Width="1100">
+        Title="MainWindow" Height="589" Width="1100" Closing="Window_Closing">
     <Window.Background>
 
         <ImageBrush ImageSource="Images/DroneInDelivery.JPG" Stretch="Uniform"/>
@@ -15,10 +15,11 @@
     </Window.Background>
 
     <Grid Name="MainGrid">
-        <Button x:Name="DronesListButton" Content="Drones" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="DroneListButton_Click" Margin="76,223,0,0" FontSize="30" FontWeight="Bold" Width="179" Height="70"/>
-        <Button x:Name="CustomersListButton" Content="Customers" HorizontalAlignment="Left" Margin="76,297,0,0" VerticalAlignment="Top" Height="70" Width="179" FontSize="30" FontWeight="Bold" Click="CustomersListButton_Click"/>
-        <Button x:Name="StationsListButton" Content="Stations" HorizontalAlignment="Left" Height="70" Margin="76,373,0,0" VerticalAlignment="Top" Width="179" FontSize="30" FontWeight="Bold" Click="StationsListButton_Click"/>
-        <Button x:Name="ParcelsListButton" Content="Parcels" HorizontalAlignment="Left" Height="70" Margin="76,448,0,0" VerticalAlignment="Top" Width="179" FontSize="30" FontWeight="Bold" Click="ParcelsListButton_Click"/>
+        <Button x:Name="DronesListButton" Content="Drones" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="DroneListButton_Click" Margin="76,324,0,0" FontSize="20" FontWeight="Bold" Width="165" Height="39"/>
+        <Button x:Name="CustomersListButton" Content="Customers" HorizontalAlignment="Left" Margin="76,365,0,0" VerticalAlignment="Top" Height="39" Width="165" FontSize="20" FontWeight="Bold" Click="CustomersListButton_Click"/>
+        <Button x:Name="StationsListButton" Content="Stations" HorizontalAlignment="Left" Height="39" Margin="76,407,0,0" VerticalAlignment="Top" Width="165" FontSize="20" FontWeight="Bold" Click="StationsListButton_Click"/>
+        <Button x:Name="ParcelsListButton" Content="Parcels" HorizontalAlignment="Left" Height="39" Margin="76,449,0,0" VerticalAlignment="Top" Width="165" FontSize="20" FontWeight="Bold" Click="ParcelsListButton_Click"/>
+        <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Left" Height="57" Margin="952,443,0,0" VerticalAlignment="Top" Width="78" FontSize="16" FontWeight="Bold" Click="ExitButton_Click"/>
     </Grid>
 
 </Window>

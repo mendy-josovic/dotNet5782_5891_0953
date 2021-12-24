@@ -34,7 +34,7 @@ namespace PL
         IBl blObject;
         bool isCloseButtonPressed;
         /// <summary>
-        /// elemnt named dronetolists tha is alredy grooped
+        /// elemnt named dronetolists that is alredy grooped
         /// </summary>
         public IEnumerable<IGrouping<STATUS_OF_DRONE_And_WEIGHT, DroneToList>> droneToLists;
 
@@ -149,7 +149,7 @@ namespace PL
             }
         }
 
-        private void RefreshListButton_Click(object sender, RoutedEventArgs e)
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             DisplayListBySelectors();
         }
