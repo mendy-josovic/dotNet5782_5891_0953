@@ -43,6 +43,9 @@ namespace PL
 
         }
 
-        
+        private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
