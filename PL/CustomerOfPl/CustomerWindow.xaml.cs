@@ -22,6 +22,12 @@ namespace PL
         public CustomerWindow()
         {
             InitializeComponent();
+
+
+        }
+        public CustomerWindow(BO.CustomerToList customer)
+        {
+
         }
 
         private void MaxWeightSelector_TextChanged(object sender, TextChangedEventArgs e)
