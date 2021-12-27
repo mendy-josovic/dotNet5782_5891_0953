@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BlApi;
+using BO;
 
 namespace PL
 {
@@ -19,9 +21,29 @@ namespace PL
     /// </summary>
     public partial class StationWindow : Window
     {
-        public StationWindow()
+        IBl blObject;
+        Station station = new();
+        bool isCloseRequired = false;
+
+        public StationWindow(IBl blObject)
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.blObject = blObject;
+            ADrone.DataContext = station;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !isCloseRequired;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            isCloseRequired = true;
+            this.Close();
         }
     }
+
+
 }

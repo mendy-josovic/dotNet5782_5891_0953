@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Icon="/Images/drone.jpg"
-        Title="DroneListWindow" Height="700" Width="840" Closing="Window_Closing">
+        Title="DroneListWindow" Height="700" Width="840" Closing="Window_Closing"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=self}}">
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="269*"/>
@@ -31,7 +32,16 @@
             <Button x:Name="ClearButton1" Grid.Column="1"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="37" Width="29" FontSize="8" Visibility="Hidden" Click="ClearButton1_Click"/>
             <Button x:Name="ClearButton2" Grid.Column="3" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="37" Width="29" FontSize="8" Visibility="Hidden" Click="ClearButton2_Click"/>
         </Grid>
-        <ListView x:Name="DronesListView" MouseDoubleClick="DronesListView_MouseDoubleClick" Grid.ColumnSpan="2" Margin="0,76,0,0" Grid.RowSpan="2"/>
+        <ListView x:Name="DronesListView" MouseDoubleClick="DronesListView_MouseDoubleClick" Margin="0,83,0,-83" ItemsSource="{Binding ListOfDrones}" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding Key}"/>
+                        <ListView ItemsSource="{Binding}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <Button x:Name="AddDrone" Content="Add new drone" HorizontalAlignment="Right" Height="40" Grid.Row="1" Margin="0,408,29,160" FontSize="16" Click="AddDrone_Click" FontWeight="Bold" Width="140"/>
         <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" Height="40" Width="140" Grid.Row="1" Margin="0,465,29,103" FontSize="16" FontWeight="Bold" Click="CloseButton_Click" />
         <Button x:Name="RefreshButton" Content="Refresh List" HorizontalAlignment="Left" Height="40" Width="120" Grid.Row="1" Margin="678,15,0,553" FontSize="16" FontWeight="Bold" Click="RefreshButton_Click"  />

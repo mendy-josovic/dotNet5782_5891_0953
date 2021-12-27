@@ -17,9 +17,9 @@ using System.Text;
 
             public override string ToString()
             {
-                return "Drone: " + Id + "\nModel: " + Model + "\nMaximum weight: " + MaxWeight
-                    + "\nBattery: " + Battery + "%\nStatus: " + status
-                    + "\nLocation of the drone: " + ThisLocation + "ID of parcel in transfer: " + ParcelId + "\n";
+                return "Drone " + Id + ", " + Model + ", " + MaxWeight
+                    + ", Battery: " + Battery + "%, : " + status
+                    + ", Location: Longitude - " + ThisLocation.Longitude + ", Latitude - " + ThisLocation.Latitude + ", Parcel in transfer - " + ParcelId + "\n";
             }
         }
     }

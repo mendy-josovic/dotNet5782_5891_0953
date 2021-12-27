@@ -78,8 +78,8 @@ namespace PL
 
         private void StationsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(blObject, blObject.BLDrone((DroneToList)StationsListView.SelectedItem)).ShowDialog();
-            DisplayListBySelector();
+            //new StationWindow(blObject, blObject.BLStation((StationToList)StationsListView.SelectedItem)).ShowDialog();
+            //DisplayListBySelector();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
