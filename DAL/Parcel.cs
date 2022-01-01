@@ -10,8 +10,8 @@ using System.Threading.Tasks;
             public int Id { get; set; }
             public int SenderId { get; set; }
             public int TargetId { get; set; }
-            public WEIGHT Weigh { set; get; }
-            public PRIORITY Priority { set; get; }
+            public Weight Weigh { set; get; }
+            public Priority Priority { set; get; }
             public int DroneId { get; set; }
             public DateTime? Requested { set; get; }
             public DateTime? Scheduled { set; get; }

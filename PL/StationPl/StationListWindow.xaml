@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Icon="/Images/drone.jpg"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=self}}"
         Title="StationListWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid Name="MainGrid">
 
@@ -29,7 +30,16 @@
             <Button x:Name="ClearButton" Grid.Column="1"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="37" Width="29" FontSize="8" Visibility="Hidden" Click="ClearButton_Click"/>
         </Grid>
         <Grid x:Name="DownGrid" Height="auto" Grid.Row="2" Width="auto">
-            <ListView x:Name="StationsListView" MouseDoubleClick="StationsListView_MouseDoubleClick" Grid.ColumnSpan="2" Margin="0,00,0,0" Grid.RowSpan="2"/>
+            <ListView x:Name="StationsListView" ItemsSource="{Binding ListOfStations, UpdateSourceTrigger=LostFocus}"  Grid.Row="1" Grid.ColumnSpan="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel x:Name="SP" Orientation="Horizontal">
+                            <Label Content="{Binding Key}"/>
+                            <ListView x:Name="ValueStationsListView" MouseDoubleClick="ValueStationsListView_MouseDoubleClick"  ItemsSource="{Binding}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" Height="40" Width="140" FontSize="16" FontWeight="Bold" Click="CloseButton_Click" Margin="0,250,30,0" />
         </Grid>
         <Label Content="List of stations" HorizontalAlignment="Left" Height="38" Margin="289,0,0,0" VerticalAlignment="Center" Width="200" FontWeight="Bold" FontSize="20"/>

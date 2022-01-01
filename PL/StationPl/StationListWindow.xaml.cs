@@ -26,17 +26,22 @@ namespace PL
         /// <summary>
         /// elemnt named dronetolists that is alredy grooped
         /// </summary>
-        IEnumerable<IGrouping<int, StationToList>> stationToLists;
+        IEnumerable<IGrouping<int, StationToList>> ListOfStations { get; set; }
+
         public StationListWindow(IBl blObject)
         {
             InitializeComponent();
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.blObject = blObject;
-            stationToLists = from l in blObject.DisplayStationList()
-                             group l by l.ReadyStandsInStation into k
-                             select k;
-            StationsListView.ItemsSource = stationToLists.SelectMany(k => k);
+            ListOfStations = from l in blObject.DisplayStationList()
+                             group l by l.ReadyStandsInStation;
+
+            InitializeComponent();
+
+            StationsListView.ItemsSource = ListOfStations;
+            
+
             ReadyStandsSelector.Items.Add("Stations with ready stands");
             ReadyStandsSelector.Items.Add("Number of ready stands");
             ClearButton.Content = "Clear\nyour\nchoice";
@@ -51,15 +56,15 @@ namespace PL
         {
             if (ReadyStandsSelector.SelectedIndex == -1)
             {
-                StationsListView.ItemsSource = stationToLists.SelectMany(k => k);
+                StationsListView.ItemsSource = ListOfStations;
             }
             if (ReadyStandsSelector.SelectedIndex == 0)
             {
-                StationsListView.ItemsSource = stationToLists.SelectMany(k => k).OrderBy(k => k.ReadyStandsInStation == 0);
+                StationsListView.ItemsSource = ListOfStations.SelectMany(k => k).OrderBy(k => k.ReadyStandsInStation == 0);
             }
             if (ReadyStandsSelector.SelectedIndex == 1)
             {
-                StationsListView.ItemsSource = stationToLists.SelectMany(k => k).OrderBy(k => k.ReadyStandsInStation);
+                StationsListView.ItemsSource = ListOfStations.SelectMany(k => k).OrderBy(k => k.ReadyStandsInStation);
             }
             ClearButton.Visibility = Visibility.Visible;
         }
@@ -76,10 +81,14 @@ namespace PL
             ClearButton.Visibility = Visibility.Hidden;
         }
 
-        private void StationsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ValueStationsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //new StationWindow(blObject, blObject.BLStation((StationToList)StationsListView.SelectedItem)).ShowDialog();
-            //DisplayListBySelector();
+            ListView selectedListView = sender as ListView;
+            if (selectedListView != null)
+            {
+                new DroneWindow(blObject, blObject.BLDrone((DroneToList)selectedListView.SelectedItem)).ShowDialog();
+                //DisplayListBySelectors();
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

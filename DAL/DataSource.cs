@@ -58,7 +58,7 @@ namespace DalObject
             {
                 Drone drn = new();
                 drn.Id = r.Next(1, 1000);
-                drn.MaxWeight = WEIGHT.HEAVY;
+                drn.MaxWeight = Weight.Heavy;
                 drones.Add(drn);
             }
             Drone tempDrone = drones[0];
@@ -82,8 +82,8 @@ namespace DalObject
                 tempParcel.Id = Config.RuningNumber++;                                     
                 tempParcel.SenderId = customers[i].Id;   
                 tempParcel.TargetId = customers[9 - i].Id;                 
-                tempParcel.Priority = ((DO.PRIORITY)r.Next(0, 3));
-                tempParcel.Weigh = ((DO.WEIGHT)r.Next(0, 3));
+                tempParcel.Priority = ((DO.Priority)r.Next(0, 3));
+                tempParcel.Weigh = ((DO.Weight)r.Next(0, 3));
                 tempParcel.Requested = new();
                 parcels.Add(tempParcel);
             }         

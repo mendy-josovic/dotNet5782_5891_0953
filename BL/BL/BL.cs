@@ -36,19 +36,19 @@ namespace BL
                 DroneToList drone = new();
                 drone.Id = item.Id;
                 drone.Model = item.Model;
-                drone.MaxWeight = (BO.WEIGHT)item.MaxWeight;
+                drone.MaxWeight = (BO.Weight)item.MaxWeight;
                 //for all parcels that didn't delivered but associated to a drone
                 if (tempDataParcels.Exists(w => w.DroneId == (item.Id) && w.Delivered ==null))
                 {
                     int i = tempDataParcels.FindIndex(w => w.DroneId == (item.Id));
-                    drone.status = BO.STATUS_OF_DRONE.DELIVERY;
+                    drone.status = BO.StatusOfDrone.Delivery;
                     var sender = Data.PrintCustomer(tempDataParcels[i].SenderId);
                     Location locOfSender = Location(sender.Longitude, sender.Latitude);
                     var target = Data.PrintCustomer(tempDataParcels[i].TargetId);
                     Location locOfTarget = Location(target.Longitude, target.Latitude);
-                    double minBattery = Consumption(drone.ThisLocation, locOfSender, MODE_OF_DRONE_IN_MOVING.AVAILABLE)
-                        + Consumption(locOfSender, locOfTarget, (MODE_OF_DRONE_IN_MOVING)tempDataParcels[i].Weigh)
-                        + Consumption(locOfTarget, GetLocationOfStation(GetClosestStation(locOfTarget)), MODE_OF_DRONE_IN_MOVING.AVAILABLE);
+                    double minBattery = Consumption(drone.ThisLocation, locOfSender, ModeOfDroneInMoving.Available)
+                        + Consumption(locOfSender, locOfTarget, (ModeOfDroneInMoving)tempDataParcels[i].Weigh)
+                        + Consumption(locOfTarget, GetLocationOfStation(GetClosestStation(locOfTarget)), ModeOfDroneInMoving.Available);
                     if (tempDataParcels[i].PickedUp < DateTime.MinValue) //if parcel didn't pick up
                     {
                         Location locOfClosestStation = GetLocationOfStation(GetClosestStation(locOfSender));
@@ -58,13 +58,13 @@ namespace BL
                     else  //if parcel picked up but didn't delivered
                     {
                         drone.ThisLocation = locOfSender;
-                        drone.Battery = r.Next((int)((minBattery - Consumption(drone.ThisLocation, locOfSender, MODE_OF_DRONE_IN_MOVING.AVAILABLE)) * 1000), 100 * 1000) / 1000;
+                        drone.Battery = r.Next((int)((minBattery - Consumption(drone.ThisLocation, locOfSender, ModeOfDroneInMoving.Available)) * 1000), 100 * 1000) / 1000;
                     }
                 }
                 else
                 {
-                    drone.status = (STATUS_OF_DRONE)r.Next(0, 1);
-                    if (drone.status == STATUS_OF_DRONE.AVAILABLE)
+                    drone.status = (StatusOfDrone)r.Next(0, 1);
+                    if (drone.status == StatusOfDrone.Available)
                     {
                         List<DO.Customer> customers = new();
                         foreach (DO.Parcel par in tempDataParcels)  //create a list of parcels that already provided
@@ -84,7 +84,7 @@ namespace BL
                             loc = Location(tempDataStations[i].Longitude, tempDataStations[i].Latitude);
                         }
                         drone.ThisLocation = loc;
-                        double con = Consumption(drone.ThisLocation, GetLocationOfStation(GetClosestStation(drone.ThisLocation)), MODE_OF_DRONE_IN_MOVING.AVAILABLE);
+                        double con = Consumption(drone.ThisLocation, GetLocationOfStation(GetClosestStation(drone.ThisLocation)), ModeOfDroneInMoving.Available);
                         drone.Battery = r.Next((int)(con * 1000), 100 * 1000) / 1000;
                     }
                     else

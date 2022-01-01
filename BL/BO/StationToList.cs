@@ -12,9 +12,9 @@ using System.Text;
             public int OccupiedStandsInStation { get; set; }
             public override string ToString()//override the to-string to print it nice
             {
-                return "Station:\nID: " + Id + "\nName: " + Name
-                    + "\nNumber of stands that are ready in station: " + ReadyStandsInStation
-                    + "\nNumber of stands that are occupied in station: " + OccupiedStandsInStation + "\n";
+                return "Station " + Id + ", " + Name
+                    + ", Ready-to-use positions: " + ReadyStandsInStation
+                    + ", Occupied positions: " + OccupiedStandsInStation + "\n";
             }
         }
     }

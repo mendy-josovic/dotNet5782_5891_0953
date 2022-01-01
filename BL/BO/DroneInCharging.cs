@@ -9,6 +9,7 @@ using System.Text;
         {
             public int Id { get; set; }
             public double Battery { get; set; }
+            public DateTime? EntryTimeForLoading = DateTime.Now;
             public DroneInCharging() { }
             public override string ToString()
             {

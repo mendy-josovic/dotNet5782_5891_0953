@@ -9,9 +9,9 @@ using System.Text;
         {
             public int Id { get; set; }
             public String Model { set; get; }
-            public WEIGHT MaxWeight { set; get; }
+            public Weight MaxWeight { set; get; }
             public double Battery { get; set; }
-            public STATUS_OF_DRONE status { get; set; }
+            public StatusOfDrone status { get; set; }
             public Location ThisLocation { get; set; }
             public int ParcelId { get; set; }
 

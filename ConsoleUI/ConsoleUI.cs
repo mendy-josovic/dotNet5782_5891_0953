@@ -74,7 +74,7 @@ namespace ConsoleUI
                                                     drone.Model = Console.ReadLine();
                                                     Console.WriteLine("Enter drone max-whight");
                                                     Int32.TryParse(Console.ReadLine(), out x);
-                                                    drone.MaxWeight = (DO.WEIGHT)x;
+                                                    drone.MaxWeight = (DO.Weight)x;
 
                                                     dalObject1.AddDrone(drone);
                                                     break;
@@ -116,10 +116,10 @@ namespace ConsoleUI
                                                     parcel.TargetId = x;
                                                     Console.WriteLine("Enter parcel weight");
                                                     int.TryParse(Console.ReadLine(), out x);
-                                                    parcel.Weigh = (DO.WEIGHT)x;
+                                                    parcel.Weigh = (DO.Weight)x;
                                                     Console.WriteLine("Enter parcel Priority");
                                                     int.TryParse(Console.ReadLine(), out x);
-                                                    parcel.Priority = (DO.PRIORITY)x;
+                                                    parcel.Priority = (DO.Priority)x;
                                                     parcel.Requested = DateTime.Now;
                                                     parcel.DroneId = 0;
                                                     dalObject1.AddSParcel(parcel);

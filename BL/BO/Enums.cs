@@ -4,9 +4,9 @@ using System.Text;
 
     namespace BO
     {
-        public enum WEIGHT { LIGHT, MEDIUM, HEAVY };
-        public enum PRIORITY { REGULAR, FAST, EMERGENCY };
-        public enum STATUS_OF_PARCEL { CREATED, ASSOCIATED, PICKEDUP, DELIVERED }
-        public enum STATUS_OF_DRONE { AVAILABLE, IN_MAINTENANCE, DELIVERY }
-        public enum MODE_OF_DRONE_IN_MOVING { LIGHT, MEDIUM, HEAVY, AVAILABLE }
+        public enum Weight { Light, Medium, Heavy };
+        public enum Priority { Regular, Fast, Emergency };
+        public enum StatusOfParcel { Created, Associated, PickedUp, Delivered }
+        public enum StatusOfDrone { Available, InMaintenance, Delivery }
+        public enum ModeOfDroneInMoving { Light, Medium, Heavy, Available }
     }

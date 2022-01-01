@@ -38,8 +38,8 @@ namespace PL
             x5.Visibility = Visibility.Hidden;
             x6.Visibility = Visibility.Hidden;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WEIGHT));
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(STATUS_OF_DRONE));
+            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(Weight));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(StatusOfDrone));
             this.blObject = blObject;
             drone = dro;
             AddDrone.DataContext = drone;
@@ -55,8 +55,8 @@ namespace PL
         {
             try
             {
-                if(!(drone.status==STATUS_OF_DRONE.IN_MAINTENANCE))
-                blObject.SendDroneToCarge(drone.Id);
+                if(!(drone.status==StatusOfDrone.InMaintenance))
+                    blObject.SendDroneToCarge(drone.Id);
                 else
                 {
                     blObject.ReturnDroneFromeCharging(drone.Id,1);
@@ -154,7 +154,7 @@ namespace PL
 
         private void InitializeButtons(Drone drone)
         {
-            if (drone.status == STATUS_OF_DRONE.AVAILABLE)
+            if (drone.status == StatusOfDrone.Available)
             {
                 DeliveryButton.Content = "Send Drone To Delivery";
                 ChargingButton.Content = "Send Drone to Charge";
@@ -162,7 +162,7 @@ namespace PL
                 UpdateButton.IsEnabled = true;
                 ChargingButton.IsEnabled = true;
             }
-            if (drone.status == STATUS_OF_DRONE.DELIVERY)
+            if (drone.status == StatusOfDrone.Delivery)
             {
                 if (!drone.parcel.PickedUp)
                 {
@@ -177,7 +177,7 @@ namespace PL
                     UpdateButton.IsEnabled = false;
                 }
             }
-            if (drone.status == STATUS_OF_DRONE.IN_MAINTENANCE)
+            if (drone.status == StatusOfDrone.InMaintenance)
             {
                 ChargingButton.Content = "Return Drone From Charging";
                 DeliveryButton.IsEnabled = false;

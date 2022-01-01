@@ -50,13 +50,13 @@ namespace BL
                 DO.Drone drone = new();
                 drone.Id = dro.Id;
                 drone.Model = dro.Model;
-                drone.MaxWeight = (DO.WEIGHT)dro.MaxWeight;
+                drone.MaxWeight = (DO.Weight)dro.MaxWeight;
                 int i = DroneList.FindIndex(w => w.Id == dro.Id);
                     if(i>=0)
                         throw new BlException("The drone is already exists");     
                 Data.AddDrone(drone);
                 dro.Battery = r.Next(20, 40);
-                dro.status = STATUS_OF_DRONE.IN_MAINTENANCE;
+                dro.status = StatusOfDrone.InMaintenance;
                 dro.ThisLocation = GetLocationOfStation(IDOfStation);
                 DroneToList d = BLDroneToList(dro);
                 DroneList.Add(d);
@@ -105,8 +105,8 @@ namespace BL
                 parcel.SenderId = par.Sender.Id;
                 parcel.TargetId = par.Recipient.Id;
                 parcel.TargetId = par.Recipient.Id;
-                parcel.Weigh = (DO.WEIGHT)par.Weight;
-                parcel.Priority = (DO.PRIORITY)par.Priority;
+                parcel.Weigh = (DO.Weight)par.Weight;
+                parcel.Priority = (DO.Priority)par.Priority;
                 parcel.DroneId = 0;
                 par.TimeOfCreation = DateTime.Now;
                 par.Scheduled = DateTime.MinValue;
