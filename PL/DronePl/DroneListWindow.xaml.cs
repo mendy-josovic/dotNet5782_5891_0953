@@ -138,7 +138,8 @@ namespace PL
                 if (StatusSelector.SelectedIndex == -1)
                 {
                     WEIGHT selectedMaxWeight = (WEIGHT)MaxWeightSelector.SelectedItem;
-                    DronesListView.ItemsSource = droneToLists.Where(x => x.Key.Weight == selectedMaxWeight).SelectMany(x => x);
+
+                    DronesListView.ItemsSource = droneToLists.Where(x=>x.Equals(selectedMaxWeight));
                 }
                 else
                 {

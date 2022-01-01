@@ -3,10 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
+        xmlns:local="clr-nmespace:PL"
         mc:Ignorable="d"
-        Title="ParcelListWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="ParcelListWindow" Height="450" Width="800" DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Grid x:Name="MainGrid" Height="auto" Grid.Row="0" Width="auto" RenderTransformOrigin="0.499,0.187">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="90*"/>
+        </Grid.RowDefinitions>
+        <Label Content="View By" HorizontalAlignment="Left" Margin="36,5,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.87,1.255"/>
+        <ListView Grid.Row="1" x:Name="ParcelLiastView" ItemsSource="{Binding parcelToLists}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel x:Name="Sp" Orientation="Horizontal">
+                        <Label Content="{Binding Key}"/>
+                        <ListView ItemsSource="{Binding}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ComboBox x:Name="ParcelSelector" HorizontalAlignment="Left" Margin="140,14,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

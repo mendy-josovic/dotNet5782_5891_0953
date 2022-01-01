@@ -13,8 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using BO;
-
-
 namespace PL
 {
     /// <summary>
@@ -30,7 +28,7 @@ namespace PL
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.blObjects = blObject;
             CustomerLists = blObjects.DisplayCustomerList();
-            CustomerListView.ItemsSource = this.blObjects.DisplayCustomerList();
+            CustomerListView.ItemsSource = CustomerLists;
         }
 
         private void CustomerListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -40,12 +38,14 @@ namespace PL
 
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
-
+            new CustomerWindow(blObjects).ShowDialog();
         }
 
         private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            object var=CustomerListView.SelectedItem;
+            new CustomerWindow(blObjects,(BO.CustomerToList)CustomerListView.SelectedItem).ShowDialog();
+            InitializeComponent();
         }
     }
 }

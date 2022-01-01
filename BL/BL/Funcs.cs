@@ -227,11 +227,15 @@ namespace BL
 
         /// <summary>
         /// Turn a DAL customer into a BL customer
+        /// gets int of the id
         /// </summary>
         /// <param name="c">DAL customer </param>
         /// <returns>BL customer</returns>
-        public BO.Customer BLCustomer(DO.Customer c)
+        public BO.Customer BLCustomer(int Id)
         {
+            
+            DO.Customer c = new();
+            c = DisplayCustomer(Id);
             List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
             BO.Customer customer = new();
             customer.Id = c.Id;
@@ -427,7 +431,7 @@ namespace BL
         public CustomerToList BLCustomerToList(DO.Customer c)
         {
             CustomerToList customerToList = new();
-            BO.Customer customer = BLCustomer(c);
+            BO.Customer customer = BLCustomer(c.Id);
             customerToList.Id = customer.Id;
             customerToList.Name = customer.Name;
             customerToList.Phone = customer.Phone;
@@ -468,10 +472,11 @@ namespace BL
         }
 
         public Location GetLocationOfStation(StationToList s)
-        {           
+        {
             DO.Station st = Data.PrintStation(s.Id);
             Location location = Location(st.Longitude, st.Latitude);
             return location;
         }
+  
     }
 }

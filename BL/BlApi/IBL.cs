@@ -27,7 +27,7 @@ namespace BlApi
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc);
         public Station BLStation(DO.Station s);
         public Drone BLDrone(DroneToList d);
-        public Customer BLCustomer(DO.Customer c);
+        public Customer BLCustomer(int Id);
         public Parcel BLParcel(DO.Parcel p);
         public ParcelInTransfer BLParcelInTransfer(DO.Parcel p);
         public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender);
@@ -47,6 +47,6 @@ namespace BlApi
         public void ReturnDroneFromeCharging(int DroneId, int Time);
         public void AssignDronToParcel(int DroneId);
         public void PickUp(int DroneId);
-        public void Suuply(int DroneId);    
+        public void Suuply(int DroneId);
     }
 }

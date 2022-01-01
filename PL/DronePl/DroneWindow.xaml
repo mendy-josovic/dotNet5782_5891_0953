@@ -55,10 +55,10 @@
         <Button x:Name="ChargingButton" Content="Send Drone To Charge" HorizontalAlignment="Left" Margin="539,182,0,0" VerticalAlignment="Top" Height="39" Width="168" Click="Charging_Click" FontWeight="Bold" FontSize="13" />
         <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="539,235,0,0" VerticalAlignment="Top" Height="37" Width="168" Click="UpdateButton_Click" FontWeight="Bold" FontSize="13"/>
         <Label x:Name="x1" Content="*" HorizontalAlignment="Left" Margin="285,87,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
-        <Label x:Name="x2" Content="*" HorizontalAlignment="Left" Margin="285,190,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x2" Content="*" HorizontalAlignment="Left" Margin="284,197,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x3" Content="*" HorizontalAlignment="Left" Margin="285,155,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
-        <Label x:Name="x4" Content="*" HorizontalAlignment="Left" Margin="285,260,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x4" Content="*" HorizontalAlignment="Left" Margin="284,266,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x5" Content="Fill in the fields marked with *" HorizontalAlignment="Left" Margin="279,61,0,0" VerticalAlignment="Top" Foreground="Red"/>
-        <Label x:Name="x6" Content="*" HorizontalAlignment="Left" Margin="285,224,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x6" Content="*" HorizontalAlignment="Left" Margin="284,228,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
     </Grid>
 </Window>

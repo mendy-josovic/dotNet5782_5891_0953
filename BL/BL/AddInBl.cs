@@ -77,7 +77,7 @@ namespace BL
             {
                 List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w=>w.Id==cus.Id));
              if(tempDataCustomers.Count!=0)
-                        throw new BlException("The station is already exists");               
+                        throw new BlException("The Customer already exists");               
                DO.Customer customer = new();
                 customer.Id = cus.Id;
                 customer.Name = cus.Name;
