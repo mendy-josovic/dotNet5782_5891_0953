@@ -36,8 +36,8 @@ namespace PL
             DeliveryOrStationsSLabel.FontSize = 14;
             DeliveryOrStationsSLabel.Margin = new(165, 252, 0, 0);
             DeliveryTextBox.Visibility = Visibility.Hidden;
-            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WEIGHT));
-            StatusSelector.Items.Add("IN_MAINTENANCE");
+            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(Weight));
+            StatusSelector.Items.Add("In Maintenance");
             ListOfStationsSelector.ItemsSource = this.blObject.DisplayStationList(d => d.ReadyStandsInStation > 0);
             DeliveryButton.Visibility = Visibility.Hidden;
             ChargingButton.Visibility = Visibility.Hidden;
@@ -90,7 +90,6 @@ namespace PL
                         MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-
             }
         }
 

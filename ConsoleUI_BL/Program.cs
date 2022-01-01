@@ -1,13 +1,14 @@
-﻿
-using IBL;
+﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+
 namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-       static IBl BLObject = new BL.BL();
+        static IBl BLObject = BlFactory.GetBl();
         static void Main(string[] args)
         {
             Console.WriteLine(@"Welcome:

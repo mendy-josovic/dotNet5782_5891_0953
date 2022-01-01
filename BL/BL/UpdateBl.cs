@@ -95,20 +95,20 @@ namespace BL
                 int i = DroneList.FindIndex(w => w.Id == DronId);
                 if (i<0)
                     throw new BlException("Drone doesn't exist");
-                if (!(DroneList[i].status == STATUS_OF_DRONE.AVAILABLE))
+                if (!(DroneList[i].status == StatusOfDrone.Available))
                     throw new BlException("Charhing Not Possible (Drone Not Availble)");
 
                 int j = GetClosestStation(DroneList[i].ThisLocation);//geting the id of station that we need to charge
-                DO.Station tempstaton =  Data.PrintStation(j);//a temporary station (like the one to charg) 
-                if (tempstaton.ReadyChargeStands == 0)
+                DO.Station tempStation =  Data.PrintStation(j);//a temporary station (like the one to charg) 
+                if (tempStation.ReadyChargeStands == 0)
                     throw new BlException("Charhing Not Possible (Station Cargin slots are full)");
-                Location location = Location(tempstaton.Longitude, tempstaton.Latitude);//checking that we have enough battery by geting the ditence and the battery cunsomption
-                if (DroneList[i].Battery < Consumption(DroneList[i].ThisLocation, location, BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE))
+                Location location = Location(tempStation.Longitude, tempStation.Latitude);//checking that we have enough battery by geting the ditence and the battery cunsomption
+                if (DroneList[i].Battery < Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available))
                     throw new BlException("Charhing Not Possible (Not Enough Battery)");
-                DroneList[i].status = BO.STATUS_OF_DRONE.IN_MAINTENANCE;//updating the drone status
-                DroneList[i].Battery -= Consumption(DroneList[i].ThisLocation, location, BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);//updating the battery
+                DroneList[i].status = BO.StatusOfDrone.InMaintenance;//updating the drone status
+                DroneList[i].Battery -= (int)Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available);//updating the battery
                 DroneList[i].ThisLocation = location;//updating the location
-                Data.UpdatStation(j, "", tempstaton.ReadyChargeStands - 1); //updating the redy charging srtands     
+                Data.UpdatStation(j, "", tempStation.ReadyChargeStands - 1); //updating the redy charging srtands     
                 Data.CreateANewDroneCharge(j,DronId);//creating a new drone-charg]
             }
             catch (DO.DalExceptions ex)
@@ -133,9 +133,9 @@ namespace BL
                 int i = DroneList.FindIndex(w => w.Id == DroneId);
                 if (i < 0)
                     throw new BlException("Drone doesn't exsit");
-                if (!(DroneList[i].status ==BO.STATUS_OF_DRONE.IN_MAINTENANCE))
+                if (!(DroneList[i].status ==BO.StatusOfDrone.InMaintenance))
                     throw new BlException("ERROR: Dron Not In Cargong Mode");
-                DroneList[i].status = BO.STATUS_OF_DRONE.AVAILABLE;
+                DroneList[i].status = BO.StatusOfDrone.Available;
                 DroneList[i].Battery += Time* batteryConfig[4];
                 if (DroneList[i].Battery > 100)//stoping the recharging in 100%
                     DroneList[i].Battery = 100;
@@ -176,7 +176,7 @@ namespace BL
                 //sorting acourding to priyuorty
                 if (tempDataParcels.Count == 0)
                     throw new BlException("Assignment Not Possble");
-                DroneList[i].status = BO.STATUS_OF_DRONE.DELIVERY;
+                DroneList[i].status = BO.StatusOfDrone.Delivery;
                 DroneList[i].ParcelId = tempDataParcels[0].Id;
                 Data.UpdatParcel(tempDataParcels[0].Id, 0, 0, DroneList[i].Id, 0, 0, 0,1);//we updating the first parcel in the list
             }
@@ -202,7 +202,7 @@ namespace BL
                 DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
                 if (parcel.PickedUp != null)
                     throw new BlException("Parcel Alredy Picked Up");
-                double batteryuse = Consumption(DroneList[i].ThisLocation, GetSenderLo(parcel), MODE_OF_DRONE_IN_MOVING.AVAILABLE);
+                double batteryuse = Consumption(DroneList[i].ThisLocation, GetSenderLo(parcel), ModeOfDroneInMoving.Available);
                 DroneList[i].Battery -= batteryuse;
                 DroneList[i].ThisLocation = GetSenderLo(parcel);
                 Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 0,1);
@@ -227,11 +227,11 @@ namespace BL
                 DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
                 if (parcel.PickedUp == null || parcel.Delivered != null)
                     throw new BlException("cant suuply");
-                double batteryuse = Consumption(DroneList[i].ThisLocation, GetReceiverLo(parcel), (MODE_OF_DRONE_IN_MOVING)parcel.Weigh);
+                double batteryuse = Consumption(DroneList[i].ThisLocation, GetReceiverLo(parcel), (ModeOfDroneInMoving)parcel.Weigh);
                 DroneList[i].Battery -= batteryuse;
                 DroneList[i].ThisLocation = GetSenderLo(parcel);
                 Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-                DroneList[i].status = STATUS_OF_DRONE.AVAILABLE;
+                DroneList[i].status = StatusOfDrone.Available;
             }
             catch (DO.DalExceptions ex)
             {

@@ -1,6 +1,6 @@
 ﻿using System;
     namespace DO
     {
-        public enum WEIGHT { LIGHT, MEDIUM, HEAVY };
-        public enum PRIORITY { REGULAR, FAST, EMERGENCY };
+        public enum Weight { Light, Medium, Heavy };
+        public enum Priority { Regular, Fast, Emergency };
     }

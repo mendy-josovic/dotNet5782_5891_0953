@@ -8,9 +8,9 @@ using System.Text;
         public class ParcelAtCustomer
         {
             public int Id { get; set; }
-            public WEIGHT Weight { get; set; }
-            public PRIORITY Priority { get; set; }
-            public STATUS_OF_PARCEL Status { get; set; }
+            public Weight Weight { get; set; }
+            public Priority Priority { get; set; }
+            public StatusOfParcel Status { get; set; }
             public CustomerInParcel TheOther { get; set; }
             public override string ToString()//override the to-string to print it nice
             {

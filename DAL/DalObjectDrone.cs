@@ -65,7 +65,7 @@ namespace DalObject
         /// <param name="UpdatSchedueld"></param>
         /// <param name="UpdatPicedup"></param>
         /// <param name="UpdateDeleverd"></param>
-        public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0, int DroneId = 0, WEIGHT whihgt = 0, PRIORITY priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
+        public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0, int DroneId = 0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
         {
             int index = DataSource.parcels.FindIndex(w => w.Id == parclId);
 

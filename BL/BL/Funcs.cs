@@ -15,7 +15,7 @@ namespace BL
         /// <param name="b">location b</param>
         /// <param name="mode">mode of the drone in moving: without a parcel, or with a parcel, and which mode of parcel</param>
         /// <returns>how much battery this moving need</returns>
-        public double Consumption(Location a, Location b, MODE_OF_DRONE_IN_MOVING mode)
+        public double Consumption(Location a, Location b, ModeOfDroneInMoving mode)
         {
             return GetDistance(a, b) * batteryConfig[(int)mode];
         }
@@ -32,10 +32,10 @@ namespace BL
                 DO.Customer Receiver = Data.PrintCustomer(prc.TargetId);        
                 DO.Station closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));          
                 Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
-                double batteryUse = Consumption(startingPiont, StapingPiont, BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE) + Consumption(StapingPiont, FinishingPiont, (BO.MODE_OF_DRONE_IN_MOVING)prc.Weigh);
+                double batteryUse = Consumption(startingPiont, StapingPiont, BO.ModeOfDroneInMoving.Available) + Consumption(StapingPiont, FinishingPiont, (BO.ModeOfDroneInMoving)prc.Weigh);
                 if (dro.Battery - batteryUse < 20)
                 {
-                    batteryUse += Consumption(FinishingPiont, ClosestCarging,BO.MODE_OF_DRONE_IN_MOVING.AVAILABLE);
+                    batteryUse += Consumption(FinishingPiont, ClosestCarging,BO.ModeOfDroneInMoving.Available);
                     if (dro.Battery - batteryUse < 0)
                         return false;
                 }
@@ -217,7 +217,7 @@ namespace BL
             drone.Battery = d.Battery;
             drone.ThisLocation = d.ThisLocation;
             drone.status = d.status;
-            if (drone.status == STATUS_OF_DRONE.DELIVERY)
+            if (drone.status == StatusOfDrone.Delivery)
             {             
                 DO.Parcel p = Data.PrintParcel(d.ParcelId);
                 drone.parcel = BLParcelInTransfer(p);
@@ -269,8 +269,8 @@ namespace BL
             List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
             BO.Parcel parcel = new();
             parcel.Id = p.Id;
-            parcel.Weight = (BO.WEIGHT)p.Weigh;
-            parcel.Priority = (BO.PRIORITY)p.Priority;
+            parcel.Weight = (BO.Weight)p.Weigh;
+            parcel.Priority = (BO.Priority)p.Priority;
             parcel.TimeOfCreation = p.Requested;
             parcel.Scheduled = p.Scheduled;
             parcel.PickedUp = p.PickedUp;
@@ -309,16 +309,16 @@ namespace BL
             List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
             ParcelAtCustomer par = new();
             par.Id = p.Id;
-            par.Weight = (BO.WEIGHT)p.Weigh;
-            par.Priority = (BO.PRIORITY)p.Priority;
+            par.Weight = (BO.Weight)p.Weigh;
+            par.Priority = (BO.Priority)p.Priority;
             if (p.Scheduled == null)
-                par.Status = STATUS_OF_PARCEL.CREATED;
+                par.Status = StatusOfParcel.Created;
             else if (p.PickedUp == null)
-                par.Status = STATUS_OF_PARCEL.ASSOCIATED;
+                par.Status = StatusOfParcel.Associated;
             else if (p.Delivered == null)
-                par.Status = STATUS_OF_PARCEL.PICKEDUP;
+                par.Status = StatusOfParcel.PickedUp;
             else
-                par.Status = STATUS_OF_PARCEL.DELIVERED;
+                par.Status = StatusOfParcel.Delivered;
             if (sender)
                 par.TheOther = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
             else
@@ -337,8 +337,8 @@ namespace BL
             ParcelInTransfer par = new();
             par.Id = p.Id;
             par.PickedUp = p.PickedUp != null;
-            par.Priority = (BO.PRIORITY)p.Priority;
-            par.Weight = (BO.WEIGHT)p.Weigh;
+            par.Priority = (BO.Priority)p.Priority;
+            par.Weight = (BO.Weight)p.Weigh;
             par.Sender = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
             par.Recipient = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
             par.LocationOfPickedUp = Location(tempDataCustomers.Find(w => w.Id == p.SenderId).Longitude, tempDataCustomers.Find(w => w.Id == p.SenderId).Latitude);
@@ -435,13 +435,13 @@ namespace BL
             customerToList.Id = customer.Id;
             customerToList.Name = customer.Name;
             customerToList.Phone = customer.Phone;
-            var sumOfDelivered = customer.FromCustomer.FindAll(w=>w.Status==STATUS_OF_PARCEL.DELIVERED);
+            var sumOfDelivered = customer.FromCustomer.FindAll(w=>w.Status==StatusOfParcel.Delivered);
             customerToList.ParcelsSentAndDelivered = sumOfDelivered.Count;
-            var sumOfSendered = customer.FromCustomer.FindAll(w => w.Status == STATUS_OF_PARCEL.PICKEDUP);
+            var sumOfSendered = customer.FromCustomer.FindAll(w => w.Status == StatusOfParcel.PickedUp);
             customerToList.ParcelsSentAndNotDelivered = sumOfSendered.Count;
-            var sumOfgot = customer.ToCustomer.FindAll(w => w.Status == STATUS_OF_PARCEL.DELIVERED);
+            var sumOfgot = customer.ToCustomer.FindAll(w => w.Status == StatusOfParcel.Delivered);
             customerToList.ParcelsReceived = sumOfgot.Count;
-            var sumOfOnWay = customer.ToCustomer.FindAll(w => w.Status == STATUS_OF_PARCEL.PICKEDUP);
+            var sumOfOnWay = customer.ToCustomer.FindAll(w => w.Status == StatusOfParcel.PickedUp);
             customerToList.ParcelsOnWayToCustomer = sumOfOnWay.Count;
             return customerToList;
         }
@@ -461,13 +461,13 @@ namespace BL
             parcelToList.Weight = parcel.Weight;
             parcelToList.Priority = parcel.Priority;
             if (parcel.Delivered != DateTime.MinValue)
-                parcelToList.Status = STATUS_OF_PARCEL.DELIVERED;
+                parcelToList.Status = StatusOfParcel.Delivered;
             else if(parcel.PickedUp!=DateTime.MinValue)
-                parcelToList.Status = STATUS_OF_PARCEL.PICKEDUP;
+                parcelToList.Status = StatusOfParcel.PickedUp;
             else if(parcel.Scheduled!=DateTime.MinValue)
-                parcelToList.Status = STATUS_OF_PARCEL.ASSOCIATED;
+                parcelToList.Status = StatusOfParcel.Associated;
             else
-                parcelToList.Status = STATUS_OF_PARCEL.CREATED;
+                parcelToList.Status = StatusOfParcel.Created;
             return parcelToList;
         }
 

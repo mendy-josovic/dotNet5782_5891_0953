@@ -8,8 +8,8 @@ using System.Text;
         {
             public int Id { get; set; }
             public bool PickedUp { get; set; }
-            public PRIORITY Priority { get; set; }
-            public WEIGHT Weight { get; set; }
+            public Priority Priority { get; set; }
+            public Weight Weight { get; set; }
             public CustomerInParcel Sender { get; set; }
             public CustomerInParcel Recipient { get; set; }
             public Location LocationOfPickedUp { get; set; }
