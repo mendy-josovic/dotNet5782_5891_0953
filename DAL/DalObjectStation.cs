@@ -49,7 +49,7 @@ namespace DalObject
         /// <param name="StationId"></param>
         /// <param name="Name"></param>
         /// <param name="NumOfCarg"></param>
-        public void UpdatStation(int StationId, string Name = "", int NumOfCarg = 0)
+        public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1)
         {
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
             if (i < 0)
@@ -59,7 +59,7 @@ namespace DalObject
             {
                 temp.Name = Name;
             }
-            if (!(NumOfCarg==0))
+            if (!(NumOfCarg==-1))
             {
                 temp.ReadyChargeStands = NumOfCarg;
             }

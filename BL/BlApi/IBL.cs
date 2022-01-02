@@ -21,7 +21,7 @@ namespace BlApi
         public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null);
         public List<CustomerToList> DisplayCustomerList(Predicate<CustomerToList> predicate = null);
         public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null);
-        public int GetClosestStation(Location a);
+        public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null);
         public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
         public Location GetLocationOfStation(int ID);
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc);

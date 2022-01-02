@@ -125,14 +125,18 @@ namespace BL
         /// </summary>
         /// <param name="a">the location we want to get it closest station</param>
         /// <returns>ID of the closest station</returns>
-        public int GetClosestStation(Location a)
+        public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null)
         {
             try
             {
                 int i = 0;
                 int closestID = 0;
                 double minimum = 0;
-                List<DO.Station> tempDataStations = new(Data.PrintStationList());
+                IEnumerable<DO.Station> tempDataStations;
+                if (stations == null)
+                    tempDataStations = Data.PrintStationList();
+                else
+                    tempDataStations = stations;
                 List<BO.Station> stationsBL = new();
                 foreach (DO.Station station in tempDataStations)
                 {
