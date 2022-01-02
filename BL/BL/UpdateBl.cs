@@ -14,7 +14,7 @@ namespace BL
         /// <summary>
         /// the func makes sure that the drone exists and 
         /// if yes send the parameters to the update func in dal objects
-        /// these r the only tow places 
+        /// these are the only two places 
         /// </summary>
         /// <param name="DroneId"></param>
         /// <param name="Name"></param>
@@ -35,8 +35,8 @@ namespace BL
         }
 
         /// <summary>
-        /// the func gets the id and finds if in exsits (we assume tha the parameters are valid and not a problem (we chack that on the console level) )
-        /// ane use the updat func
+        /// the func gets the id and finds if it exsits (we assume that the parameters are valid and not a problem (we chack that on the console level) )
+        /// ane use the update func
         /// </summary>
         /// <param name="Id"></param>
         /// <param name="Name"></param>
@@ -58,7 +58,7 @@ namespace BL
         }
 
         /// <summary>
-        /// the func gets the id finsds if it exsits and the changes 
+        /// the func gets the id, finds if it exists and the changes 
         /// are with the pararmtets
         /// </summary>
         /// <param name="Id"></param>
@@ -80,14 +80,14 @@ namespace BL
         }
 
         /// <summary>
-        /// we make 4 initial checks 1. macke sure that the drone exits
-        /// 2. checkinfg if the drone is availble 
-        /// 3. checking if the station is availble
+        /// we make 4 initial checks 1. make sure that the drone exists
+        /// 2. checking if the drone is available 
+        /// 3. checking if the station is available
         /// 4. checking if we have enough battery
-        /// then we updat the drone in the dronre to-list
+        /// then we update the drone in the drone to-list
         /// </summary>
         /// <param name="DronId"></param>
-   
+
         public void SendDroneToCarge(int DronId)
         {
             try
@@ -98,18 +98,18 @@ namespace BL
                 if (!(DroneList[i].status == StatusOfDrone.Available))
                     throw new BlException("Charhing Not Possible (Drone Not Availble)");
 
-                int j = GetClosestStation(DroneList[i].ThisLocation);//geting the id of station that we need to charge
-                DO.Station tempStation =  Data.PrintStation(j);//a temporary station (like the one to charg) 
+                int j = GetClosestStation(DroneList[i].ThisLocation); //geting the id of station that we need to charge
+                DO.Station tempStation =  Data.PrintStation(j); //a temporary station (like the one to charg) 
                 if (tempStation.ReadyChargeStands == 0)
                     throw new BlException("Charhing Not Possible (Station Cargin slots are full)");
-                Location location = Location(tempStation.Longitude, tempStation.Latitude);//checking that we have enough battery by geting the ditence and the battery cunsomption
+                Location location = Location(tempStation.Longitude, tempStation.Latitude); //checking that we have enough battery by geting the ditence and the battery consumption
                 if (DroneList[i].Battery < Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available))
                     throw new BlException("Charhing Not Possible (Not Enough Battery)");
-                DroneList[i].status = BO.StatusOfDrone.InMaintenance;//updating the drone status
-                DroneList[i].Battery -= (int)Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available);//updating the battery
+                DroneList[i].status = BO.StatusOfDrone.InMaintenance; //updating the drone status
+                DroneList[i].Battery -= (int)Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available); //updating the battery
                 DroneList[i].ThisLocation = location;//updating the location
-                Data.UpdatStation(j, "", tempStation.ReadyChargeStands - 1); //updating the redy charging srtands     
-                Data.CreateANewDroneCharge(j,DronId);//creating a new drone-charg]
+                Data.UpdatStation(j, "", tempStation.ReadyChargeStands - 1); //updating the ready charging stands     
+                Data.CreateANewDroneCharge(j,DronId); //creating a new drone-charge
             }
             catch (DO.DalExceptions ex)
             {

@@ -59,7 +59,8 @@ namespace DalObject
             {
                 temp.Name = Name;
             }
-            if (!(NumOfCarg==0))
+           // temp.ReadyChargeStands = NumOfCarg;
+            if (!(NumOfCarg < 0))
             {
                 temp.ReadyChargeStands = NumOfCarg;
             }

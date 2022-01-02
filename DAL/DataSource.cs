@@ -31,7 +31,9 @@ namespace DalObject
                 sta.Id = r.Next(1, 501);
                 sta.Latitude = r.NextDouble() / 1.234;
                 sta.Longitude = r.NextDouble() / 1.234;
-                sta.ReadyChargeStands = r.Next(3, 7);
+                //sta.ReadyChargeStands = r.Next(3, 7);
+                sta.ReadyChargeStands = 1;
+
                 stations.Add(sta);
             }
             Station tempStation = stations[0];

@@ -200,6 +200,11 @@ namespace BL
             station.location.Longitude = s.Longitude;
             station.location.Latitude = s.Latitude;
             station.ReadyStandsInStation = s.ReadyChargeStands;
+            List<DroneToList> d = DisplayDroneList(d => d.ThisLocation.Latitude == station.location.Latitude && d.ThisLocation.Longitude == station.location.Longitude && d.status == StatusOfDrone.InMaintenance);
+            foreach (DroneToList item in d)
+            {
+                station.ListOfDrones.Add(BLDroneInCharging(item));
+            }
             return station;
         }
 
