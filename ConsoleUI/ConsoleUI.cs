@@ -183,7 +183,7 @@ namespace ConsoleUI
                                                     if (dtoneId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
                                                     Console.WriteLine("Enter ID of a station from the list:");
-                                                    dalObject1.PrintAvailableChargingStations();
+                                                    dalObject1.PrintStationList(w=>w.ReadyChargeStands > 0);
                                                     int.TryParse(Console.ReadLine(), out int stationId);
                                                     if (stationId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
@@ -305,7 +305,7 @@ namespace ConsoleUI
                                     {
                                         case 'a':
                                             {
-                                                List<Station> Stations = new List<Station>(dalObject1.PrintStationList());
+                                                List<Station> Stations = new (dalObject1.PrintStationList());
                                                 foreach (Station item in Stations)
                                                 {
                                                     Console.WriteLine();
@@ -314,7 +314,7 @@ namespace ConsoleUI
                                             }
                                         case 'b':
                                             {
-                                                List<Drone> Drones = new List<Drone>(dalObject1.PrintDroneList());
+                                                List<Drone> Drones = new (dalObject1.PrintDroneList());
                                                 foreach (Drone item in Drones)
                                                 {
                                                     Console.WriteLine();
@@ -323,7 +323,7 @@ namespace ConsoleUI
                                             }
                                         case 'c':
                                             {
-                                                List<Customer> Customers = new List<Customer>(dalObject1.PrintCustomerList());
+                                                List<Customer> Customers = new (dalObject1.PrintCustomerList());
                                                 foreach (Customer item in Customers)
                                                 {
                                                     Console.WriteLine();
@@ -332,7 +332,7 @@ namespace ConsoleUI
                                             }
                                         case 'd':
                                             {
-                                                List<Parcel> Parcels = new List<Parcel>(dalObject1.PrintParcelList());
+                                                List<Parcel> Parcels = new (dalObject1.PrintParcelList());
                                                 foreach (Parcel item in Parcels)
                                                 {
                                                     Console.WriteLine();
@@ -341,7 +341,7 @@ namespace ConsoleUI
                                             }
                                         case 'f':
                                             {
-                                                List<Parcel> Parcels = new List<Parcel>(dalObject1.PrintUnassignedParcels());
+                                                List<Parcel> Parcels = new (dalObject1.PrintUnassignedParcels());
                                                 foreach (Parcel item in Parcels)
                                                 {
                                                     Console.WriteLine();
@@ -350,7 +350,7 @@ namespace ConsoleUI
                                             }
                                         case 'g':
                                             {
-                                                List<Station> Stations = new List<Station>(dalObject1.PrintAvailableChargingStations());
+                                                List<Station> Stations = new (dalObject1.PrintStationList(w => w.ReadyChargeStands > 0));
                                                 foreach (Station item in Stations)
                                                 {
                                                     Console.WriteLine();

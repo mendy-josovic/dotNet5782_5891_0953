@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\background.jpg" />
+    <None Remove="Images\clear.png" />
     <None Remove="Images\drone.jpg" />
     <None Remove="Images\DroneInDelivery.jpg" />
+    <None Remove="Images\drone_house.jpeg" />
+    <None Remove="Images\drone_sky.jpg" />
+    <None Remove="Images\refresh.png" />
+    <None Remove="Images\sky.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,8 +22,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\background.jpg" />
+    <Resource Include="Images\clear.png" />
     <Resource Include="Images\drone.jpg" />
     <Resource Include="Images\DroneInDelivery.jpg" />
+    <Resource Include="Images\drone_house.jpeg" />
+    <Resource Include="Images\drone_sky.jpg" />
+    <Resource Include="Images\refresh.png" />
+    <Resource Include="Images\sky.jpg" />
   </ItemGroup>
 
 </Project>

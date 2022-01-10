@@ -43,6 +43,8 @@ namespace PL
             this.blObject = blObject;
             drone = dro;
             AddDrone.DataContext = drone;
+            LongitudeTextBox.Text = ConvertToSexagesimal(drone.ThisLocation.Longitude);
+
             InitializeButtons(drone);
             AddDroneLabel.Content = String.Format("Drone {0}",dro.Id);
         }

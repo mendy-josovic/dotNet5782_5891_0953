@@ -9,11 +9,11 @@ using System.Text;
         {
             public int Id { get; set; }
             public double Battery { get; set; }
-            public DateTime? EntryTimeForLoading = DateTime.Now;
+            public DateTime? EntryTimeForLoading { get; set; }
             public DroneInCharging() { }
             public override string ToString()
             {
-                return "Drone:\nID: " + Id + "\nBattery percentages available: " + Battery + "\n";
+                return "ID: " + Id + " Battery: " + Battery + "%" + "\n";
             }
         }
     }

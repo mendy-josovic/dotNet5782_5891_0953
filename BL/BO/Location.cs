@@ -11,7 +11,7 @@ using System.Text;
             public double Latitude { get; set; }
             public override string ToString()//override the to-string to print it nice
             {
-                return "Longitude: " + Longitude + "\nLatitude: " + Latitude + "\n";
+                return "Longitude: " + BL.BL.ConvertToSexagesimal(Longitude) + "\nLatitude: " + BL.BL.ConvertToSexagesimal(Latitude) + "\n";
             }
         }
     }

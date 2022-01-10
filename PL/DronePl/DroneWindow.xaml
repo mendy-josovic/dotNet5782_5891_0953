@@ -25,7 +25,7 @@
         <ComboBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="300,158,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding MaxWeight, Mode=TwoWay}" MouseDoubleClick="MaxWeightSelector_MouseDoubleClick"/>
         <ComboBox x:Name="StatusSelector" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding status, Mode=TwoWay}"/>
         <Label x:Name="AddDroneLabel" Content="Add a drone" HorizontalAlignment="Left" Margin="293,31,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
-        <Button x:Name="AddADroneButton"  Content="Add your drone" HorizontalAlignment="Left" Margin="539,286,0,0" VerticalAlignment="Top" Height="35" Width="169" FontSize="16" FontWeight="Bold"  Click="AddADroneButton_Click">
+        <Button x:Name="AddADroneButton"  Content="Add your drone" HorizontalAlignment="Left" Margin="539,286,0,0" VerticalAlignment="Top" Height="35" Width="169" FontSize="16" FontWeight="Bold" Click="AddADroneButton_Click">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="True" />

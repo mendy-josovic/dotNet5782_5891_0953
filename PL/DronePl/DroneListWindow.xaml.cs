@@ -49,11 +49,13 @@ namespace PL
     {
         IBl blObject;
         bool isCloseButtonPressed;
+
         /// <summary>
         /// elemnt named dronetolists that is alredy grooped
         /// </summary>
         public IEnumerable<IGrouping<StatusOfDrone, DroneToList>> ListOfDrones { get; set; }
 
+        IEnumerable<StationToList> stations;
         /// <summary>
         /// constractor
         /// </summary>
@@ -69,8 +71,6 @@ namespace PL
 
             StatusSelector.ItemsSource = Enum.GetValues(typeof(StatusOfDrone));
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(Weight));
-            ClearButton1.Content = "Clear\nyour\nchoice";
-            ClearButton2.Content = "Clear\nyour\nchoice";
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -87,8 +87,16 @@ namespace PL
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(blObject).ShowDialog();
-            DisplayListBySelectors();
+            stations = blObject.DisplayStationList(d => d.ReadyStandsInStation > 0);
+            if (stations.Count() > 0)
+            {
+                new DroneWindow(blObject).ShowDialog();
+                DisplayListBySelectors();
+            }
+            else
+            {
+                MessageBox.Show("Sorry, but there are no stations with ready stands.\nYou can try again later.", "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ValueDronesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -146,14 +154,12 @@ namespace PL
             {
                 if (StatusSelector.SelectedIndex == -1)
                 {
-                    //DronesListView.ItemsSource = ListOfDrones.SelectMany(x => x);
                     DronesListView.ItemsSource = from l in blObject.DisplayDroneList()
                                                  group l by l.status;
                 }
                 else
                 {
                     StatusOfDrone SelectedStatus = (StatusOfDrone)StatusSelector.SelectedItem;
-                    //DronesListView.ItemsSource = ListOfDrones.SelectMany(x => x);
 
                     DronesListView.ItemsSource = from l in blObject.DisplayDroneList(x => x.status == SelectedStatus)
                                                  group l by l.status;
@@ -164,8 +170,7 @@ namespace PL
                 if (StatusSelector.SelectedIndex == -1)
                 {
                     Weight selectedMaxWeight = (Weight)MaxWeightSelector.SelectedItem;
-                    //DronesListView.ItemsSource = ListOfDrones.Where(x => x.Key.Weight == selectedMaxWeight).SelectMany(x => x);
-                    //DronesListView.ItemsSource = ListOfDrones.SelectMany(x => x);
+
                     DronesListView.ItemsSource = from l in blObject.DisplayDroneList(x => x.MaxWeight == selectedMaxWeight)
                                                  group l by l.status;
                 }
@@ -173,8 +178,7 @@ namespace PL
                 {
                     Weight selectedMaxWeight = (Weight)MaxWeightSelector.SelectedItem;
                     StatusOfDrone selectedStatus = (StatusOfDrone)StatusSelector.SelectedItem;
-                    //DronesListView.ItemsSource = ListOfDrones.Where(x => x.Key.status == selectedStatus && x.Key.Weight == selectedMaxWeight).SelectMany(x => x);
-                    //DronesListView.ItemsSource = ListOfDrones.SelectMany(x => x);
+
                     DronesListView.ItemsSource = from l in blObject.DisplayDroneList(x => x.MaxWeight == selectedMaxWeight && x.status == selectedStatus)
                                                  group l by l.status;
                 }

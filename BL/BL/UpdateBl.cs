@@ -64,7 +64,7 @@ namespace BL
         /// <param name="Id"></param>
         /// <param name="Name"></param>
         /// <param name="numofCha"></param>
-        public void UpdateStstion(int Id, string Name,int numofCha)
+        public void UpdateStation(int Id, string Name,int numofCha)
         {
             try
             {

@@ -46,7 +46,6 @@ namespace PL
 
             GroupByComboBox.Items.Add("Has free stations");
             GroupByComboBox.Items.Add("Number of ready stands");
-            ClearButton.Content = "Clear\nyour\nchoice";
         }
 
         private void GroupByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,7 +90,8 @@ namespace PL
                 GroupedStationsListView.Visibility = Visibility.Visible;
                 StationsListView.Visibility = Visibility.Hidden;
             }
-            ClearButton.Visibility = Visibility.Visible;
+            if (GroupByComboBox.SelectedIndex != -1)
+                ClearButton.Visibility = Visibility.Visible;
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -111,8 +111,8 @@ namespace PL
             ListView selectedListView = sender as ListView;
             if (selectedListView != null)
             {
-                new DroneWindow(blObject, blObject.BLDrone((DroneToList)selectedListView.SelectedItem)).ShowDialog();
-                //DisplayListBySelectors();
+                new StationWindow(blObject, blObject.BLStation(((StationToList)selectedListView.SelectedItem).Id)).ShowDialog();
+                DisplayListBySelector();
             }
         }
 

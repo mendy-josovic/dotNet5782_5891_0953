@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        Icon="/Images/drone.jpg"
         mc:Ignorable="d"
         Title="StationWindow" Height="450" Width="800" Closing="Window_Closing">
     <Window.Resources>
@@ -21,6 +22,8 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -33,17 +36,11 @@
         <Label Content="Longitude" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Margin="119,0,0,0" Width="86"/>
         <Label Content="Latitude" HorizontalAlignment="Left" Margin="120,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="16"/>
         <Label Content="Drones in charging" HorizontalAlignment="Left" Margin="119,38,0,0" Grid.Row="4" VerticalAlignment="Top" FontSize="16" Grid.RowSpan="2" Width="146"/>
-        <TextBox Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" HorizontalAlignment="Left" Margin="65,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="131" Height="32" FontSize="16"/>
-        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" HorizontalAlignment="Left" Margin="65,0,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="131" Height="32" FontSize="16"/>
-        <TextBox Text="{Binding Location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" HorizontalAlignment="Left" Margin="65,0,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Width="131" Height="32" FontSize="16"/>
-        <TextBox Text="{Binding Location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" HorizontalAlignment="Left" Margin="65,0,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Width="131" Height="32" FontSize="16"/>
-        <ListView x:Name="StationsListView" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,0,64,0" ItemsSource="{Binding ListOfDrones, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button Content="Close" Grid.Column="2" HorizontalAlignment="Left" Margin="98,126,0,0" Grid.Row="5" VerticalAlignment="Top" Width="105" Height="50" FontSize="20" FontWeight="Bold" Click="Button_Click"/>
+        <TextBox Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" HorizontalAlignment="Left" Margin="65,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="131" Height="32" FontSize="16" BorderBrush="{x:Null}"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" HorizontalAlignment="Left" Margin="65,0,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" BorderBrush="{x:Null}"/>
+        <TextBox Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" HorizontalAlignment="Left" Margin="65,0,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" BorderBrush="{x:Null}"/>
+        <TextBox Text="{Binding location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" HorizontalAlignment="Left" Margin="65,0,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" BorderBrush="{x:Null}"/>
+        <ListView x:Name="DronesListView" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="65,34,64,35"  Grid.RowSpan="3" BorderBrush="{x:Null}"/>
+        <Button Content="Close" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Click="Button_Click" Margin="136,0,0,0" Width="81"/>
     </Grid>
 </Window>
