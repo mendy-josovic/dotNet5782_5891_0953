@@ -19,8 +19,6 @@ namespace BL
         {
             return GetDistance(a, b) * batteryConfig[(int)mode];
         }
-
-
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc)
         {
             try
@@ -287,7 +285,7 @@ namespace BL
             }
             return parcel;
         }
-
+       
         /// <summary>
         /// Turn a DroneToList drone into a DroneInParcel
         /// </summary>

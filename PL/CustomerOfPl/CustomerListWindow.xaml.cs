@@ -42,10 +42,10 @@ namespace PL
         }
 
         private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            object var=CustomerListView.SelectedItem;
-            new CustomerWindow(blObjects,(BO.CustomerToList)CustomerListView.SelectedItem).ShowDialog();
-            InitializeComponent();
+        {           
+            new CustomerWindow(blObjects, blObjects.BLCustomer(CustomerLists.First(x => x == CustomerListView.SelectedItem).Id)).ShowDialog();
+            CustomerLists = blObjects.DisplayCustomerList();
+            CustomerListView.ItemsSource = CustomerLists;
         }
     }
 }

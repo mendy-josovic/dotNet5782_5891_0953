@@ -32,7 +32,7 @@
             <Button x:Name="ClearButton1" Grid.Column="1"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="37" Width="29" FontSize="8" Visibility="Hidden" Click="ClearButton1_Click"/>
             <Button x:Name="ClearButton2" Grid.Column="3" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="37" Width="29" FontSize="8" Visibility="Hidden" Click="ClearButton2_Click"/>
         </Grid>
-        <ListView x:Name="DronesListView" Margin="0,83,0,-83" ItemsSource="{Binding ListOfDrones, UpdateSourceTrigger=LostFocus}" Grid.Row="1" Grid.ColumnSpan="2" >
+        <ListView x:Name="DronesListView" Margin="0,83,0,-83" ItemsSource="{Binding drones, UpdateSourceTrigger=LostFocus}" Grid.Row="1" Grid.ColumnSpan="2" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel x:Name="SP" Orientation="Vertical">

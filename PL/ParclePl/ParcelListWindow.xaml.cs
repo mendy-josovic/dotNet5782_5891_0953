@@ -29,7 +29,12 @@ namespace PL
             this.BlObject = blObject;
             parcelToLists = from l in BlObject.DisplayParcelList()
                             group l by l.Sender;
-            ParcelLiastView.ItemsSource = parcelToLists;           
+            ParcelLiastView.ItemsSource = parcelToLists;
+        }
+
+        private void ParcelLiastView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
     }

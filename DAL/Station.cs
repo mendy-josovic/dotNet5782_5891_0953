@@ -15,7 +15,7 @@ using System.Threading.Tasks;
             public int ReadyChargeStands { get; set; }
             public override string ToString()
             {
-                return "ID: " + Id + "\nName: " + Name + "\nLongitude: " + Longitude + "\nLatitude: " + Latitude + "\nReady charging stands: " + ReadyChargeStands + "\n";
+                return "ID: " + Id + "\nName: " + Name + "\nLongitude: " +Longitude + "\nLatitude: " + Latitude + "\nReady charging stands: " + ReadyChargeStands + "\n";
             }
         }
     }

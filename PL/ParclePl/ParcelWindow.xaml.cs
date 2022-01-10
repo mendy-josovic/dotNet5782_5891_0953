@@ -26,9 +26,10 @@ namespace PL
         public ParcelWindow(IBl blObject)
         {
             InitializeComponent();
+           
         }
 
-        public ParcelWindow(IBl blObject, int Id)
+        public ParcelWindow(IBl blObject,Parcel prc)
         {
             InitializeComponent();
 

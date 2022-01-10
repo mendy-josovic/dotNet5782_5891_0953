@@ -6,13 +6,16 @@
         xmlns:local="clr-nmespace:PL"
         mc:Ignorable="d"
         Title="ParcelListWindow" Height="450" Width="800" DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid x:Name="MainGrid" Height="auto" Grid.Row="0" Width="auto" RenderTransformOrigin="0.499,0.187">
+    <Grid x:Name="MainGrid" Height="auto" Grid.Row="1" Width="auto" RenderTransformOrigin="0.499,0.187">
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="90*"/>
         </Grid.RowDefinitions>
-        <Label Content="View By" HorizontalAlignment="Left" Margin="36,5,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.87,1.255"/>
-        <ListView Grid.Row="1" x:Name="ParcelLiastView" ItemsSource="{Binding parcelToLists}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="30*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="ParcelLiastView" ItemsSource="{Binding parcelToLists}" SelectionChanged="ParcelLiastView_SelectionChanged" Margin="5,39,-5,6" Grid.RowSpan="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel x:Name="Sp" Orientation="Horizontal">
@@ -22,6 +25,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ComboBox x:Name="ParcelSelector" HorizontalAlignment="Left" Margin="140,14,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="88,11,0,0" Text="diplay " TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Calendar HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Top" Height="160"  Grid.Column="1" Margin="22,5,0,0"/>
     </Grid>
 </Window>

@@ -9,10 +9,12 @@ using System.Threading.Tasks;
         {
             public int DroneId { get; set; }
             public int StationId { get; set; }
+            public DateTime? TimeOfCreation { get; set; }
             public DroneCharge(int drone, int station)
             {
                 DroneId = drone;
                 StationId = station;
+                TimeOfCreation = DateTime.Now;
             }
         }
     }

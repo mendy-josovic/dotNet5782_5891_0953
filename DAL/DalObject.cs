@@ -21,19 +21,21 @@ namespace DalObject
         public void CreateANewDroneCharge(int staId, int drnId)
         {
             DataSource.droneCharges.Add(new DroneCharge(drnId, staId));
-        }        
+        }  
         public void ClearDroneCharge(int drnId)
         {
             int i = DataSource.droneCharges.FindIndex(w => w.DroneId == drnId);  //find the parcel that was supplied
             DroneCharge tempDroneCharge = DataSource.droneCharges[i];
             DataSource.droneCharges.Remove(tempDroneCharge);//removes the drone-charge
         }
+        /// 
         /// <summary>
         /// we finde the place with the station and the dronr we need 
         /// </summary>
         /// <param name="DroneId"></param>
         /// <param name="StationId"></param>
         /// <returns></returns>
+
         public DroneCharge PrintDronCarg(int DroneId = 0, int StationId = 0)
         {
             int i = 0;

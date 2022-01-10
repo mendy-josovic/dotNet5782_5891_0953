@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using BlApi;
 using BO;
 
@@ -52,8 +53,9 @@ namespace PL
         /// <summary>
         /// elemnt named dronetolists that is alredy grooped
         /// </summary>
+        ///         
         public IEnumerable<IGrouping<StatusOfDrone, DroneToList>> ListOfDrones { get; set; }
-
+        ObservableCollection<IGrouping<StatusOfDrone, DroneToList>> drones;
         /// <summary>
         /// constractor
         /// </summary>
@@ -64,15 +66,15 @@ namespace PL
             this.blObject = blObject;
             ListOfDrones = from l in blObject.DisplayDroneList()
                            group l by l.status;
-
             var ListOfDronesCount = blObject.DisplayDroneList().GroupBy(drone => drone.status)
                         .Select(group => new
                         {
                             Status = group.Key,
                             Count = group.Count()
                         });
+            drones = new(ListOfDrones);
             InitializeComponent();
-
+            DronesListView.ItemsSource = drones;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(StatusOfDrone));
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(Weight));
             ClearButton1.Content = "Clear\nyour\nchoice";
@@ -102,7 +104,7 @@ namespace PL
             ListView selectedListView = sender as ListView;
             if (selectedListView != null)
             {
-                new DroneWindow(blObject, blObject.BLDrone((DroneToList)selectedListView.SelectedItem)).ShowDialog();
+                new DroneWindow(blObject, blObject.BLDrone((DroneToList)selectedListView.SelectedItem)).Show();
                 DisplayListBySelectors();
             }
         }
