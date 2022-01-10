@@ -125,14 +125,18 @@ namespace BL
         /// </summary>
         /// <param name="a">the location we want to get it closest station</param>
         /// <returns>ID of the closest station</returns>
-        public int GetClosestStation(Location a)
+        public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null)
         {
             try
             {
                 int i = 0;
                 int closestID = 0;
                 double minimum = 0;
-                List<DO.Station> tempDataStations = new(Data.PrintStationList());
+                IEnumerable<DO.Station> tempDataStations;
+                if (stations == null)
+                    tempDataStations = Data.PrintStationList();
+                else
+                    tempDataStations = stations;
                 List<BO.Station> stationsBL = new();
                 foreach (DO.Station station in tempDataStations)
                 {
@@ -232,11 +236,15 @@ namespace BL
 
         /// <summary>
         /// Turn a DAL customer into a BL customer
+        /// gets int of the id
         /// </summary>
         /// <param name="c">DAL customer </param>
         /// <returns>BL customer</returns>
-        public BO.Customer BLCustomer(DO.Customer c)
+        public BO.Customer BLCustomer(int Id)
         {
+            
+            DO.Customer c = new();
+            c = DisplayCustomer(Id);
             List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
             BO.Customer customer = new();
             customer.Id = c.Id;
@@ -432,7 +440,7 @@ namespace BL
         public CustomerToList BLCustomerToList(DO.Customer c)
         {
             CustomerToList customerToList = new();
-            BO.Customer customer = BLCustomer(c);
+            BO.Customer customer = BLCustomer(c.Id);
             customerToList.Id = customer.Id;
             customerToList.Name = customer.Name;
             customerToList.Phone = customer.Phone;
@@ -473,10 +481,11 @@ namespace BL
         }
 
         public Location GetLocationOfStation(StationToList s)
-        {           
+        {
             DO.Station st = Data.PrintStation(s.Id);
             Location location = Location(st.Longitude, st.Latitude);
             return location;
         }
+  
     }
 }

@@ -91,22 +91,18 @@ namespace BL
         public void SendDroneToCarge(int DronId)
         {
             try
-            {
+            {      
                 int i = DroneList.FindIndex(w => w.Id == DronId);
                 if (i<0)
-                    throw new BlException("Drone doesn't exist");
-                if (!(DroneList[i].status == StatusOfDrone.Available))
-                    throw new BlException("Charhing Not Possible (Drone Not Availble)");
-
-                int j = GetClosestStation(DroneList[i].ThisLocation); //geting the id of station that we need to charge
-                DO.Station tempStation =  Data.PrintStation(j); //a temporary station (like the one to charg) 
-                if (tempStation.ReadyChargeStands == 0)
-                    throw new BlException("Charhing Not Possible (Station Cargin slots are full)");
-                Location location = Location(tempStation.Longitude, tempStation.Latitude); //checking that we have enough battery by geting the ditence and the battery consumption
-                if (DroneList[i].Battery < Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available))
-                    throw new BlException("Charhing Not Possible (Not Enough Battery)");
-                DroneList[i].status = BO.StatusOfDrone.InMaintenance; //updating the drone status
-                DroneList[i].Battery -= (int)Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available); //updating the battery
+                    throw new BlException("Drone doesn't exist");       
+                IEnumerable<DO.Station> stations = Data.PrintStationList(x => x.ReadyChargeStands > 0 && DroneList[i].Battery- (int)Consumption(DroneList[i].ThisLocation,Location(x.Longitude,x.Latitude), BO.ModeOfDroneInMoving.Available)>0);
+                if(stations.Count()==0)
+                    throw new BlException("Charhing Not Possible (Station Cargin slots are full,Not Enough Battery,)");
+                int j = GetClosestStation(DroneList[i].ThisLocation, stations);//geting the id of station that we need to charge 
+                DO.Station tempStation = Data.PrintStation(j);//a temporary station (like the one to charg)   
+                DroneList[i].status = StatusOfDrone.InMaintenance;//updating the drone status
+                Location location = Location(tempStation.Longitude, tempStation.Latitude);
+                DroneList[i].Battery -= (int)Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available);//updating the battery for the way to the station
                 DroneList[i].ThisLocation = location;//updating the location
                 Data.UpdatStation(j, "", tempStation.ReadyChargeStands - 1); //updating the ready charging stands     
                 Data.CreateANewDroneCharge(j,DronId); //creating a new drone-charge

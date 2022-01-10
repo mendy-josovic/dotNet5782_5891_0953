@@ -21,13 +21,13 @@ namespace BlApi
         public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null);
         public List<CustomerToList> DisplayCustomerList(Predicate<CustomerToList> predicate = null);
         public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null);
-        public int GetClosestStation(Location a);
+        public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null);
         public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
         public Location GetLocationOfStation(int ID);
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc);
         public Station BLStation(DO.Station s);
         public Drone BLDrone(DroneToList d);
-        public Customer BLCustomer(DO.Customer c);
+        public Customer BLCustomer(int Id);
         public Parcel BLParcel(DO.Parcel p);
         public ParcelInTransfer BLParcelInTransfer(DO.Parcel p);
         public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender);
@@ -47,6 +47,6 @@ namespace BlApi
         public void ReturnDroneFromeCharging(int DroneId, int Time);
         public void AssignDronToParcel(int DroneId);
         public void PickUp(int DroneId);
-        public void Suuply(int DroneId);    
+        public void Suuply(int DroneId);
     }
 }

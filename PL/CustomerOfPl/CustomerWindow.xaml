@@ -7,22 +7,27 @@
         mc:Ignorable="d"
         Icon="/Images/drone.jpg"
         Title="CustomerWindow" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="CustomerWindowGrid">
         <Label x:Name="IDLabel" Content="ID" HorizontalAlignment="Left" Margin="96,88,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
-        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id , Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="False" PreviewTextInput="IDTextBox_PreviewTextInput"/>
+        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id , Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"/>
         <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Left" Margin="88,121,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True"  />
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"  />
         <Label x:Name="PhoneLabel" Content="Phone num" HorizontalAlignment="Left" Margin="93,164,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="ParcelSentAndDLabel" Content="parcelsSentAndDelivered" HorizontalAlignment="Left" Margin="88,191,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="PaecelsentAndDTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding ParcelSentAndDelivered, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" PreviewTextInput="PaecelsentAndDTextBox_PreviewTextInput"  />
+        <TextBox x:Name="PaecelsentAndDTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding ParcelSentAndDel, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here" />
         <Label x:Name="ParcelsSentAndNotDeliveredLabel" Content="ParcelsSentAndNotDelivered" HorizontalAlignment="Left" Margin="86,223,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="ParcelsReceivedTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="299,271,0,0" Text="{Binding ParcelsReceived, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
         <Label x:Name="ParcelsReceived" Content="ParcelsReceived" HorizontalAlignment="Left" Margin="94,266,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="ParcelsOnWayToCustomerLabel" Content="ParcelsOnWayToCustomer" HorizontalAlignment="Left" Margin="88,305,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="ParcelsOnWayToCustomer" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,310,0,0" Text="{Binding ParcelsOnWayToCustomer, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
-        <TextBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="299,157,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding Phone, Mode=TwoWay}" MouseDoubleClick="Phone_MouseDoubleClick" TextChanged="MaxWeightSelector_TextChanged"/>
-        <TextBox x:Name="ParcelsSentAndNotDeliveredTextBox" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding ParcelsSentAndNotDelivered, Mode=TwoWay}"/>
-        <Label x:Name="AddDroneLabel" Content="Add a drone" HorizontalAlignment="Left" Margin="293,31,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="299,157,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding Phone, Mode=TwoWay}" MouseDoubleClick="Phone_MouseDoubleClick" />
+        <TextBox x:Name="ParcelsSentAndNotDeliveredTextBox" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding ParcelsSentAndNotDelivered, Mode=TwoWay}"  ToolTip="This fiel doesn't initialize here" TextChanged="ParcelsSentAndNotDeliveredTextBox_TextChanged" IsReadOnly="True"/>
+        <Label x:Name="AddDroneLabel" Content="Customer info" HorizontalAlignment="Left" Margin="293,31,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
+        <Button x:Name="AddCustomerButton" Content="Add" HorizontalAlignment="Left" Margin="672,340,0,0" VerticalAlignment="Top" Height="36" Width="88" Click="AddCustomerButton_Click"/>
+        <Label x:Name="x5" Content="Fill in the fields marked with *" HorizontalAlignment="Left" Margin="279,61,0,0" VerticalAlignment="Top" Foreground="Red"/>
+        <Label x:Name="x1" Content="*" HorizontalAlignment="Left" Margin="284,93,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x2" Content="*" HorizontalAlignment="Left" Margin="285,127,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x3" Content="*" HorizontalAlignment="Left" Margin="283,160,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
     </Grid>
 
 </Window>

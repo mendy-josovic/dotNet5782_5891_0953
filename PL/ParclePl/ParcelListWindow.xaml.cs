@@ -21,9 +21,16 @@ namespace PL
     /// </summary>
     public partial class ParcelListWindow : Window
     {
+        IBl BlObject;
+        IEnumerable<IGrouping<String, ParcelToList>> parcelToLists { set; get; }
         public ParcelListWindow(IBl blObject)
         {
             InitializeComponent();
+            this.BlObject = blObject;
+            parcelToLists = from l in BlObject.DisplayParcelList()
+                            group l by l.Sender;
+            ParcelLiastView.ItemsSource = parcelToLists;           
         }
+
     }
 }
