@@ -35,7 +35,7 @@ namespace DalApi
         public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null);
         public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null);
         public IEnumerable<Parcel> PrintUnassignedParcels();
-        public IEnumerable<Station> PrintAvailableChargingStations();
+        public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null);
         public double[] Consumption();
     }
 }

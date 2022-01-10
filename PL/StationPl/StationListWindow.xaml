@@ -8,8 +8,14 @@
         Icon="/Images/drone.jpg"
         DataContext="{Binding RelativeSource={RelativeSource Mode=self}}"
         Title="StationListWindow" Height="450" Width="800" Closing="Window_Closing">
-    <Grid Name="MainGrid">
 
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/drone_sky.jpg" />
+    </Window.Background>
+    <Grid Name="MainGrid" >
+        <Grid.Resources>
+            <ImageBrush x:Key="ClearImage" ImageSource="/Images/clear.png" />
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="70*"/>
             <RowDefinition Height="50*"/>
@@ -25,20 +31,44 @@
                 <ColumnDefinition Width="200*"/>
                 <ColumnDefinition Width="200*"/>
             </Grid.ColumnDefinitions >
-            <Label x:Name="OrderByLabel" Grid.Column="0" Content="Order by" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="106,0,0,0" FontSize="16" FontWeight="Bold" Height="32" Width="76"/>
-            <ComboBox Name="ReadyStandsSelector" Grid.Column="1" Margin="22,5,3,5" SelectionChanged="ReadyStandsSelector_SelectionChanged" MouseDoubleClick="ReadyStandsSelector_MouseDoubleClick"/>
-            <Button x:Name="ClearButton" Grid.Column="1"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="37" Width="29" FontSize="8" Visibility="Hidden" Click="ClearButton_Click"/>
+            <Label x:Name="GroupByLabel" Grid.Column="0" Content="Group by" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="106,0,0,0" FontSize="16" FontWeight="Bold" Height="32" Width="84"/>
+            <ComboBox x:Name="GroupByComboBox" Grid.Column="1" Margin="22,5,3,5" SelectionChanged="GroupByComboBox_SelectionChanged" MouseDoubleClick="GroupByComboBox_MouseDoubleClick"/>
+            <Button x:Name="ClearButton" Background="{StaticResource ClearImage}" Grid.Column="2"  HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Center" Height="22" Width="53" FontSize="8" Visibility="Hidden" Click="ClearButton_Click" Grid.ColumnSpan="2" BorderBrush="{x:Null}"/>
         </Grid>
         <Grid x:Name="DownGrid" Height="auto" Grid.Row="2" Width="auto">
-            <ListView x:Name="StationsListView" ItemsSource="{Binding ListOfStations, UpdateSourceTrigger=LostFocus}"  Grid.Row="1" Grid.ColumnSpan="2">
+            <ListView x:Name="GroupedStationsListView" Background="Transparent" ItemsSource="{Binding ListOfStations, UpdateSourceTrigger=LostFocus}"  Grid.Row="1" Grid.ColumnSpan="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel x:Name="SP" Orientation="Horizontal">
-                            <Label Content="{Binding Key}"/>
-                            <ListView x:Name="ValueStationsListView" MouseDoubleClick="ValueStationsListView_MouseDoubleClick"  ItemsSource="{Binding}"/>
+                        <StackPanel x:Name="SP" Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Key}" FontWeight="Bold" Foreground="Gray" FontSize="22" VerticalAlignment="Bottom" />
+                                <TextBlock Text=" /" FontWeight="Bold" Foreground="Gray" FontSize="22" VerticalAlignment="Bottom" />
+                                <TextBlock Text="{Binding Count}" FontSize="22" Foreground="Green" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                <TextBlock Text=" item(s)" FontSize="22" Foreground="Silver" FontStyle="Italic" VerticalAlignment="Bottom" />
+                            </StackPanel>
+                            <ListView x:Name="ValueStationsListView" Background="Transparent" MouseDoubleClick="ValueStationsListView_MouseDoubleClick"  ItemsSource="{Binding Value}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}" />
+                                        <GridViewColumn Header="Name" Width="110" DisplayMemberBinding="{Binding Name}" />
+                                        <GridViewColumn Header="Free Stands" Width="120" DisplayMemberBinding="{Binding ReadyStandsInStation}" />
+                                        <GridViewColumn Header="Busy Stands" Width="90" DisplayMemberBinding="{Binding OccupiedStandsInStation}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+            </ListView>
+            <ListView x:Name="StationsListView" Background="Transparent" MouseDoubleClick="ValueStationsListView_MouseDoubleClick" ItemsSource="{Binding ListOfStations, UpdateSourceTrigger=LostFocus}" Margin="10,0,-10,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Name" Width="110" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Free Stands" Width="120" DisplayMemberBinding="{Binding ReadyStandsInStation}" />
+                        <GridViewColumn Header="Busy Stands" Width="90" DisplayMemberBinding="{Binding OccupiedStandsInStation}" />
+                    </GridView>
+                </ListView.View>
             </ListView>
             <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" Height="40" Width="140" FontSize="16" FontWeight="Bold" Click="CloseButton_Click" Margin="0,250,30,0" />
         </Grid>

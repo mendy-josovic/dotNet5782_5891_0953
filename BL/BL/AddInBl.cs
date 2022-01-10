@@ -44,16 +44,26 @@ namespace BL
         {
             try
             {
-                List<DO.Station> tempDataStations =new (Data.PrintStationList(w=>w.Id==IDOfStation));
-                if (tempDataStations.Count==0)
+                List<DO.Station> tempDataStations = new (Data.PrintStationList(w=>w.Id==IDOfStation));
+                if (tempDataStations.Count == 0)
                     throw new BlException("there is not a station with this ID");
+
                 DO.Drone drone = new();
                 drone.Id = dro.Id;
+
+                //Checks if the ID number does not already exist in the system
+                int i = DroneList.FindIndex(w => w.Id == dro.Id);
+                if (i>=0)
+                    throw new BlException("The drone is already exists");
+
+                DO.Station station = Data.PrintStation(IDOfStation);
+                if (station.ReadyChargeStands == 0)
+                    throw new BlException("There are no ready stands at this station!");
+                else
+                    UpdateStation(station.Id, station.Name, station.ReadyChargeStands - 1);
+
                 drone.Model = dro.Model;
                 drone.MaxWeight = (DO.Weight)dro.MaxWeight;
-                int i = DroneList.FindIndex(w => w.Id == dro.Id);
-                    if(i>=0)
-                        throw new BlException("The drone is already exists");     
                 Data.AddDrone(drone);
                 dro.Battery = r.Next(20, 40);
                 dro.status = StatusOfDrone.InMaintenance;

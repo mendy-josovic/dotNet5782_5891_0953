@@ -95,5 +95,9 @@ namespace DalObject
             DataSource.parcels[index] = parcel;
         }
 
+        public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null)
+        {
+            return DataSource.droneCharges.FindAll(x => predicate == null ? true : predicate(x));
+        }
     }
 }

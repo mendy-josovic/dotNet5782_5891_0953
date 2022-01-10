@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using DalApi;
 using DO;
@@ -138,7 +139,7 @@ namespace BL
                 List<BO.Station> stationsBL = new();
                 foreach (DO.Station station in tempDataStations)
                 {
-                    stationsBL.Add(BLStation(station));
+                    stationsBL.Add(BLStation(station.Id));
                 }
                 if (stationsBL.Count == 0)
                     return closestID;
@@ -193,8 +194,9 @@ namespace BL
         /// </summary>
         /// <param name="s">DAL station</param>
         /// <returns>BL station</returns>
-        public BO.Station BLStation(DO.Station s)
+        public BO.Station BLStation(int id)
         {
+            DO.Station s = Data.PrintStation(id);
             BO.Station station = new();
             station.Id = s.Id;
             station.Name = s.Name;
@@ -202,6 +204,7 @@ namespace BL
             station.location.Longitude = s.Longitude;
             station.location.Latitude = s.Latitude;
             station.ReadyStandsInStation = s.ReadyChargeStands;
+            station.ListOfDrones = DisplayDronesInCharging((w => GetDistance(station.location, DisplayDrone(w.Id).ThisLocation) == 0)).ToList();
             return station;
         }
 
@@ -376,6 +379,21 @@ namespace BL
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DroneInCharging BLDroneInCharging1(int id)
+        {
+            DroneInCharging drone = new();
+            DO.DroneCharge d = Data.PrintDronCarg(id);
+            drone.Id = d.DroneId;
+            drone.Battery = DroneList.Find(w => w.Id == id).Battery;
+            drone.EntryTimeForLoading = d.EntryTimeForLoading;
+            return drone;
+        }
+
+        /// <summary>
         /// create a Location
         /// </summary>
         /// <param name="lon">longitude point value</param>
@@ -398,7 +416,7 @@ namespace BL
         public StationToList BLStationToList(DO.Station s)
         {
             StationToList stationToList = new();
-            BO.Station station = BLStation(s);
+            BO.Station station = BLStation(s.Id);
             stationToList.Id = station.Id;
             stationToList.Name = station.Name;
             stationToList.ReadyStandsInStation = station.ReadyStandsInStation;
@@ -479,6 +497,21 @@ namespace BL
             Location location = Location(st.Longitude, st.Latitude);
             return location;
         }
-  
+
+        public static string ConvertToSexagesimal(double? point)
+        {
+            if (point == null)
+                throw new NullReferenceException("point is null");
+
+            int Degrees = (int)point;
+            point -= Degrees;
+            point *= 60;
+            int Minutes = (int)point;
+            point -= Minutes;
+            point *= 60;
+            double? Second = point;
+            return $"{Degrees}° {Minutes}' {string.Format("{0:0.###}", Second)}\" ";
+        }
+
     }
 }

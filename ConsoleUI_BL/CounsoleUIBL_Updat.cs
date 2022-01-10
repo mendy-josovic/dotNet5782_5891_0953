@@ -1,5 +1,7 @@
 ﻿using System;
-using IBL.BO;
+using BO;
+using BlApi;
+
 namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
@@ -47,7 +49,7 @@ namespace ConsoleUI_BL
                                 Int32.TryParse(Console.ReadLine(), out int j);
                                 if (j < 0)
                                     throw new ConsoleBlException("Invalid Imput");
-                                BLObject.UpdateStstion(x, str, j);
+                                BLObject.UpdateStation(x, str, j);
                                 break;
                             }
                         case 'C':
@@ -118,7 +120,7 @@ namespace ConsoleUI_BL
                             }
                     }
                 }
-                catch (IBL.BO.BlException ex)
+                catch (BO.BlException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }

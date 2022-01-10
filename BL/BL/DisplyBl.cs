@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using DalApi;
 using BO;
 using System.Collections;
@@ -98,13 +99,20 @@ namespace BL
 
         public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null)
         {
-            List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
+            IEnumerable<DO.Parcel> tempDataParcels = Data.PrintParcelList();
             List<ParcelToList> parcelList = new();
             foreach (DO.Parcel parcel in tempDataParcels)
             {
                 parcelList.Add(BLParcelToList(parcel));
             }
             return parcelList.FindAll(x => predicate == null ? true : predicate(x));
+        }
+
+        public IEnumerable<DroneInCharging> DisplayDronesInCharging(Predicate<DroneInCharging> predicate = null)
+        {
+            IEnumerable<DO.DroneCharge> tempDataDronesInCharge = Data.DisplayDronesInCharging();
+            IEnumerable<DroneInCharging> DronesInChargingList = tempDataDronesInCharge.Select(w => BLDroneInCharging1(w.DroneId));
+            return DronesInChargingList.Where(x => predicate == null ? true : predicate(x));
         }
     }
 }

@@ -39,45 +39,70 @@ namespace PL
 
             InitializeComponent();
 
-            StationsListView.ItemsSource = ListOfStations;
-            
+            StationsListView.ItemsSource = ListOfStations.SelectMany(x => x);
+            GroupedStationsListView.Visibility = Visibility.Hidden;
+            StationsListView.Visibility = Visibility.Visible;
 
-            ReadyStandsSelector.Items.Add("Stations with ready stands");
-            ReadyStandsSelector.Items.Add("Number of ready stands");
-            ClearButton.Content = "Clear\nyour\nchoice";
+
+            GroupByComboBox.Items.Add("Has free stations");
+            GroupByComboBox.Items.Add("Number of ready stands");
         }
 
-        private void ReadyStandsSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void GroupByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DisplayListBySelector();
         }
 
         private void DisplayListBySelector()
         {
-            if (ReadyStandsSelector.SelectedIndex == -1)
+            if (GroupByComboBox.SelectedIndex == -1)
             {
-                StationsListView.ItemsSource = ListOfStations;
+                StationsListView.ItemsSource = ListOfStations.SelectMany(x => x);
+                GroupedStationsListView.Visibility = Visibility.Hidden;
+                StationsListView.Visibility = Visibility.Visible;
             }
-            if (ReadyStandsSelector.SelectedIndex == 0)
+            if (GroupByComboBox.SelectedIndex == 0)
             {
-                StationsListView.ItemsSource = ListOfStations.SelectMany(k => k).OrderBy(k => k.ReadyStandsInStation == 0);
+                GroupedStationsListView.ItemsSource = (from l in blObject.DisplayStationList()
+                                                       group l by l.ReadyStandsInStation)
+                                                      .Select(grp => new
+                                                      {
+                                                          Key = grp.Key > 0 ? "Has Free stands" : "All stands are busy",
+                                                          Value = grp.ToList(),
+                                                          Count = grp.ToList().Count()
+                                                      });
+                    
+                    
+                GroupedStationsListView.Visibility = Visibility.Visible;
+                StationsListView.Visibility = Visibility.Hidden;
             }
-            if (ReadyStandsSelector.SelectedIndex == 1)
+            if (GroupByComboBox.SelectedIndex == 1)
             {
-                StationsListView.ItemsSource = ListOfStations.SelectMany(k => k).OrderBy(k => k.ReadyStandsInStation);
+                GroupedStationsListView.ItemsSource = (from l in blObject.DisplayStationList()
+                                                       group l by l.ReadyStandsInStation)
+                                                       .Select(grp => new
+                                                       {
+                                                           Key = String.Format("# free stands: {0}", grp.Key),
+                                                           Value = grp.ToList(),
+                                                           Count = grp.ToList().Count()
+                                                       });
+
+                GroupedStationsListView.Visibility = Visibility.Visible;
+                StationsListView.Visibility = Visibility.Hidden;
             }
-            ClearButton.Visibility = Visibility.Visible;
+            if (GroupByComboBox.SelectedIndex != -1)
+                ClearButton.Visibility = Visibility.Visible;
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            ReadyStandsSelector.SelectedIndex = -1;
+            GroupByComboBox.SelectedIndex = -1;
             ClearButton.Visibility = Visibility.Hidden;
         }
 
-        private void ReadyStandsSelector_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void GroupByComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ReadyStandsSelector.SelectedIndex = -1;
+            GroupByComboBox.SelectedIndex = -1;
             ClearButton.Visibility = Visibility.Hidden;
         }
 
@@ -86,8 +111,8 @@ namespace PL
             ListView selectedListView = sender as ListView;
             if (selectedListView != null)
             {
-                new DroneWindow(blObject, blObject.BLDrone((DroneToList)selectedListView.SelectedItem)).ShowDialog();
-                //DisplayListBySelectors();
+                new StationWindow(blObject, blObject.BLStation(((StationToList)selectedListView.SelectedItem).Id)).ShowDialog();
+                DisplayListBySelector();
             }
         }
 

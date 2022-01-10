@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using IBL.BO;
-using IBL;
+using BlApi;
+using BO;
+using DO;
+using DalApi;
 
 namespace ConsoleUI_BL
 {
@@ -45,8 +47,8 @@ namespace ConsoleUI_BL
                                                         Int32.TryParse(Console.ReadLine(), out int x);
                                                         if (x <= 0)
                                                             throw new ConsoleBlException("Invalid value");
-                                                        IDAL.DO.Station station = BLObject.DisplayStation(x);
-                                                        Station BLStation = BLObject.BLStation(station);
+                                                        DO.Station station = BLObject.DisplayStation(x);
+                                                        BO.Station BLStation = BLObject.BLStation(station.Id);
                                                         foreach (DroneToList drone in BLObject.BLDrones())
                                                         {
                                                             if (drone.ThisLocation == BLStation.location)
@@ -62,7 +64,7 @@ namespace ConsoleUI_BL
                                                         if (x <= 0)
                                                             throw new ConsoleBlException("Invalid value");
                                                         DroneToList drone = BLObject.DisplayDrone(x);
-                                                        Drone BLDrone = BLObject.BLDrone(drone);
+                                                        BO.Drone BLDrone = BLObject.BLDrone(drone);
                                                         Console.WriteLine(BLDrone);
                                                         break;
                                                     }
@@ -72,8 +74,8 @@ namespace ConsoleUI_BL
                                                         Int32.TryParse(Console.ReadLine(), out int x);
                                                         if (x <= 0)
                                                             throw new ConsoleBlException("Invalid value");
-                                                        IDAL.DO.Customer customer = BLObject.DisplayCustomer(x);
-                                                        Customer BLCustomer = BLObject.BLCustomer(customer);
+                                                        DO.Customer customer = BLObject.DisplayCustomer(x);
+                                                        BO.Customer BLCustomer = BLObject.BLCustomer(customer.Id);
                                                         Console.WriteLine(BLCustomer);
                                                         break;
                                                     }
@@ -83,8 +85,8 @@ namespace ConsoleUI_BL
                                                         Int32.TryParse(Console.ReadLine(), out int x);
                                                         if (x <= 0)
                                                             throw new ConsoleBlException("Invalid value");
-                                                        IDAL.DO.Parcel parcel = BLObject.DisplayParcel(x);
-                                                        Parcel BLParcel = BLObject.BLParcel(parcel);
+                                                        DO.Parcel parcel = BLObject.DisplayParcel(x);
+                                                        BO.Parcel BLParcel = BLObject.BLParcel(parcel);
                                                         Console.WriteLine(BLParcel);
                                                         break;
                                                     }
@@ -99,7 +101,7 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
-                                        catch (IBL.BO.BlException ex)
+                                        catch (BO.BlException ex)
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
@@ -164,7 +166,7 @@ namespace ConsoleUI_BL
                                                 case 'f':
                                                     {
                                                         List<ParcelToList> parcels = BLObject.DisplayParcelList();
-                                                        var notAssociated = parcels.FindAll(w => w.Status == STATUS_OF_PARCEL.CREATED);
+                                                        var notAssociated = parcels.FindAll(w => w.Status == StatusOfParcel.Created);
                                                         foreach (ParcelToList parcel in notAssociated)
                                                         {
                                                             Console.WriteLine(parcel + "\n");
@@ -187,7 +189,7 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
-                                        catch (IBL.BO.BlException ex)
+                                        catch (BO.BlException ex)
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
@@ -202,7 +204,7 @@ namespace ConsoleUI_BL
                     {
                         Console.WriteLine(ex.Message);
                     }
-                    catch (IBL.BO.BlException ex)
+                    catch (BO.BlException ex)
                     {
                         Console.WriteLine(ex.Message);
                     }

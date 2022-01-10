@@ -23,6 +23,7 @@ namespace PL
     {
         IBl blObject;
         Station station = new();
+        IEnumerable<DroneToList> ListOfDrones; 
         bool isCloseRequired = false;
 
         public StationWindow(IBl blObject)
@@ -31,6 +32,17 @@ namespace PL
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.blObject = blObject;
             ADrone.DataContext = station;
+            ListOfDrones = blObject.DisplayDroneList(w => w.ThisLocation.Longitude == station.location.Longitude && w.ThisLocation.Latitude == station.location.Latitude && w.status == StatusOfDrone.InMaintenance);
+        }
+
+        public StationWindow(IBl blObject, Station s)
+        {
+            InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.blObject = blObject;
+            station = s;           
+            ADrone.DataContext = station;
+            DronesListView.ItemsSource = station.ListOfDrones;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -22,11 +22,12 @@ namespace BlApi
         public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null);
         public List<CustomerToList> DisplayCustomerList(Predicate<CustomerToList> predicate = null);
         public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null);
+        public IEnumerable<DroneInCharging> DisplayDronesInCharging(Predicate<DroneInCharging> predicate = null);
         public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null);
         public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
         public Location GetLocationOfStation(int ID);
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc);
-        public Station BLStation(DO.Station s);
+        public Station BLStation(int id);
         public Drone BLDrone(DroneToList d);
         public Customer BLCustomer(int Id);
         public Parcel BLParcel(DO.Parcel p);
@@ -34,6 +35,7 @@ namespace BlApi
         public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender);
         public CustomerInParcel BLCustomerInParcel(DO.Customer DalCus);
         public DroneInCharging BLDroneInCharging(DroneToList d);
+        public DroneInCharging BLDroneInCharging1(int id);
         public StationToList BLStationToList(DO.Station s);
         public DroneToList BLDroneToList(Drone d);
         public CustomerToList BLCustomerToList(DO.Customer c);
@@ -43,7 +45,7 @@ namespace BlApi
         public IEnumerable<DroneToList> BLDrones(Predicate<DroneToList> predicate = null);        
         public void UpdatDroneName(int DroneId, string Name);
         public void UpdateCosomerInfo(int Id, string Name, string Phone);
-        public void UpdateStstion(int Id, string Name, int numofCha);
+        public void UpdateStation(int Id, string Name, int numofCha);
         public void SendDroneToCarge(int DronId);
         public void ReturnDroneFromeCharging(int DroneId, int Time);
         public void AssignDronToParcel(int DroneId);

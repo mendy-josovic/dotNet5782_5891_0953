@@ -22,7 +22,7 @@ namespace DalObject
         {
             int i = DataSource.stations.FindIndex(w => w.Id == staId);  //find the station
             if (i < 0)
-                throw new DalExceptions("Station dosent exist");
+                throw new DalExceptions("Station dosen't exist");
             Station tempStation = DataSource.stations[i];
             tempStation.ReadyChargeStands--;
             DataSource.stations[i] = tempStation;
@@ -36,11 +36,6 @@ namespace DalObject
             return DataSource.stations.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-
-        public IEnumerable<Station> PrintAvailableChargingStations()  //returns a new list of available charging slots
-        {
-            return DataSource.stations.FindAll(w => w.ReadyChargeStands > 0);
-        }
 
         /// <summary>
         /// the func gets the id of the statoin and the name and number of cargin slots

@@ -71,6 +71,11 @@ namespace PL
             StationToList station = ListOfStationsSelector.SelectedItem as StationToList;
             if (station != null && isInputValid())
             {
+                if (station.ReadyStandsInStation == 0)
+                {
+                    MessageBox.Show("There are no ready stands at this station!", "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 try
                 {
                     blObject.AddDrone(drone, station.Id);
@@ -150,6 +155,21 @@ namespace PL
             //int.TryParse(DeliveryTextBox.Text, out int x);
             //if (DeliveryTextBox.Text != "")
             //    new ParcelWindow(blObject, blObject.BLParcel(x)).Show();
+        }
+
+        public string ConvertToSexagesimal(double? point)
+        {
+            if (point == null)
+                throw new NullReferenceException("point is null");
+
+            int Degrees = (int)point;
+            point -= Degrees;
+            point *= 60;
+            int Minutes = (int)point;
+            point -= Minutes;
+            point *= 60;
+            double? Second = point;
+            return $"{Degrees}° {Minutes}' {string.Format("{0:0.###}", Second)}\" ";
         }
     }
 }
