@@ -30,7 +30,7 @@
                         <DataTrigger Binding="{Binding ElementName=NameTextBox, Path=Text}" Value="">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=PhoneTextBox, Path=SelectedIndex}" Value="">
+                        <DataTrigger Binding="{Binding ElementName=PhoneTextBox, Path=Text}" Value="">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                     </Style.Triggers>

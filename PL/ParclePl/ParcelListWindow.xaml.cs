@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using BO;
-
 namespace PL
 {
     /// <summary>
@@ -22,20 +21,74 @@ namespace PL
     public partial class ParcelListWindow : Window
     {
         IBl BlObject;
-        IEnumerable<IGrouping<String, ParcelToList>> parcelToLists { set; get; }
+        IEnumerable <ParcelToList> parcelToLists { set; get; }
         public ParcelListWindow(IBl blObject)
         {
             InitializeComponent();
             this.BlObject = blObject;
-            parcelToLists = from l in BlObject.DisplayParcelList()
-                            group l by l.Sender;
+            parcelToLists = BlObject.DisplayParcelList();
             ParcelLiastView.ItemsSource = parcelToLists;
+            //    StatusSelector.ItemsSource = Enum.GetValues(typeof(StatusOfDrone));
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelLiastView.ItemsSource);
+            //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Sender");
+            //view.GroupDescriptions.Add(groupDescription);
+            priorityComboBox.ItemsSource = Enum.GetValues(typeof(Priority));
         }
 
-        private void ParcelLiastView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        /// <summary>
+        /// cleer the sort and get the hole list                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearBotten_Click(object sender, RoutedEventArgs e)
         {
+            SenderTextBox.Clear();
+            RecipientTextBox.Clear();
+            priorityComboBox.SelectedItem = null;
+            parcelToLists = BlObject.DisplayParcelList();
+            ParcelLiastView.ItemsSource = parcelToLists;
 
         }
+        /// <summary>
+        /// the filter o the recwested
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChoiseDate.SelectedDate.HasValue)
+            {
+                DateTime t = ChoiseDate.SelectedDates.First().Date;
+                DateTime t2 = ChoiseDate.SelectedDates.Last().Date;
+                IEnumerable<BO.Parcel> parcels = BlObject.DisplayParcelLists(w => w.TimeOfCreation.Value.Day >= t.Day && (w.TimeOfCreation.Value.Day <= t2.Day));
+                parcelToLists = parcelToLists.Where(w => parcels.Any(x => x.Id == w.Id));
+            }
+            if(SenderTextBox.Text.Length>0)
+            {
+                parcelToLists = parcelToLists.Where(w => w.Sender == SenderTextBox.Text);
+            }
+            if (RecipientTextBox.Text.Length > 0)
+            {
+                parcelToLists = parcelToLists.Where(w => w.Recipient == RecipientTextBox.Text);
+            }
+            object var = priorityComboBox.SelectedItem;
+            if(var!=null)
+            {                
+                parcelToLists = parcelToLists.Where(w => (int)w.Priority == (int)var);
+            }
+            ParcelLiastView.ItemsSource = parcelToLists;
+            ClearBotten.Visibility = Visibility.Visible;
+        }
 
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow(BlObject).Show();
+        }
+
+        private void ParcelLiastView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new ParcelWindow(BlObject, ((ParcelToList)ParcelLiastView.SelectedItem).Id).Show();
+        }
     }
 }

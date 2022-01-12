@@ -70,7 +70,6 @@ namespace PL
                            group l by l.status;
 
             InitializeComponent();
-            DronesListView.ItemsSource = drones;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(StatusOfDrone));
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(Weight));
         }

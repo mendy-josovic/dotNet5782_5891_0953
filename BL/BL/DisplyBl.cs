@@ -80,6 +80,20 @@ namespace BL
                 throw new BlException(ex.Message);
             }
         }
+        /// <summary>
+        /// the func returns a Ienumrable of Bo parcels from Do Prcels
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public IEnumerable<BO.Parcel> DisplayParcelLists(Predicate<BO.Parcel> predicate = null)
+        {
+
+            IEnumerable<BO.Parcel> A;
+            IEnumerable<DO.Parcel> B = Data.PrintParcelList();
+            A = B.Select(w => BLParcel(w));
+            return A.Where(x => predicate == null ? true : predicate(x)); ;
+       
+        }
 
         public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null)
         {
@@ -97,7 +111,7 @@ namespace BL
             return customerList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null)
+        public IEnumerable<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null)
         {
             IEnumerable<DO.Parcel> tempDataParcels = Data.PrintParcelList();
             List<ParcelToList> parcelList = new();

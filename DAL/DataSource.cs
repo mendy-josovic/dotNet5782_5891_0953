@@ -84,7 +84,7 @@ namespace DalObject
                 tempParcel.TargetId = customers[9 - i].Id;                 
                 tempParcel.Priority = ((DO.Priority)r.Next(0, 3));
                 tempParcel.Weigh = ((DO.Weight)r.Next(0, 3));
-                tempParcel.Requested = new();
+                tempParcel.Requested = DateTime.Now;
                 parcels.Add(tempParcel);
             }         
         }

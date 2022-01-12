@@ -29,7 +29,7 @@ namespace DalApi
         public Drone PrintDrone(int id);
         public Customer PrintCustomer(int id);
         public Parcel PrintParcel(int id);
-        public DroneCharge PrintDronCarg(int DroneId = 0, int StationId = 0);
+        public DroneCharge PrintDronCarg(int DroneId = 0);
         public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null);
         public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null);
         public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null);
@@ -37,5 +37,6 @@ namespace DalApi
         public IEnumerable<Parcel> PrintUnassignedParcels();
         public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null);
         public double[] Consumption();
+        public int GetRuningNumber();
     }
 }

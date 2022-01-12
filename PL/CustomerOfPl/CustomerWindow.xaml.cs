@@ -68,12 +68,14 @@ namespace PL
         }
         private void ParcelsSent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ParcelAtCustomer p = (ParcelAtCustomer)ParcelsSent.SelectedItem;
+            new ParcelWindow(blObject, p.Id).Show();
         }
 
         private void ParcelsRecievd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ParcelAtCustomer p = (ParcelAtCustomer)ParcelsRecievd.SelectedItem;
+            new ParcelWindow(blObject, p.Id).Show();
         }
     }
 }

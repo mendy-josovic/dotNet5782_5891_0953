@@ -18,10 +18,11 @@ namespace BlApi
         public DroneToList DisplayDrone(int ID);
         public DO.Customer DisplayCustomer(int ID);
         public DO.Parcel DisplayParcel(int ID);
+        public IEnumerable<BO.Parcel> DisplayParcelLists(Predicate<BO.Parcel> predicate = null); 
         public List<StationToList> DisplayStationList(Predicate<StationToList> predicate = null);
         public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null);
         public List<CustomerToList> DisplayCustomerList(Predicate<CustomerToList> predicate = null);
-        public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null);
+        public IEnumerable<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null);
         public IEnumerable<DroneInCharging> DisplayDronesInCharging(Predicate<DroneInCharging> predicate = null);
         public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null);
         public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
