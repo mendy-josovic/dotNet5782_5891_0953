@@ -52,5 +52,10 @@ namespace BlApi
         public void AssignDronToParcel(int DroneId);
         public void PickUp(int DroneId);
         public void Suuply(int DroneId);
+        /// <summary>
+        /// the func gets id of a parecel and delets
+        /// </summary>
+        /// <param name="Id"></param>
+        public void DeletAParcel(int Id);
     }
 }

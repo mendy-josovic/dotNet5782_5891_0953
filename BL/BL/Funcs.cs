@@ -512,6 +512,9 @@ namespace BL
             double? Second = point;
             return $"{Degrees}° {Minutes}' {string.Format("{0:0.###}", Second)}\" ";
         }
-
+        public void DeletAParcel(int Id)
+        {
+            Data.DeleteParcel(Id);
+        }
     }
 }

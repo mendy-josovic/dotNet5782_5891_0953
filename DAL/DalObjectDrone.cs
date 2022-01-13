@@ -70,7 +70,7 @@ namespace DalObject
             int index = DataSource.parcels.FindIndex(w => w.Id == parclId);
 
             if (index == -1)
-                throw new DO.DalExceptions("Drone Dosen't exsits");
+                throw new DO.DalExceptions("Drone Parcel Dose Not exsits");
 
             Parcel parcel = DataSource.parcels[index];
 
@@ -94,7 +94,17 @@ namespace DalObject
                 parcel.Delivered = DateTime.Now;
             DataSource.parcels[index] = parcel;
         }
-
+        /// <summary>
+        /// gets the parcel id and deletes the parcel
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteParcel(int id)
+        {
+            if (!DataSource.parcels.Exists(x=>x.Id==id))
+                throw new DO.DalExceptions("Drone Parcel Dose Not exsits");
+            Parcel parcel = DataSource.parcels.Find(x => x.Id == id);
+            DataSource.parcels.Remove(parcel);
+        }
         public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null)
         {
             return DataSource.droneCharges.FindAll(x => predicate == null ? true : predicate(x));
