@@ -13,21 +13,35 @@
         <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Left" Margin="88,121,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"  />
         <Label x:Name="PhoneLabel" Content="Phone num" HorizontalAlignment="Left" Margin="93,164,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Label x:Name="ParcelSentAndDLabel" Content="parcelsSentAndDelivered" HorizontalAlignment="Left" Margin="88,191,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="PaecelsentAndDTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding ParcelSentAndDel, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here" />
-        <Label x:Name="ParcelsSentAndNotDeliveredLabel" Content="ParcelsSentAndNotDelivered" HorizontalAlignment="Left" Margin="86,223,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="ParcelsReceivedTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="299,271,0,0" Text="{Binding ParcelsReceived, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
-        <Label x:Name="ParcelsReceived" Content="ParcelsReceived" HorizontalAlignment="Left" Margin="94,266,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Label x:Name="ParcelsOnWayToCustomerLabel" Content="ParcelsOnWayToCustomer" HorizontalAlignment="Left" Margin="88,305,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="ParcelsOnWayToCustomer" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,310,0,0" Text="{Binding ParcelsOnWayToCustomer, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" ToolTip="This fiel doesn't initialize here"/>
-        <TextBox x:Name="MaxWeightSelector" HorizontalAlignment="Left" Margin="299,157,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding Phone, Mode=TwoWay}" MouseDoubleClick="Phone_MouseDoubleClick" />
-        <TextBox x:Name="ParcelsSentAndNotDeliveredTextBox" HorizontalAlignment="Left" Margin="300,228,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding ParcelsSentAndNotDelivered, Mode=TwoWay}"  ToolTip="This fiel doesn't initialize here" TextChanged="ParcelsSentAndNotDeliveredTextBox_TextChanged" IsReadOnly="True"/>
-        <Label x:Name="AddDroneLabel" Content="Customer info" HorizontalAlignment="Left" Margin="293,31,0,0" VerticalAlignment="Top" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
-        <Button x:Name="AddCustomerButton" Content="Add" HorizontalAlignment="Left" Margin="672,340,0,0" VerticalAlignment="Top" Height="36" Width="88" Click="AddCustomerButton_Click"/>
+        <Label x:Name="LocationLabel" Content="Location" HorizontalAlignment="Left" Margin="101,191,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
+        <TextBox x:Name="LocationTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="301,193,0,0" Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
+        <Label x:Name="ParcelsSentLabel" Content="Parcels Sent" HorizontalAlignment="Left" Margin="99,225,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.972,0.685"/>
+        <Label x:Name="ParcelsReceivedLabel" Content="Parcels Received" HorizontalAlignment="Left" Margin="100,259,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="PhoneTextBox" HorizontalAlignment="Left" Margin="299,157,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding Phone, Mode=TwoWay}" />
+        <Label x:Name="AddDroneLabel" Content="Customer info" HorizontalAlignment="Left" Margin="293,31,0,0" VerticalAlignment="Top" Height="37" Width="147" FontSize="20" FontWeight="Bold"/>
+        <Button x:Name="AddCustomerButton" Content="Add" HorizontalAlignment="Left" Margin="672,340,0,0" VerticalAlignment="Top" Height="36" Width="88" Click="AddCustomerButton_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=IDTextBox, Path=Text}" Value="">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=NameTextBox, Path=Text}" Value="">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=PhoneTextBox, Path=Text}" Value="">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
         <Label x:Name="x5" Content="Fill in the fields marked with *" HorizontalAlignment="Left" Margin="279,61,0,0" VerticalAlignment="Top" Foreground="Red"/>
         <Label x:Name="x1" Content="*" HorizontalAlignment="Left" Margin="284,93,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x2" Content="*" HorizontalAlignment="Left" Margin="285,127,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x3" Content="*" HorizontalAlignment="Left" Margin="283,160,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <ComboBox x:Name="ParcelsSent" HorizontalAlignment="Left" Margin="298,231,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding FromCustomer}" SelectionChanged="ParcelsSent_SelectionChanged"/>
+        <ComboBox x:Name="ParcelsRecievd" HorizontalAlignment="Left" Margin="299,263,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ToCustomer}" SelectionChanged="ParcelsRecievd_SelectionChanged"/>
     </Grid>
-
 </Window>

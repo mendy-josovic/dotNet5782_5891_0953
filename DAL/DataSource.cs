@@ -29,8 +29,8 @@ namespace DalObject
             {
                 Station sta = new Station();
                 sta.Id = r.Next(1, 501);
-                sta.Latitude = r.NextDouble() / 1.234;
-                sta.Longitude = r.NextDouble() / 1.234;
+                sta.Latitude = r.NextDouble() * (32 - 29) + 29;
+                sta.Longitude = r.NextDouble() * (36 - 34) + 34;
                 sta.ReadyChargeStands = r.Next(3, 7);
                 stations.Add(sta);
             }
@@ -47,8 +47,8 @@ namespace DalObject
             {
                 Customer cst = new Customer();
                 cst.Id = r.Next(1, 10000);
-                cst.Latitude = r.NextDouble() / 1.234;
-                cst.Longitude = r.NextDouble() / 1.234;
+                cst.Latitude = r.NextDouble()*(32-29)+29;
+                cst.Longitude = r.NextDouble()*(36-34)+34;        
                 cst. Name = names[i];
                 cst.Phone = phones[i];
                 customers.Add(cst);
@@ -84,7 +84,7 @@ namespace DalObject
                 tempParcel.TargetId = customers[9 - i].Id;                 
                 tempParcel.Priority = ((DO.Priority)r.Next(0, 3));
                 tempParcel.Weigh = ((DO.Weight)r.Next(0, 3));
-                tempParcel.Requested = new();
+                tempParcel.Requested = DateTime.Now;
                 parcels.Add(tempParcel);
             }         
         }

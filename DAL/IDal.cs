@@ -19,7 +19,7 @@ namespace DalApi
         public void UpdateDrone(int drnId,string Name="");
         public void UpdateCustomer(int CusId, string Name ="", string phone = "");
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1);
-
+        public void DeleteParcel(int id);
         public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0,int DroneId=0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0);
         public void UpdateTimeOfSupplied(int prcId);
         public void UpdateReadyStandsInStation(int staId);
@@ -29,7 +29,7 @@ namespace DalApi
         public Drone PrintDrone(int id);
         public Customer PrintCustomer(int id);
         public Parcel PrintParcel(int id);
-        public DroneCharge PrintDronCarg(int DroneId = 0, int StationId = 0);
+        public DroneCharge PrintDronCarg(int DroneId = 0);
         public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null);
         public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null);
         public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null);
@@ -37,5 +37,6 @@ namespace DalApi
         public IEnumerable<Parcel> PrintUnassignedParcels();
         public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null);
         public double[] Consumption();
+        public int GetRuningNumber();
     }
 }

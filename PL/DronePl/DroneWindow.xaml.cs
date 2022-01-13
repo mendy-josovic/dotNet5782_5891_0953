@@ -152,9 +152,9 @@ namespace PL
 
         private void DeliveryTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int.TryParse(DeliveryTextBox.Text, out int x);
-            if (DeliveryTextBox.Text != "")
-                new ParcelWindow(blObject, x).Show();
+            //int.TryParse(DeliveryTextBox.Text, out int x);
+            //if (DeliveryTextBox.Text != "")
+            //    new ParcelWindow(blObject, blObject.BLParcel(x)).Show();
         }
 
         public string ConvertToSexagesimal(double? point)

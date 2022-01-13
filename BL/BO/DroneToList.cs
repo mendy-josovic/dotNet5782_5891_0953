@@ -19,7 +19,7 @@ using System.Text;
             {
                 return "Drone " + Id + ", " + Model + ", " + MaxWeight
                     + ", Battery: " + Battery + "%, : " + status
-                    + ", Location: Longitude - " + ThisLocation.Longitude + ", Latitude - " + ThisLocation.Latitude + ", Parcel in transfer - " + ParcelId + "\n";
+                    + ", Location: Longitude - " + FuncForToString.ConvertToSexagesimal(ThisLocation.Longitude) + ", Latitude - " + FuncForToString.ConvertToSexagesimal( ThisLocation.Latitude) + ", Parcel in transfer - " + ParcelId + "\n";
             }
         }
     }

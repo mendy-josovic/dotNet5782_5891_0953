@@ -111,17 +111,13 @@ namespace BL
             try
             {
                 DO.Parcel parcel = new();
-                parcel.Id = par.Id;
+                parcel.Id = Data.GetRuningNumber();
                 parcel.SenderId = par.Sender.Id;
-                parcel.TargetId = par.Recipient.Id;
-                parcel.TargetId = par.Recipient.Id;
+                parcel.TargetId = par.Recipient.Id;           
                 parcel.Weigh = (DO.Weight)par.Weight;
                 parcel.Priority = (DO.Priority)par.Priority;
                 parcel.DroneId = 0;
-                par.TimeOfCreation = DateTime.Now;
-                par.Scheduled = DateTime.MinValue;
-                par.PickedUp = DateTime.MinValue;
-                par.Delivered = DateTime.MinValue;
+                par.TimeOfCreation = DateTime.Now;                        
                 par.Drone = null;
                 parcel.Requested = par.TimeOfCreation;
                 parcel.Scheduled = par.Scheduled;

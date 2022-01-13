@@ -21,14 +21,15 @@ namespace PL
     public partial class CustomerWindow : Window
     {
         IBl blObject;
-        BO.CustomerToList Customer1 = new();
+        Customer Customer1 = new();
         public CustomerWindow(IBl blobject)
         {
             this.blObject = blobject;
             InitializeComponent();
-            AddCustomerButton.Content = "Add";         
+            AddCustomerButton.Content = "Add";
+            CustomerWindowGrid.DataContext = Customer1;
         }
-        public CustomerWindow(IBl blobjects, BO.CustomerToList Customer)
+        public CustomerWindow(IBl blobjects, Customer Customer)
         {
             InitializeComponent();
             Customer1 = Customer;
@@ -50,13 +51,11 @@ namespace PL
                 if (AddCustomerButton.Content == "Update")
                 {
                     blObject.UpdateCosomerInfo(Customer1.Id, Customer1.Name, Customer1.Phone);
-                    Customer1 = blObject.BLCustomerToList(blObject.DisplayCustomer(Customer1.Id));
-
-                    
+                    InitializeComponent();
                 }
                 if (AddCustomerButton.Content == "Add")
                 {                   
-                    blObject.AddCustomer(blObject.BLCustomer(Customer1.Id));
+                    blObject.AddCustomer(Customer1);
                     MessageBox.Show("Successfully added Customer!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
@@ -67,15 +66,16 @@ namespace PL
                 MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void Phone_MouseDoubleClick(object sender, RoutedEventArgs e)
+        private void ParcelsSent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ParcelAtCustomer p = (ParcelAtCustomer)ParcelsSent.SelectedItem;
+            new ParcelWindow(blObject, p.Id).Show();
         }
 
-        private void ParcelsSentAndNotDeliveredTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void ParcelsRecievd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ParcelAtCustomer p = (ParcelAtCustomer)ParcelsRecievd.SelectedItem;
+            new ParcelWindow(blObject, p.Id).Show();
         }
     }
 }

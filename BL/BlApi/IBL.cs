@@ -9,6 +9,7 @@ namespace BlApi
 {
     public interface IBl
     {
+
         public void AddStation(Station sta);
         public void AddDrone(Drone dro, int IDOfStation);
         public void AddCustomer(Customer cus);
@@ -17,10 +18,11 @@ namespace BlApi
         public DroneToList DisplayDrone(int ID);
         public DO.Customer DisplayCustomer(int ID);
         public DO.Parcel DisplayParcel(int ID);
+        public IEnumerable<BO.Parcel> DisplayParcelLists(Predicate<BO.Parcel> predicate = null); 
         public List<StationToList> DisplayStationList(Predicate<StationToList> predicate = null);
         public List<DroneToList> DisplayDroneList(Predicate<DroneToList> predicate = null);
         public List<CustomerToList> DisplayCustomerList(Predicate<CustomerToList> predicate = null);
-        public List<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null);
+        public IEnumerable<ParcelToList> DisplayParcelList(Predicate<ParcelToList> predicate = null);
         public IEnumerable<DroneInCharging> DisplayDronesInCharging(Predicate<DroneInCharging> predicate = null);
         public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null);
         public double GetDistance(Location a, Location b,double longA= 0, double latA = 0, double longB = 0, double latB = 0);
@@ -51,5 +53,10 @@ namespace BlApi
         public void AssignDronToParcel(int DroneId);
         public void PickUp(int DroneId);
         public void Suuply(int DroneId);
+        /// <summary>
+        /// the func gets id of a parecel and delets
+        /// </summary>
+        /// <param name="Id"></param>
+        public void DeletAParcel(int Id);
     }
 }

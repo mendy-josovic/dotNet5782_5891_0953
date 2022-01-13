@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Icon="/Images/drone.jpg"
-        Title="CustomerListWindow" Height="450" Width="800">
+        Title="CustomerListWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="269*"/>
-            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="100*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -19,7 +20,19 @@
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2">
         </Grid>
         <Grid Name="DownGrid" Height="auto" Grid.Row="1" Width="auto" Grid.ColumnSpan="2">
-            <ListView x:Name="CustomerListView"  Grid.ColumnSpan="2" Margin="0,0,0,0" Grid.RowSpan="2"  MouseDoubleClick="CustomerListView_MouseDoubleClick" />
+            <ListView x:Name="CustomerListView"  Grid.ColumnSpan="2" Margin="0,0,0,0" Grid.RowSpan="2" ItemsSource="{Binding CustomerLists,UpdateSourceTrigger=LostFocus}" MouseDoubleClick="CustomerListView_MouseDoubleClick" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Name" Width="110" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Phone" Width="120" DisplayMemberBinding="{Binding Phone}" />
+                        <GridViewColumn Header=" Parcels Sent And Delivered" Width="90" DisplayMemberBinding="{Binding ParcelsSentAndDelivered }" />
+                        <GridViewColumn Header="Parcels Sent And Not Delivered" Width="110" DisplayMemberBinding="{Binding ParcelsSentAndNotDelivered}" />
+                        <GridViewColumn Header="Parcels Received" Width="140" DisplayMemberBinding="{Binding ParcelsReceived }" />
+                        <GridViewColumn Header="Parcels On Way To Customer" Width="60" DisplayMemberBinding="{Binding ParcelsOnWayToCustomer}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
         <Button x:Name="AddCustome" Content="Add A Customer" HorizontalAlignment="Left" Margin="674,315,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="2.372,6.353" Grid.ColumnSpan="2" Width="95" Click="AddCustomer_Click"/>
     </Grid>

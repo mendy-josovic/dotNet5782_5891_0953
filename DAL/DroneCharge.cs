@@ -10,11 +10,5 @@ using System.Threading.Tasks;
             public int DroneId { get; set; }
             public int StationId { get; set; }
             public DateTime? EntryTimeForLoading = DateTime.Now;
-
-            public DroneCharge(int drone, int station)
-            {
-                DroneId = drone;
-                StationId = station;
-            }
         }
     }

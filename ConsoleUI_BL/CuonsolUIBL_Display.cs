@@ -156,7 +156,7 @@ namespace ConsoleUI_BL
                                                     }
                                                 case 'd':
                                                     {
-                                                        List<ParcelToList> parcels = BLObject.DisplayParcelList();
+                                                        IEnumerable<ParcelToList> parcels = BLObject.DisplayParcelList();
                                                         foreach (ParcelToList parcel in parcels)
                                                         {
                                                             Console.WriteLine(parcel + "\n");
@@ -165,12 +165,12 @@ namespace ConsoleUI_BL
                                                     }
                                                 case 'f':
                                                     {
-                                                        List<ParcelToList> parcels = BLObject.DisplayParcelList();
-                                                        var notAssociated = parcels.FindAll(w => w.Status == StatusOfParcel.Created);
-                                                        foreach (ParcelToList parcel in notAssociated)
-                                                        {
-                                                            Console.WriteLine(parcel + "\n");
-                                                        }
+                                                        IEnumerable<ParcelToList> parcels = BLObject.DisplayParcelList();
+                                                        var notAssociated = parcels.Select(w => w.Status == StatusOfParcel.Created);
+                                                        //foreach (ParcelToList parcel in notAssociated)
+                                                        //{
+                                                        //    Console.WriteLine(parcel + "\n");
+                                                        //}
                                                         break;
                                                     }
                                                 case 'g':

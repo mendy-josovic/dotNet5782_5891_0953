@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-
     namespace BO
     {
        public class Location
@@ -10,8 +9,8 @@ using System.Text;
             public double Longitude { get; set; }
             public double Latitude { get; set; }
             public override string ToString()//override the to-string to print it nice
-            {
-                return "Longitude: " + BL.BL.ConvertToSexagesimal(Longitude) + "\nLatitude: " + BL.BL.ConvertToSexagesimal(Latitude) + "\n";
+            {          
+                return "Longitude: " + FuncForToString.ConvertToSexagesimal(Longitude) + "\nLatitude: " + FuncForToString.ConvertToSexagesimal(Latitude) + "\n";
             }
         }
     }

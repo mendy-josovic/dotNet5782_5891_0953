@@ -13,7 +13,7 @@ using System.Text;
             public Weight Weight { get; set; }
             public Priority Priority { get; set; }
             public DroneInParcel Drone { get; set; }
-            public DateTime? TimeOfCreation = DateTime.Now;
+            public DateTime? TimeOfCreation { get; set; }
             public DateTime? Scheduled { set; get; }
             public DateTime? PickedUp { set; get; }
             public DateTime? Delivered { set; get; }

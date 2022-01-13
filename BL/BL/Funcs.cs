@@ -20,8 +20,6 @@ namespace BL
         {
             return GetDistance(a, b) * batteryConfig[(int)mode];
         }
-
-
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc)
         {
             try
@@ -298,7 +296,7 @@ namespace BL
             }
             return parcel;
         }
-
+       
         /// <summary>
         /// Turn a DroneToList drone into a DroneInParcel
         /// </summary>
@@ -522,6 +520,9 @@ namespace BL
             double? Second = point;
             return $"{Degrees}° {Minutes}' {string.Format("{0:0.###}", Second)}\" ";
         }
-
+        public void DeletAParcel(int Id)
+        {
+            Data.DeleteParcel(Id);
+        }
     }
 }
