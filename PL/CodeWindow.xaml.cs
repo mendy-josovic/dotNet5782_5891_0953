@@ -15,27 +15,23 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for ManagementWindow.xaml
+    /// Interaction logic for CodeWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CodeWindow : Window
     {
-        public MainWindow()
+        public CodeWindow()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
-        private void ManagementButton_Click(object sender, RoutedEventArgs e)
+        private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            new CodeWindow().Show();
-            this.Close();
-        }
-
-        private void CustomerButton_Click(object sender, RoutedEventArgs e)
-        {
-            //new CustomerWindow();
-            this.Close();
+            if(CodeTextBox.Text == "1234")
+            {
+                new ManagementWindow().Show();
+                this.Close();
+            }
         }
     }
 }
-

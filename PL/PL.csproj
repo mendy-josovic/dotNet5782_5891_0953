@@ -13,6 +13,8 @@
     <None Remove="Images\DroneInDelivery.jpg" />
     <None Remove="Images\drone_house.jpeg" />
     <None Remove="Images\drone_sky.jpg" />
+    <None Remove="Images\drone_with_parcel.jpg" />
+    <None Remove="Images\drone_with_parcel2.jpg" />
     <None Remove="Images\refresh.png" />
     <None Remove="Images\sky.jpg" />
   </ItemGroup>
@@ -28,6 +30,8 @@
     <Resource Include="Images\DroneInDelivery.jpg" />
     <Resource Include="Images\drone_house.jpeg" />
     <Resource Include="Images\drone_sky.jpg" />
+    <Resource Include="Images\drone_with_parcel.jpg" />
+    <Resource Include="Images\drone_with_parcel2.jpg" />
     <Resource Include="Images\refresh.png" />
     <Resource Include="Images\sky.jpg" />
   </ItemGroup>

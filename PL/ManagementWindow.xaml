@@ -1,0 +1,26 @@
+﻿<Window x:Class="PL.ManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls=" Microsoft.Toolkit.Wpf.UI.Controls"   
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Icon="/Images/drone.jpg"
+        Title="MainWindow" Height="589" Width="1100" Closing="Window_Closing">
+    <Window.Background>
+
+        <ImageBrush ImageSource="Images/DroneInDelivery.JPG" Stretch="Uniform"/>
+
+    </Window.Background>
+
+    <Grid Name="MainGrid">
+        <Button x:Name="DronesListButton" Content="Drones" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="DroneListButton_Click" Margin="76,324,0,0" FontSize="20" FontWeight="Bold" Width="165" Height="39"/>
+        <Button x:Name="CustomersListButton" Content="Customers" HorizontalAlignment="Left" Margin="76,365,0,0" VerticalAlignment="Top" Height="39" Width="165" FontSize="20" FontWeight="Bold" Click="CustomersListButton_Click"/>
+        <Button x:Name="StationsListButton" Content="Stations" HorizontalAlignment="Left" Height="39" Margin="76,407,0,0" VerticalAlignment="Top" Width="165" FontSize="20" FontWeight="Bold" Click="StationsListButton_Click"/>
+        <Button x:Name="ParcelsListButton" Content="Parcels" HorizontalAlignment="Left" Height="39" Margin="76,449,0,0" VerticalAlignment="Top" Width="165" FontSize="20" FontWeight="Bold" Click="ParcelsListButton_Click"/>
+        <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Left" Height="57" Margin="952,443,0,0" VerticalAlignment="Top" Width="78" FontSize="16" FontWeight="Bold" Click="ExitButton_Click"/>
+    </Grid>
+
+</Window>
+

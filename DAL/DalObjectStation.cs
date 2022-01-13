@@ -49,7 +49,7 @@ namespace DalObject
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
             if (i < 0)
                 throw new DalExceptions("Station dosent exist");
-           Station temp = PrintStation(StationId);
+            Station temp = PrintStation(StationId);
             if (!string.IsNullOrEmpty(Name))
             {
                 temp.Name = Name;

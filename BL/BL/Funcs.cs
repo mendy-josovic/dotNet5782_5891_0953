@@ -203,13 +203,21 @@ namespace BL
             station.Id = s.Id;
             station.Name = s.Name;
             station.location = new();
-            station.location.Longitude = s.Longitude;
             station.location.Latitude = s.Latitude;
+            station.location.Longitude = s.Longitude;
             station.ReadyStandsInStation = s.ReadyChargeStands;
             station.ListOfDrones = DisplayDronesInCharging((w => GetDistance(station.location, DisplayDrone(w.Id).ThisLocation) == 0)).ToList();
             return station;
         }
 
+        public BO.Station BLStation()
+        {
+            BO.Station station = new();
+            station.location = new();
+            station.ListOfDrones = new();
+            return station;
+        }
+        
         /// <summary>
         /// Turn a DroneToList drone into a BL Drone
         /// </summary>

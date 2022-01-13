@@ -20,6 +20,7 @@
             <RowDefinition Height="70*"/>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
+            <RowDefinition Height="70*"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" Height="auto" Grid.Row="1" Width="auto" Grid.ColumnSpan="2">
 
@@ -60,7 +61,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView x:Name="StationsListView" Background="Transparent" MouseDoubleClick="ValueStationsListView_MouseDoubleClick" ItemsSource="{Binding ListOfStations, UpdateSourceTrigger=LostFocus}" Margin="10,0,-10,0">
+            <ListView x:Name="StationsListView" Background="Transparent" MouseDoubleClick="ValueStationsListView_MouseDoubleClick" ItemsSource="{Binding ListOfStations, UpdateSourceTrigger=LostFocus}" Margin="10,0,10,0" BorderBrush="{x:Null}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}" />
@@ -70,8 +71,9 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" Height="40" Width="140" FontSize="16" FontWeight="Bold" Click="CloseButton_Click" Margin="0,250,30,0" />
         </Grid>
         <Label Content="List of stations" HorizontalAlignment="Left" Height="38" Margin="289,0,0,0" VerticalAlignment="Center" Width="200" FontWeight="Bold" FontSize="20"/>
+        <Button x:Name="CloseButton" Content="Close" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32" Width="89" FontSize="20" FontWeight="Bold" Click="CloseButton_Click" Margin="0,0,36,0"/>
+        <Button x:Name="AddButton" Content="Add a station" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Height="32" Width="140" Click="AddButton_Click" Margin="490,0,0,0"/>
     </Grid>
 </Window>

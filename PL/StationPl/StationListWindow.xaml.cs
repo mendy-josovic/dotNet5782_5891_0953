@@ -37,15 +37,13 @@ namespace PL
             ListOfStations = from l in blObject.DisplayStationList()
                              group l by l.ReadyStandsInStation;
 
-            InitializeComponent();
-
             StationsListView.ItemsSource = ListOfStations.SelectMany(x => x);
             GroupedStationsListView.Visibility = Visibility.Hidden;
             StationsListView.Visibility = Visibility.Visible;
 
 
             GroupByComboBox.Items.Add("Has free stations");
-            GroupByComboBox.Items.Add("Number of ready stands");
+            GroupByComboBox.Items.Add("# ready stands");
         }
 
         private void GroupByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,6 +55,8 @@ namespace PL
         {
             if (GroupByComboBox.SelectedIndex == -1)
             {
+                ListOfStations = from l in blObject.DisplayStationList()
+                                 group l by l.ReadyStandsInStation;
                 StationsListView.ItemsSource = ListOfStations.SelectMany(x => x);
                 GroupedStationsListView.Visibility = Visibility.Hidden;
                 StationsListView.Visibility = Visibility.Visible;
@@ -64,10 +64,10 @@ namespace PL
             if (GroupByComboBox.SelectedIndex == 0)
             {
                 GroupedStationsListView.ItemsSource = (from l in blObject.DisplayStationList()
-                                                       group l by l.ReadyStandsInStation)
+                                                       group l by l.ReadyStandsInStation > 0)
                                                       .Select(grp => new
                                                       {
-                                                          Key = grp.Key > 0 ? "Has Free stands" : "All stands are busy",
+                                                          Key = grp.Key == true ? "Has Free stands" : "All stands are busy",
                                                           Value = grp.ToList(),
                                                           Count = grp.ToList().Count()
                                                       });
@@ -98,6 +98,9 @@ namespace PL
         {
             GroupByComboBox.SelectedIndex = -1;
             ClearButton.Visibility = Visibility.Hidden;
+            ListOfStations = from l in blObject.DisplayStationList()
+                             group l by l.ReadyStandsInStation;
+            StationsListView.ItemsSource = ListOfStations.SelectMany(x => x);
         }
 
         private void GroupByComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -125,6 +128,12 @@ namespace PL
         {
             isCloseButtonPressed = true;
             this.Close();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            new StationWindow(blObject).ShowDialog();
+            DisplayListBySelector();
         }
     }
 }

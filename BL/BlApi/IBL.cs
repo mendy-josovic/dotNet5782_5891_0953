@@ -27,6 +27,7 @@ namespace BlApi
         public Location GetLocationOfStation(int ID);
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc);
         public Station BLStation(int id);
+        public Station BLStation();
         public Drone BLDrone(DroneToList d);
         public Customer BLCustomer(int Id);
         public Parcel BLParcel(DO.Parcel p);
