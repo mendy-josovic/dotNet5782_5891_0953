@@ -163,7 +163,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int parcelId);
                                                     if (parcelId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    dalObject1.ParcelScheduled(parcelId);
+                                                    dalObject1.UpdatParcel(parcelId,0,0,0,0,0,0,1);
                                                     dalObject1.DroneIdOfPArcel(parcelId, droneId);
                                                     break;
                                                 }
@@ -173,7 +173,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int parcelId);
                                                     if (parcelId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    dalObject1.PickUp(parcelId);
+                                                    dalObject1.UpdatParcel(parcelId,0,0,0,0,0,0,0,1);
                                                     break;
                                                 }
                                             case 'c':
@@ -187,7 +187,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int stationId);
                                                     if (stationId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    dalObject1.UpdateReadyStandsInStation(stationId);
+                                                    dalObject1.UpdatStation(stationId,"",dalObject1.DisplayStation(stationId).ReadyChargeStands-1);
                                                     dalObject1.CreateANewDroneCharge(stationId, dtoneId);
                                                     break;
                                                 }
@@ -206,7 +206,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int parcelId);
                                                     if (parcelId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    dalObject1.UpdateTimeOfSupplied(parcelId);
+                                                    dalObject1.UpdatParcel(parcelId,0,0,0,0,0,0,0,0,0);
                                                     break;
                                                 }
                                         }
@@ -341,7 +341,7 @@ namespace ConsoleUI
                                             }
                                         case 'f':
                                             {
-                                                List<Parcel> Parcels = new (dalObject1.PrintUnassignedParcels());
+                                                List<Parcel> Parcels = new (dalObject1.PrintParcelList(x=>x.Scheduled!=null));
                                                 foreach (Parcel item in Parcels)
                                                 {
                                                     Console.WriteLine();
