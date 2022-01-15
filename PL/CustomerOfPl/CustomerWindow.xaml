@@ -6,20 +6,26 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Icon="/Images/drone.jpg"
-        Title="CustomerWindow" Height="450" Width="800">
+        Title="CustomerWindow" Height="450" Width="800" Closing="Window_Closing">
+
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/drone_with_parcel2.jpg"/>
+    </Window.Background>
+
     <Grid x:Name="CustomerWindowGrid">
-        <Label x:Name="IDLabel" Content="ID" HorizontalAlignment="Left" Margin="96,88,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
-        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id , Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"/>
-        <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Left" Margin="88,121,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"  />
-        <Label x:Name="PhoneLabel" Content="Phone num" HorizontalAlignment="Left" Margin="93,164,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Label x:Name="LocationLabel" Content="Location" HorizontalAlignment="Left" Margin="101,191,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
-        <TextBox x:Name="LocationTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="301,193,0,0" Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
-        <Label x:Name="ParcelsSentLabel" Content="Parcels Sent" HorizontalAlignment="Left" Margin="99,225,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.972,0.685"/>
-        <Label x:Name="ParcelsReceivedLabel" Content="Parcels Received" HorizontalAlignment="Left" Margin="100,259,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="PhoneTextBox" HorizontalAlignment="Left" Margin="299,157,0,0" VerticalAlignment="Top" Width="120" Height="30" Text="{Binding Phone, Mode=TwoWay}" />
-        <Label x:Name="AddDroneLabel" Content="Customer info" HorizontalAlignment="Left" Margin="293,31,0,0" VerticalAlignment="Top" Height="37" Width="147" FontSize="20" FontWeight="Bold"/>
-        <Button x:Name="AddCustomerButton" Content="Add" HorizontalAlignment="Left" Margin="672,340,0,0" VerticalAlignment="Top" Height="36" Width="88" Click="AddCustomerButton_Click">
+        <Label x:Name="IDLabel" Content="ID" HorizontalAlignment="Left" Margin="99,88,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
+        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,88,0,0" Text="{Binding Id , Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"/>
+        <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Left" Margin="99,121,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="300,121,0,0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"  />
+        <Label x:Name="PhoneLabel" Content="Phone number" HorizontalAlignment="Left" Margin="99,154,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label x:Name="LocationLabel" Content="Location" HorizontalAlignment="Left" Margin="99,187,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
+        <TextBox x:Name="LocationTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="300,193,0,0" Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
+        <Label x:Name="ParcelsSentLabel" Content="Parcels Sent" HorizontalAlignment="Left" Margin="99,220,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.972,0.685"/>
+        <Label x:Name="ParcelsReceivedLabel" Content="Parcels Received" HorizontalAlignment="Left" Margin="99,253,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="PhoneTextBox" HorizontalAlignment="Left" Margin="300,157,0,0" VerticalAlignment="Top" Width="120" Height="25" Text="{Binding Phone, Mode=TwoWay}" />
+        <Label x:Name="AddDroneLabel" Content="Customer info" HorizontalAlignment="Left" Margin="99,26,0,0" VerticalAlignment="Top" Height="37" Width="147" FontSize="20" FontWeight="Bold"/>
+        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="594,378,0,0" VerticalAlignment="Top" Height="35" Width="169" Click="CloseButton_Click" FontSize="16" FontWeight="Bold"/>
+        <Button x:Name="AddCustomerButton" Content="Add" HorizontalAlignment="Left" Margin="594,328,0,0" VerticalAlignment="Top" Height="35" Width="169" FontSize="16" FontWeight="Bold" Click="AddCustomerButton_Click">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="True" />
@@ -41,7 +47,7 @@
         <Label x:Name="x1" Content="*" HorizontalAlignment="Left" Margin="284,93,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x2" Content="*" HorizontalAlignment="Left" Margin="285,127,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x3" Content="*" HorizontalAlignment="Left" Margin="283,160,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
-        <ComboBox x:Name="ParcelsSent" HorizontalAlignment="Left" Margin="298,231,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding FromCustomer}" SelectionChanged="ParcelsSent_SelectionChanged"/>
-        <ComboBox x:Name="ParcelsRecievd" HorizontalAlignment="Left" Margin="299,263,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ToCustomer}" SelectionChanged="ParcelsRecievd_SelectionChanged"/>
+        <ComboBox x:Name="ParcelsSent" HorizontalAlignment="Left" Margin="300,231,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding FromCustomer}" SelectionChanged="ParcelsSent_SelectionChanged" Height="25"/>
+        <ComboBox x:Name="ParcelsRecievd" HorizontalAlignment="Left" Margin="300,263,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ToCustomer}" SelectionChanged="ParcelsRecievd_SelectionChanged" Height="25"/>
     </Grid>
 </Window>

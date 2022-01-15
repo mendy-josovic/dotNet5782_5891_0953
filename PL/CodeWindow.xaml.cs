@@ -27,7 +27,26 @@ namespace PL
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            if(CodeTextBox.Text == "1234")
+            CheckPassword();
+        }
+
+        private void CodeTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                e.Handled = true;
+                CheckPassword();
+            }
+        }
+
+        private void CheckPassword()
+        {
+            if (CodeTextBox.Password != "1234")
+            {
+                MessageBox.Show("Wrong Password, please try again", "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                CodeTextBox.BorderBrush = Brushes.Red;
+            }
+            else
             {
                 new ManagementWindow().Show();
                 this.Close();

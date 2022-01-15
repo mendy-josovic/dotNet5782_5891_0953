@@ -22,6 +22,7 @@ namespace PL
     {
         IBl blObjects;
         IEnumerable<BO.CustomerToList> CustomerLists;
+        bool isCloseButtonPressed;
         public CustomerListWindow(IBl blObject)
         {
             InitializeComponent();
@@ -46,6 +47,17 @@ namespace PL
             new CustomerWindow(blObjects, blObjects.BLCustomer(CustomerLists.First(x => x == CustomerListView.SelectedItem).Id)).ShowDialog();
             CustomerLists = blObjects.DisplayCustomerList();
             CustomerListView.ItemsSource = CustomerLists;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            isCloseButtonPressed = true;
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !isCloseButtonPressed;
         }
     }
 }

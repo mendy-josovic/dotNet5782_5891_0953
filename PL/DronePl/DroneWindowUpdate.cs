@@ -133,6 +133,7 @@ namespace PL
                 drone = blObject.BLDrone(blObject.DisplayDrone(drone.Id));
                 AddDrone.DataContext = drone;
                 InitializeButtons(drone);
+                MessageBox.Show("Successfully updated drone!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (BO.BlException ex)
             {

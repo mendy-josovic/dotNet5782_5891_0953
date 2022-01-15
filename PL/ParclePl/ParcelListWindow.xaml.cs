@@ -22,9 +22,13 @@ namespace PL
     {
         IBl BlObject;
         IEnumerable <ParcelToList> parcelToLists { set; get; }
+
+        bool isCloseButtonPressed;
+
         public ParcelListWindow(IBl blObject)
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.BlObject = blObject;
             parcelToLists = BlObject.DisplayParcelList();
             ParcelLiastView.ItemsSource = parcelToLists;
@@ -89,6 +93,17 @@ namespace PL
         private void ParcelLiastView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(BlObject, ((ParcelToList)ParcelLiastView.SelectedItem).Id).Show();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            isCloseButtonPressed = true;
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !isCloseButtonPressed;
         }
     }
 }
