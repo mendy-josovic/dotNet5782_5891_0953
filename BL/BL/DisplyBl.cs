@@ -18,7 +18,7 @@ namespace BL
                 List<DO.Station> tempDataStations = new(Data.PrintStationList(w=>w.Id==id));
                 if (tempDataStations.Count==0)
                     throw new BlException("Station does not exists");
-                    return (Data.PrintStation(id));
+                    return (Data.DisplayStation(id));
             }
             catch (DO.DalExceptions ex)
             {

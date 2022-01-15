@@ -18,6 +18,7 @@ namespace DalObject
                 throw new DalExceptions("Station Alredy exsits");///theowin the exciption of elerdy exsit
             DataSource.stations.Add(sta);
         }
+
         public void UpdateReadyStandsInStation(int staId)
         {
             int i = DataSource.stations.FindIndex(w => w.Id == staId);  //find the station
@@ -27,7 +28,7 @@ namespace DalObject
             tempStation.ReadyChargeStands--;
             DataSource.stations[i] = tempStation;
         }
-        public Station PrintStation(int id)  //finds the station and sends a replica
+        public Station DisplayStation(int id)  //finds the station and sends a replica
         {
             return (DataSource.stations.Find(w => w.Id == id));
         }
@@ -37,19 +38,13 @@ namespace DalObject
         }
 
 
-        /// <summary>
-        /// the func gets the id of the statoin and the name and number of cargin slots
-        /// it is with a dfult empty so we can chang only one of the field
-        /// </summary>
-        /// <param name="StationId"></param>
-        /// <param name="Name"></param>
-        /// <param name="NumOfCarg"></param>
+
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1)
         {
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
             if (i < 0)
                 throw new DalExceptions("Station dosent exist");
-            Station temp = PrintStation(StationId);
+            Station temp = DisplayStation(StationId);
             if (!string.IsNullOrEmpty(Name))
             {
                 temp.Name = Name;

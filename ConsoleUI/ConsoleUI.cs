@@ -242,7 +242,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int stationId);
                                                     if (stationId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    DO.Station st = dalObject1.PrintStation(stationId);
+                                                    DO.Station st = dalObject1.DisplayStation(stationId);
                                                     Console.WriteLine(st);
                                                     break;
                                                 }

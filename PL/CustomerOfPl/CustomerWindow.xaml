@@ -13,7 +13,7 @@
         <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Left" Margin="88,121,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"  />
         <Label x:Name="PhoneLabel" Content="Phone num" HorizontalAlignment="Left" Margin="93,164,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Label x:Name="LocationLabel" Content="Location" HorizontalAlignment="Left" Margin="101,191,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
+        <Label x:Name="LocationLabel" Content="Longitude" HorizontalAlignment="Left" Margin="101,191,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
         <TextBox x:Name="LocationTextBox" IsReadOnly="True" HorizontalAlignment="Left" Margin="301,193,0,0" Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
         <Label x:Name="ParcelsSentLabel" Content="Parcels Sent" HorizontalAlignment="Left" Margin="99,225,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.972,0.685"/>
         <Label x:Name="ParcelsReceivedLabel" Content="Parcels Received" HorizontalAlignment="Left" Margin="100,259,0,0" VerticalAlignment="Top" FontSize="16"/>

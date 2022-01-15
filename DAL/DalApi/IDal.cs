@@ -9,29 +9,75 @@ namespace DalApi
 {
     public interface IDal
     {
+        /// <summary>
+        /// we add the station that is got in the parametr
+        /// </summary>
+        /// <param name="sta"></param>
         public void AddStation(Station sta);
         public void AddDrone(Drone dro);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cst"></param>
         public void AddCustomer(Customer cst);
         public void AddSParcel(Parcel prc);
         public void ParcelScheduled(int prcId);
         public void DroneIdOfPArcel(int prcId, int drnId);
         public void PickUp(int prcId);
         public void UpdateDrone(int drnId,string Name="");
+        /// <summary>
+        /// the func gets the id of the customer and a new name or phone \
+        /// and it with a defult empty and we use the replace func and null or empty..
+        /// </summary>
+        /// <param name="CusId"></param>
+        /// <param name="Name"></param>
+        /// <param name="phone"></param>
         public void UpdateCustomer(int CusId, string Name ="", string phone = "");
+        /// <summary>
+        /// the func gets the id of the statoin and the name and number of cargin slots
+        /// it is with a dfult empty so we can chang only one of the field
+        /// </summary>
+        /// <param name="StationId"></param>
+        /// <param name="Name"></param>
+        /// <param name="NumOfCarg"></param>
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1);
         public void DeleteParcel(int id);
         public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0,int DroneId=0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0);
         public void UpdateTimeOfSupplied(int prcId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="staId"></param>
         public void UpdateReadyStandsInStation(int staId);
         public void CreateANewDroneCharge(int staId, int drnId);
         public void ClearDroneCharge(int drnId);
-        public Station PrintStation(int id);
+        /// <summary>
+        /// gets the Id and returns the station.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Station DisplayStation(int id);
         public Drone PrintDrone(int id);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Customer PrintCustomer(int id);
         public Parcel PrintParcel(int id);
         public DroneCharge PrintDronCarg(int DroneId = 0);
+        /// <summary>
+        /// returns a Ienumrable that is with a predicet
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null);
         public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null);
         public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null);
         public IEnumerable<Parcel> PrintUnassignedParcels();
