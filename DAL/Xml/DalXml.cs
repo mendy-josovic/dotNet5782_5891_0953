@@ -18,7 +18,16 @@ namespace DalXml
         public static string CustomerXml = @"CustomerXml.xml";
         public static string ParcelXml = @"ParcelXml.xml";
         public static string DroneChargeXml = @"DroneChargeXml.xml";
+        public static string ConfigXml = @"ConfigXml.xml";
 
+        internal class Config
+        {
+            public static double vacant { get; set; } = 1;
+            public static double LightWeightCarrier { get; set; } = 2;
+            public static double MediumWeightCarrier { get; set; } = 3;
+            public static double HeavyWeightCarrier { get; set; } = 4;
+            public static double ChargingRate { get; set; } = 25;
+        };
 
         /// <summary>
         /// defult constractors and singelton 
@@ -141,6 +150,7 @@ namespace DalXml
         #region Drones
 
         public void AddDrone(Drone dro)
+        public Customer PrintCustomer(int id)  //finds the customer and sends a replica
         {
             if (dro.Id <= 0)
                 throw new DO.DalExceptions("Invalid ID, ID must be positive");
@@ -158,7 +168,44 @@ namespace DalXml
         }
 
         public IEnumerable<Drone> DisplayDronesList(Predicate<Drone> predicate = null)  //returns a new list of drones
+
+            XElement element = XmlToolKit.LoadListFromXMLElement(CustomerXml);//get the wlwmnt
+
+            XElement customer = (from cus in element.Elements()// gets if it alredy exsits
+                                 where cus.Element("Id").Value == id.ToString()
+                                 select cus).FirstOrDefault();
+            if (customer == null)
+            {
+                throw new DalExceptions("Customer Dose not exsits");
+            }
+
+            Customer customer1 = (from cus in element.Elements()
+                                 where cus.Element("Id").Value == id.ToString()
+                                 select new Customer()
+                                 {
+                                     Id = int.Parse(cus.Element("Id").Value),
+                                     Name = cus.Element("Name").Value,
+                                     Phone = cus.Element("Phone").Value,
+                                     Longitude = double.Parse(cus.Element("Longitude").Value),
+                                     Latitude = double.Parse(cus.Element("Latitude").Value)
+                                 }
+                        ).FirstOrDefault();
+            return customer1;
+        }
+        public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null)  //returns a new list of customers
         {
+            XElement element =XmlToolKit.LoadListFromXMLElement(CustomerXml);
+            IEnumerable<Customer> customer = from cus in element.Elements()
+                                             select new Customer()
+                                             {
+                                                 Id = int.Parse(cus.Element("Id").Value),
+                                                 Name = cus.Element("Name").Value,
+                                                 Phone = cus.Element("Phone").Value,
+                                                 Longitude = double.Parse(cus.Element("Longitude").Value),
+                                                 Latitude = double.Parse(cus.Element("Latitude").Value)
+                                             };
+            
+            return customer.Where(x => predicate == null ? true : predicate(x));
             List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
             return drones.FindAll(x => predicate == null ? true : predicate(x));
         }
@@ -183,6 +230,80 @@ namespace DalXml
         #endregion
 
         #region Parcels
+        public void AddSParcel(Parcel prc)  //same
+        {
+
+
+            List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);         
+            if (parcels.Exists(x=>x.Id==prc.Id))
+                throw new DO.DalExceptions("Parcel Alredy exsits");
+            parcels.Add(prc);
+            XmlToolKit.SaveListToXMLSerializer<Parcel>(parcels, ParcelXml);
+        }
+        public Parcel PrintParcel(int id)  //finds the station and sends a replica
+        {
+            List<Parcel> parcels= XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            if (!parcels.Exists(x => x.Id == id))
+                throw new DalExceptions("Parcel dose not exsit");
+            return parcels.Find(w => w.Id == id);
+        }
+        public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null)  //returns a new list of parcels
+        {
+            List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+
+            return parcels.FindAll(x => predicate == null ? true : predicate(x));
+        }
+        public void DeleteParcel(int id)
+        {
+            List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            if (!parcels.Exists(x => x.Id == id))
+                throw new DO.DalExceptions("Parcel Dose Not exsits");
+            Parcel parcel = parcels.Find(x => x.Id == id);
+            parcels.Remove(parcel);
+            XmlToolKit.SaveListToXMLSerializer<Parcel>(parcels, ParcelXml);
+        }
+        public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0, int DroneId = 0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
+        {         
+            List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            if (!parcels.Exists(x => x.Id == parclId))
+                throw new DO.DalExceptions("Parcel Dose Not exsits");
+            Parcel parcel = parcels.Find(x => x.Id == parclId);  
+            if (SenderId != 0)
+                parcel.SenderId = SenderId;
+            if (TargetId != 0)
+                parcel.TargetId = TargetId;
+            if (DroneId != 0)
+                parcel.DroneId = DroneId;
+            if (whihgt != 0)
+                parcel.Weigh = whihgt;
+            if (priorty != 0)
+                parcel.Priority = priorty;
+            if (Updatereqwested != 0)
+                parcel.Requested = DateTime.Now;
+            if (UpdatPicedup != 0)
+                parcel.PickedUp = DateTime.Now;
+            if (UpdatSchedueld != 0)
+                parcel.Scheduled = DateTime.Now;
+            if (UpdateDeleverd != 0)
+                parcel.Delivered = DateTime.Now;
+            parcels.Where(x => x.Id == parclId).Select(x => parcel);
+            XmlToolKit.SaveListToXMLSerializer<Parcel>(parcels, ParcelXml);
+        }
+        public void DroneIdOfPArcel(int prcId, int drnId)
+        {
+            List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            if (!parcels.Exists(x => x.Id == prcId))
+                throw new DalExceptions("Parcel Dose Not exsits");
+            List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
+            if  (!parcels.Exists(x => x.Id == drnId))
+                    throw new DalExceptions("Drone Dose Not exsits");
+
+            Parcel tempParcel = parcels.Find(x => x.Id == prcId);
+            tempParcel.DroneId = drnId;
+            parcels.Where(x => x.Id == prcId).Select(x => tempParcel);
+            XmlToolKit.SaveListToXMLSerializer<Parcel>(parcels, ParcelXml);
+
+        }
         #endregion
 
         #region DroneCharge
@@ -230,5 +351,22 @@ namespace DalXml
         }
 
         #endregion
+        #region Config
+        public double[] Consumption()
+        {
+            double[] arr = new double[] { DalXml.Config.vacant, DalXml.Config.LightWeightCarrier, DalXml.Config.MediumWeightCarrier, DalXml.Config.HeavyWeightCarrier, DalXml.Config.ChargingRate };
+            return arr;
+        }
+        public int GetRuningNumber()
+        {
+            List<string> Run = XmlToolKit.LoadListFromXMLSerializer<string>(ConfigXml);// geting the runing number (was stored as a string)
+            int run2 = int.Parse(Run[0]);//convert to int
+            run2++;//+1
+            Run[0] = run2.ToString();//convert back to string
+            XmlToolKit.SaveListToXMLSerializer<string>(Run, ConfigXml);//stor
+            return run2;//return...
+        }
+        #endregion
+
     }
 }

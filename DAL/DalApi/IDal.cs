@@ -16,14 +16,21 @@ namespace DalApi
         public void AddStation(Station sta);
         public void AddDrone(Drone dro);
         /// <summary>
-        /// 
+        ///  adding the customer with this Id
         /// </summary>
         /// <param name="cst"></param>
         public void AddCustomer(Customer cst);
+        /// <summary>
+        /// addina a parcel by the customer
+        /// </summary>
+        /// <param name="prc"></param>
         public void AddSParcel(Parcel prc);
-        public void ParcelScheduled(int prcId);
+        /// <summary>
+        /// updats the drone Id in a parcel....
+        /// </summary>
+        /// <param name="prcId"></param>
+        /// <param name="drnId"></param>
         public void DroneIdOfPArcel(int prcId, int drnId);
-        public void PickUp(int prcId);
         public void UpdateDrone(int drnId,string Name="");
         /// <summary>
         /// the func gets the id of the customer and a new name or phone \
@@ -41,14 +48,26 @@ namespace DalApi
         /// <param name="Name"></param>
         /// <param name="NumOfCarg"></param>
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1);
+        /// <summary>
+        /// gets the parcel id and deletes the parcel
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteParcel(int id);
-        public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0,int DroneId=0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0);
-        public void UpdateTimeOfSupplied(int prcId);
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="staId"></param>
-        public void UpdateReadyStandsInStation(int staId);
+        /// <param name="parclId"></param>
+        /// <param name="SenderId"></param>
+        /// <param name="TargetId"></param>
+        /// <param name="DroneId"></param>
+        /// <param name="whihgt"></param>
+        /// <param name="priorty"></param>
+        /// <param name="Updatereqwested"></param>
+        /// <param name="UpdatSchedueld"></param>
+        /// <param name="UpdatPicedup"></param>
+        /// <param name="UpdateDeleverd"></param>
+        public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0,int DroneId=0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0);
+
         public void CreateANewDroneCharge(int staId, int drnId);
         public void ClearDroneCharge(int drnId);
         /// <summary>
@@ -59,11 +78,16 @@ namespace DalApi
         public Station DisplayStation(int id);
         public Drone DisplayDrone(int id);
         /// <summary>
-        /// 
+        /// disply customer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public Customer PrintCustomer(int id);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Parcel PrintParcel(int id);
         public DroneCharge DisplayDroneCharge(int DroneId = 0);
         /// <summary>
@@ -74,15 +98,23 @@ namespace DalApi
         public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null);
         public IEnumerable<Drone> DisplayDronesList(Predicate<Drone> predicate = null);
         /// <summary>
-        /// 
+        /// disply customer list with the pridecet
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
         public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null);
-        public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null);
-        public IEnumerable<Parcel> PrintUnassignedParcels();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null);      
         public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null);
         public double[] Consumption();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int GetRuningNumber();
     }
 }
