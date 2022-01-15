@@ -86,7 +86,12 @@ namespace DalObject
                 tempParcel.Weigh = ((DO.Weight)r.Next(0, 3));
                 tempParcel.Requested = DateTime.Now;
                 parcels.Add(tempParcel);
-            }         
+            }
+            DalXml.XmlToolKit.SaveListToXMLSerializer(drones, @"DroneXml.xml");
+            DalXml.XmlToolKit.SaveListToXMLSerializer(stations, @"BaseStationXml.xml");
+            DalXml.XmlToolKit.SaveListToXMLSerializer(customers, @"CustomerXml.xml");
+            DalXml.XmlToolKit.SaveListToXMLSerializer(parcels, @"ParcelXml.xml");
+            DalXml.XmlToolKit.SaveListToXMLSerializer(Config.RuningNumber.ToString(), @"ConfigXml.xml");
         }
     }
 }

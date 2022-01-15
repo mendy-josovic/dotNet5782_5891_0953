@@ -25,6 +25,11 @@ namespace DalApi
         /// </summary>
         /// <param name="prc"></param>
         public void AddSParcel(Parcel prc);
+        /// <summary>
+        /// updats the drone Id in a parcel....
+        /// </summary>
+        /// <param name="prcId"></param>
+        /// <param name="drnId"></param>
         public void DroneIdOfPArcel(int prcId, int drnId);
         public void UpdateDrone(int drnId,string Name="");
         /// <summary>
@@ -106,6 +111,10 @@ namespace DalApi
         public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null);      
         public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null);
         public double[] Consumption();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int GetRuningNumber();
     }
 }

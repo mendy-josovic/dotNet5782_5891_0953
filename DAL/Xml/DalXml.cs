@@ -18,7 +18,16 @@ namespace DalXml
         public static string CustomerXml = @"CustomerXml.xml";
         public static string ParcelXml = @"ParcelXml.xml";
         public static string DroneChargeXml = @"DroneChargeXml.xml";
+        public static string ConfigXml = @"ConfigXml.xml";
 
+        internal class Config
+        {
+            public static double vacant { get; set; } = 1;
+            public static double LightWeightCarrier { get; set; } = 2;
+            public static double MediumWeightCarrier { get; set; } = 3;
+            public static double HeavyWeightCarrier { get; set; } = 4;
+            public static double ChargingRate { get; set; } = 25;
+        };
 
         /// <summary>
         /// defult constractors and singelton 
@@ -171,8 +180,8 @@ namespace DalXml
                                                  Longitude = double.Parse(cus.Element("Longitude").Value),
                                                  Latitude = double.Parse(cus.Element("Latitude").Value)
                                              };
-            return customer.Select(item => item);
-            return DataSource.customers.FindAll(x => predicate == null ? true : predicate(x));
+            
+            return customer.Where(x => predicate == null ? true : predicate(x));
         }
 
 
@@ -260,5 +269,22 @@ namespace DalXml
 
         #region DroneCharge
         #endregion
+        #region Config
+        public double[] Consumption()
+        {
+            double[] arr = new double[] { DalXml.Config.vacant, DalXml.Config.LightWeightCarrier, DalXml.Config.MediumWeightCarrier, DalXml.Config.HeavyWeightCarrier, DalXml.Config.ChargingRate };
+            return arr;
+        }
+        public int GetRuningNumber()
+        {
+            List<string> Run = XmlToolKit.LoadListFromXMLSerializer<string>(ConfigXml);// geting the runing number (was stored as a string)
+            int run2 = int.Parse(Run[0]);//convert to int
+            run2++;//+1
+            Run[0] = run2.ToString();//convert back to string
+            XmlToolKit.SaveListToXMLSerializer<string>(Run, ConfigXml);//stor
+            return run2;//return...
+        }
+        #endregion
+
     }
 }
