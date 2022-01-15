@@ -13,8 +13,9 @@ namespace DO
             public int type { get; set; }
             public DalExceptions() : base() { }
             public DalExceptions(string message) : base(message) { }
-            public DalExceptions(string message, Exception e) : base(message, e) { }
+            public DalExceptions(string message, Exception e) : base(message, e) { }   
             protected DalExceptions(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
             public override string ToString()
             {
                 return "Dal_Object_Exception" +this.violations[type];

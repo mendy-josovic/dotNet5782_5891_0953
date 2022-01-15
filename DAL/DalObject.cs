@@ -14,12 +14,13 @@ namespace DalObject
         public static IDal Instance { get => instance; }
 
 
-       private DalObject() 
+        private DalObject() 
         {
             DataSource.Initialize();
         }
         public void CreateANewDroneCharge(int staId, int drnId)
         {
+
             DroneCharge Dc=new();
             Dc.DroneId = drnId;
             Dc.StationId = staId;
@@ -29,6 +30,7 @@ namespace DalObject
         public void ClearDroneCharge(int drnId)
         {
             int i = DataSource.droneCharges.FindIndex(w => w.DroneId == drnId);  //find the parcel that was supplied
+
             DroneCharge tempDroneCharge = DataSource.droneCharges[i];
             DataSource.droneCharges.Remove(tempDroneCharge);//removes the drone-charge
         }

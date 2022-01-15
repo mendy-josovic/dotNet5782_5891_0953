@@ -99,7 +99,7 @@ namespace BL
                 if(stations.Count()==0)
                     throw new BlException("Charhing Not Possible (Station Cargin slots are full,Not Enough Battery,)");
                 int j = GetClosestStation(DroneList[i].ThisLocation, stations);//geting the id of station that we need to charge 
-                DO.Station tempStation = Data.PrintStation(j);//a temporary station (like the one to charg)   
+                DO.Station tempStation = Data.DisplayStation(j);//a temporary station (like the one to charg)   
                 DroneList[i].status = StatusOfDrone.InMaintenance;//updating the drone status
                 Location location = Location(tempStation.Longitude, tempStation.Latitude);
                 DroneList[i].Battery -= (int)Consumption(DroneList[i].ThisLocation, location, BO.ModeOfDroneInMoving.Available);//updating the battery for the way to the station
@@ -136,7 +136,7 @@ namespace BL
                 if (DroneList[i].Battery > 100)//stoping the recharging in 100%
                     DroneList[i].Battery = 100;
                 DO.DroneCharge droneCharge = Data.PrintDronCarg(DroneId);
-                DO.Station station = Data.PrintStation(droneCharge.StationId);
+                DO.Station station = Data.DisplayStation(droneCharge.StationId);
                 Data.UpdatStation(station.Id, "", station.ReadyChargeStands + 1);
                 Data.ClearDroneCharge(DroneId);
                

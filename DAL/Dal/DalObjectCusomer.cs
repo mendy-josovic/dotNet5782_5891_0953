@@ -27,13 +27,7 @@ namespace DalObject
         {
             return DataSource.customers.FindAll(x => predicate == null ? true : predicate(x));
         }
-       /// <summary>
-       /// the func gets the id of the customer and a new name or phone \
-       /// and it with a defult empty and we use the replace func and null or empty..
-       /// </summary>
-       /// <param name="CusId"></param>
-       /// <param name="Name"></param>
-       /// <param name="phone"></param>
+ 
         public void UpdateCustomer(int CusId, string Name ="", string phone ="")
         {
             int i = DataSource.customers.FindIndex(w => w.Id == CusId);

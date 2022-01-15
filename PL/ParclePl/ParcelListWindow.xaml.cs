@@ -30,6 +30,7 @@ namespace PL
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.BlObject = blObject;
+            MainGrid.DataContext = parcelToLists;
             parcelToLists = BlObject.DisplayParcelList();
             ParcelLiastView.ItemsSource = parcelToLists;
             //    StatusSelector.ItemsSource = Enum.GetValues(typeof(StatusOfDrone));

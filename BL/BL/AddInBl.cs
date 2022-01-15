@@ -56,7 +56,7 @@ namespace BL
                 if (i>=0)
                     throw new BlException("The drone is already exists");
 
-                DO.Station station = Data.PrintStation(IDOfStation);
+                DO.Station station = Data.DisplayStation(IDOfStation);
                 if (station.ReadyChargeStands == 0)
                     throw new BlException("There are no ready stands at this station!");
                 else

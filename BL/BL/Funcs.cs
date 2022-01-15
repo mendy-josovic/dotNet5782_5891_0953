@@ -29,7 +29,7 @@ namespace BL
                 Location FinishingPiont = GetReceiverLo(prc);
                 DO.Customer sender = Data.PrintCustomer(prc.SenderId);                
                 DO.Customer Receiver = Data.PrintCustomer(prc.TargetId);        
-                DO.Station closeststation = Data.PrintStation(GetClosestStation(FinishingPiont));          
+                DO.Station closeststation = Data.DisplayStation(GetClosestStation(FinishingPiont));          
                 Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
                 double batteryUse = Consumption(startingPiont, StapingPiont, BO.ModeOfDroneInMoving.Available) + Consumption(StapingPiont, FinishingPiont, (BO.ModeOfDroneInMoving)prc.Weigh);
                 if (dro.Battery - batteryUse < 20)
@@ -179,7 +179,7 @@ namespace BL
         {
             try
             {
-                DO.Station tempDataStations = Data.PrintStation(ID);            
+                DO.Station tempDataStations = Data.DisplayStation(ID);            
                 Location loc = Location(tempDataStations.Longitude, tempDataStations.Latitude);
                 return loc;
             }
@@ -196,7 +196,7 @@ namespace BL
         /// <returns>BL station</returns>
         public BO.Station BLStation(int id)
         {
-            DO.Station s = Data.PrintStation(id);
+            DO.Station s = Data.DisplayStation(id);
             BO.Station station = new();
             station.Id = s.Id;
             station.Name = s.Name;
@@ -501,7 +501,7 @@ namespace BL
 
         public Location GetLocationOfStation(StationToList s)
         {
-            DO.Station st = Data.PrintStation(s.Id);
+            DO.Station st = Data.DisplayStation(s.Id);
             Location location = Location(st.Longitude, st.Latitude);
             return location;
         }
