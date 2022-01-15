@@ -135,7 +135,7 @@ namespace BL
                 DroneList[i].Battery += Time* batteryConfig[4];
                 if (DroneList[i].Battery > 100)//stoping the recharging in 100%
                     DroneList[i].Battery = 100;
-                DO.DroneCharge droneCharge = Data.PrintDronCarg(DroneId);
+                DO.DroneCharge droneCharge = Data.DisplayDroneCharge(DroneId);
                 DO.Station station = Data.DisplayStation(droneCharge.StationId);
                 Data.UpdatStation(station.Id, "", station.ReadyChargeStands + 1);
                 Data.ClearDroneCharge(DroneId);

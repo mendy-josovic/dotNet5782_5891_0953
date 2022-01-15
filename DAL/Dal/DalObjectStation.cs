@@ -28,6 +28,7 @@ namespace DalObject
             tempStation.ReadyChargeStands--;
             DataSource.stations[i] = tempStation;
         }
+
         public Station DisplayStation(int id)  //finds the station and sends a replica
         {
             return (DataSource.stations.Find(w => w.Id == id));
@@ -36,8 +37,6 @@ namespace DalObject
         {
             return DataSource.stations.FindAll(x => predicate == null ? true : predicate(x));
         }
-
-
 
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1)
         {

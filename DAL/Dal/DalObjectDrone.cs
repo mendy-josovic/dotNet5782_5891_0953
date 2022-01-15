@@ -19,6 +19,7 @@ namespace DalObject
                 throw new DO.DalExceptions("Invalid ID, ID must be positive");
             DataSource.drones.Add(dro);
         }
+
         public void DroneIdOfPArcel(int prcId, int drnId)
         {
             int i = DataSource.parcels.FindIndex(w => w.Id == prcId);
@@ -28,11 +29,13 @@ namespace DalObject
             tempParcel.DroneId = drnId;
             DataSource.parcels[i] = tempParcel;
         }
-        public Drone PrintDrone(int id)  //finds the drone and sends a replica
+
+        public Drone DisplayDrone(int id)  //finds the drone and sends a replica
         {
             return (DataSource.drones.Find(w => w.Id == id));
         }
-        public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null)  //returns a new list of drones
+
+        public IEnumerable<Drone> DisplayDronesList(Predicate<Drone> predicate = null)  //returns a new list of drones
         {
             return DataSource.drones.FindAll(x => predicate == null ? true : predicate(x));
         }
@@ -53,6 +56,7 @@ namespace DalObject
             tempdrone.Model = Name;
             DataSource.drones[i] = tempdrone;
         }
+
         /// <summary>
         /// the funvc gets the updating parameters and fill in acording to what we have
         /// </summary>
@@ -94,6 +98,7 @@ namespace DalObject
                 parcel.Delivered = DateTime.Now;
             DataSource.parcels[index] = parcel;
         }
+
         /// <summary>
         /// gets the parcel id and deletes the parcel
         /// </summary>
@@ -105,6 +110,7 @@ namespace DalObject
             Parcel parcel = DataSource.parcels.Find(x => x.Id == id);
             DataSource.parcels.Remove(parcel);
         }
+
         public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null)
         {
             return DataSource.droneCharges.FindAll(x => predicate == null ? true : predicate(x));
