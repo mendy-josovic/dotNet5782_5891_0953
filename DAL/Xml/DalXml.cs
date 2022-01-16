@@ -33,10 +33,10 @@ namespace DalXml
         /// defult constractors and singelton 
         /// </summary>
         #region Singelton+Constractors
-        static DalXml()//  ctor to ensure instance init is done just before first usage
-        {
-            DalObject.DataSource.Initialize();
-        }
+        //static DalXml()//  ctor to ensure instance init is done just before first usage
+        //{
+        //    DalObject.DataSource.Initialize();
+        //}
 
         /// <summary>
         ///  ctor in the biginin of eace run we relese all the drons from charge
@@ -145,12 +145,52 @@ namespace DalXml
             XmlToolKit.SaveListToXMLElement(element, CustomerXml);
         }
 
+        public Customer PrintCustomer(int id)  //finds the customer and sends a replica
+        {
+            XElement element = XmlToolKit.LoadListFromXMLElement(CustomerXml);//get the wlwmnt
+            XElement customer = (from cus in element.Elements()// gets if it alredy exsits
+                                 where cus.Element("Id").Value == id.ToString()
+                                 select cus).FirstOrDefault();
+            if (customer == null)
+            {
+                throw new DalExceptions("Customer Dose not exsits");
+            }
+
+            Customer customer1 = (from cus in element.Elements()
+                                  where cus.Element("Id").Value == id.ToString()
+                                  select new Customer()
+                                  {
+                                      Id = int.Parse(cus.Element("Id").Value),
+                                      Name = cus.Element("Name").Value,
+                                      Phone = cus.Element("Phone").Value,
+                                      Longitude = double.Parse(cus.Element("Longitude").Value),
+                                      Latitude = double.Parse(cus.Element("Latitude").Value)
+                                  }
+                                  ).FirstOrDefault();
+            return customer1;
+        }
+
+        public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null)  //returns a new list of customers
+        {
+            XElement element = XmlToolKit.LoadListFromXMLElement(CustomerXml);
+            IEnumerable<Customer> customer = from cus in element.Elements()
+                                             select new Customer()
+                                             {
+                                                 Id = int.Parse(cus.Element("Id").Value),
+                                                 Name = cus.Element("Name").Value,
+                                                 Phone = cus.Element("Phone").Value,
+                                                 Longitude = double.Parse(cus.Element("Longitude").Value),
+                                                 Latitude = double.Parse(cus.Element("Latitude").Value)
+                                             };
+
+            return customer.Where(x => predicate == null ? true : predicate(x));            
+        }
+
         #endregion
 
         #region Drones
 
         public void AddDrone(Drone dro)
-        public Customer PrintCustomer(int id)  //finds the customer and sends a replica
         {
             if (dro.Id <= 0)
                 throw new DO.DalExceptions("Invalid ID, ID must be positive");
@@ -161,6 +201,8 @@ namespace DalXml
             XmlToolKit.SaveListToXMLSerializer(drones, DroneXml);
         }
 
+       
+
         public Drone DisplayDrone(int id)  //finds the drone and sends a replica
         {
             List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
@@ -168,47 +210,11 @@ namespace DalXml
         }
 
         public IEnumerable<Drone> DisplayDronesList(Predicate<Drone> predicate = null)  //returns a new list of drones
-
-            XElement element = XmlToolKit.LoadListFromXMLElement(CustomerXml);//get the wlwmnt
-
-            XElement customer = (from cus in element.Elements()// gets if it alredy exsits
-                                 where cus.Element("Id").Value == id.ToString()
-                                 select cus).FirstOrDefault();
-            if (customer == null)
-            {
-                throw new DalExceptions("Customer Dose not exsits");
-            }
-
-            Customer customer1 = (from cus in element.Elements()
-                                 where cus.Element("Id").Value == id.ToString()
-                                 select new Customer()
-                                 {
-                                     Id = int.Parse(cus.Element("Id").Value),
-                                     Name = cus.Element("Name").Value,
-                                     Phone = cus.Element("Phone").Value,
-                                     Longitude = double.Parse(cus.Element("Longitude").Value),
-                                     Latitude = double.Parse(cus.Element("Latitude").Value)
-                                 }
-                        ).FirstOrDefault();
-            return customer1;
-        }
-        public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null)  //returns a new list of customers
         {
-            XElement element =XmlToolKit.LoadListFromXMLElement(CustomerXml);
-            IEnumerable<Customer> customer = from cus in element.Elements()
-                                             select new Customer()
-                                             {
-                                                 Id = int.Parse(cus.Element("Id").Value),
-                                                 Name = cus.Element("Name").Value,
-                                                 Phone = cus.Element("Phone").Value,
-                                                 Longitude = double.Parse(cus.Element("Longitude").Value),
-                                                 Latitude = double.Parse(cus.Element("Latitude").Value)
-                                             };
-            
-            return customer.Where(x => predicate == null ? true : predicate(x));
             List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
             return drones.FindAll(x => predicate == null ? true : predicate(x));
         }
+      
 
         /// <summary>
         /// the func gets a new name and replaces the name in the func with a new one
@@ -223,7 +229,7 @@ namespace DalXml
                 throw new DalExceptions("Drone doesn't exsit");
             Drone temp = drones.Find(x => x.Id == drnId);
             temp.Model = Name;
-            drones.Where(x => x.Id == drnId).Select(x => x = temp);
+            drones[drones.FindIndex(x => x.Id == drnId)] = temp;
             XmlToolKit.SaveListToXMLSerializer(drones, DroneXml);
         }
 

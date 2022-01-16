@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using DO;
 using DalApi;
+
 namespace DalObject
 {
     internal partial class DalObject : IDal

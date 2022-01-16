@@ -22,7 +22,7 @@ namespace BL
         /// </summary>
        internal BL()
         {
-            Data = DalFactory.GetDal("Object");  
+            Data = DalFactory.GetDal("DalXml");  
             DroneList = new();
             batteryConfig = Data.Consumption();
             //Copies the lists from DAL

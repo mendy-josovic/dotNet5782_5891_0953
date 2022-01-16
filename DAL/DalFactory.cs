@@ -17,8 +17,8 @@ namespace DO
         {
             if (str == "Object")
                 return DalObject.DalObject.Instance;
-            //if (str == "DalXml")
-            //    return DalXml.DalXml.Instance;//foe now till we learn about xml...
+            if (str == "DalXml")
+                return DalXml.DalXml.Instance;
             else
                 throw new DO.DalExceptions("no reqwest");
 
