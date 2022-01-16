@@ -14,12 +14,16 @@ using System.Windows.Shapes;
 using BlApi;
 using BO;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
+
 namespace PL
 {
     public partial class DroneWindow : Window
     {
         string PickupContent = "Pick-up at sender";
         string RecieverContent = "Recieve parcel";
+        bool isManualModePressed;
+        BackgroundWorker worker;
         /// <summary>
         /// 
         /// </summary>
@@ -55,6 +59,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// 
         private void Charging_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -157,6 +162,75 @@ namespace PL
             ChargingButton.IsEnabled = true;
         }
 
+        private void ManualButton_Click(object sender, RoutedEventArgs e)
+        {
+            isManualModePressed = true;
+            ManualButton.Visibility = Visibility.Hidden;
+            AutoButton.Visibility = Visibility.Visible;
+            worker.CancelAsync();
+        }
+
+        private void AutoButton_Click(object sender, RoutedEventArgs e)
+        {
+            ManualButton.Visibility = Visibility.Visible;
+            AutoButton.Visibility = Visibility.Hidden;
+            CloseButton.IsEnabled = false;
+            DeliveryButton.Visibility = Visibility.Hidden;
+            ChargingButton.Visibility = Visibility.Hidden;
+            UpdateButton.Visibility = Visibility.Hidden;
+
+            worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+
+            worker.RunWorkerAsync();
+        }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int droneId = 0;
+            IDTextBox.Dispatcher.Invoke(new Action(delegate ()
+            {
+                droneId = Int32.Parse(IDTextBox.Text);
+            }));
+
+            Action workerProgress = new Action(WorkerProgress);
+            Func<bool> cancelWorker = new Func<bool>(CancelWorker);
+            blObject.RunSimulator(droneId, workerProgress, cancelWorker);
+        }
+
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (isManualModePressed)
+            {
+                isCloseRequired = true;
+                this.Close();
+            }
+        }
+
+        private void WorkerProgress()
+        {
+            int droneId = 0;
+            IDTextBox.Dispatcher.Invoke(new Action(delegate ()
+            {
+                droneId = Int32.Parse(IDTextBox.Text);
+            }));
+
+            drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
+
+            AddDrone.Dispatcher.Invoke(new Action(delegate ()
+            {
+                AddDrone.DataContext = drone;
+            }));
+        }
+
+        private bool CancelWorker()
+        {
+            return isManualModePressed;
+        }
+
         private void InitializeButtons(Drone drone)
         {
             if (drone.status == StatusOfDrone.Available)
@@ -189,5 +263,7 @@ namespace PL
                 UpdateButton.IsEnabled = false;
             }
         }
+
+
     }
 }

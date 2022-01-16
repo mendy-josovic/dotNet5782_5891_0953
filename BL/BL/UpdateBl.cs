@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections;
 using BlApi;
 using DO;
+using System.Runtime.CompilerServices;
 namespace BL
 {
     internal partial class BL : IBl
@@ -18,6 +19,9 @@ namespace BL
         /// </summary>
         /// <param name="DroneId"></param>
         /// <param name="Name"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void UpdatDroneName(int DroneId, string Name)
         {
             try
@@ -41,6 +45,9 @@ namespace BL
         /// <param name="Id"></param>
         /// <param name="Name"></param>
         /// <param name="Phone"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void UpdateCosomerInfo(int Id,string Name, string Phone)
         {
             try
@@ -64,6 +71,9 @@ namespace BL
         /// <param name="Id"></param>
         /// <param name="Name"></param>
         /// <param name="numofCha"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void UpdateStation(int Id, string Name,int numofCha)
         {
             try
@@ -88,6 +98,7 @@ namespace BL
         /// </summary>
         /// <param name="DronId"></param>
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCarge(int DronId)
         {
             try
@@ -122,6 +133,8 @@ namespace BL
         /// </summary>
         /// <param name="DroneId"></param>
         /// <param name="Time"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReturnDroneFromeCharging(int DroneId,int Time)
         {
             try
@@ -153,6 +166,9 @@ namespace BL
         /// the we sort the list first acording to ditence and then priyoritity
         /// </summary>
         /// <param name="DroneId"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void AssignDronToParcel(int DroneId)
         {
             try
@@ -188,6 +204,9 @@ namespace BL
         /// and then we judst updat the dton acourdin to 
         /// </summary>
         /// <param name="DroneId"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void PickUp(int DroneId)
         {
             try
@@ -213,6 +232,9 @@ namespace BL
         /// the func gets the status and
         /// </summary>
         /// <param name="DroneId"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void Suuply(int DroneId)
         {
             try

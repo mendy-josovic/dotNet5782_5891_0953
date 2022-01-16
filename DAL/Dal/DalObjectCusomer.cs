@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Collections;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 namespace DalObject
 {
    internal partial class DalObject : IDal
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer cst)  //same
         {
            
@@ -18,16 +20,17 @@ namespace DalObject
                 throw new DO.DalExceptions("Customer Alredy exsits");
             DataSource.customers.Add(cst);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer PrintCustomer(int id)  //finds the customer and sends a replica
         {
             return DataSource.customers.Find(w => w.Id == id);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null)  //returns a new list of customers
         {
             return DataSource.customers.FindAll(x => predicate == null ? true : predicate(x));
         }
- 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int CusId, string Name ="", string phone ="")
         {
             int i = DataSource.customers.FindIndex(w => w.Id == CusId);

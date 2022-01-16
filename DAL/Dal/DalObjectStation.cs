@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using System.Collections;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 namespace DalObject
 {
     internal partial class DalObject : IDal
     {
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station sta)  //just adding to the last place
         {
             int i = DataSource.stations.FindIndex(w => w.Equals(sta));
@@ -18,15 +19,18 @@ namespace DalObject
                 throw new DalExceptions("Station Alredy exsits");///theowin the exciption of elerdy exsit
             DataSource.stations.Add(sta);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station DisplayStation(int id)  //finds the station and sends a replica
         {
             return (DataSource.stations.Find(w => w.Id == id));
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null)  //returns a new list of stations
         {
             return DataSource.stations.FindAll(x => predicate == null ? true : predicate(x));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1)
         {
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);

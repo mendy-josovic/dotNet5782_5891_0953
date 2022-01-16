@@ -58,5 +58,7 @@ namespace BlApi
         /// </summary>
         /// <param name="Id"></param>
         public void DeletAParcel(int Id);
+
+        public void RunSimulator(int droneId, Action simulatorProgress, Func<bool> cancelSimulator);
     }
 }

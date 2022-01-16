@@ -51,6 +51,7 @@ namespace PL
             SenderTextBox.Clear();
             RecipientTextBox.Clear();
             priorityComboBox.SelectedItem = null;
+            ClearBotten.Visibility = Visibility.Hidden;
             parcelToLists = BlObject.DisplayParcelList();
             ParcelLiastView.ItemsSource = parcelToLists;
 
