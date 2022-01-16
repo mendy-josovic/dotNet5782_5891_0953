@@ -18,6 +18,8 @@ namespace PL
 {
     public partial class DroneWindow : Window
     {
+        string PickupContent = "Pick-up at sender";
+        string RecieverContent = "Recieve parcel";
         /// <summary>
         /// 
         /// </summary>
@@ -95,7 +97,7 @@ namespace PL
                         AddDrone.DataContext = drone;
                         InitializeButtons(drone);
                     }
-                    else if (button.Content == "Update Pick-Up")
+                    else if (button.Content == PickupContent)
                     {
                         blObject.PickUp(drone.Id);
                         drone = blObject.BLDrone(blObject.DisplayDrone(drone.Id));
@@ -169,13 +171,13 @@ namespace PL
             {
                 if (!drone.parcel.PickedUp)
                 {
-                    DeliveryButton.Content = "Update Pick-Up";
+                    DeliveryButton.Content = PickupContent;
                     ChargingButton.IsEnabled = false;
                     UpdateButton.IsEnabled = false;
                 }
                 else
                 {
-                    DeliveryButton.Content = "Update Delivery";
+                    DeliveryButton.Content = RecieverContent;
                     ChargingButton.IsEnabled = false;
                     UpdateButton.IsEnabled = false;
                 }

@@ -11,6 +11,9 @@
     <Window.Background>
         <ImageBrush ImageSource="/Images/drone_house.jpeg"/>
     </Window.Background>
+    <Window.Resources>
+        <local:ProgressForegroundConverter x:Key="ProgressForegroundConverter"/>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.Resources>
             <ImageBrush x:Key="RefreshImage" ImageSource="/Images/refresh.png" />
@@ -56,7 +59,17 @@
                                         <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}" />
                                         <GridViewColumn Header="Model" Width="110" DisplayMemberBinding="{Binding Model}" />
                                         <GridViewColumn Header="Max Weight" Width="120" DisplayMemberBinding="{Binding MaxWeight}" />
-                                        <GridViewColumn Header="Battery" Width="90" DisplayMemberBinding="{Binding Battery}" />
+                                        <GridViewColumn Header="Battery" Width="120">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <ProgressBar x:Name="BatteryProgressBar" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Height="25" Value="{Binding Battery}" Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Value, Converter={StaticResource ProgressForegroundConverter}}"/>
+                                                        <TextBlock Text="{Binding ElementName=BatteryProgressBar, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <!--<GridViewColumn Header="Battery" Width="90" DisplayMemberBinding="{Binding Battery}" />-->
                                         <GridViewColumn Header="status" Width="110" DisplayMemberBinding="{Binding status}" />
                                         <GridViewColumn Header="Location" Width="140" DisplayMemberBinding="{Binding ThisLocation}" />
                                         <GridViewColumn Header="Parcel" Width="60" DisplayMemberBinding="{Binding ParcelId}" />
