@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-nmespace:PL"
         mc:Ignorable="d"
-        Title="ParcelListWindow" Height="450" Width="800">
+        Title="ParcelListWindow" Height="500" Width="800" Closing="Window_Closing">
+
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/drone_sky.jpg" />
+    </Window.Background>
+
     <Grid x:Name="MainGrid" Height="auto" Grid.Row="1" Width="auto" RenderTransformOrigin="0.499,0.187">
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -15,7 +20,7 @@
             <ColumnDefinition Width="70*"/>
             <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="ParcelLiastView" MouseDoubleClick="ParcelLiastView_MouseDoubleClick" Margin="5,39,-5,6" Grid.RowSpan="2">
+        <ListView x:Name="ParcelLiastView" Background="Transparent" MouseDoubleClick="ParcelLiastView_MouseDoubleClick" Margin="5,39,-5,6" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="90" DisplayMemberBinding="{Binding Id}"/>
@@ -36,16 +41,19 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <Calendar  x:Name="ChoiseDate" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Top" Height="160"  Grid.Column="1" Margin="22,5,0,0" SelectionMode="SingleRange"  />
+        <Calendar  x:Name="ChoiseDate" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Top" Height="160"  Grid.Column="1" Margin="0,5,0,0" SelectionMode="SingleRange"  />
         <Button x:Name="ClearBotten" Content="Reset" HorizontalAlignment="Left" Margin="180,325,0,0" VerticalAlignment="Top" Width="35" Height="37" Click="ClearBotten_Click" Grid.Column="1" Grid.Row="1" Visibility="Hidden" />
-        <TextBox x:Name="SenderTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="95,203,0,0" Grid.Row="1"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="SenderLabel" Content="Sender" Grid.Column="1" HorizontalAlignment="Left" Margin="43,196,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Label Content="Filter" Grid.Column="1" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Width="56"/>
-        <Label Content=" Recipient" Grid.Column="1" HorizontalAlignment="Left" Margin="33,239,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <TextBox x:Name="RecipientTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="97,245,0,0" Grid.Row="1"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="priorityComboBox" Grid.Column="1" HorizontalAlignment="Left" Margin="95,276,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Priority" Grid.Column="1" HorizontalAlignment="Left" Margin="42,273,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Button x:Name="FilterButton" Content="Filter" Grid.Column="1" HorizontalAlignment="Left" Margin="103,331,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Click="FilterButton_Click"/>
-        <Button x:Name="AddButton" Content="Add" Grid.Column="1" HorizontalAlignment="Left" Margin="14,318,0,0" Grid.Row="1" VerticalAlignment="Top" Height="50" Width="55" Click="AddButton_Click"/>
+        <TextBox x:Name="SenderTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="95,203,0,0" Grid.Row="1"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18"/>
+        <Label x:Name="SenderLabel" Content="Sender" Grid.Column="1" HorizontalAlignment="Left" Margin="31,199,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Content="Choose a Date:" Grid.Column="1" HorizontalAlignment="Left" Margin="28,12,0,0" VerticalAlignment="Top" Width="105" FontWeight="Bold"/>
+        <Label Content="Recipient" Grid.Column="1" HorizontalAlignment="Left" Margin="31,232,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <TextBox x:Name="RecipientTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="95,235,0,0" Grid.Row="1"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18"/>
+        <ComboBox x:Name="priorityComboBox" Grid.Column="1" HorizontalAlignment="Left" Margin="95,269,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Height="18"/>
+        <Label Content="Priority" Grid.Column="1" HorizontalAlignment="Left" Margin="31,266,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button x:Name="FilterButton" Content="Search" Grid.Column="1" HorizontalAlignment="Left" Margin="122,303,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Click="FilterButton_Click" FontWeight="Bold"/>
+        <Button x:Name="AddButton" Content="Add New Parcel" Grid.Column="1" HorizontalAlignment="Left" Margin="14,343,0,0" Grid.Row="1" VerticalAlignment="Top" Height="24" Width="122" Click="AddButton_Click" FontSize="12" FontWeight="Bold"/>
+        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Top" Height="24" Width="122" Grid.Row="1" FontSize="12" FontWeight="Bold" Click="CloseButton_Click" Grid.Column="1" Margin="0,380,104,0" />
+        <Label Content="Parcels" HorizontalAlignment="Left" Height="38" Margin="289,0,0,0" VerticalAlignment="Center" Width="200" FontWeight="Bold" FontSize="20"/>
+        <Label Content="Search:" Grid.Column="1" HorizontalAlignment="Left" Margin="31,174,0,0" VerticalAlignment="Top" Width="105" FontWeight="Bold" Grid.Row="1"/>
     </Grid>
 </Window>

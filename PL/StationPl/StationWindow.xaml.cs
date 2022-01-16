@@ -51,7 +51,7 @@ namespace PL
             station = s;           
             ADrone.DataContext = station;
             DronesListView.ItemsSource = station.ListOfDrones;
-            StationLabel.Content = String.Format("Drone {0}", station.Id);
+            StationLabel.Content = String.Format("Station {0}", station.Id);
             AddButton.Visibility = Visibility.Hidden;
             IDTextBox.BorderBrush = null;
             NameTextBox.BorderBrush = null;

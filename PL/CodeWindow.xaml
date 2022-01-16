@@ -15,7 +15,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Label Content="Enter the code:" HorizontalAlignment="Left" Margin="56,0,0,15" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold"/>
-        <TextBox x:Name="CodeTextBox" HorizontalAlignment="Left" Margin="61,7,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="23"/>
-        <Button x:Name="OKButton" Content="OK" HorizontalAlignment="Left" Margin="105,46,0,0" Grid.Row="1" VerticalAlignment="Top" Width="26" Click="OKButton_Click" />
+        <PasswordBox x:Name="CodeTextBox" HorizontalAlignment="Left" Margin="61,7,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Height="23" KeyUp="CodeTextBox_KeyUp"/>
+        <Button x:Name="OKButton" Content="OK" HorizontalAlignment="Left" Margin="95,46,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Click="OKButton_Click" FontWeight="Bold" />
     </Grid>
 </Window>

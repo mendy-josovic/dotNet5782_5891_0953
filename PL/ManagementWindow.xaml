@@ -10,11 +10,12 @@
         Title="MainWindow" Height="589" Width="1100" Closing="Window_Closing">
     <Window.Background>
 
-        <ImageBrush ImageSource="Images/DroneInDelivery.JPG" Stretch="Uniform"/>
+        <ImageBrush ImageSource="/Images/drone_with_parcel2.jpg"/>
 
     </Window.Background>
 
     <Grid Name="MainGrid">
+        <Label Content="Menu"  HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="Monotype Corsiva" FontSize="72" Grid.Row="0" Margin="76,0,0,421"/>
         <Button x:Name="DronesListButton" Content="Drones" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="DroneListButton_Click" Margin="76,324,0,0" FontSize="20" FontWeight="Bold" Width="165" Height="39"/>
         <Button x:Name="CustomersListButton" Content="Customers" HorizontalAlignment="Left" Margin="76,365,0,0" VerticalAlignment="Top" Height="39" Width="165" FontSize="20" FontWeight="Bold" Click="CustomersListButton_Click"/>
         <Button x:Name="StationsListButton" Content="Stations" HorizontalAlignment="Left" Height="39" Margin="76,407,0,0" VerticalAlignment="Top" Width="165" FontSize="20" FontWeight="Bold" Click="StationsListButton_Click"/>

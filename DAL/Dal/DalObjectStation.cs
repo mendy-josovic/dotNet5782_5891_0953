@@ -27,8 +27,6 @@ namespace DalObject
             return DataSource.stations.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-
-
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1)
         {
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);

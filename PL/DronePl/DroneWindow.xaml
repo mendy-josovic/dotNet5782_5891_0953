@@ -10,11 +10,16 @@
     <Window.Background>
         <ImageBrush ImageSource="/Images/drone_with_parcel2.jpg"/>
     </Window.Background>
+    <Window.Resources>
+        <local:ProgressForegroundConverter x:Key="ProgressForegroundConverter"/>
+    </Window.Resources>
     <Grid x:Name="AddDrone">
         <Label x:Name="IDLabel" Content="ID" HorizontalAlignment="Left" Margin="165,85,0,0" VerticalAlignment="Top" Height="35" Width="39" FontSize="16"/>
         <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="300,92,0,0" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="False" PreviewTextInput="NumberValidationTextBox"/>
         <Label x:Name="BatteryLabel" Content="Battery" HorizontalAlignment="Left" Margin="165,120,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="BatteryTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Battery, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="BatteryTextBox_MouseEnter" />
+        <!--<TextBox x:Name="BatteryTextBox" HorizontalAlignment="Left" Margin="300,126,0,0" Text="{Binding Battery, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" IsReadOnly="True" MouseEnter="BatteryTextBox_MouseEnter" />-->
+        <ProgressBar x:Name="BatteryProgressBar" HorizontalAlignment="Left" Margin="300,126,0,0" Value="{Binding Battery, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Value, Converter={StaticResource ProgressForegroundConverter}}" VerticalAlignment="Top" Width="120" Height="25" MouseEnter="BatteryProgressBar_MouseEnter"/>
+        <TextBlock Text="{Binding ElementName=BatteryProgressBar, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="349,129,0,0" />
         <Label x:Name="MaxWeightLabel" Content="Max weight" HorizontalAlignment="Left" Margin="165,155,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label x:Name="ModelLabel" Content="Model" HorizontalAlignment="Left" Margin="165,190,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Margin="300,196,0,0" Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" TextChanged="ModelTextBox_TextChanged" PreviewTextInput="ModelTextBox_PreviewTextInput" />

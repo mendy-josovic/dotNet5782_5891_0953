@@ -252,7 +252,7 @@ namespace ConsoleUI
                                                     int.TryParse(Console.ReadLine(), out int droneId);
                                                     if (droneId <= 0)
                                                         throw new ConsoleException("Enter Id 1-999999");
-                                                    DO.Drone dr = dalObject1.PrintDrone(droneId);
+                                                    DO.Drone dr = dalObject1.DisplayDrone(droneId);
                                                     Console.WriteLine(dr);
                                                     break;
                                                 }
@@ -314,7 +314,7 @@ namespace ConsoleUI
                                             }
                                         case 'b':
                                             {
-                                                List<Drone> Drones = new (dalObject1.PrintDroneList());
+                                                List<Drone> Drones = new (dalObject1.DisplayDronesList());
                                                 foreach (Drone item in Drones)
                                                 {
                                                     Console.WriteLine();

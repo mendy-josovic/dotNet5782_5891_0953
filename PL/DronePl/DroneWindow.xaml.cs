@@ -55,14 +55,17 @@ namespace PL
             }
         }
 
-        private void BatteryTextBox_MouseEnter(object sender, MouseEventArgs e)
+        private void BatteryProgressBar_MouseEnter(object sender, MouseEventArgs e)
         {
-            TextBox t = sender as TextBox;
-            if (t != null)
+            if (AddADroneButton.Visibility == Visibility.Visible)
             {
-                ToolTip tt = new ToolTip();
-                tt.Content = "This field is automatically given";
-                t.ToolTip = tt;
+                ProgressBar t = sender as ProgressBar;
+                if (t != null)
+                {
+                    ToolTip tt = new ToolTip();
+                    tt.Content = "This field is automatically given";
+                    t.ToolTip = tt;
+                }
             }
         }
 

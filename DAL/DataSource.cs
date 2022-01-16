@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DalXml;
 using DO;
+using DalXml;
 
 namespace DalObject
 {
@@ -78,6 +79,9 @@ namespace DalObject
             tempDrone = drones[4];
             tempDrone.Model = "IJ123";
             drones[4] = tempDrone;
+            tempDrone = drones[5];
+            tempDrone.Model = "KL123";
+            drones[5] = tempDrone;
             Parcel tempParcel = new();       
             for (int i = 0; i < 10; i++)  //creating ID and a counter for 10 parcels
             { 

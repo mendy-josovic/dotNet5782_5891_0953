@@ -105,7 +105,7 @@ namespace PL
             ListView selectedListView = sender as ListView;
             if (selectedListView != null)
             {
-                new DroneWindow(blObject, blObject.BLDrone((DroneToList)selectedListView.SelectedItem)).Show();
+                new DroneWindow(blObject, blObject.BLDrone((DroneToList)selectedListView.SelectedItem)).ShowDialog();
                 DisplayListBySelectors();
             }
         }

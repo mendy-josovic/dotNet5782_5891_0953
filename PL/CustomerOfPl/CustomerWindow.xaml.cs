@@ -22,6 +22,8 @@ namespace PL
     {
         IBl blObject;
         Customer Customer1 = new();
+        bool isCloseRequired;
+
         public CustomerWindow(IBl blobject)
         {
             this.blObject = blobject;
@@ -76,6 +78,17 @@ namespace PL
         {
             ParcelAtCustomer p = (ParcelAtCustomer)ParcelsRecievd.SelectedItem;
             new ParcelWindow(blObject, p.Id).Show();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            isCloseRequired = true;
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !isCloseRequired;
         }
     }
 }

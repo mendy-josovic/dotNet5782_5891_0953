@@ -9,7 +9,7 @@ using DalObject;
 using System.Globalization;
 using System.Xml.Linq;
 using System.Runtime.CompilerServices;
-namespace DalXml  
+namespace DalXml
 {
     class DalXml : IDal
     {
@@ -33,10 +33,10 @@ namespace DalXml
         /// defult constractors and singelton 
         /// </summary>
         #region Singelton+Constractors
-        static DalXml()//  ctor to ensure instance init is done just before first usage
-        {
-            DalObject.DataSource.Initialize();
-        }
+        //static DalXml()//  ctor to ensure instance init is done just before first usage
+        //{
+        //    DalObject.DataSource.Initialize();
+        //}
 
         /// <summary>
         ///  ctor in the biginin of eace run we relese all the drons from charge
@@ -44,10 +44,10 @@ namespace DalXml
         private DalXml() //private  
         {
             List<DO.DroneCharge> droneCharge = (List<DO.DroneCharge>)XmlToolKit.LoadListFromXMLSerializer<DO.DroneCharge>(DroneChargeXml);
-            List<DO.Station> St= (List<DO.Station>)XmlToolKit.LoadListFromXMLSerializer<DO.Station>(BaseStationXml);
+            List<DO.Station> St = (List<DO.Station>)XmlToolKit.LoadListFromXMLSerializer<DO.Station>(BaseStationXml);
             foreach (var item in droneCharge)
             {
-                St.Where(x => x.Id == item.StationId).Select(x => x.ReadyChargeStands--);              
+                St.Where(x => x.Id == item.StationId).Select(x => x.ReadyChargeStands--);
             }
             droneCharge.Clear();
             XmlToolKit.SaveListToXMLSerializer(droneCharge, DroneChargeXml);
@@ -62,18 +62,18 @@ namespace DalXml
         public void AddStation(Station sta)  //just adding to the last place
         {
             List<Station> stations = XmlToolKit.LoadListFromXMLSerializer<Station>(BaseStationXml);
-            if(stations.Exists(x=>x.Id==sta.Id))
+            if (stations.Exists(x => x.Id == sta.Id))
                 throw new DalExceptions("Station Alredy exsits");///theowin the exciption of elerdy exsit
-          stations.Add(sta);
+            stations.Add(sta);
             XmlToolKit.SaveListToXMLSerializer(stations, BaseStationXml);
         }
-       
+
         public void UpdatStation(int StationId, string Name = "", int NumOfCarg = -1)
         {
             List<Station> stations = XmlToolKit.LoadListFromXMLSerializer<Station>(BaseStationXml);
-            if(!stations.Exists(x=>x.Id==StationId))
-                throw new DalExceptions("Station dosent exist");
-            Station temp = stations.Find(x=>x.Id==StationId);
+            if (!stations.Exists(x => x.Id == StationId))
+                throw new DalExceptions("Station dosen't exist");
+            Station temp = stations.Find(x => x.Id == StationId);
             if (!string.IsNullOrEmpty(Name))
             {
                 temp.Name = Name;
@@ -85,11 +85,13 @@ namespace DalXml
             stations.Where(x => x.Id == StationId).Select(x => x = temp);
             XmlToolKit.SaveListToXMLSerializer(stations, BaseStationXml);
         }
+
         public Station DisplayStation(int id)  //finds the station and sends a replica
         {
             List<Station> st = XmlToolKit.LoadListFromXMLSerializer<Station>(BaseStationXml);
             return (st.Find(w => w.Id == id));
         }
+
         public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null)  //returns a new list of stations
         {
             List<Station> stations = XmlToolKit.LoadListFromXMLSerializer<Station>(BaseStationXml);
@@ -98,9 +100,9 @@ namespace DalXml
         #endregion
 
         #region Customers
-        public void AddCustomer(Customer cst) 
+        public void AddCustomer(Customer cst)
         {
-           XElement element = XmlToolKit.LoadListFromXMLElement(CustomerXml);//get the wlwmnt
+            XElement element = XmlToolKit.LoadListFromXMLElement(CustomerXml);//get the wlwmnt
 
             XElement customer = (from cus in element.Elements()// gets if it alredy exsits
                                  where cus.Element("Id").Value == cst.Id.ToString()
@@ -131,22 +133,21 @@ namespace DalXml
             if (customer == null)
             {
                 throw new DalExceptions("Customer Dose not exsits");
-            }   
+            }
             if (!string.IsNullOrEmpty(Name))
-            {             
-                customer.Element("Name").Value= Name;
+            {
+                customer.Element("Name").Value = Name;
             }
             if (!string.IsNullOrEmpty(phone))
             {
-               customer.Element("Phone").Value = phone;
+                customer.Element("Phone").Value = phone;
             }
             XmlToolKit.SaveListToXMLElement(element, CustomerXml);
         }
+
         public Customer PrintCustomer(int id)  //finds the customer and sends a replica
         {
-
             XElement element = XmlToolKit.LoadListFromXMLElement(CustomerXml);//get the wlwmnt
-
             XElement customer = (from cus in element.Elements()// gets if it alredy exsits
                                  where cus.Element("Id").Value == id.ToString()
                                  select cus).FirstOrDefault();
@@ -156,21 +157,22 @@ namespace DalXml
             }
 
             Customer customer1 = (from cus in element.Elements()
-                                 where cus.Element("Id").Value == id.ToString()
-                                 select new Customer()
-                                 {
-                                     Id = int.Parse(cus.Element("Id").Value),
-                                     Name = cus.Element("Name").Value,
-                                     Phone = cus.Element("Phone").Value,
-                                     Longitude = double.Parse(cus.Element("Longitude").Value),
-                                     Latitude = double.Parse(cus.Element("Latitude").Value)
-                                 }
-                        ).FirstOrDefault();
+                                  where cus.Element("Id").Value == id.ToString()
+                                  select new Customer()
+                                  {
+                                      Id = int.Parse(cus.Element("Id").Value),
+                                      Name = cus.Element("Name").Value,
+                                      Phone = cus.Element("Phone").Value,
+                                      Longitude = double.Parse(cus.Element("Longitude").Value),
+                                      Latitude = double.Parse(cus.Element("Latitude").Value)
+                                  }
+                                  ).FirstOrDefault();
             return customer1;
         }
+
         public IEnumerable<Customer> PrintCustomerList(Predicate<Customer> predicate = null)  //returns a new list of customers
         {
-            XElement element =XmlToolKit.LoadListFromXMLElement(CustomerXml);
+            XElement element = XmlToolKit.LoadListFromXMLElement(CustomerXml);
             IEnumerable<Customer> customer = from cus in element.Elements()
                                              select new Customer()
                                              {
@@ -180,14 +182,57 @@ namespace DalXml
                                                  Longitude = double.Parse(cus.Element("Longitude").Value),
                                                  Latitude = double.Parse(cus.Element("Latitude").Value)
                                              };
-            
-            return customer.Where(x => predicate == null ? true : predicate(x));
-        }
 
+            return customer.Where(x => predicate == null ? true : predicate(x));            
+        }
 
         #endregion
 
         #region Drones
+
+        public void AddDrone(Drone dro)
+        {
+            if (dro.Id <= 0)
+                throw new DO.DalExceptions("Invalid ID, ID must be positive");
+            List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
+            if (drones.Exists(x => x.Id == dro.Id))
+                throw new DalExceptions("Drone Alredy exsits");  //throwing the exciption of alerdy exsit
+            drones.Add(dro);
+            XmlToolKit.SaveListToXMLSerializer(drones, DroneXml);
+        }
+
+       
+
+        public Drone DisplayDrone(int id)  //finds the drone and sends a replica
+        {
+            List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
+            return (drones.Find(w => w.Id == id));
+        }
+
+        public IEnumerable<Drone> DisplayDronesList(Predicate<Drone> predicate = null)  //returns a new list of drones
+        {
+            List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
+            return drones.FindAll(x => predicate == null ? true : predicate(x));
+        }
+      
+
+        /// <summary>
+        /// the func gets a new name and replaces the name in the func with a new one
+        ///using the library func replace"
+        /// </summary>
+        /// <param name="drnId"></param>
+        /// <param name="Name"></param>
+        public void UpdateDrone(int drnId, string Name)
+        {
+            List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
+            if (!drones.Exists(x => x.Id == drnId))
+                throw new DalExceptions("Drone doesn't exsit");
+            Drone temp = drones.Find(x => x.Id == drnId);
+            temp.Model = Name;
+            drones[drones.FindIndex(x => x.Id == drnId)] = temp;
+            XmlToolKit.SaveListToXMLSerializer(drones, DroneXml);
+        }
+
         #endregion
 
         #region Parcels
@@ -268,6 +313,49 @@ namespace DalXml
         #endregion
 
         #region DroneCharge
+
+        public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null)
+        {
+            List<DroneCharge> drones = XmlToolKit.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml);
+            return drones.FindAll(x => predicate == null ? true : predicate(x));
+        }
+
+        public void CreateANewDroneCharge(int staId, int drnId)
+        {
+            List<DroneCharge> drones = XmlToolKit.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml);
+            DroneCharge Dc = new();
+            Dc.DroneId = drnId;
+            Dc.StationId = staId;
+            Dc.EntryTimeForLoading = DateTime.Now;
+            drones.Add(Dc);
+            XmlToolKit.SaveListToXMLSerializer(drones, DroneChargeXml);
+        }
+
+        public void ClearDroneCharge(int drnId)
+        {
+            List<DroneCharge> drones = XmlToolKit.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml);
+            if (!drones.Exists(x => x.DroneId == drnId))
+                throw new DalExceptions("Drone doesn't in charging");
+            DroneCharge drone = drones.Find(w => w.DroneId == drnId);
+            drones.Remove(drone);
+            XmlToolKit.SaveListToXMLSerializer(drones, DroneChargeXml);
+        }
+
+        /// 
+        /// <summary>
+        /// we finde the place with the station and the dronr we need 
+        /// </summary>
+        /// <param name="DroneId"></param>
+        /// <param name="StationId"></param>
+        /// <returns></returns>
+        public DroneCharge DisplayDroneCharge(int DroneId = 0)
+        {
+            List<DroneCharge> drones = XmlToolKit.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml);
+            if (!drones.Exists(x => x.DroneId == DroneId))
+                throw new DalExceptions("No Drone Charge Exsits");
+            return drones.Find(x => x.DroneId == DroneId);
+        }
+
         #endregion
         #region Config
         public double[] Consumption()

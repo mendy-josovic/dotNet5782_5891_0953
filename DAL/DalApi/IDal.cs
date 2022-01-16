@@ -76,7 +76,7 @@ namespace DalApi
         /// <param name="id"></param>
         /// <returns></returns>
         public Station DisplayStation(int id);
-        public Drone PrintDrone(int id);
+        public Drone DisplayDrone(int id);
         /// <summary>
         /// disply customer
         /// </summary>
@@ -89,14 +89,14 @@ namespace DalApi
         /// <param name="id"></param>
         /// <returns></returns>
         public Parcel PrintParcel(int id);
-        public DroneCharge PrintDronCarg(int DroneId = 0);
+        public DroneCharge DisplayDroneCharge(int DroneId = 0);
         /// <summary>
         /// returns a Ienumrable that is with a predicet
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
         public IEnumerable<Station> PrintStationList(Predicate<Station> predicate = null);
-        public IEnumerable<Drone> PrintDroneList(Predicate<Drone> predicate = null);
+        public IEnumerable<Drone> DisplayDronesList(Predicate<Drone> predicate = null);
         /// <summary>
         /// disply customer list with the pridecet
         /// </summary>

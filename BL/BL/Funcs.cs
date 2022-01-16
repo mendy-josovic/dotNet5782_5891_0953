@@ -394,7 +394,7 @@ namespace BL
         public DroneInCharging BLDroneInCharging1(int id)
         {
             DroneInCharging drone = new();
-            DO.DroneCharge d = Data.PrintDronCarg(id);
+            DO.DroneCharge d = Data.DisplayDroneCharge(id);
             drone.Id = d.DroneId;
             drone.Battery = DroneList.Find(w => w.Id == id).Battery;
             drone.EntryTimeForLoading = d.EntryTimeForLoading;
