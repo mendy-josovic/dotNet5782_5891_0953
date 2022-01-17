@@ -19,13 +19,9 @@ namespace BL
         /// <param name="mode">mode of the drone in moving: without a parcel, or with a parcel, and which mode of parcel</param>
         /// <returns>how much battery this moving need</returns>
         /// 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public double Consumption(Location a, Location b, ModeOfDroneInMoving mode)
         {
-            lock (Data)
-            {
-                return GetDistance(a, b) * batteryConfig[(int)mode];
-            }
+            return GetDistance(a, b) * batteryConfig[(int)mode];
         }
 
 
@@ -133,11 +129,9 @@ namespace BL
         /// <param name="latB"></param>
         /// <returns></returns>
         /// 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetDistance(Location a, Location b, double longA = 0, double latA = 0, double longB = 0, double latB = 0)
         {
-            lock (Data)
-            {
+            
                 if (a.Latitude == 0)
                 {
                     a.Latitude = latA;
@@ -149,7 +143,7 @@ namespace BL
                     b.Longitude = longB;
                 }
                 return Math.Sqrt((Math.Pow(a.Longitude - b.Longitude, 2) + Math.Pow(a.Latitude - b.Latitude, 2)));
-            }
+            
         }
 
         /// <summary>
@@ -242,19 +236,21 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station BLStation(int id)
         {
-            DO.Station s = Data.DisplayStation(id);
-            BO.Station station = new();
-            station.Id = s.Id;
-            station.Name = s.Name;
-            station.location = new();
-            station.location.Latitude = s.Latitude;
-            station.location.Longitude = s.Longitude;
-            station.ReadyStandsInStation = s.ReadyChargeStands;
-            station.ListOfDrones = DisplayDronesInCharging((w => GetDistance(station.location, DisplayDrone(w.Id).ThisLocation) == 0)).ToList();
-            return station;
+            lock (Data)
+            {
+                DO.Station s = Data.DisplayStation(id);
+                BO.Station station = new();
+                station.Id = s.Id;
+                station.Name = s.Name;
+                station.location = new();
+                station.location.Latitude = s.Latitude;
+                station.location.Longitude = s.Longitude;
+                station.ReadyStandsInStation = s.ReadyChargeStands;
+                station.ListOfDrones = DisplayDronesInCharging((w => GetDistance(station.location, DisplayDrone(w.Id).ThisLocation) == 0)).ToList();
+                return station;
+            }
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station BLStation()
         {
             BO.Station station = new();
@@ -272,19 +268,22 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Drone BLDrone(DroneToList d)
         {
-            BO.Drone drone = new();
-            drone.Id = d.Id;
-            drone.Model = d.Model;
-            drone.MaxWeight = d.MaxWeight;
-            drone.Battery = d.Battery;
-            drone.ThisLocation = d.ThisLocation;
-            drone.status = d.status;
-            if (drone.status == StatusOfDrone.Delivery)
-            {             
-                DO.Parcel p = Data.PrintParcel(d.ParcelId);
-                drone.parcel = BLParcelInTransfer(p);
+            lock (Data)
+            {
+                BO.Drone drone = new();
+                drone.Id = d.Id;
+                drone.Model = d.Model;
+                drone.MaxWeight = d.MaxWeight;
+                drone.Battery = d.Battery;
+                drone.ThisLocation = d.ThisLocation;
+                drone.status = d.status;
+                if (drone.status == StatusOfDrone.Delivery)
+                {
+                    DO.Parcel p = Data.PrintParcel(d.ParcelId);
+                    drone.parcel = BLParcelInTransfer(p);
+                }
+                return drone;
             }
-            return drone;
         }
 
         /// <summary>
@@ -297,30 +296,32 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Customer BLCustomer(int Id)
         {
-            
-            DO.Customer c = new();
-            c = DisplayCustomer(Id);
-            List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
-            BO.Customer customer = new();
-            customer.Id = c.Id;
-            customer.Phone = c.Phone;
-            customer.Name = c.Name;
-            customer.location = Location(c.Longitude, c.Latitude);
-            //From - a list okf parcels that sendered by this customer
-            var From = tempDataParcels.FindAll(w => w.SenderId == customer.Id);
-            customer.FromCustomer = new();
-            foreach (DO.Parcel p in From)
+            lock (Data)
             {
-                customer.FromCustomer.Add(BLParcelAtCustomer(p, true));
+                DO.Customer c = new();
+                c = DisplayCustomer(Id);
+                List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());
+                BO.Customer customer = new();
+                customer.Id = c.Id;
+                customer.Phone = c.Phone;
+                customer.Name = c.Name;
+                customer.location = Location(c.Longitude, c.Latitude);
+                //From - a list okf parcels that sendered by this customer
+                var From = tempDataParcels.FindAll(w => w.SenderId == customer.Id);
+                customer.FromCustomer = new();
+                foreach (DO.Parcel p in From)
+                {
+                    customer.FromCustomer.Add(BLParcelAtCustomer(p, true));
+                }
+                //To - a list okf parcels that sendered to this customer
+                var To = tempDataParcels.FindAll(w => w.TargetId == customer.Id);
+                customer.ToCustomer = new();
+                foreach (DO.Parcel p in To)
+                {
+                    customer.ToCustomer.Add(BLParcelAtCustomer(p, false));
+                }
+                return customer;
             }
-            //To - a list okf parcels that sendered to this customer
-            var To = tempDataParcels.FindAll(w => w.TargetId == customer.Id);
-            customer.ToCustomer = new();
-            foreach(DO.Parcel p in To)
-            {
-                customer.ToCustomer.Add(BLParcelAtCustomer(p, false));
-            }
-            return customer;
         }
 
         /// <summary>
@@ -332,22 +333,25 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Parcel BLParcel(DO.Parcel p)
         {
-            List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
-            BO.Parcel parcel = new();
-            parcel.Id = p.Id;
-            parcel.Weight = (BO.Weight)p.Weigh;
-            parcel.Priority = (BO.Priority)p.Priority;
-            parcel.TimeOfCreation = p.Requested;
-            parcel.Scheduled = p.Scheduled;
-            parcel.PickedUp = p.PickedUp;
-            parcel.Delivered = p.Delivered;
-            parcel.Sender = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
-            parcel.Recipient = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
-            if(p.Scheduled != null)
+            lock (Data)
             {
-                parcel.Drone = BLDroneInParcel(DroneList.Find(w => w.Id == p.DroneId));
+                List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+                BO.Parcel parcel = new();
+                parcel.Id = p.Id;
+                parcel.Weight = (BO.Weight)p.Weigh;
+                parcel.Priority = (BO.Priority)p.Priority;
+                parcel.TimeOfCreation = p.Requested;
+                parcel.Scheduled = p.Scheduled;
+                parcel.PickedUp = p.PickedUp;
+                parcel.Delivered = p.Delivered;
+                parcel.Sender = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
+                parcel.Recipient = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
+                if (p.Scheduled != null)
+                {
+                    parcel.Drone = BLDroneInParcel(DroneList.Find(w => w.Id == p.DroneId));
+                }
+                return parcel;
             }
-            return parcel;
         }
 
         /// <summary>
@@ -356,7 +360,6 @@ namespace BL
         /// <param name="d">DroneToList</param>
         /// <returns>DroneInParcel</returns>
         /// 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneInParcel BLDroneInParcel(DroneToList d)
         {
             DroneInParcel drone = new();
@@ -377,24 +380,27 @@ namespace BL
 
         public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender)
         {
-            List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
-            ParcelAtCustomer par = new();
-            par.Id = p.Id;
-            par.Weight = (BO.Weight)p.Weigh;
-            par.Priority = (BO.Priority)p.Priority;
-            if (p.Scheduled == null)
-                par.Status = StatusOfParcel.Created;
-            else if (p.PickedUp == null)
-                par.Status = StatusOfParcel.Associated;
-            else if (p.Delivered == null)
-                par.Status = StatusOfParcel.PickedUp;
-            else
-                par.Status = StatusOfParcel.Delivered;
-            if (sender)
-                par.TheOther = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
-            else
-                par.TheOther = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
-            return par;
+            lock (Data)
+            {
+                List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+                ParcelAtCustomer par = new();
+                par.Id = p.Id;
+                par.Weight = (BO.Weight)p.Weigh;
+                par.Priority = (BO.Priority)p.Priority;
+                if (p.Scheduled == null)
+                    par.Status = StatusOfParcel.Created;
+                else if (p.PickedUp == null)
+                    par.Status = StatusOfParcel.Associated;
+                else if (p.Delivered == null)
+                    par.Status = StatusOfParcel.PickedUp;
+                else
+                    par.Status = StatusOfParcel.Delivered;
+                if (sender)
+                    par.TheOther = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
+                else
+                    par.TheOther = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
+                return par;
+            }
         }
 
         /// <summary>
@@ -407,18 +413,21 @@ namespace BL
 
         public ParcelInTransfer BLParcelInTransfer(DO.Parcel p)
         {
-            List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
-            ParcelInTransfer par = new();
-            par.Id = p.Id;
-            par.PickedUp = p.PickedUp != null;
-            par.Priority = (BO.Priority)p.Priority;
-            par.Weight = (BO.Weight)p.Weigh;
-            par.Sender = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
-            par.Recipient = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
-            par.LocationOfPickedUp = Location(tempDataCustomers.Find(w => w.Id == p.SenderId).Longitude, tempDataCustomers.Find(w => w.Id == p.SenderId).Latitude);
-            par.LocationOfDestination = Location(tempDataCustomers.Find(w => w.Id == p.TargetId).Longitude, tempDataCustomers.Find(w => w.Id == p.TargetId).Latitude);
-            par.Distance = GetDistance(par.LocationOfPickedUp, par.LocationOfDestination);
-            return par;
+            lock (Data)
+            {
+                List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
+                ParcelInTransfer par = new();
+                par.Id = p.Id;
+                par.PickedUp = p.PickedUp != null;
+                par.Priority = (BO.Priority)p.Priority;
+                par.Weight = (BO.Weight)p.Weigh;
+                par.Sender = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.SenderId));
+                par.Recipient = BLCustomerInParcel(tempDataCustomers.Find(w => w.Id == p.TargetId));
+                par.LocationOfPickedUp = Location(tempDataCustomers.Find(w => w.Id == p.SenderId).Longitude, tempDataCustomers.Find(w => w.Id == p.SenderId).Latitude);
+                par.LocationOfDestination = Location(tempDataCustomers.Find(w => w.Id == p.TargetId).Longitude, tempDataCustomers.Find(w => w.Id == p.TargetId).Latitude);
+                par.Distance = GetDistance(par.LocationOfPickedUp, par.LocationOfDestination);
+                return par;
+            }
         }
 
         /// <summary>
@@ -427,8 +436,6 @@ namespace BL
         /// <param name="DalCus">DAL customer</param>
         /// <returns>BL CustomerInParcel</returns>
         /// 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-
         public CustomerInParcel BLCustomerInParcel(DO.Customer DalCus)
         {
             CustomerInParcel c = new();
@@ -443,8 +450,6 @@ namespace BL
         /// <param name="d">DroneToList</param>
         /// <returns>DroneInCharging</returns>
         /// 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-
         public DroneInCharging BLDroneInCharging(DroneToList d)
         {
             DroneInCharging drone = new();
@@ -463,12 +468,15 @@ namespace BL
 
         public DroneInCharging BLDroneInCharging1(int id)
         {
-            DroneInCharging drone = new();
-            DO.DroneCharge d = Data.DisplayDroneCharge(id);
-            drone.Id = d.DroneId;
-            drone.Battery = DroneList.Find(w => w.Id == id).Battery;
-            drone.EntryTimeForLoading = d.EntryTimeForLoading;
-            return drone;
+            lock (Data)
+            {
+                DroneInCharging drone = new();
+                DO.DroneCharge d = Data.DisplayDroneCharge(id);
+                drone.Id = d.DroneId;
+                drone.Battery = DroneList.Find(w => w.Id == id).Battery;
+                drone.EntryTimeForLoading = d.EntryTimeForLoading;
+                return drone;
+            }
         }
 
         /// <summary>
@@ -478,8 +486,6 @@ namespace BL
         /// <param name="lat">latitude point value</param>
         /// <returns>Location</returns>
         /// 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-
         public Location Location(double lon, double lat)
         {
             Location l = new();
@@ -499,13 +505,16 @@ namespace BL
 
         public StationToList BLStationToList(DO.Station s)
         {
-            StationToList stationToList = new();
-            BO.Station station = BLStation(s.Id);
-            stationToList.Id = station.Id;
-            stationToList.Name = station.Name;
-            stationToList.ReadyStandsInStation = station.ReadyStandsInStation;
-            stationToList.OccupiedStandsInStation = station.ListOfDrones.Count;
-            return stationToList;
+            lock (Data)
+            {
+                StationToList stationToList = new();
+                BO.Station station = BLStation(s.Id);
+                stationToList.Id = station.Id;
+                stationToList.Name = station.Name;
+                stationToList.ReadyStandsInStation = station.ReadyStandsInStation;
+                stationToList.OccupiedStandsInStation = station.ListOfDrones.Count;
+                return stationToList;
+            }
         }
 
         /// <summary>
@@ -518,16 +527,19 @@ namespace BL
 
         public DroneToList BLDroneToList(BO.Drone d)
         {
-            DroneToList droneToList = new();
-            droneToList.Id = d.Id;
-            droneToList.Model = d.Model;
-            droneToList.MaxWeight = d.MaxWeight;
-            droneToList.Battery = d.Battery;
-            droneToList.status = d.status;
-            droneToList.ThisLocation = d.ThisLocation;
-            if(d.parcel!=null)
-                droneToList.ParcelId = d.parcel.Id;
-            return droneToList;
+            lock (Data)
+            {
+                DroneToList droneToList = new();
+                droneToList.Id = d.Id;
+                droneToList.Model = d.Model;
+                droneToList.MaxWeight = d.MaxWeight;
+                droneToList.Battery = d.Battery;
+                droneToList.status = d.status;
+                droneToList.ThisLocation = d.ThisLocation;
+                if (d.parcel != null)
+                    droneToList.ParcelId = d.parcel.Id;
+                return droneToList;
+            }
         }
 
         /// <summary>
@@ -540,20 +552,23 @@ namespace BL
 
         public CustomerToList BLCustomerToList(DO.Customer c)
         {
-            CustomerToList customerToList = new();
-            BO.Customer customer = BLCustomer(c.Id);
-            customerToList.Id = customer.Id;
-            customerToList.Name = customer.Name;
-            customerToList.Phone = customer.Phone;
-            var sumOfDelivered = customer.FromCustomer.FindAll(w=>w.Status==StatusOfParcel.Delivered);
-            customerToList.ParcelsSentAndDelivered = sumOfDelivered.Count;
-            var sumOfSendered = customer.FromCustomer.FindAll(w => w.Status == StatusOfParcel.PickedUp);
-            customerToList.ParcelsSentAndNotDelivered = sumOfSendered.Count;
-            var sumOfgot = customer.ToCustomer.FindAll(w => w.Status == StatusOfParcel.Delivered);
-            customerToList.ParcelsReceived = sumOfgot.Count;
-            var sumOfOnWay = customer.ToCustomer.FindAll(w => w.Status == StatusOfParcel.PickedUp);
-            customerToList.ParcelsOnWayToCustomer = sumOfOnWay.Count;
-            return customerToList;
+            lock (Data)
+            {
+                CustomerToList customerToList = new();
+                BO.Customer customer = BLCustomer(c.Id);
+                customerToList.Id = customer.Id;
+                customerToList.Name = customer.Name;
+                customerToList.Phone = customer.Phone;
+                var sumOfDelivered = customer.FromCustomer.FindAll(w => w.Status == StatusOfParcel.Delivered);
+                customerToList.ParcelsSentAndDelivered = sumOfDelivered.Count;
+                var sumOfSendered = customer.FromCustomer.FindAll(w => w.Status == StatusOfParcel.PickedUp);
+                customerToList.ParcelsSentAndNotDelivered = sumOfSendered.Count;
+                var sumOfgot = customer.ToCustomer.FindAll(w => w.Status == StatusOfParcel.Delivered);
+                customerToList.ParcelsReceived = sumOfgot.Count;
+                var sumOfOnWay = customer.ToCustomer.FindAll(w => w.Status == StatusOfParcel.PickedUp);
+                customerToList.ParcelsOnWayToCustomer = sumOfOnWay.Count;
+                return customerToList;
+            }
         }
 
         /// <summary>
@@ -566,57 +581,48 @@ namespace BL
 
         public ParcelToList BLParcelToList(DO.Parcel c)
         {
-            ParcelToList parcelToList = new();
-            BO.Parcel parcel = BLParcel(c);
-            parcelToList.Id = parcel.Id;
-            parcelToList.Sender = parcel.Sender.Name;
-            parcelToList.Recipient = parcel.Recipient.Name;
-            parcelToList.Weight = parcel.Weight;
-            parcelToList.Priority = parcel.Priority;
-            if (parcel.Delivered != DateTime.MinValue)
-                parcelToList.Status = StatusOfParcel.Delivered;
-            else if(parcel.PickedUp!=DateTime.MinValue)
-                parcelToList.Status = StatusOfParcel.PickedUp;
-            else if(parcel.Scheduled!=DateTime.MinValue)
-                parcelToList.Status = StatusOfParcel.Associated;
-            else
-                parcelToList.Status = StatusOfParcel.Created;
-            return parcelToList;
+            lock (Data)
+            {
+                ParcelToList parcelToList = new();
+                BO.Parcel parcel = BLParcel(c);
+                parcelToList.Id = parcel.Id;
+                parcelToList.Sender = parcel.Sender.Name;
+                parcelToList.Recipient = parcel.Recipient.Name;
+                parcelToList.Weight = parcel.Weight;
+                parcelToList.Priority = parcel.Priority;
+                if (parcel.Delivered != DateTime.MinValue)
+                    parcelToList.Status = StatusOfParcel.Delivered;
+                else if (parcel.PickedUp != DateTime.MinValue)
+                    parcelToList.Status = StatusOfParcel.PickedUp;
+                else if (parcel.Scheduled != DateTime.MinValue)
+                    parcelToList.Status = StatusOfParcel.Associated;
+                else
+                    parcelToList.Status = StatusOfParcel.Created;
+                return parcelToList;
+            }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public Location GetLocationOfStation(StationToList s)
         {
-            DO.Station st = Data.DisplayStation(s.Id);
-            Location location = Location(st.Longitude, st.Latitude);
-            return location;
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public static string ConvertToSexagesimal(double? point)
-        {
-            if (point == null)
-                throw new NullReferenceException("point is null");
-
-            int Degrees = (int)point;
-            point -= Degrees;
-            point *= 60;
-            int Minutes = (int)point;
-            point -= Minutes;
-            point *= 60;
-            double? Second = point;
-            return $"{Degrees}° {Minutes}' {string.Format("{0:0.###}", Second)}\" ";
+            lock (Data)
+            {
+                DO.Station st = Data.DisplayStation(s.Id);
+                Location location = Location(st.Longitude, st.Latitude);
+                return location;
+            }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public void DeletAParcel(int Id)
         {
-            Data.DeleteParcel(Id);
+            lock (Data)
+            {
+                Data.DeleteParcel(Id);
+            }
         }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
 
         public void RunSimulator(int droneId, Action simulatorProgress, Func<bool> cancelSimulator)
         {

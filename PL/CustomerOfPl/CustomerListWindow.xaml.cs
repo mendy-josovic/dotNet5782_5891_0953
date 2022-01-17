@@ -23,13 +23,24 @@ namespace PL
         IBl blObjects;
         IEnumerable<BO.CustomerToList> CustomerLists;
         bool isCloseButtonPressed;
+        RefreshSimulatorEvent refreshSimulatorEvent = new();
         public CustomerListWindow(IBl blObject)
         {
+            refreshSimulatorEvent.AddEventHandler(new Action(RefreshEventHandler));
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.blObjects = blObject;
             CustomerLists = blObjects.DisplayCustomerList();
             CustomerListView.ItemsSource = CustomerLists;
+        }
+
+        private void RefreshEventHandler()
+        {
+            this.Dispatcher.Invoke(new Action(delegate ()
+            {
+                CustomerLists = blObjects.DisplayCustomerList();
+                CustomerListView.ItemsSource = CustomerLists;
+            }));
         }
 
         private void CustomerListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

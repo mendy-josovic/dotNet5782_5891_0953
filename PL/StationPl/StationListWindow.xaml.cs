@@ -23,6 +23,7 @@ namespace PL
     {
         IBl blObject;
         bool isCloseButtonPressed;
+        RefreshSimulatorEvent refreshSimulatorEvent = new();
         /// <summary>
         /// elemnt named dronetolists that is alredy grooped
         /// </summary>
@@ -30,6 +31,7 @@ namespace PL
 
         public StationListWindow(IBl blObject)
         {
+            refreshSimulatorEvent.AddEventHandler(new Action(RefreshEventHandler));
             InitializeComponent();
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -44,6 +46,10 @@ namespace PL
 
             GroupByComboBox.Items.Add("Has free stations");
             GroupByComboBox.Items.Add("# ready stands");
+        }
+        private void RefreshEventHandler()
+        {
+            this.Dispatcher.Invoke(new Action(DisplayListBySelector));
         }
 
         private void GroupByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

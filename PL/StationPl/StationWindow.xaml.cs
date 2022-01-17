@@ -89,8 +89,25 @@ namespace PL
 
         private void UpDateButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
                 blObject.UpdateStation(station.Id, NameTextBox.Text, -1);
-                UpDateButton.IsEnabled = false;   
+                UpDateButton.IsEnabled = false;
+                MessageBox.Show("Successfully updated station!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (BO.BlException ex)
+            {
+                try
+                {
+                    throw new PLExceptions(ex.Message);
+                }
+                catch (PLExceptions ex2)
+                {
+                    String message = String.Format("Something went wrong...\n{0}", ex2.Message);
+                    MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+             
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
