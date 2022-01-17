@@ -7,12 +7,13 @@ using BO;
 using System.Collections;
 using BlApi;
 using DO;
+using System.Runtime.CompilerServices;
 namespace BL
 {
    internal partial class BL: IBl
     {
         private List<DroneToList> DroneList;
-        IDal Data;  //object of DAL
+        internal IDal Data;  //object of DAL
         public static Random r = new Random();
         public static double[] batteryConfig = new double[] { };
         internal static IBl instance { get; } = new BL();
@@ -20,9 +21,12 @@ namespace BL
         /// <summary>
         /// constractor of BL
         /// </summary>
-       internal BL()
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
+        internal BL()
         {
-            Data = DalFactory.GetDal("DalXml");  
+            Data = DalFactory.GetDal("Object");
             DroneList = new();
             batteryConfig = Data.Consumption();
             //Copies the lists from DAL
@@ -38,7 +42,7 @@ namespace BL
                 drone.Model = item.Model;
                 drone.MaxWeight = (BO.Weight)item.MaxWeight;
                 //for all parcels that didn't delivered but associated to a drone
-                if (tempDataParcels.Exists(w => w.DroneId == (item.Id) && w.Delivered ==null))
+                if (tempDataParcels.Exists(w => w.DroneId == (item.Id) && w.Delivered == null))
                 {
                     int i = tempDataParcels.FindIndex(w => w.DroneId == (item.Id));
                     drone.status = BO.StatusOfDrone.Delivery;

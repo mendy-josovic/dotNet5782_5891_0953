@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using System.Collections;
 using DO;
 using DalApi;
-
+using System.Runtime.CompilerServices;
 namespace DalObject
 {
     internal partial class DalObject : IDal
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone dro)  //same
         {
             int i = DataSource.drones.FindIndex(w => w.Id == dro.Id);
@@ -21,6 +22,7 @@ namespace DalObject
             DataSource.drones.Add(dro);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneIdOfPArcel(int prcId, int drnId)
         {
             int i = DataSource.parcels.FindIndex(w => w.Id == prcId);
@@ -30,12 +32,12 @@ namespace DalObject
             tempParcel.DroneId = drnId;
             DataSource.parcels[i] = tempParcel;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone DisplayDrone(int id)  //finds the drone and sends a replica
         {
             return (DataSource.drones.Find(w => w.Id == id));
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> DisplayDronesList(Predicate<Drone> predicate = null)  //returns a new list of drones
         {
             return DataSource.drones.FindAll(x => predicate == null ? true : predicate(x));
@@ -48,6 +50,8 @@ namespace DalObject
         /// </summary>
         /// <param name="drnId"></param>
         /// <param name="Name"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int drnId, string Name)
         {
             int i = DataSource.drones.FindIndex(w => w.Id == drnId);
@@ -70,6 +74,8 @@ namespace DalObject
         /// <param name="UpdatSchedueld"></param>
         /// <param name="UpdatPicedup"></param>
         /// <param name="UpdateDeleverd"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0, int DroneId = 0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
         {
             int index = DataSource.parcels.FindIndex(w => w.Id == parclId);
@@ -99,8 +105,9 @@ namespace DalObject
                 parcel.Delivered = DateTime.Now;
             DataSource.parcels[index] = parcel;
         }
-     
-      
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null)
         {
             return DataSource.droneCharges.FindAll(x => predicate == null ? true : predicate(x));

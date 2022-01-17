@@ -5,6 +5,8 @@ using System.Linq;
 using System.Collections.Generic;
 using DalApi;
 using DO;
+using Simulator;
+using System.Runtime.CompilerServices;
 namespace BL
 {
     internal partial class BL : IBl
@@ -16,33 +18,44 @@ namespace BL
         /// <param name="b">location b</param>
         /// <param name="mode">mode of the drone in moving: without a parcel, or with a parcel, and which mode of parcel</param>
         /// <returns>how much battery this moving need</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double Consumption(Location a, Location b, ModeOfDroneInMoving mode)
         {
-            return GetDistance(a, b) * batteryConfig[(int)mode];
+            lock (Data)
+            {
+                return GetDistance(a, b) * batteryConfig[(int)mode];
+            }
         }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc)
         {
-            try
+            lock (Data)
             {
-                Location startingPiont = dro.ThisLocation;
-                Location StapingPiont = GetSenderLo(prc);
-                Location FinishingPiont = GetReceiverLo(prc);
-                DO.Customer sender = Data.PrintCustomer(prc.SenderId);                
-                DO.Customer Receiver = Data.PrintCustomer(prc.TargetId);        
-                DO.Station closeststation = Data.DisplayStation(GetClosestStation(FinishingPiont));          
-                Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
-                double batteryUse = Consumption(startingPiont, StapingPiont, BO.ModeOfDroneInMoving.Available) + Consumption(StapingPiont, FinishingPiont, (BO.ModeOfDroneInMoving)prc.Weigh);
-                if (dro.Battery - batteryUse < 20)
+                try
                 {
-                    batteryUse += Consumption(FinishingPiont, ClosestCarging,BO.ModeOfDroneInMoving.Available);
-                    if (dro.Battery - batteryUse < 0)
-                        return false;
+                    Location startingPiont = dro.ThisLocation;
+                    Location StapingPiont = GetSenderLo(prc);
+                    Location FinishingPiont = GetReceiverLo(prc);
+                    DO.Customer sender = Data.PrintCustomer(prc.SenderId);
+                    DO.Customer Receiver = Data.PrintCustomer(prc.TargetId);
+                    DO.Station closeststation = Data.DisplayStation(GetClosestStation(FinishingPiont));
+                    Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
+                    double batteryUse = Consumption(startingPiont, StapingPiont, BO.ModeOfDroneInMoving.Available) + Consumption(StapingPiont, FinishingPiont, (BO.ModeOfDroneInMoving)prc.Weigh);
+                    if (dro.Battery - batteryUse < 20)
+                    {
+                        batteryUse += Consumption(FinishingPiont, ClosestCarging, BO.ModeOfDroneInMoving.Available);
+                        if (dro.Battery - batteryUse < 0)
+                            return false;
+                    }
+                    return true;
                 }
-                return true;
-            }
-             catch (DO.DalExceptions ex)
-            {
-                throw new BlException(ex.Message);
+                catch (DO.DalExceptions ex)
+                {
+                    throw new BlException(ex.Message);
+                }
             }
 
         }
@@ -51,17 +64,22 @@ namespace BL
         /// </summary>
         /// <param name="pr"></param>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Location GetSenderLo(DO.Parcel pr)
         {
-            try
+            lock (Data)
             {
-                DO.Customer cs = Data.PrintCustomer(pr.SenderId);
-                Location newloc = Location(cs.Longitude, cs.Latitude);
-                return newloc;
-            }
-            catch (DO.DalExceptions ex)
-            {
-                throw new BlException(ex.Message);
+                try
+                {
+                    DO.Customer cs = Data.PrintCustomer(pr.SenderId);
+                    Location newloc = Location(cs.Longitude, cs.Latitude);
+                    return newloc;
+                }
+                catch (DO.DalExceptions ex)
+                {
+                    throw new BlException(ex.Message);
+                }
             }
         }
         /// <summary>
@@ -69,17 +87,22 @@ namespace BL
         /// </summary>
         /// <param name="pr"></param>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Location GetReceiverLo(DO.Parcel pr)
         {
-            try
+            lock (Data)
             {
-                DO.Customer cs = Data.PrintCustomer(pr.TargetId);
-                Location newloc = Location(cs.Longitude, cs.Latitude);
-                return newloc;
-            }
-            catch (DO.DalExceptions ex)
-            {
-                throw new BlException(ex.Message);
+                try
+                {
+                    DO.Customer cs = Data.PrintCustomer(pr.TargetId);
+                    Location newloc = Location(cs.Longitude, cs.Latitude);
+                    return newloc;
+                }
+                catch (DO.DalExceptions ex)
+                {
+                    throw new BlException(ex.Message);
+                }
             }
         }
 
@@ -88,9 +111,14 @@ namespace BL
         /// turn DroneList into IEnumerable DroneList
         /// </summary>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> BLDrones(Predicate<DroneToList> predicate = null)
         {
-            return DroneList.FindAll(x => predicate == null ? true : predicate(x));
+            lock (Data)
+            {
+                return DroneList.FindAll(x => predicate == null ? true : predicate(x));
+            }
         }
 
         /// <summary>
@@ -104,19 +132,24 @@ namespace BL
         /// <param name="longB"></param>
         /// <param name="latB"></param>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetDistance(Location a, Location b, double longA = 0, double latA = 0, double longB = 0, double latB = 0)
         {
-            if (a.Latitude == 0)
+            lock (Data)
             {
-                a.Latitude = latA;
-                a.Longitude = longA;
+                if (a.Latitude == 0)
+                {
+                    a.Latitude = latA;
+                    a.Longitude = longA;
+                }
+                if (b.Latitude == 0)
+                {
+                    b.Latitude = latB;
+                    b.Longitude = longB;
+                }
+                return Math.Sqrt((Math.Pow(a.Longitude - b.Longitude, 2) + Math.Pow(a.Latitude - b.Latitude, 2)));
             }
-            if (b.Latitude == 0)
-            {
-                b.Latitude = latB;
-                b.Longitude = longB;
-            }
-            return Math.Sqrt((Math.Pow(a.Longitude - b.Longitude, 2) + Math.Pow(a.Latitude - b.Latitude, 2)));
         }
 
         /// <summary>
@@ -124,49 +157,55 @@ namespace BL
         /// </summary>
         /// <param name="a">the location we want to get it closest station</param>
         /// <returns>ID of the closest station</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null)
         {
-            try
+            lock (Data)
             {
-                int i = 0;
-                int closestID = 0;
-                double minimum = 0;
-                IEnumerable<DO.Station> tempDataStations;
-                if (stations == null)
-                    tempDataStations = Data.PrintStationList();
-                else
-                    tempDataStations = stations;
-                List<BO.Station> stationsBL = new();
-                foreach (DO.Station station in tempDataStations)
+                try
                 {
-                    stationsBL.Add(BLStation(station.Id));
-                }
-                if (stationsBL.Count == 0)
+                    int i = 0;
+                    int closestID = 0;
+                    double minimum = 0;
+                    IEnumerable<DO.Station> tempDataStations;
+                    if (stations == null)
+                        tempDataStations = Data.PrintStationList();
+                    else
+                        tempDataStations = stations;
+                    List<BO.Station> stationsBL = new();
+                    foreach (DO.Station station in tempDataStations)
+                    {
+                        stationsBL.Add(BLStation(station.Id));
+                    }
+                    if (stationsBL.Count == 0)
+                        return closestID;
+                    while (i != stationsBL.Count)
+                    {
+                        if (stationsBL[i].ReadyStandsInStation > 0)
+                        {
+                            closestID = stationsBL[0].Id;
+                            minimum = GetDistance(a, stationsBL[0].location);
+                            break;
+                        }
+                    }
+                    if (i == stationsBL.Count)
+                        throw new BlException("There is no station to charge");
+                    for (; i < stationsBL.Count; i++)
+                    {
+                        if (minimum > GetDistance(a, stationsBL[i].location) && stationsBL[i].ReadyStandsInStation > 0)
+                        {
+                            closestID = stationsBL[i].Id;
+                            minimum = GetDistance(a, stationsBL[i].location);
+                        }
+                    }
                     return closestID;
-                while (i != stationsBL.Count)
-                {
-                    if (stationsBL[i].ReadyStandsInStation > 0)
-                    {
-                        closestID = stationsBL[0].Id;
-                        minimum = GetDistance(a, stationsBL[0].location);
-                        break;
-                    }
                 }
-                if (i == stationsBL.Count)
-                    throw new BlException("There is no station to charge");
-                for (; i < stationsBL.Count; i++)
+                catch (DO.DalExceptions ex)
                 {
-                    if (minimum > GetDistance(a, stationsBL[i].location) && stationsBL[i].ReadyStandsInStation > 0)
-                    {
-                        closestID = stationsBL[i].Id;
-                        minimum = GetDistance(a, stationsBL[i].location);
-                    }
+                    throw new BlException(ex.Message);
                 }
-                return closestID;
-            }
-            catch (DO.DalExceptions ex)
-            {
-                throw new BlException(ex.Message);
             }
         }
 
@@ -175,17 +214,22 @@ namespace BL
         /// </summary>
         /// <param name="ID">ID of station</param>
         /// <returns>location of station</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Location GetLocationOfStation(int ID)
         {
-            try
+            lock (Data)
             {
-                DO.Station tempDataStations = Data.DisplayStation(ID);            
-                Location loc = Location(tempDataStations.Longitude, tempDataStations.Latitude);
-                return loc;
-            }
-            catch (DO.DalExceptions ex)
-            {
-                throw new BlException(ex.Message);
+                try
+                {
+                    DO.Station tempDataStations = Data.DisplayStation(ID);
+                    Location loc = Location(tempDataStations.Longitude, tempDataStations.Latitude);
+                    return loc;
+                }
+                catch (DO.DalExceptions ex)
+                {
+                    throw new BlException(ex.Message);
+                }
             }
         }
 
@@ -194,6 +238,8 @@ namespace BL
         /// </summary>
         /// <param name="s">DAL station</param>
         /// <returns>BL station</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station BLStation(int id)
         {
             DO.Station s = Data.DisplayStation(id);
@@ -208,6 +254,7 @@ namespace BL
             return station;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station BLStation()
         {
             BO.Station station = new();
@@ -215,12 +262,14 @@ namespace BL
             station.ListOfDrones = new();
             return station;
         }
-        
+
         /// <summary>
         /// Turn a DroneToList drone into a BL Drone
         /// </summary>
         /// <param name="d">DroneToList drone</param>
         /// <returns>BL Drone</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Drone BLDrone(DroneToList d)
         {
             BO.Drone drone = new();
@@ -244,6 +293,8 @@ namespace BL
         /// </summary>
         /// <param name="c">DAL customer </param>
         /// <returns>BL customer</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Customer BLCustomer(int Id)
         {
             
@@ -277,6 +328,8 @@ namespace BL
         /// </summary>
         /// <param name="p">DAL parcel </param>
         /// <returns>BL parcel</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Parcel BLParcel(DO.Parcel p)
         {
             List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
@@ -296,12 +349,14 @@ namespace BL
             }
             return parcel;
         }
-       
+
         /// <summary>
         /// Turn a DroneToList drone into a DroneInParcel
         /// </summary>
         /// <param name="d">DroneToList</param>
         /// <returns>DroneInParcel</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneInParcel BLDroneInParcel(DroneToList d)
         {
             DroneInParcel drone = new();
@@ -317,6 +372,9 @@ namespace BL
         /// <param name="p">DAL parcel</param>
         /// <param name="sender">a flag if the customer of ParcelAtCustomer is the sender or the recipient</param>
         /// <returns>BL ParcelAtCustomer</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender)
         {
             List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
@@ -344,6 +402,9 @@ namespace BL
         /// </summary>
         /// <param name="p">DAL parcel</param>
         /// <returns>BL ParcelInTransfer</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public ParcelInTransfer BLParcelInTransfer(DO.Parcel p)
         {
             List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList());
@@ -365,6 +426,9 @@ namespace BL
         /// </summary>
         /// <param name="DalCus">DAL customer</param>
         /// <returns>BL CustomerInParcel</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public CustomerInParcel BLCustomerInParcel(DO.Customer DalCus)
         {
             CustomerInParcel c = new();
@@ -378,6 +442,9 @@ namespace BL
         /// </summary>
         /// <param name="d">DroneToList</param>
         /// <returns>DroneInCharging</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public DroneInCharging BLDroneInCharging(DroneToList d)
         {
             DroneInCharging drone = new();
@@ -391,6 +458,9 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public DroneInCharging BLDroneInCharging1(int id)
         {
             DroneInCharging drone = new();
@@ -407,6 +477,9 @@ namespace BL
         /// <param name="lon">longitude point value</param>
         /// <param name="lat">latitude point value</param>
         /// <returns>Location</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public Location Location(double lon, double lat)
         {
             Location l = new();
@@ -421,6 +494,9 @@ namespace BL
         /// <param name="s">DAL station</param>
         /// <param name="s">DAL station</param>
         /// <returns>StationToList</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public StationToList BLStationToList(DO.Station s)
         {
             StationToList stationToList = new();
@@ -437,6 +513,9 @@ namespace BL
         /// </summary>
         /// <param name="d"> BL Drone</param>
         /// <returns>DroneToList</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public DroneToList BLDroneToList(BO.Drone d)
         {
             DroneToList droneToList = new();
@@ -456,6 +535,9 @@ namespace BL
         /// </summary>
         /// <param name="c">DAL customer</param>
         /// <returns>CustomerToList</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public CustomerToList BLCustomerToList(DO.Customer c)
         {
             CustomerToList customerToList = new();
@@ -479,6 +561,9 @@ namespace BL
         /// </summary>
         /// <param name="c">DAL parcel</param>
         /// <returns>ParcelToList</returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public ParcelToList BLParcelToList(DO.Parcel c)
         {
             ParcelToList parcelToList = new();
@@ -499,6 +584,8 @@ namespace BL
             return parcelToList;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public Location GetLocationOfStation(StationToList s)
         {
             DO.Station st = Data.DisplayStation(s.Id);
@@ -506,6 +593,7 @@ namespace BL
             return location;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static string ConvertToSexagesimal(double? point)
         {
             if (point == null)
@@ -520,9 +608,19 @@ namespace BL
             double? Second = point;
             return $"{Degrees}° {Minutes}' {string.Format("{0:0.###}", Second)}\" ";
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void DeletAParcel(int Id)
         {
             Data.DeleteParcel(Id);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
+        public void RunSimulator(int droneId, Action simulatorProgress, Func<bool> cancelSimulator)
+        {
+            Simulator.Simulator simulator = new Simulator.Simulator(this, droneId, simulatorProgress, cancelSimulator);
         }
     }
 }

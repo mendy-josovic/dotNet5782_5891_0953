@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 namespace DalObject
 {
     internal partial class DalObject : IDal
@@ -18,6 +19,7 @@ namespace DalObject
             DataSource.Initialize();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateANewDroneCharge(int staId, int drnId)
         {
 
@@ -26,8 +28,9 @@ namespace DalObject
             Dc.StationId = staId;
             Dc.EntryTimeForLoading = DateTime.Now;
             DataSource.droneCharges.Add(Dc);
-        }  
+        }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ClearDroneCharge(int drnId)
         {
             int i = DataSource.droneCharges.FindIndex(w => w.DroneId == drnId);  //find the parcel that was supplied
@@ -43,6 +46,8 @@ namespace DalObject
         /// <param name="DroneId"></param>
         /// <param name="StationId"></param>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge DisplayDroneCharge(int DroneId = 0)
         {        
                 if(!DataSource.droneCharges.Any(w => w.DroneId == DroneId))
@@ -50,13 +55,15 @@ namespace DalObject
                 return DataSource.droneCharges.Find(w => w.DroneId == DroneId);                      
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] Consumption()
         {
             double[] arr = new double[]{ DataSource.Config.vacant,  DataSource.Config.LightWeightCarrier,  DataSource.Config.MediumWeightCarrier,  DataSource.Config.HeavyWeightCarrier,  DataSource.Config.ChargingRate };
             return arr;
         }
 
-         public int GetRuningNumber()
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public int GetRuningNumber()
         {
             return ++DataSource.Config.RuningNumber;
         }
