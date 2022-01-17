@@ -357,6 +357,7 @@ namespace DalXml
         }
 
         #endregion
+
         #region Config
         public double[] Consumption()
         {
