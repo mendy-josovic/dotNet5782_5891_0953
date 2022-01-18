@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-    namespace BO
+namespace BO
+{
+    public class CustomerInParcel
     {
-        public class CustomerInParcel
+        public int Id { get; set; }
+        public String Name { get; set; }
+        public override string ToString()//override the to-string to print it nice
         {
-            public int Id { get; set; }
-            public String Name { get; set; }
-            public override string ToString()//override the to-string to print it nice
-            {
-                return "Customer ID: " + Id + "\nName: " + Name + "\n";
-            }
+            return "Customer ID: " + Id + "\nName: " + Name + "\n";
         }
     }
+}

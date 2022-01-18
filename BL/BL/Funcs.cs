@@ -324,6 +324,13 @@ namespace BL
             }
         }
 
+        public BO.Customer BLCustomer()
+        {
+            BO.Customer customer = new();
+            customer.location = new();
+            return customer;
+        }
+
         /// <summary>
         /// Turn a DAL parcel into a BL parcel 
         /// </summary>
@@ -595,6 +602,28 @@ namespace BL
                 else if (parcel.PickedUp != DateTime.MinValue)
                     parcelToList.Status = StatusOfParcel.PickedUp;
                 else if (parcel.Scheduled != DateTime.MinValue)
+                    parcelToList.Status = StatusOfParcel.Associated;
+                else
+                    parcelToList.Status = StatusOfParcel.Created;
+                return parcelToList;
+            }
+        }
+
+        public ParcelToList BLParcelToList(BO.Parcel p)
+        {
+            lock (Data)
+            {
+                ParcelToList parcelToList = new();
+                parcelToList.Id = p.Id;
+                parcelToList.Sender = p.Sender.Name;
+                parcelToList.Recipient = p.Recipient.Name;
+                parcelToList.Weight = p.Weight;
+                parcelToList.Priority = p.Priority;
+                if (p.Delivered != DateTime.MinValue)
+                    parcelToList.Status = StatusOfParcel.Delivered;
+                else if (p.PickedUp != DateTime.MinValue)
+                    parcelToList.Status = StatusOfParcel.PickedUp;
+                else if (p.Scheduled != DateTime.MinValue)
                     parcelToList.Status = StatusOfParcel.Associated;
                 else
                     parcelToList.Status = StatusOfParcel.Created;

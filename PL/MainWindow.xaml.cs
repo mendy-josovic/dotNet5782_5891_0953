@@ -28,12 +28,12 @@ namespace PL
         private void ManagementButton_Click(object sender, RoutedEventArgs e)
         {
             new CodeWindow().Show();
-            this.Close();
+            //this.Close();
         }
 
         private void CustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            //new CustomerWindow();
+            new CustomerCode().Show();
             this.Close();
         }
     }

@@ -51,6 +51,8 @@ namespace PL
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(blObjects).ShowDialog();
+            CustomerLists = blObjects.DisplayCustomerList();
+            CustomerListView.ItemsSource = CustomerLists;
         }
 
         private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)

@@ -32,6 +32,7 @@ namespace BlApi
         public Station BLStation();
         public Drone BLDrone(DroneToList d);
         public Customer BLCustomer(int Id);
+        public Customer BLCustomer();
         public Parcel BLParcel(DO.Parcel p);
         public ParcelInTransfer BLParcelInTransfer(DO.Parcel p);
         public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender);
@@ -42,6 +43,7 @@ namespace BlApi
         public DroneToList BLDroneToList(Drone d);
         public CustomerToList BLCustomerToList(DO.Customer c);
         public ParcelToList BLParcelToList(DO.Parcel c);
+        public ParcelToList BLParcelToList(BO.Parcel p);
         public Location Location(double lon, double lat);
         public Location GetLocationOfStation(StationToList s);
         public IEnumerable<DroneToList> BLDrones(Predicate<DroneToList> predicate = null);        

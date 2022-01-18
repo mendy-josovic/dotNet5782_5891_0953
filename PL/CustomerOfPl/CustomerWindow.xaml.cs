@@ -21,15 +21,20 @@ namespace PL
     public partial class CustomerWindow : Window
     {
         IBl blObject;
-        Customer Customer1 = new();
+        Customer Customer1;
         bool isCloseRequired;
 
         public CustomerWindow(IBl blobject)
         {
             this.blObject = blobject;
+            Customer1 = blObject.BLCustomer();
             InitializeComponent();
             AddCustomerButton.Content = "Add";
             CustomerWindowGrid.DataContext = Customer1;
+            ParcelsSent.Visibility = Visibility.Hidden;
+            ParcelsRecievd.Visibility = Visibility.Hidden;
+            ParcelsSentLabel.Visibility = Visibility.Hidden;
+            ParcelsReceivedLabel.Visibility = Visibility.Hidden;
         }
         public CustomerWindow(IBl blobjects, Customer Customer)
         {
@@ -59,6 +64,7 @@ namespace PL
                 {                   
                     blObject.AddCustomer(Customer1);
                     MessageBox.Show("Successfully added Customer!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    isCloseRequired = true;
                     this.Close();
                 }
             }
