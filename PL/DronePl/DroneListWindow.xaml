@@ -14,7 +14,7 @@
     <Window.Resources>
         <local:ProgressForegroundConverter x:Key="ProgressForegroundConverter"/>
     </Window.Resources>
-    <Grid Name="MainGrid">
+    <Grid x:Name="MainGrid">
         <Grid.Resources>
             <ImageBrush x:Key="RefreshImage" ImageSource="/Images/refresh.png" />
             <ImageBrush x:Key="ClearImage" ImageSource="/Images/clear.png" />
@@ -51,9 +51,12 @@
                     <StackPanel x:Name="SP" Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding Key}" FontWeight="Bold" Foreground="Gray" FontSize="22" VerticalAlignment="Bottom" />
+                            <TextBlock Text=" /" FontWeight="Bold" Foreground="Gray" FontSize="22" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{Binding Count}" FontSize="22" Foreground="Green" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                            <TextBlock Text=" item(s)" FontSize="22" Foreground="Silver" FontStyle="Italic" VerticalAlignment="Bottom" />
                         </StackPanel>
                         <Expander IsExpanded="True">
-                            <ListView x:Name="ValueDronesListView" MouseDoubleClick="ValueDronesListView_MouseDoubleClick"  ItemsSource="{Binding}">
+                            <ListView x:Name="ValueDronesListView" MouseDoubleClick="ValueDronesListView_MouseDoubleClick"  ItemsSource="{Binding Value}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}" />

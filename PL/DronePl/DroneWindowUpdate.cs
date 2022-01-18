@@ -24,6 +24,7 @@ namespace PL
         string RecieverContent = "Recieve parcel";
         bool isManualModePressed;
         BackgroundWorker worker;
+        RefreshSimulatorEvent refreshSimulatorEvent = new();
         /// <summary>
         /// 
         /// </summary>
@@ -167,6 +168,10 @@ namespace PL
             isManualModePressed = true;
             ManualButton.Visibility = Visibility.Hidden;
             AutoButton.Visibility = Visibility.Visible;
+            DeliveryButton.Visibility = Visibility.Visible;
+            ChargingButton.Visibility = Visibility.Visible;
+            UpdateButton.Visibility = Visibility.Visible;
+            CloseButton.IsEnabled = true;
             worker.CancelAsync();
         }
 
@@ -224,6 +229,8 @@ namespace PL
             {
                 AddDrone.DataContext = drone;
             }));
+
+            refreshSimulatorEvent.RaiseEvent();
         }
 
         private bool CancelWorker()

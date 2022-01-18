@@ -24,9 +24,11 @@ namespace PL
         IEnumerable <ParcelToList> parcelToLists { set; get; }
 
         bool isCloseButtonPressed;
+        RefreshSimulatorEvent refreshSimulatorEvent = new();
 
         public ParcelListWindow(IBl blObject)
         {
+            refreshSimulatorEvent.AddEventHandler(new Action(RefreshEventHandler));
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.BlObject = blObject;
@@ -38,6 +40,15 @@ namespace PL
             //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Sender");
             //view.GroupDescriptions.Add(groupDescription);
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(Priority));
+        }
+
+        private void RefreshEventHandler()
+        {
+            this.Dispatcher.Invoke(new Action(delegate ()
+            {
+                parcelToLists = BlObject.DisplayParcelList();
+                ParcelLiastView.ItemsSource = parcelToLists;
+            }));
         }
 
 
