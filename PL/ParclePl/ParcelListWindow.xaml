@@ -28,7 +28,6 @@
                     <GridViewColumn Header="Recipient" Width="70" DisplayMemberBinding="{Binding Recipient }"/>
                     <GridViewColumn Header="Weight" Width="90" DisplayMemberBinding="{Binding Weight}"/>
                     <GridViewColumn Header="Priority" Width="90" DisplayMemberBinding="{Binding Priority}"/>
-                    <GridViewColumn Header="Drone" Width="90" DisplayMemberBinding="{Binding Drone.Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle>

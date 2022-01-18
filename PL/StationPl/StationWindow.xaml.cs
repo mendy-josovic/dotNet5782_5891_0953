@@ -53,6 +53,8 @@ namespace PL
             DronesListView.ItemsSource = station.ListOfDrones;
             StationLabel.Content = String.Format("Station {0}", station.Id);
             AddButton.Visibility = Visibility.Hidden;
+            LongitudeTextBox.IsReadOnly = true;
+            LatitudeTextBox.IsReadOnly = true;
             IDTextBox.BorderBrush = null;
             NameTextBox.BorderBrush = null;
             LongitudeTextBox.BorderBrush = null;

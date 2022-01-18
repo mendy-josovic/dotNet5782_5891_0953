@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Icon="/Images/drone.jpg"
         Title="CustomerWindow" Height="450" Width="800" Closing="Window_Closing">
-
+    <Window.Resources>
+        <local:LocationConverter x:Key="LocationConverter"/>
+    </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="/Images/drone_with_parcel2.jpg"/>
     </Window.Background>
@@ -18,10 +20,10 @@
         <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Left" Margin="99,121,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="300,121,0,0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25"  />
         <Label x:Name="PhoneLabel" Content="Phone number" HorizontalAlignment="Left" Margin="99,154,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Label x:Name="LongtitudeLabel" Content="Longtitude" HorizontalAlignment="Left" Margin="99,189,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
-        <Label x:Name="LatitudeLabel" Content="Latitude" HorizontalAlignment="Left" Margin="105,229,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
-        <TextBox x:Name="LongtitudeTextBox" HorizontalAlignment="Left" Margin="300,193,0,0" Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
-        <TextBox x:Name="LatitudeTextBox" HorizontalAlignment="Left" Margin="300,233,0,0" Text="{Binding location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
+        <Label x:Name="LongtitudeLabel" Content="Longitude" HorizontalAlignment="Left" Margin="99,189,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
+        <Label x:Name="LatitudeLabel" Content="Latitude" HorizontalAlignment="Left" Margin="99,229,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="1.003,0.596"/>
+        <TextBox x:Name="LongtitudeTextBox" HorizontalAlignment="Left" Margin="300,193,0,0" Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource LocationConverter}}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
+        <TextBox x:Name="LatitudeTextBox" HorizontalAlignment="Left" Margin="300,233,0,0" Text="{Binding location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource LocationConverter}}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" />
         <Label x:Name="ParcelsSentLabel" Content="Parcels Sent" HorizontalAlignment="Left" Margin="99,272,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.972,0.685"/>
         <Label x:Name="ParcelsReceivedLabel" Content="Parcels Received" HorizontalAlignment="Left" Margin="99,304,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="PhoneTextBox" HorizontalAlignment="Left" Margin="300,157,0,0" VerticalAlignment="Top" Width="120" Height="25" Text="{Binding Phone, Mode=TwoWay}" />
@@ -57,8 +59,7 @@
         <Label x:Name="x3" Content="*" HorizontalAlignment="Left" Margin="283,160,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x4" Content="*" HorizontalAlignment="Left" Margin="283,195,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x6" Content="*" HorizontalAlignment="Left" Margin="284,230,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
-        <ComboBox x:Name="ParcelsSent" HorizontalAlignment="Left" Margin="302,261,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding FromCustomer}" SelectionChanged="ParcelsSent_SelectionChanged" Height="25"/>
-        <ComboBox x:Name="ParcelsRecievd" HorizontalAlignment="Left" Margin="300,298,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ToCustomer}" SelectionChanged="ParcelsRecievd_SelectionChanged" Height="25"/>
-        <Label x:Name="Latitude" Content=" Latitude"  FontSize="16" HorizontalAlignment="Left" Margin="109,224,0,0" VerticalAlignment="Top" Width="74"/>
+        <ComboBox x:Name="ParcelsSent" HorizontalAlignment="Left" Margin="300,272,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding FromCustomer}" SelectionChanged="ParcelsSent_SelectionChanged" Height="25"/>
+        <ComboBox x:Name="ParcelsRecievd" HorizontalAlignment="Left" Margin="300,304,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ToCustomer}" SelectionChanged="ParcelsRecievd_SelectionChanged" Height="25"/>
     </Grid>
 </Window>
