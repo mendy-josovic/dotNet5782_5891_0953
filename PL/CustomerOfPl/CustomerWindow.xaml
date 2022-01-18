@@ -41,6 +41,12 @@
                         <DataTrigger Binding="{Binding ElementName=PhoneTextBox, Path=Text}" Value="">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=LongitudeTextBox, Path=Text}" Value="">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=LatitudeTextBoxL, Path=Text}" Value="">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Button.Style>
@@ -49,7 +55,10 @@
         <Label x:Name="x1" Content="*" HorizontalAlignment="Left" Margin="284,93,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x2" Content="*" HorizontalAlignment="Left" Margin="285,127,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Label x:Name="x3" Content="*" HorizontalAlignment="Left" Margin="283,160,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
-        <ComboBox x:Name="ParcelsSent" HorizontalAlignment="Left" Margin="300,274,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding FromCustomer}" SelectionChanged="ParcelsSent_SelectionChanged" Height="25"/>
-        <ComboBox x:Name="ParcelsRecievd" HorizontalAlignment="Left" Margin="300,308,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ToCustomer}" SelectionChanged="ParcelsRecievd_SelectionChanged" Height="25"/>
+        <Label x:Name="x4" Content="*" HorizontalAlignment="Left" Margin="283,195,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="x6" Content="*" HorizontalAlignment="Left" Margin="284,230,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <ComboBox x:Name="ParcelsSent" HorizontalAlignment="Left" Margin="302,261,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding FromCustomer}" SelectionChanged="ParcelsSent_SelectionChanged" Height="25"/>
+        <ComboBox x:Name="ParcelsRecievd" HorizontalAlignment="Left" Margin="300,298,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ToCustomer}" SelectionChanged="ParcelsRecievd_SelectionChanged" Height="25"/>
+        <Label x:Name="Latitude" Content=" Latitude"  FontSize="16" HorizontalAlignment="Left" Margin="109,224,0,0" VerticalAlignment="Top" Width="74"/>
     </Grid>
 </Window>

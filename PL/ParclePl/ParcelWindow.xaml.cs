@@ -62,6 +62,8 @@ namespace PL
             Parcel.Weight = (Weight)WeihComboBox.SelectedItem;
             Parcel.Priority = (Priority)PriorityComboBox.SelectedItem;
             BlObject.AddParcel(Parcel);
+            MessageBox.Show("Successfully added Parcel!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
 
         private void PickUpButton_Click(object sender, RoutedEventArgs e)
@@ -97,6 +99,7 @@ namespace PL
             }
             else
             {
+               
                 DeleteButton.IsEnabled = false;
                 UpdateButton.IsEnabled = false;
                 PickUpButton.IsEnabled = false;
@@ -106,17 +109,56 @@ namespace PL
         {
             if(Parcel.Id>0)
             {
+                S2.Visibility = Visibility.Hidden;
+                R2.Visibility = Visibility.Hidden;
+                w2.Visibility = Visibility.Hidden;
+                P2.Visibility = Visibility.Hidden;
+                parcel.Visibility = Visibility.Visible;
+                SenderTextBox.Visibility = Visibility.Visible;
+                Sender.Visibility = Visibility.Visible;
+                RecipientTextBox.Visibility = Visibility.Visible;
+                WeighTextBox.Visibility = Visibility.Visible;
+                PriorityTextBox.Visibility = Visibility.Visible;
+                DronTextBox.Visibility = Visibility.Visible;
+                Recipient.Visibility = Visibility.Visible;
+                weigh.Visibility = Visibility.Visible;
+                Priority.Visibility = Visibility.Visible;
+                Drone.Visibility = Visibility.Visible;
                 DeleteButton.Visibility = Visibility.Visible;
                 UpdateButton.Visibility = Visibility.Visible;
                 PickUpButton.Visibility = Visibility.Visible;
                 AddButton.Visibility = Visibility.Hidden;
+                SemderComboBox.Visibility = Visibility.Hidden;
+                RecipientComboBox.Visibility = Visibility.Hidden;
+                PriorityComboBox.Visibility = Visibility.Hidden;
+                WeihComboBox.Visibility = Visibility.Hidden;
+
             }
             else
             {
+                parcel.Visibility = Visibility.Hidden;
+                SenderTextBox.Visibility = Visibility.Hidden;
+                Sender.Visibility = Visibility.Hidden;
+                RecipientTextBox.Visibility = Visibility.Hidden;
+                WeighTextBox.Visibility = Visibility.Hidden;
+                PriorityTextBox.Visibility = Visibility.Hidden;
+                DronTextBox.Visibility = Visibility.Hidden;
+                Recipient.Visibility = Visibility.Hidden;
+                weigh.Visibility = Visibility.Hidden;
+                Priority.Visibility = Visibility.Hidden;
+                Drone.Visibility = Visibility.Hidden;
                 DeleteButton.Visibility = Visibility.Hidden;
                 UpdateButton.Visibility = Visibility.Hidden;
                 PickUpButton.Visibility = Visibility.Hidden;
                 AddButton.Visibility = Visibility.Visible;
+                SemderComboBox.Visibility = Visibility.Visible;
+                RecipientComboBox.Visibility = Visibility.Visible;
+                PriorityComboBox.Visibility = Visibility.Visible;
+                WeihComboBox.Visibility = Visibility.Visible;
+                S2.Visibility = Visibility.Visible;
+                R2.Visibility = Visibility.Visible;
+                w2.Visibility = Visibility.Visible;
+                P2.Visibility = Visibility.Visible;
             }
         }
 

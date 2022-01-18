@@ -61,7 +61,10 @@ namespace PL
                     InitializeComponent();
                 }
                 if (AddCustomerButton.Content == "Add")
-                {                   
+                {
+                    Customer1.location= new();
+                    Customer1.location.Longitude = double.Parse(LongitudeTextBox.Text);
+                    Customer1.location.Latitude = double.Parse(LatitudeTextBoxL.Text);
                     blObject.AddCustomer(Customer1);
                     MessageBox.Show("Successfully added Customer!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
                     isCloseRequired = true;
