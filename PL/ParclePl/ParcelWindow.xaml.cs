@@ -23,19 +23,21 @@ namespace PL
     {
         IBl BlObject;
         Parcel Parcel = new();
+        bool isCloseButtonPressed = false;
+
         public ParcelWindow(IBl blObject)
         {
             InitializeComponent();        
             this.BlObject = blObject;
             IEnumerable<CustomerToList> customers = BlObject.DisplayCustomerList();
             List<String> Nams = BlObject.DisplayCustomerList().Select(x => x.Name).ToList();
-            SemderComboBox.ItemsSource = Nams;
+            SenderComboBox.ItemsSource = Nams;
             RecipientComboBox.ItemsSource = Nams;
-            List<int> idofsender = customers.Where(x => x.Name == (String)SemderComboBox.SelectedItem).Select(x => x.Id).ToList();        
-            WeihComboBox.ItemsSource = Enum.GetValues(typeof(Weight));
+            List<int> idofsender = customers.Where(x => x.Name == (String)SenderComboBox.SelectedItem).Select(x => x.Id).ToList();        
+            WeightComboBox.ItemsSource = Enum.GetValues(typeof(Weight));
             PriorityComboBox.ItemsSource = Enum.GetValues(typeof(Priority));
-            ButtoneEnblaer();
-            VisibiltyIndecatoer();
+            ButtonEnabler();
+            VisibiltyIndicator();
         }
 
         public ParcelWindow(IBl blObject, int Id)
@@ -44,8 +46,8 @@ namespace PL
             Parcel = BlObject.BLParcel(BlObject.DisplayParcel(Id));      
             InitializeComponent();
             ParcelMainGrid.DataContext = Parcel;
-            ButtoneEnblaer();
-            VisibiltyIndecatoer();
+            ButtonEnabler();
+            VisibiltyIndicator();
         }
         /// <summary>
         /// 
@@ -55,11 +57,11 @@ namespace PL
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            List<int> idofsender = BlObject.DisplayCustomerList().Where(x => x.Name == (String)SemderComboBox.SelectedItem).Select(x => x.Id).ToList();
+            List<int> idofsender = BlObject.DisplayCustomerList().Where(x => x.Name == (String)SenderComboBox.SelectedItem).Select(x => x.Id).ToList();
             List<int> Recipient = BlObject.DisplayCustomerList().Where(x => x.Name == (String)RecipientComboBox.SelectedItem).Select(x => x.Id).ToList();
             Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(idofsender.First()));
             Parcel.Recipient= BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(idofsender.Last()));
-            Parcel.Weight = (Weight)WeihComboBox.SelectedItem;
+            Parcel.Weight = (Weight)WeightComboBox.SelectedItem;
             Parcel.Priority = (Priority)PriorityComboBox.SelectedItem;
             BlObject.AddParcel(Parcel);
             MessageBox.Show("Successfully added Parcel!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -89,7 +91,7 @@ namespace PL
         /// <summary>
         /// sets the able and enable of the buttons
         /// </summary>
-        public void ButtoneEnblaer()
+        public void ButtonEnabler()
         {
             if(Parcel.Scheduled!= DateTime.MinValue&& Parcel.PickedUp==null)
             {
@@ -105,60 +107,43 @@ namespace PL
                 PickUpButton.IsEnabled = false;
             }
         }
-        public void VisibiltyIndecatoer()
+        public void VisibiltyIndicator()
         {
             if(Parcel.Id>0)
             {
-                S2.Visibility = Visibility.Hidden;
-                R2.Visibility = Visibility.Hidden;
-                w2.Visibility = Visibility.Hidden;
-                P2.Visibility = Visibility.Hidden;
-                parcel.Visibility = Visibility.Visible;
+                ParcelIDTextBlock.Visibility = Visibility.Visible;
                 SenderTextBox.Visibility = Visibility.Visible;
-                Sender.Visibility = Visibility.Visible;
                 RecipientTextBox.Visibility = Visibility.Visible;
-                WeighTextBox.Visibility = Visibility.Visible;
                 PriorityTextBox.Visibility = Visibility.Visible;
-                DronTextBox.Visibility = Visibility.Visible;
-                Recipient.Visibility = Visibility.Visible;
-                weigh.Visibility = Visibility.Visible;
-                Priority.Visibility = Visibility.Visible;
+                DroneTextBox.Visibility = Visibility.Visible;
+                WeightTextBox.Visibility = Visibility.Visible;
                 Drone.Visibility = Visibility.Visible;
                 DeleteButton.Visibility = Visibility.Visible;
                 UpdateButton.Visibility = Visibility.Visible;
                 PickUpButton.Visibility = Visibility.Visible;
                 AddButton.Visibility = Visibility.Hidden;
-                SemderComboBox.Visibility = Visibility.Hidden;
+                SenderComboBox.Visibility = Visibility.Hidden;
                 RecipientComboBox.Visibility = Visibility.Hidden;
                 PriorityComboBox.Visibility = Visibility.Hidden;
-                WeihComboBox.Visibility = Visibility.Hidden;
+                WeightComboBox.Visibility = Visibility.Hidden;
 
             }
             else
             {
-                parcel.Visibility = Visibility.Hidden;
+                ParcelIDTextBlock.Visibility = Visibility.Hidden;
                 SenderTextBox.Visibility = Visibility.Hidden;
-                Sender.Visibility = Visibility.Hidden;
                 RecipientTextBox.Visibility = Visibility.Hidden;
-                WeighTextBox.Visibility = Visibility.Hidden;
+                WeightTextBox.Visibility = Visibility.Hidden;
                 PriorityTextBox.Visibility = Visibility.Hidden;
-                DronTextBox.Visibility = Visibility.Hidden;
-                Recipient.Visibility = Visibility.Hidden;
-                weigh.Visibility = Visibility.Hidden;
-                Priority.Visibility = Visibility.Hidden;
-                Drone.Visibility = Visibility.Hidden;
+                DroneTextBox.Visibility = Visibility.Hidden;
                 DeleteButton.Visibility = Visibility.Hidden;
                 UpdateButton.Visibility = Visibility.Hidden;
                 PickUpButton.Visibility = Visibility.Hidden;
                 AddButton.Visibility = Visibility.Visible;
-                SemderComboBox.Visibility = Visibility.Visible;
+                SenderComboBox.Visibility = Visibility.Visible;
                 RecipientComboBox.Visibility = Visibility.Visible;
                 PriorityComboBox.Visibility = Visibility.Visible;
-                WeihComboBox.Visibility = Visibility.Visible;
-                S2.Visibility = Visibility.Visible;
-                R2.Visibility = Visibility.Visible;
-                w2.Visibility = Visibility.Visible;
-                P2.Visibility = Visibility.Visible;
+                WeightComboBox.Visibility = Visibility.Visible;
             }
         }
 
@@ -170,6 +155,17 @@ namespace PL
         private void RecipientTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             new CustomerWindow(BlObject, BlObject.BLCustomer(Parcel.Recipient.Id)).Show();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            isCloseButtonPressed = true;
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !isCloseButtonPressed;
         }
     }
 }

@@ -1,0 +1,24 @@
+﻿<Window x:Class="PL.CustomerCode"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="CustomerCode" Height="200" Width="400">
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/drone_sky.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Enter Your ID:" HorizontalAlignment="Left" Margin="60,0,0,15" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold"/>
+        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="61,7,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Height="23"/>
+        <Button x:Name="OKButton" Content="OK" HorizontalAlignment="Left" Margin="95,46,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" FontWeight="Bold" Click="OKButton_Click" />
+        <Label Content="New Customer?" HorizontalAlignment="Left" Margin="257,0,0,54" VerticalAlignment="Bottom" FontWeight="Bold" Height="28" Grid.Row="1" Foreground="#FFF90101"/>
+        <Button x:Name="RegisterButton" Content="Register" HorizontalAlignment="Left" Margin="255,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="102" FontWeight="Bold" Click="RegisterButton_Click"/>
+
+    </Grid>
+</Window>

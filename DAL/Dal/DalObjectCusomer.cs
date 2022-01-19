@@ -17,7 +17,9 @@ namespace DalObject
            
             int i = DataSource.customers.FindIndex(w => w.Equals(cst));
             if (i > 0)
-                throw new DO.DalExceptions("Customer Alredy exsits");
+                throw new DO.DalExceptions("Customer Already exists");
+            if (cst.Id <= 0)
+                throw new DO.DalExceptions("Invalid ID, ID must be positive");
             DataSource.customers.Add(cst);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]

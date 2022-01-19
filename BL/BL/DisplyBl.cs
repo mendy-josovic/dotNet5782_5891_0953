@@ -55,7 +55,7 @@ namespace BL
                 {
                     List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w => w.Id == id));
                     if (tempDataCustomers.Count == 0)
-                        throw new BlException("Customer does not exixt");
+                        throw new BlException("Customer does not exist");
                     return Data.PrintCustomer(id);
                 }
                 catch (DO.DalExceptions ex)

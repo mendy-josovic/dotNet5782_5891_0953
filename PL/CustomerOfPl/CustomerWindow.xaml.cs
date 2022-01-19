@@ -21,15 +21,20 @@ namespace PL
     public partial class CustomerWindow : Window
     {
         IBl blObject;
-        Customer Customer1 = new();
+        Customer Customer1;
         bool isCloseRequired;
 
         public CustomerWindow(IBl blobject)
         {
             this.blObject = blobject;
+            Customer1 = blObject.BLCustomer();
             InitializeComponent();
             AddCustomerButton.Content = "Add";
             CustomerWindowGrid.DataContext = Customer1;
+            ParcelsSent.Visibility = Visibility.Hidden;
+            ParcelsRecievd.Visibility = Visibility.Hidden;
+            ParcelsSentLabel.Visibility = Visibility.Hidden;
+            ParcelsReceivedLabel.Visibility = Visibility.Hidden;
         }
         public CustomerWindow(IBl blobjects, Customer Customer)
         {
@@ -41,6 +46,8 @@ namespace PL
             x5.Visibility = Visibility.Hidden;
             x3.Visibility = Visibility.Hidden;
             IDTextBox.IsReadOnly = true;
+            LongtitudeTextBox.IsReadOnly = true;
+            LatitudeTextBox.IsReadOnly = true;
             CustomerWindowGrid.DataContext = Customer1;
             blObject = blobjects;
 
@@ -53,13 +60,11 @@ namespace PL
                 if (AddCustomerButton.Content == "Update")
                 {
                     blObject.UpdateCosomerInfo(Customer1.Id, Customer1.Name, Customer1.Phone);
+                    MessageBox.Show("Successfully updated Customer!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
                     InitializeComponent();
                 }
                 if (AddCustomerButton.Content == "Add")
                 {
-                    Customer1.location= new();
-                    Customer1.location.Longitude = double.Parse(LongitudeTextBox.Text);
-                    Customer1.location.Latitude = double.Parse(LatitudeTextBoxL.Text);
                     blObject.AddCustomer(Customer1);
                     MessageBox.Show("Successfully added Customer!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
                     isCloseRequired = true;

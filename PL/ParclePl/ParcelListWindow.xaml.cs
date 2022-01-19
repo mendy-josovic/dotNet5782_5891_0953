@@ -42,6 +42,19 @@ namespace PL
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(Priority));
         }
 
+        public ParcelListWindow(IBl blObject, CustomerInParcel cus)
+        {
+            InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.BlObject = blObject;
+            MainGrid.DataContext = parcelToLists;
+           
+            IEnumerable<BO.Parcel> parcelsList = blObject.DisplayParcelLists(x => x.Sender.Id == cus.Id || x.Recipient.Id == cus.Id);
+            parcelToLists = parcelsList.Select(x => blObject.BLParcelToList(x)).ToList();
+            ParcelLiastView.ItemsSource = parcelToLists;
+            priorityComboBox.ItemsSource = Enum.GetValues(typeof(Priority));
+        }
+
         private void RefreshEventHandler()
         {
             this.Dispatcher.Invoke(new Action(delegate ()

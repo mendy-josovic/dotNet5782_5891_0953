@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelWindow" Height="450" Width="800">
+        Title="ParcelWindow" Height="450" Width="800" Closing="Window_Closing">
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/drone_with_parcel2.jpg"/>
+    </Window.Background>
     <Grid x:Name="ParcelMainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="c1" Width="100*"/>
@@ -17,30 +20,28 @@
             <RowDefinition x:Name="r2" Height="200*"/>
             <RowDefinition x:Name="r3" Height="100*"/>
         </Grid.RowDefinitions>
-        <ComboBox x:Name="RecipientComboBox" HorizontalAlignment="Left" Margin="57,64,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="SemderComboBox" HorizontalAlignment="Left" Margin="57,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="R2" Content="Recipient" HorizontalAlignment="Left" Margin="1,59,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="-0.068,0.591"/>
-        <Label x:Name="S2" Content="Sender" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Grid.Row="1"/>
-        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="70,186,0,0" Grid.Row="1" VerticalAlignment="Top" Width="88" Click="AddButton_Click" RenderTransformOrigin="0.652,0.771"/>
-        <ComboBox x:Name="PriorityComboBox" HorizontalAlignment="Left" Margin="54,141,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-        <ComboBox  x:Name="WeihComboBox" HorizontalAlignment="Left" Margin="55,101,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="w2" Content=" Weight" HorizontalAlignment="Left" Margin="7,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
-        <Label x:Name="P2" Content=" Priority" HorizontalAlignment="Left" Margin="9,136,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.186,-0.161"/>
-        <Label x:Name="parcel" Content="Parecl" FontSize="16" Grid.Column="1" HorizontalAlignment="Left" Margin="134,59,0,0" VerticalAlignment="Top" Width="67"/>
-        <TextBlock x:Name="IdtextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="209,69,0,0" Text="{Binding Id ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Label x:Name="Sender" Content="Sender" Grid.Column="1" HorizontalAlignment="Left" Margin="89,6,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Label x:Name="weigh" Content="Weigh" Grid.Column="1" HorizontalAlignment="Left" Margin="87,83,0,109" Grid.Row="1"/>
-        <Label x:Name="Recipient" Content="Recipient" Grid.Column="1" HorizontalAlignment="Left" Margin="91,42,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.504,-0.317"/>
-        <Label x:Name="Priority" Content="Priority" Grid.Column="1" HorizontalAlignment="Left" Margin="89,126,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <TextBox  x:Name="SenderTextBox" MouseDoubleClick="SenderTextBox_MouseDoubleClick" Grid.Column="1" HorizontalAlignment="Left" Margin="171,0,0,0" Grid.Row="1" Text="{Binding Sender.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" Height="32"/>
-        <TextBox  x:Name="RecipientTextBox" MouseDoubleClick="RecipientTextBox_MouseDoubleClick" Grid.Column="1" HorizontalAlignment="Left" Margin="171,41,0,0" Grid.Row="1" Text="{Binding Recipient.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" Height="32"/>
-        <TextBox x:Name="PriorityTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="173,129,0,0" Grid.Row="1" Text="{Binding Priority}" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" Height="32"/>
-        <TextBox x:Name="WeighTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="172,86,0,0" Grid.Row="1" Text="{Binding Weight}" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" Height="32"/>
-        <Label x:Name="Drone" Content="Drone Cariy" Grid.Column="1" HorizontalAlignment="Left" Margin="86,172,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <TextBox x:Name="DronTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="173,175,0,0" Grid.Row="1" Text="{Binding Drone.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="172" Height="25"/>
-        <Button x:Name="PickUpButton" Content="Pick Up" Click="PickUpButton_Click" Grid.Column="1" HorizontalAlignment="Left" Margin="116,37,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="3.638,1.459" Height="27" Width="49"/>
-        <Button x:Name="DeleteButton" Click="DeleteButton_Click" Content="Delete Parcel" Grid.Column="1" HorizontalAlignment="Left" Margin="211,37,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.336,-0.197" Height="27" Width="53"/>
-        <Button x:Name="UpdateButton" Click="UpdateButton_Click" Content="Update" Grid.Column="1" HorizontalAlignment="Left" Margin="303,36,0,0" Grid.Row="2" VerticalAlignment="Top" Height="28" Width="52" RenderTransformOrigin="0.379,0.171"/>
+        <ComboBox x:Name="RecipientComboBox" HorizontalAlignment="Left" Margin="164,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="SenderComboBox" HorizontalAlignment="Left" Margin="164,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="368,52,0,0" Grid.Row="2" VerticalAlignment="Top" Width="89" Click="AddButton_Click" RenderTransformOrigin="0.652,0.771" Height="31" FontSize="20" FontWeight="Bold" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="PriorityComboBox" HorizontalAlignment="Left" Margin="164,122,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <ComboBox  x:Name="WeightComboBox" HorizontalAlignment="Left" Margin="164,85,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Height="23"/>
+        <Label x:Name="parcel" Content="Parcel" FontSize="20" HorizontalAlignment="Left" Margin="83,0,0,0" VerticalAlignment="Center" Width="66" FontWeight="Bold"/>
+        <TextBlock x:Name="ParcelIDTextBlock" HorizontalAlignment="Left" Margin="158,39,0,0" Text="{Binding Id ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" Grid.ColumnSpan="2" Height="37" FontSize="20" FontWeight="Bold"/>
+        <Label x:Name="Sender" Content="Sender" HorizontalAlignment="Left" Margin="37,6,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+        <Label x:Name="weight" Content="Weight" HorizontalAlignment="Left" Margin="37,81,0,85" Grid.Row="1" FontSize="16" FontWeight="Bold" Width="72"/>
+        <Label x:Name="Recipient" Content="Recipient" HorizontalAlignment="Left" Margin="37,45,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.504,-0.317" FontSize="16" FontWeight="Bold"/>
+        <Label x:Name="Priority" Content="Priority" HorizontalAlignment="Left" Margin="37,117,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <TextBox  x:Name="SenderTextBox" MouseDoubleClick="SenderTextBox_MouseDoubleClick" HorizontalAlignment="Left" Margin="164,9,0,0" Grid.Row="1" Text="{Binding Sender.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <TextBox  x:Name="RecipientTextBox" MouseDoubleClick="RecipientTextBox_MouseDoubleClick" HorizontalAlignment="Left" Margin="164,49,0,0" Grid.Row="1" Text="{Binding Recipient.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <TextBox x:Name="PriorityTextBox" HorizontalAlignment="Left" Margin="164,122,0,0" Grid.Row="1" Text="{Binding Priority}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <TextBox x:Name="WeightTextBox" HorizontalAlignment="Left" Margin="164,84,0,0" Grid.Row="1" Text="{Binding Weight}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <Label x:Name="Drone" Content="Drone" HorizontalAlignment="Left" Margin="37,154,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Visibility="Hidden"/>
+        <TextBox x:Name="DroneTextBox" HorizontalAlignment="Left" Margin="164,158,0,0" Grid.Row="1" Text="{Binding Drone.Id}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <Button x:Name="PickUpButton" Content="Pick Up" Click="PickUpButton_Click" Margin="37,22,52,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="3.638,1.459" Height="37" FontWeight="Bold" FontSize="16"/>
+        <Button x:Name="DeleteButton" Click="DeleteButton_Click" Content="Delete Parcel" HorizontalAlignment="Left" Margin="164,21,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.336,-0.197" Height="37" Width="111" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
+        <Button x:Name="UpdateButton" Click="UpdateButton_Click" Content="Update" Grid.Column="1" HorizontalAlignment="Left" Margin="93,20,0,0" Grid.Row="2" VerticalAlignment="Top" Height="37" Width="111" RenderTransformOrigin="0.379,0.171" FontWeight="Bold" FontSize="16"/>
+        <Button x:Name="CloseButton" Content="Close" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Margin="82,52,0,0" Width="89" Click="CloseButton_Click"/>
+
 
 
     </Grid>
