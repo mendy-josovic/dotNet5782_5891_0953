@@ -21,6 +21,8 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
+        String pickUpContent = "Pick Up";
+        String supplyContent = "Supply";
         IBl BlObject;
         Parcel Parcel = new();
         bool isCloseButtonPressed = false;
@@ -30,10 +32,13 @@ namespace PL
             InitializeComponent();        
             this.BlObject = blObject;
             IEnumerable<CustomerToList> customers = BlObject.DisplayCustomerList();
-            List<String> Nams = BlObject.DisplayCustomerList().Select(x => x.Name).ToList();
-            SenderComboBox.ItemsSource = Nams;
-            RecipientComboBox.ItemsSource = Nams;
-            List<int> idofsender = customers.Where(x => x.Name == (String)SenderComboBox.SelectedItem).Select(x => x.Id).ToList();        
+            List<CustomerToList> customerNames = BlObject.DisplayCustomerList().ToList();
+            SenderComboBox.ItemsSource = customerNames;
+            SenderComboBox.DisplayMemberPath = "Name";
+            SenderComboBox.SelectedValuePath = "Id";
+            RecipientComboBox.ItemsSource = customerNames;
+            RecipientComboBox.DisplayMemberPath = "Name";
+            RecipientComboBox.SelectedValuePath = "Id";
             WeightComboBox.ItemsSource = Enum.GetValues(typeof(Weight));
             PriorityComboBox.ItemsSource = Enum.GetValues(typeof(Priority));
             ButtonEnabler();
@@ -57,21 +62,47 @@ namespace PL
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            List<int> idofsender = BlObject.DisplayCustomerList().Where(x => x.Name == (String)SenderComboBox.SelectedItem).Select(x => x.Id).ToList();
-            List<int> Recipient = BlObject.DisplayCustomerList().Where(x => x.Name == (String)RecipientComboBox.SelectedItem).Select(x => x.Id).ToList();
-            Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(idofsender.First()));
-            Parcel.Recipient= BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(idofsender.Last()));
+            Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Int32.Parse(SenderComboBox.SelectedValue.ToString())));
+            Parcel.Recipient= BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Int32.Parse(RecipientComboBox.SelectedValue.ToString())));
             Parcel.Weight = (Weight)WeightComboBox.SelectedItem;
             Parcel.Priority = (Priority)PriorityComboBox.SelectedItem;
-            BlObject.AddParcel(Parcel);
-            MessageBox.Show("Successfully added Parcel!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
+            try
+            {
+                BlObject.AddParcel(Parcel);
+                MessageBox.Show("Successfully added Parcel!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+                isCloseButtonPressed = true;
+                this.Close();
+
+            }
+            catch (BO.BlException ex)
+            {
+                try
+                {
+                    throw new PLExceptions(ex.Message);
+                }
+                catch (PLExceptions ex2)
+                {
+                    String message = String.Format("Something went wrong...\n{0}", ex2.Message);
+                    MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void PickUpButton_Click(object sender, RoutedEventArgs e)
         {
-          
-      
+            Button b = sender as Button;
+            if (b != null)
+            {
+                if ((String)b.Content == pickUpContent)
+                {
+                    BlObject.PickUp(Parcel.Drone.Id);
+                }
+                else if((String)b.Content == supplyContent)
+                {
+                    BlObject.Suuply(Parcel.Drone.Id);
+                }
+            }
+            UpdateContollers();
         }
         /// <summary>
         /// call the fuc in bl to delete
@@ -80,8 +111,26 @@ namespace PL
         /// <param name="e"></param>
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            BlObject.DeletAParcel(Parcel.Id);
+            try
+            {
+                BlObject.DeletAParcel(Parcel.Id);
+                MessageBox.Show("Successfully deleted Parcel!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+                isCloseButtonPressed = true;
+                this.Close();
 
+            }
+            catch (BO.BlException ex)
+            {
+                try
+                {
+                    throw new PLExceptions(ex.Message);
+                }
+                catch (PLExceptions ex2)
+                {
+                    String message = String.Format("Something went wrong...\n{0}", ex2.Message);
+                    MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -104,6 +153,9 @@ namespace PL
                
                 DeleteButton.IsEnabled = false;
                 UpdateButton.IsEnabled = false;
+            }
+            if (Parcel.Drone == null)
+            {
                 PickUpButton.IsEnabled = false;
             }
         }
@@ -126,6 +178,22 @@ namespace PL
                 RecipientComboBox.Visibility = Visibility.Hidden;
                 PriorityComboBox.Visibility = Visibility.Hidden;
                 WeightComboBox.Visibility = Visibility.Hidden;
+
+                if (Parcel.Scheduled != null)
+                {
+                    if (Parcel.PickedUp == null)
+                    {
+                        PickUpButton.Content = pickUpContent;
+                    }
+                    else if (Parcel.Delivered == null)
+                    {
+                        PickUpButton.Content = supplyContent;
+                    }
+                    else
+                    {
+                        PickUpButton.Visibility = Visibility.Hidden;
+                    }
+                }
 
             }
             else
@@ -166,6 +234,22 @@ namespace PL
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !isCloseButtonPressed;
+        }
+
+        private void DroneTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DroneTextBox.Text != "")
+            {
+                new DroneWindow(BlObject, BlObject.BLDrone(BlObject.DisplayDrone(Parcel.Drone.Id))).ShowDialog();
+                UpdateContollers();
+            }
+        }
+
+        private void UpdateContollers()
+        {
+            Parcel = BlObject.BLParcel(BlObject.DisplayParcel(Parcel.Id));
+            ButtonEnabler();
+            VisibiltyIndicator();
         }
     }
 }

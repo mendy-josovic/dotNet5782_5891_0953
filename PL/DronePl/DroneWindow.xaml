@@ -60,7 +60,7 @@
         </Button>
         <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="539,335,0,0" VerticalAlignment="Top" Height="35" Width="169" Click="CloseButton_Click" FontSize="16" FontWeight="Bold"/>
         <ComboBox x:Name="ListOfStationsSelector" HorizontalAlignment="Left" Margin="300,265,0,0" VerticalAlignment="Top" Width="120" Height="30" SelectionChanged="ListOfStationsSelector_SelectionChanged"/>
-        <Button x:Name="DeliveryButton" Content="Send Drone To Dilivery" HorizontalAlignment="Left" Margin="539,286,0,0" VerticalAlignment="Top" Width="168" Height="37" Click="Delivery_Click" FontSize="13" FontWeight="Bold"/>
+        <Button x:Name="DeliveryButton" Content="Send Drone To Delivery" HorizontalAlignment="Left" Margin="539,286,0,0" VerticalAlignment="Top" Width="168" Height="37" Click="Delivery_Click" FontSize="13" FontWeight="Bold"/>
         <Button x:Name="ChargingButton" Content="Send Drone To Charge" HorizontalAlignment="Left" Margin="539,182,0,0" VerticalAlignment="Top" Height="39" Width="168" Click="Charging_Click" FontWeight="Bold" FontSize="13" />
         <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="539,235,0,0" VerticalAlignment="Top" Height="37" Width="168" Click="UpdateButton_Click" FontWeight="Bold" FontSize="13"/>
         <Label x:Name="x1" Content="*" HorizontalAlignment="Left" Margin="285,87,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>

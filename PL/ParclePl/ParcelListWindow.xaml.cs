@@ -59,8 +59,7 @@ namespace PL
         {
             this.Dispatcher.Invoke(new Action(delegate ()
             {
-                parcelToLists = BlObject.DisplayParcelList();
-                ParcelLiastView.ItemsSource = parcelToLists;
+                DisplayListByFilters();
             }));
         }
 
@@ -87,33 +86,13 @@ namespace PL
         /// <param name="e"></param>
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ChoiseDate.SelectedDate.HasValue)
-            {
-                DateTime t = ChoiseDate.SelectedDates.First().Date;
-                DateTime t2 = ChoiseDate.SelectedDates.Last().Date;
-                IEnumerable<BO.Parcel> parcels = BlObject.DisplayParcelLists(w => w.TimeOfCreation.Value.Day >= t.Day && (w.TimeOfCreation.Value.Day <= t2.Day));
-                parcelToLists = parcelToLists.Where(w => parcels.Any(x => x.Id == w.Id));
-            }
-            if(SenderTextBox.Text.Length>0)
-            {
-                parcelToLists = parcelToLists.Where(w => w.Sender == SenderTextBox.Text);
-            }
-            if (RecipientTextBox.Text.Length > 0)
-            {
-                parcelToLists = parcelToLists.Where(w => w.Recipient == RecipientTextBox.Text);
-            }
-            object var = priorityComboBox.SelectedItem;
-            if(var!=null)
-            {                
-                parcelToLists = parcelToLists.Where(w => (int)w.Priority == (int)var);
-            }
-            ParcelLiastView.ItemsSource = parcelToLists;
-            ClearBotten.Visibility = Visibility.Visible;
+            DisplayListByFilters();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(BlObject).Show();
+            new ParcelWindow(BlObject).ShowDialog();
+            DisplayListByFilters();
         }
 
         private void ParcelLiastView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -130,6 +109,33 @@ namespace PL
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !isCloseButtonPressed;
+        }
+
+        private void DisplayListByFilters()
+        {
+            parcelToLists = BlObject.DisplayParcelList();
+            if (ChoiseDate.SelectedDate.HasValue)
+            {
+                DateTime t = ChoiseDate.SelectedDates.First().Date;
+                DateTime t2 = ChoiseDate.SelectedDates.Last().Date;
+                IEnumerable<BO.Parcel> parcels = BlObject.DisplayParcelLists(w => w.TimeOfCreation.Value.Day >= t.Day && (w.TimeOfCreation.Value.Day <= t2.Day));
+                parcelToLists = parcelToLists.Where(w => parcels.Any(x => x.Id == w.Id));
+            }
+            if (SenderTextBox.Text.Length > 0)
+            {
+                parcelToLists = parcelToLists.Where(w => w.Sender == SenderTextBox.Text);
+            }
+            if (RecipientTextBox.Text.Length > 0)
+            {
+                parcelToLists = parcelToLists.Where(w => w.Recipient == RecipientTextBox.Text);
+            }
+            object var = priorityComboBox.SelectedItem;
+            if (var != null)
+            {
+                parcelToLists = parcelToLists.Where(w => (int)w.Priority == (int)var);
+            }
+            ParcelLiastView.ItemsSource = parcelToLists;
+            ClearBotten.Visibility = Visibility.Visible;
         }
     }
 }

@@ -117,6 +117,8 @@ namespace PL
                         AddDrone.DataContext = drone;
                         InitializeButtons(drone);
                     }
+
+                    refreshSimulatorEvent.RaiseEvent();
                 }
             }
             catch (BO.BlException ex)
@@ -142,6 +144,7 @@ namespace PL
                 AddDrone.DataContext = drone;
                 InitializeButtons(drone);
                 MessageBox.Show("Successfully updated drone!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+                refreshSimulatorEvent.RaiseEvent();
             }
             catch (BO.BlException ex)
             {
