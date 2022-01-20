@@ -34,7 +34,7 @@ namespace PL
         private void CustomerButton_Click(object sender, RoutedEventArgs e)
         {
             new CustomerCode().Show();
-            this.Close();
+            //this.Close();
         }
     }
 }

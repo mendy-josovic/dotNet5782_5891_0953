@@ -597,11 +597,11 @@ namespace BL
                 parcelToList.Recipient = parcel.Recipient.Name;
                 parcelToList.Weight = parcel.Weight;
                 parcelToList.Priority = parcel.Priority;
-                if (parcel.Delivered != DateTime.MinValue)
+                if (parcel.Delivered != null && parcel.Delivered != DateTime.MinValue)
                     parcelToList.Status = StatusOfParcel.Delivered;
-                else if (parcel.PickedUp != DateTime.MinValue)
+                else if (parcel.PickedUp != null && parcel.PickedUp != DateTime.MinValue)
                     parcelToList.Status = StatusOfParcel.PickedUp;
-                else if (parcel.Scheduled != DateTime.MinValue)
+                else if (parcel.Scheduled != null && parcel.Scheduled != DateTime.MinValue)
                     parcelToList.Status = StatusOfParcel.Associated;
                 else
                     parcelToList.Status = StatusOfParcel.Created;
@@ -619,11 +619,11 @@ namespace BL
                 parcelToList.Recipient = p.Recipient.Name;
                 parcelToList.Weight = p.Weight;
                 parcelToList.Priority = p.Priority;
-                if (p.Delivered != DateTime.MinValue)
+                if (p.Delivered != null && p.Delivered != DateTime.MinValue)
                     parcelToList.Status = StatusOfParcel.Delivered;
-                else if (p.PickedUp != DateTime.MinValue)
+                else if (p.PickedUp != null && p.PickedUp != DateTime.MinValue)
                     parcelToList.Status = StatusOfParcel.PickedUp;
-                else if (p.Scheduled != DateTime.MinValue)
+                else if (p.Scheduled != null && p.Scheduled != DateTime.MinValue)
                     parcelToList.Status = StatusOfParcel.Associated;
                 else
                     parcelToList.Status = StatusOfParcel.Created;

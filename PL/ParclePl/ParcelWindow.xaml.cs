@@ -25,9 +25,12 @@ namespace PL
         String supplyContent = "Supply";
         IBl BlObject;
         Parcel Parcel = new();
+        CustomerInParcel customer = null;
+        bool isCustomerSender = false;
+        bool isCustomerReciever = false;
         bool isCloseButtonPressed = false;
 
-        public ParcelWindow(IBl blObject)
+        public ParcelWindow(IBl blObject, CustomerInParcel cus = null)
         {
             InitializeComponent();        
             this.BlObject = blObject;
@@ -41,16 +44,33 @@ namespace PL
             RecipientComboBox.SelectedValuePath = "Id";
             WeightComboBox.ItemsSource = Enum.GetValues(typeof(Weight));
             PriorityComboBox.ItemsSource = Enum.GetValues(typeof(Priority));
+            if (cus != null)
+            {
+                customer = cus;
+                isCustomerSender = true;
+            }
             ButtonEnabler();
             VisibiltyIndicator();
         }
 
-        public ParcelWindow(IBl blObject, int Id)
+        public ParcelWindow(IBl blObject, int Id, CustomerInParcel cus = null)
         {
             this.BlObject = blObject;
             Parcel = BlObject.BLParcel(BlObject.DisplayParcel(Id));      
             InitializeComponent();
             ParcelMainGrid.DataContext = Parcel;
+            if (cus != null)
+            {
+                customer = cus;
+                if (Parcel.Sender.Id == customer.Id)
+                {
+                    isCustomerSender = true;
+                }
+                else if (Parcel.Recipient.Id == customer.Id)
+                {
+                    isCustomerReciever = true;
+                }
+            }
             ButtonEnabler();
             VisibiltyIndicator();
         }
@@ -62,7 +82,14 @@ namespace PL
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Int32.Parse(SenderComboBox.SelectedValue.ToString())));
+            if (customer != null)
+            {
+                Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+            }
+            else
+            {
+                Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Int32.Parse(SenderComboBox.SelectedValue.ToString())));
+            }
             Parcel.Recipient= BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Int32.Parse(RecipientComboBox.SelectedValue.ToString())));
             Parcel.Weight = (Weight)WeightComboBox.SelectedItem;
             Parcel.Priority = (Priority)PriorityComboBox.SelectedItem;
@@ -150,7 +177,6 @@ namespace PL
             }
             else
             {
-               
                 DeleteButton.IsEnabled = false;
                 UpdateButton.IsEnabled = false;
             }
@@ -161,68 +187,161 @@ namespace PL
         }
         public void VisibiltyIndicator()
         {
-            if(Parcel.Id>0)
+            if(Parcel.Id>0) // existing parcel
             {
-                ParcelIDTextBlock.Visibility = Visibility.Visible;
-                SenderTextBox.Visibility = Visibility.Visible;
-                RecipientTextBox.Visibility = Visibility.Visible;
-                PriorityTextBox.Visibility = Visibility.Visible;
-                DroneTextBox.Visibility = Visibility.Visible;
-                WeightTextBox.Visibility = Visibility.Visible;
-                Drone.Visibility = Visibility.Visible;
-                DeleteButton.Visibility = Visibility.Visible;
-                UpdateButton.Visibility = Visibility.Visible;
-                PickUpButton.Visibility = Visibility.Visible;
-                AddButton.Visibility = Visibility.Hidden;
-                SenderComboBox.Visibility = Visibility.Hidden;
-                RecipientComboBox.Visibility = Visibility.Hidden;
-                PriorityComboBox.Visibility = Visibility.Hidden;
-                WeightComboBox.Visibility = Visibility.Hidden;
-
-                if (Parcel.Scheduled != null)
+                if (customer != null) // customer interface
                 {
-                    if (Parcel.PickedUp == null)
-                    {
-                        PickUpButton.Content = pickUpContent;
-                    }
-                    else if (Parcel.Delivered == null)
-                    {
-                        PickUpButton.Content = supplyContent;
-                    }
-                    else
+                    ParcelIDTextBlock.Visibility = Visibility.Visible;
+                    SenderTextBox.Visibility = Visibility.Visible;
+                    RecipientTextBox.Visibility = Visibility.Visible;
+                    PriorityTextBox.Visibility = Visibility.Visible;
+                    DroneTextBox.Visibility = Visibility.Visible;
+                    WeightTextBox.Visibility = Visibility.Visible;
+                    Drone.Visibility = Visibility.Visible;
+                    DeleteButton.Visibility = Visibility.Hidden;
+                    UpdateButton.Visibility = Visibility.Hidden;
+                    AddButton.Visibility = Visibility.Hidden;
+                    SenderComboBox.Visibility = Visibility.Hidden;
+                    RecipientComboBox.Visibility = Visibility.Hidden;
+                    PriorityComboBox.Visibility = Visibility.Hidden;
+                    WeightComboBox.Visibility = Visibility.Hidden;
+
+                    if (Parcel.Drone == null)
                     {
                         PickUpButton.Visibility = Visibility.Hidden;
                     }
-                }
 
+                    else if (Parcel.Scheduled != null)
+                    {
+                        if (Parcel.PickedUp == null)
+                        {
+                            if (isCustomerSender)
+                            {
+                                PickUpButton.Content = pickUpContent;
+                            }
+                            else
+                            {
+                                PickUpButton.Visibility = Visibility.Hidden;
+                            }
+                        }
+                        else if (Parcel.Delivered == null)
+                        {
+                            if (isCustomerReciever)
+                            {
+                                PickUpButton.Content = supplyContent;
+                            }
+                            else
+                            {
+                                PickUpButton.Visibility = Visibility.Hidden;
+                            }
+                        }
+                        else
+                        {
+                            PickUpButton.Visibility = Visibility.Hidden;
+                        }
+                    }
+                }
+                else // manager interface
+                {
+                    ParcelIDTextBlock.Visibility = Visibility.Visible;
+                    SenderTextBox.Visibility = Visibility.Visible;
+                    RecipientTextBox.Visibility = Visibility.Visible;
+                    PriorityTextBox.Visibility = Visibility.Visible;
+                    DroneTextBox.Visibility = Visibility.Visible;
+                    WeightTextBox.Visibility = Visibility.Visible;
+                    Drone.Visibility = Visibility.Visible;
+                    DeleteButton.Visibility = Visibility.Visible;
+                    UpdateButton.Visibility = Visibility.Visible;
+                    PickUpButton.Visibility = Visibility.Visible;
+                    AddButton.Visibility = Visibility.Hidden;
+                    SenderComboBox.Visibility = Visibility.Hidden;
+                    RecipientComboBox.Visibility = Visibility.Hidden;
+                    PriorityComboBox.Visibility = Visibility.Hidden;
+                    WeightComboBox.Visibility = Visibility.Hidden;
+
+                    if (Parcel.Scheduled != null)
+                    {
+                        if (Parcel.PickedUp == null)
+                        {
+                            PickUpButton.Content = pickUpContent;
+                        }
+                        else if (Parcel.Delivered == null)
+                        {
+                            PickUpButton.Content = supplyContent;
+                        }
+                        else
+                        {
+                            PickUpButton.Visibility = Visibility.Hidden;
+                        }
+                    }
+                }
             }
-            else
+            else // new parcel
             {
-                ParcelIDTextBlock.Visibility = Visibility.Hidden;
-                SenderTextBox.Visibility = Visibility.Hidden;
-                RecipientTextBox.Visibility = Visibility.Hidden;
-                WeightTextBox.Visibility = Visibility.Hidden;
-                PriorityTextBox.Visibility = Visibility.Hidden;
-                DroneTextBox.Visibility = Visibility.Hidden;
-                DeleteButton.Visibility = Visibility.Hidden;
-                UpdateButton.Visibility = Visibility.Hidden;
-                PickUpButton.Visibility = Visibility.Hidden;
-                AddButton.Visibility = Visibility.Visible;
-                SenderComboBox.Visibility = Visibility.Visible;
-                RecipientComboBox.Visibility = Visibility.Visible;
-                PriorityComboBox.Visibility = Visibility.Visible;
-                WeightComboBox.Visibility = Visibility.Visible;
+                if (customer != null) // customer interface
+                {
+                    ParcelIDTextBlock.Visibility = Visibility.Hidden;
+                    SenderTextBox2.Visibility = Visibility.Visible;
+                    SenderTextBox.Visibility = Visibility.Hidden;
+                    SenderTextBox2.Text = customer.Name;
+                    SenderTextBox.IsReadOnly = true;
+                    RecipientTextBox.Visibility = Visibility.Hidden;
+                    WeightTextBox.Visibility = Visibility.Hidden;
+                    PriorityTextBox.Visibility = Visibility.Hidden;
+                    DroneTextBox.Visibility = Visibility.Hidden;
+                    DeleteButton.Visibility = Visibility.Hidden;
+                    UpdateButton.Visibility = Visibility.Hidden;
+                    PickUpButton.Visibility = Visibility.Hidden;
+                    AddButton.Visibility = Visibility.Visible;
+                    RecipientComboBox.Visibility = Visibility.Visible;
+                    PriorityComboBox.Visibility = Visibility.Visible;
+                    WeightComboBox.Visibility = Visibility.Visible;
+                }
+                else // manager interface
+                {
+                    ParcelIDTextBlock.Visibility = Visibility.Hidden;
+                    SenderTextBox.Visibility = Visibility.Hidden;
+                    RecipientTextBox.Visibility = Visibility.Hidden;
+                    WeightTextBox.Visibility = Visibility.Hidden;
+                    PriorityTextBox.Visibility = Visibility.Hidden;
+                    DroneTextBox.Visibility = Visibility.Hidden;
+                    DeleteButton.Visibility = Visibility.Hidden;
+                    UpdateButton.Visibility = Visibility.Hidden;
+                    PickUpButton.Visibility = Visibility.Hidden;
+                    AddButton.Visibility = Visibility.Visible;
+                    SenderComboBox.Visibility = Visibility.Visible;
+                    RecipientComboBox.Visibility = Visibility.Visible;
+                    PriorityComboBox.Visibility = Visibility.Visible;
+                    WeightComboBox.Visibility = Visibility.Visible;
+                }
             }
         }
 
         private void SenderTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new CustomerWindow(BlObject, BlObject.BLCustomer(Parcel.Sender.Id)).Show();
+            if (Parcel.Sender != null)
+            {
+                new CustomerWindow(BlObject, BlObject.BLCustomer(Parcel.Sender.Id)).ShowDialog();
+                SetSenderAndReceivers();
+            }
+            else if (customer != null && isCustomerSender)
+            {
+                new CustomerWindow(BlObject, BlObject.BLCustomer(customer.Id)).ShowDialog();
+                CustomerInParcel cus = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+                customer = cus;
+                SenderTextBox2.Text = customer.Name;
+                SetSenderAndReceivers();
+
+            }
         }
 
         private void RecipientTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new CustomerWindow(BlObject, BlObject.BLCustomer(Parcel.Recipient.Id)).Show();
+            if (customer == null || (customer != null && isCustomerReciever))
+            {
+                new CustomerWindow(BlObject, BlObject.BLCustomer(Parcel.Recipient.Id)).ShowDialog();
+                SetSenderAndReceivers();
+            }
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -238,7 +357,7 @@ namespace PL
 
         private void DroneTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (DroneTextBox.Text != "")
+            if (DroneTextBox.Text != "" && customer == null)
             {
                 new DroneWindow(BlObject, BlObject.BLDrone(BlObject.DisplayDrone(Parcel.Drone.Id))).ShowDialog();
                 UpdateContollers();
@@ -250,6 +369,16 @@ namespace PL
             Parcel = BlObject.BLParcel(BlObject.DisplayParcel(Parcel.Id));
             ButtonEnabler();
             VisibiltyIndicator();
+        }
+
+        private void SetSenderAndReceivers()
+        {
+         
+            Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Parcel.Sender.Id));
+            Parcel.Recipient = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Parcel.Recipient.Id));
+            ParcelMainGrid.DataContext = Parcel;
+            SenderTextBox.Text = Parcel.Sender.Name;
+            RecipientTextBox.Text = Parcel.Recipient.Name;
         }
     }
 }

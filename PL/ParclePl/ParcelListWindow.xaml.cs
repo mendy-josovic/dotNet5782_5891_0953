@@ -22,6 +22,7 @@ namespace PL
     {
         IBl BlObject;
         IEnumerable <ParcelToList> parcelToLists { set; get; }
+        CustomerInParcel customer = null;
 
         bool isCloseButtonPressed;
         RefreshSimulatorEvent refreshSimulatorEvent = new();
@@ -33,7 +34,7 @@ namespace PL
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.BlObject = blObject;
             MainGrid.DataContext = parcelToLists;
-            parcelToLists = BlObject.DisplayParcelList();
+            parcelToLists = GetListByCustomer();
             ParcelLiastView.ItemsSource = parcelToLists;
             //    StatusSelector.ItemsSource = Enum.GetValues(typeof(StatusOfDrone));
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelLiastView.ItemsSource);
@@ -48,9 +49,9 @@ namespace PL
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.BlObject = blObject;
             MainGrid.DataContext = parcelToLists;
-           
-            IEnumerable<BO.Parcel> parcelsList = blObject.DisplayParcelLists(x => x.Sender.Id == cus.Id || x.Recipient.Id == cus.Id);
-            parcelToLists = parcelsList.Select(x => blObject.BLParcelToList(x)).ToList();
+            customer = cus;
+
+            parcelToLists = GetListByCustomer();
             ParcelLiastView.ItemsSource = parcelToLists;
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(Priority));
         }
@@ -75,7 +76,7 @@ namespace PL
             RecipientTextBox.Clear();
             priorityComboBox.SelectedItem = null;
             ClearBotten.Visibility = Visibility.Hidden;
-            parcelToLists = BlObject.DisplayParcelList();
+            parcelToLists = GetListByCustomer();
             ParcelLiastView.ItemsSource = parcelToLists;
 
         }
@@ -91,13 +92,14 @@ namespace PL
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(BlObject).ShowDialog();
+            new ParcelWindow(BlObject, customer).ShowDialog();
             DisplayListByFilters();
         }
 
         private void ParcelLiastView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new ParcelWindow(BlObject, ((ParcelToList)ParcelLiastView.SelectedItem).Id).Show();
+            new ParcelWindow(BlObject, ((ParcelToList)ParcelLiastView.SelectedItem).Id, customer).ShowDialog();
+            DisplayListByFilters();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -111,9 +113,22 @@ namespace PL
             e.Cancel = !isCloseButtonPressed;
         }
 
+        private IEnumerable<ParcelToList> GetListByCustomer()
+        {
+            if (customer != null)
+            {
+                IEnumerable<BO.Parcel> parcelsList = BlObject.DisplayParcelLists(x => x.Sender.Id == customer.Id || x.Recipient.Id == customer.Id);
+                return parcelsList.Select(x => BlObject.BLParcelToList(x)).ToList();
+            }
+            else
+            {
+                return BlObject.DisplayParcelList();
+            }
+        }
+        
         private void DisplayListByFilters()
         {
-            parcelToLists = BlObject.DisplayParcelList();
+            parcelToLists = GetListByCustomer();
             if (ChoiseDate.SelectedDate.HasValue)
             {
                 DateTime t = ChoiseDate.SelectedDates.First().Date;
