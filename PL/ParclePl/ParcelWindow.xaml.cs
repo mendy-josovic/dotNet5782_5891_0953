@@ -32,6 +32,7 @@ namespace PL
 
         public ParcelWindow(IBl blObject, CustomerInParcel cus = null)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();        
             this.BlObject = blObject;
             IEnumerable<CustomerToList> customers = BlObject.DisplayCustomerList();
@@ -55,6 +56,7 @@ namespace PL
 
         public ParcelWindow(IBl blObject, int Id, CustomerInParcel cus = null)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.BlObject = blObject;
             Parcel = BlObject.BLParcel(BlObject.DisplayParcel(Id));      
             InitializeComponent();
@@ -169,10 +171,16 @@ namespace PL
         /// </summary>
         public void ButtonEnabler()
         {
-            if(Parcel.Scheduled!= DateTime.MinValue&& Parcel.PickedUp==null)
+            if (Parcel.Scheduled == null)
             {
                 DeleteButton.IsEnabled = true;
                 UpdateButton.IsEnabled = true;
+                
+            }
+            else if (Parcel.PickedUp == null || Parcel.Delivered == null)
+            {
+                DeleteButton.IsEnabled = false;
+                UpdateButton.IsEnabled = false;
                 PickUpButton.IsEnabled = true;
             }
             else

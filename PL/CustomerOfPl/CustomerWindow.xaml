@@ -43,10 +43,10 @@
                         <DataTrigger Binding="{Binding ElementName=PhoneTextBox, Path=Text}" Value="">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=LongitudeTextBox, Path=Text}" Value="">
+                        <DataTrigger Binding="{Binding ElementName=LongitudeTextBox, Path=Text}" Value="0">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=LatitudeTextBoxL, Path=Text}" Value="">
+                        <DataTrigger Binding="{Binding ElementName=LatitudeTextBoxL, Path=Text}" Value="0">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                     </Style.Triggers>

@@ -95,14 +95,20 @@ namespace PL
         {
             new ParcelWindow(BlObject, customer).ShowDialog();
             DisplayListByFilters();
-            customer =  BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+            if (customer != null)
+            {
+                customer = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+            }
         }
 
         private void ParcelLiastView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(BlObject, ((ParcelToList)ParcelLiastView.SelectedItem).Id, customer).ShowDialog();
             DisplayListByFilters();
-            customer = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+            if (customer != null)
+            {
+                customer = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+            }
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

@@ -26,6 +26,7 @@ namespace PL
 
         public CustomerWindow(IBl blobject)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.blObject = blobject;
             Customer1 = blObject.BLCustomer();
             InitializeComponent();
@@ -38,6 +39,7 @@ namespace PL
         }
         public CustomerWindow(IBl blobjects, Customer Customer)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             Customer1 = Customer;
             AddCustomerButton.Content = "Update";
@@ -50,7 +52,6 @@ namespace PL
             LatitudeTextBox.IsReadOnly = true;
             CustomerWindowGrid.DataContext = Customer1;
             blObject = blobjects;
-
         }
 
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
