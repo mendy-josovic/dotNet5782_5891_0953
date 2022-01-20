@@ -319,28 +319,52 @@ namespace PL
 
         private void SenderTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (Parcel.Sender != null)
+            if (customer == null && Parcel.Sender != null)
             {
                 new CustomerWindow(BlObject, BlObject.BLCustomer(Parcel.Sender.Id)).ShowDialog();
-                SetSenderAndReceivers();
+                Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Parcel.Sender.Id));
+                ParcelMainGrid.DataContext = Parcel;
+                SenderTextBox.Text = Parcel.Sender.Name;
             }
-            else if (customer != null && isCustomerSender)
+            else if (customer != null && isCustomerSender && Parcel.Sender != null)
+            {
+                new CustomerWindow(BlObject, BlObject.BLCustomer(customer.Id)).ShowDialog();
+                CustomerInParcel cus = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+                customer = cus;
+                Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+                ParcelMainGrid.DataContext = Parcel;
+                SenderTextBox.Text = Parcel.Sender.Name;
+            }
+        }
+
+        private void SenderTextBox2_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (Parcel.Sender == null && customer != null && isCustomerSender)
             {
                 new CustomerWindow(BlObject, BlObject.BLCustomer(customer.Id)).ShowDialog();
                 CustomerInParcel cus = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
                 customer = cus;
                 SenderTextBox2.Text = customer.Name;
-                SetSenderAndReceivers();
-
             }
         }
 
         private void RecipientTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (customer == null || (customer != null && isCustomerReciever))
+            if (customer == null && Parcel.Recipient != null)
             {
                 new CustomerWindow(BlObject, BlObject.BLCustomer(Parcel.Recipient.Id)).ShowDialog();
-                SetSenderAndReceivers();
+                Parcel.Recipient = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Parcel.Recipient.Id));
+                ParcelMainGrid.DataContext = Parcel;
+                RecipientTextBox.Text = Parcel.Recipient.Name;
+            }
+            else if (customer != null && isCustomerReciever && Parcel.Recipient != null)
+            {
+                new CustomerWindow(BlObject, BlObject.BLCustomer(customer.Id)).ShowDialog();
+                CustomerInParcel cus = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+                customer = cus;
+                Parcel.Recipient = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Parcel.Recipient.Id));
+                ParcelMainGrid.DataContext = Parcel;
+                RecipientTextBox.Text = Parcel.Recipient.Name;
             }
         }
 
@@ -369,16 +393,6 @@ namespace PL
             Parcel = BlObject.BLParcel(BlObject.DisplayParcel(Parcel.Id));
             ButtonEnabler();
             VisibiltyIndicator();
-        }
-
-        private void SetSenderAndReceivers()
-        {
-         
-            Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Parcel.Sender.Id));
-            Parcel.Recipient = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Parcel.Recipient.Id));
-            ParcelMainGrid.DataContext = Parcel;
-            SenderTextBox.Text = Parcel.Sender.Name;
-            RecipientTextBox.Text = Parcel.Recipient.Name;
         }
     }
 }
