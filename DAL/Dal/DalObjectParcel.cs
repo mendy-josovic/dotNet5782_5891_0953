@@ -16,14 +16,14 @@ namespace DalObject
         {
             int i = DataSource.parcels.FindIndex(w => w.Equals(prc));
             if (i > 0)
-                throw new DO.DalExceptions("Parcel Alredy exsits");
+                throw new DO.DalExceptions("Parcel already exists");
             DataSource.parcels.Add(prc);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int id)
         {
             if (!DataSource.parcels.Exists(x => x.Id == id))
-                throw new DO.DalExceptions("Drone Parcel Dose Not exsits");
+                throw new DO.DalExceptions("Drone Parcel deos not exists");
             Parcel parcel = DataSource.parcels.Find(x => x.Id == id);
             DataSource.parcels.Remove(parcel);
         }

@@ -59,7 +59,7 @@ namespace BL
                 {
                     List<DO.Customer> Tempcustomers = new(Data.PrintCustomerList(w => w.Id == Id));
                     if (Tempcustomers.Count == 0)
-                        throw new BlException("Customer doesn't exsit");
+                        throw new BlException("Customer doesn't exist");
                     Data.UpdateCustomer(Id, Name, Phone);
                 }
                 catch (DO.DalExceptions ex)
@@ -88,7 +88,7 @@ namespace BL
                 {
                     List<DO.Station> Tempstation = new(Data.PrintStationList(w => w.Id == Id));
                     if (Tempstation.Count == 0)
-                        throw new BlException("Customer doesn't exsit");
+                        throw new BlException("Customer doesn't exist");
                     Data.UpdatStation(Id, Name, numofCha);
                 }
                 catch (DO.DalExceptions ex)
@@ -119,7 +119,7 @@ namespace BL
                         throw new BlException("Drone doesn't exist");
                     IEnumerable<DO.Station> stations = Data.PrintStationList(x => x.ReadyChargeStands > 0 && DroneList[i].Battery - (int)Consumption(DroneList[i].ThisLocation, Location(x.Longitude, x.Latitude), BO.ModeOfDroneInMoving.Available) > 0);
                     if (stations.Count() == 0)
-                        throw new BlException("Charging Not Possible (Station Charging slots are full ,Not Enough Battery)");
+                        throw new BlException("Charging Not Possible (Station Charging slots are full, Not Enough Battery)");
                     int j = GetClosestStation(DroneList[i].ThisLocation, stations);//geting the id of station that we need to charge 
                     DO.Station tempStation = Data.DisplayStation(j);//a temporary station (like the one to charg)   
                     DroneList[i].status = StatusOfDrone.InMaintenance;//updating the drone status
@@ -155,9 +155,9 @@ namespace BL
                 {
                     int i = DroneList.FindIndex(w => w.Id == DroneId);
                     if (i < 0)
-                        throw new BlException("Drone doesn't exsit");
+                        throw new BlException("Drone doesn't exist");
                     if (!(DroneList[i].status == BO.StatusOfDrone.InMaintenance))
-                        throw new BlException("ERROR: Dron Not In Cargong Mode");
+                        throw new BlException("ERROR: Drone isn't in charging mode");
                     DroneList[i].status = BO.StatusOfDrone.Available;
                     DroneList[i].Battery += Time * batteryConfig[4];
                     if (DroneList[i].Battery > 100)//stoping the recharging in 100%
@@ -191,7 +191,7 @@ namespace BL
                 try
                 {
                     if (!(DroneList.Exists(w => w.Id == DroneId)))
-                        throw new BlException("Drone dosent exsit");
+                        throw new BlException("Drone dosen't exist");
                     int i = DroneList.FindIndex(w => w.Id == DroneId);
 
                     //get only the relevent for us
@@ -204,7 +204,7 @@ namespace BL
 
                     //sorting acourding to priyuorty
                     if (tempDataParcels.Count == 0)
-                        throw new BlException("Assignment Not Possble");
+                        throw new BlException("Assignment Not Possible");
                     DroneList[i].status = BO.StatusOfDrone.Delivery;
                     DroneList[i].ParcelId = tempDataParcels[0].Id;
                     Data.UpdatParcel(tempDataParcels[0].Id, 0, 0, DroneList[i].Id, 0, 0, 0, 1);//we updating the first parcel in the list
@@ -232,11 +232,11 @@ namespace BL
                 try
                 {
                     if (!(DroneList.Exists(w => w.Id == DroneId)))
-                        throw new BlException("Drone dosent exsit");
+                        throw new BlException("Drone dosennt exist");
                     int i = DroneList.FindIndex(w => w.Id == DroneId);
                     DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
                     if (parcel.PickedUp != null)
-                        throw new BlException("Parcel Alredy Picked Up");
+                        throw new BlException("Parcel Already Picked Up");
                     double batteryuse = Consumption(DroneList[i].ThisLocation, GetSenderLo(parcel), ModeOfDroneInMoving.Available);
                     DroneList[i].Battery -= batteryuse;
                     DroneList[i].ThisLocation = GetSenderLo(parcel);
@@ -263,11 +263,11 @@ namespace BL
                 try
                 {
                     if (!(DroneList.Exists(w => w.Id == DroneId)))
-                        throw new BlException("Drone dosent exsit");
+                        throw new BlException("Drone dosen't exist");
                     int i = DroneList.FindIndex(w => w.Id == DroneId);
                     DO.Parcel parcel = Data.PrintParcel(DroneList[i].ParcelId);
                     if (parcel.PickedUp == null || parcel.Delivered != null)
-                        throw new BlException("cant suuply");
+                        throw new BlException("cannot supply");
                     double batteryuse = Consumption(DroneList[i].ThisLocation, GetReceiverLo(parcel), (ModeOfDroneInMoving)parcel.Weigh);
                     DroneList[i].Battery -= batteryuse;
                     DroneList[i].ThisLocation = GetSenderLo(parcel);
