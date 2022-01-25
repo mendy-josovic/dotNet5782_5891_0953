@@ -203,7 +203,6 @@ namespace PL
             {
                 droneId = Int32.Parse(IDTextBox.Text);
             }));
-
             Action workerProgress = new Action(WorkerProgress);
             Func<bool> cancelWorker = new Func<bool>(CancelWorker);
             blObject.RunSimulator(droneId, workerProgress, cancelWorker);
