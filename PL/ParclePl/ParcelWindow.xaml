@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Icon="/Images/drone.jpg"
         Title="ParcelWindow" Height="450" Width="800" Closing="Window_Closing">
     <Window.Background>
         <ImageBrush ImageSource="/Images/drone_with_parcel2.jpg"/>
@@ -32,7 +33,7 @@
         <Label x:Name="Recipient" Content="Recipient" HorizontalAlignment="Left" Margin="37,45,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.504,-0.317" FontSize="16" FontWeight="Bold"/>
         <Label x:Name="Priority" Content="Priority" HorizontalAlignment="Left" Margin="37,117,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
         <TextBox  x:Name="SenderTextBox" MouseDoubleClick="SenderTextBox_MouseDoubleClick" HorizontalAlignment="Left" Margin="164,9,0,0" Grid.Row="1" Text="{Binding Sender.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
-        <TextBox  x:Name="SenderTextBox2" MouseDoubleClick="SenderTextBox_MouseDoubleClick" HorizontalAlignment="Left" Margin="164,9,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <TextBox  x:Name="SenderTextBox2" MouseDoubleClick="SenderTextBox2_MouseDoubleClick" HorizontalAlignment="Left" Margin="164,9,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
         <TextBox  x:Name="RecipientTextBox" MouseDoubleClick="RecipientTextBox_MouseDoubleClick" HorizontalAlignment="Left" Margin="164,49,0,0" Grid.Row="1" Text="{Binding Recipient.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
         <TextBox x:Name="PriorityTextBox" HorizontalAlignment="Left" Margin="164,122,0,0" Grid.Row="1" Text="{Binding Priority}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>
         <TextBox x:Name="WeightTextBox" HorizontalAlignment="Left" Margin="164,84,0,0" Grid.Row="1" Text="{Binding Weight}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.ColumnSpan="2" Visibility="Hidden"/>

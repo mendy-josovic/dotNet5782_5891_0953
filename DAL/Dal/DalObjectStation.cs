@@ -16,7 +16,7 @@ namespace DalObject
         {
             int i = DataSource.stations.FindIndex(w => w.Equals(sta));
             if (i > 0)
-                throw new DalExceptions("Station Alredy exsits");///theowin the exciption of elerdy exsit
+                throw new DalExceptions("Station already exists");///theowin the exciption of elerdy exsit
             DataSource.stations.Add(sta);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -35,7 +35,7 @@ namespace DalObject
         {
             int i = DataSource.stations.FindIndex(w => w.Id ==StationId);
             if (i < 0)
-                throw new DalExceptions("Station dosent exist");
+                throw new DalExceptions("Station doesn't exist");
             Station temp = DisplayStation(StationId);
             if (!string.IsNullOrEmpty(Name))
             {

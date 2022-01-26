@@ -18,7 +18,7 @@ namespace BO
         protected BlException(SerializationInfo info, StreamingContext context) : base(info, context) { }
         public override string ToString()
         {
-            return "Logic_BL_Excception"+base.ToString();
+            return "Logic_BL_Exception"+base.ToString();
         }
 
     }

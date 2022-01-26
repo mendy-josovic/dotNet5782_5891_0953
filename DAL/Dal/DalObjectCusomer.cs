@@ -37,7 +37,7 @@ namespace DalObject
         {
             int i = DataSource.customers.FindIndex(w => w.Id == CusId);
             if (i < 0)
-                throw new DO.DalExceptions("Customer Dosen't exsits");
+                throw new DO.DalExceptions("Customer dosen't exist");
           Customer Tempcustomer = DataSource.customers[i];
             if (!string.IsNullOrEmpty(Name))
             {

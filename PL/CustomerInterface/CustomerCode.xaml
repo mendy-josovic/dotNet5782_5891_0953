@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Icon="/Images/drone.jpg"
         Title="CustomerCode" Height="200" Width="400">
     <Window.Background>
         <ImageBrush ImageSource="/Images/drone_sky.jpg"/>

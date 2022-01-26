@@ -56,7 +56,7 @@ namespace DalObject
         {
             int i = DataSource.drones.FindIndex(w => w.Id == drnId);
             if (i < 0)
-                throw new DO.DalExceptions("Drone Dosen't exsits");
+                throw new DO.DalExceptions("Drone doesn't exists");
             Drone tempdrone = DataSource.drones[i];
             tempdrone.Model = Name;
             DataSource.drones[i] = tempdrone;
@@ -81,7 +81,7 @@ namespace DalObject
             int index = DataSource.parcels.FindIndex(w => w.Id == parclId);
 
             if (index == -1)
-                throw new DO.DalExceptions("Drone Parcel Dose Not exsits");
+                throw new DO.DalExceptions("Drone Parcel does not exist");
 
             Parcel parcel = DataSource.parcels[index];
 

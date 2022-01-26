@@ -26,7 +26,7 @@ namespace BL
                 {
                     List<DO.Station> tempDataStations = new(Data.PrintStationList(w => w.Id == sta.Id));//if elredy exsits we want to stop
                     if (tempDataStations.Count != 0)
-                        throw new BlException("The station is already exists");
+                        throw new BlException("The station already exists");
                     DO.Station station = new();
                     station.Id = sta.Id;
                     station.Name = sta.Name;
@@ -66,7 +66,7 @@ namespace BL
                     //Checks if the ID number does not already exist in the system
                     int i = DroneList.FindIndex(w => w.Id == dro.Id);
                     if (i >= 0)
-                        throw new BlException("The drone is already exists");
+                        throw new BlException("The drone already exists");
 
                     DO.Station station = Data.DisplayStation(IDOfStation);
                     if (station.ReadyChargeStands == 0)

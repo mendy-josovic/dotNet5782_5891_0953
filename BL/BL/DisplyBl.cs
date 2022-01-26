@@ -23,7 +23,7 @@ namespace BL
                 {
                     List<DO.Station> tempDataStations = new(Data.PrintStationList(w => w.Id == id));
                     if (tempDataStations.Count == 0)
-                        throw new BlException("Station does not exists");
+                        throw new BlException("Station does not exist");
                     return (Data.DisplayStation(id));
                 }
                 catch (DO.DalExceptions ex)
@@ -40,7 +40,7 @@ namespace BL
             lock (Data)
             {
                 if (!(DroneList.Exists(w => w.Id == id)))
-                    throw new BlException("Drone does not exixt");
+                    throw new BlException("Drone does not exist");
                 return DroneList.Find(w => w.Id == id);
             }
         }
@@ -75,7 +75,7 @@ namespace BL
                 {
                     List<DO.Parcel> tempDataParcel = new(Data.PrintParcelList(w => w.Id == id));
                     if (tempDataParcel.Count == 0)
-                        throw new BlException("parcel does not exixt");
+                        throw new BlException("parcel does not exist");
                     return Data.PrintParcel(id);
                 }
                 catch (DO.DalExceptions ex)

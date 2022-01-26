@@ -88,18 +88,27 @@ namespace PL
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
             DisplayListByFilters();
+            ClearBotten.Visibility = Visibility.Visible;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(BlObject, customer).ShowDialog();
             DisplayListByFilters();
+            if (customer != null)
+            {
+                customer = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+            }
         }
 
         private void ParcelLiastView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(BlObject, ((ParcelToList)ParcelLiastView.SelectedItem).Id, customer).ShowDialog();
             DisplayListByFilters();
+            if (customer != null)
+            {
+                customer = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(customer.Id));
+            }
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -150,7 +159,7 @@ namespace PL
                 parcelToLists = parcelToLists.Where(w => (int)w.Priority == (int)var);
             }
             ParcelLiastView.ItemsSource = parcelToLists;
-            ClearBotten.Visibility = Visibility.Visible;
+            
         }
     }
 }

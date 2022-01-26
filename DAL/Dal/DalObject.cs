@@ -51,7 +51,7 @@ namespace DalObject
         public DroneCharge DisplayDroneCharge(int DroneId = 0)
         {        
                 if(!DataSource.droneCharges.Any(w => w.DroneId == DroneId))
-                        throw new DalExceptions("No Drone Charg Exsits"); 
+                        throw new DalExceptions("No Drone charge exists"); 
                 return DataSource.droneCharges.Find(w => w.DroneId == DroneId);                      
         }
 
