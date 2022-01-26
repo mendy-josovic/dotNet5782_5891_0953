@@ -65,9 +65,9 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}" />
-                        <GridViewColumn Header="Name" Width="110" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Free Stands" Width="120" DisplayMemberBinding="{Binding ReadyStandsInStation}" />
-                        <GridViewColumn Header="Busy Stands" Width="90" DisplayMemberBinding="{Binding OccupiedStandsInStation}" />
+                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Free Stands" Width="110" DisplayMemberBinding="{Binding ReadyStandsInStation}" />
+                        <GridViewColumn Header="Busy Stands" Width="110" DisplayMemberBinding="{Binding OccupiedStandsInStation}" />
                     </GridView>
                 </ListView.View>
             </ListView>

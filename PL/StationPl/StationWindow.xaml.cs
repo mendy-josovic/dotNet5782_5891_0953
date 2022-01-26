@@ -42,6 +42,7 @@ namespace PL
             IDTextBox.IsReadOnly = false;
             LongitudeTextBox.IsReadOnly = false;
             LatitudeTextBox.IsReadOnly = false;
+            FreeStandsTextBox.IsReadOnly = false;
             ListOfDronesLabel.Content = "";
             UpDateButton.Visibility = Visibility.Hidden;
         }
@@ -177,7 +178,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IDTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void IDAndFreeStandsTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[0-9]*$");
             e.Handled = !regex.IsMatch(e.Text);

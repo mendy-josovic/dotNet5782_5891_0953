@@ -41,10 +41,11 @@
         <Label Content="Latitude" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="37,0,0,0"/>
         <Label Content="Free stands" HorizontalAlignment="Left" Margin="37,0,0,0" Grid.Row="5" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
         <Label x:Name="ListOfDronesLabel" Content="Drones in charging" HorizontalAlignment="Left" Margin="37,4,0,0" Grid.Row="6" VerticalAlignment="Top" FontSize="16" Width="152" FontWeight="Bold"/>
-        <TextBox x:Name="IDTextBox" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="131" Height="32" FontSize="16" IsReadOnly="True" Grid.Column="1" PreviewTextInput="IDTextBox_PreviewTextInput"/>
+        <TextBox x:Name="IDTextBox" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="131" Height="32" FontSize="16" IsReadOnly="True" Grid.Column="1" PreviewTextInput="IDAndFreeStandsTextBox_PreviewTextInput"/>
         <TextBox x:Name="NameTextBox" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" TextChanged="TextBox_TextChanged" Grid.Column="1" PreviewTextInput="NameTextBox_PreviewTextInput"/>
         <TextBox x:Name="LongitudeTextBox" Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource LocationConverter}}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" Grid.Column="1" PreviewTextInput="LongitudeAndLatitudeTextBox_PreviewTextInput"/>
         <TextBox x:Name="LatitudeTextBox" Text="{Binding location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource LocationConverter}}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" Grid.Column="1" PreviewTextInput="LongitudeAndLatitudeTextBox_PreviewTextInput"/>
+        <TextBox x:Name="FreeStandsTextBox" Text="{Binding ReadyStandsInStation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsReadOnly="True" Background="Transparent" HorizontalAlignment="Left" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" Grid.Column="1" PreviewTextInput="IDAndFreeStandsTextBox_PreviewTextInput"/>
         <ListView x:Name="DronesListView" Background="Transparent" Grid.Row="7" Grid.ColumnSpan="2" Margin="1,16,128,19"  Grid.RowSpan="2" BorderBrush="{x:Null}" MouseDoubleClick="DronesListView_MouseDoubleClick" Grid.Column="1"/>
         <Button x:Name="CloseButton" Content="Close" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Click="Button_Click" Margin="136,0,0,0" Width="89"/>
         <Button x:Name="UpDateButton" Content="Update" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="7" VerticalAlignment="Top" Height="31" Width="89" FontSize="20" FontWeight="Bold" IsEnabled="False" Click="UpDateButton_Click"/>
@@ -63,6 +64,9 @@
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=LatitudeTextBox, Path=Text}" Value="">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=FreeStandsTextBox, Path=Text}" Value="">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                     </Style.Triggers>

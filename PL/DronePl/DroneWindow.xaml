@@ -70,7 +70,7 @@
         <Label x:Name="x6" Content="*" HorizontalAlignment="Left" Margin="284,228,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Button x:Name="AutoButton" Content="Auto Mode" HorizontalAlignment="Left" Margin="211,373,0,0" VerticalAlignment="Top" Height="31" Width="158" FontSize="16" FontWeight="Bold" Click="AutoButton_Click"/>
         <Button x:Name="ManualButton" Content="Manual Mode" HorizontalAlignment="Left" Margin="211,382,0,0" VerticalAlignment="Top" Height="31" Width="158" FontSize="16" FontWeight="Bold" Visibility="Hidden" Click="ManualButton_Click"/>
-        <Grid x:Name="parcelGrid" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="130" Margin="14,163,0,0">
+        <Grid x:Name="parcelGrid" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="130" Margin="14,163,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -79,7 +79,6 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="35*"/>
-                <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="29*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Parcel" FontWeight="Bold" HorizontalAlignment="Left"/>
@@ -87,10 +86,10 @@
             <Label Content="Weight" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center"/>
             <Label Content="Picked up" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Center" Width="60" Grid.ColumnSpan="2"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding Priority, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding Priority, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Center" Width="70"/>
             <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding Weight, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
             <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding PickedUp, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
         </Grid>
-        <Rectangle HorizontalAlignment="Left" Height="148" Margin="10,155,0,0" Stroke="Black" VerticalAlignment="Top" Width="144"/>
+        <Rectangle x:Name="parcelGridBorder" Visibility="Hidden" HorizontalAlignment="Left" Height="148" Margin="10,155,0,0" Stroke="Black" VerticalAlignment="Top" Width="144"/>
     </Grid>
 </Window>

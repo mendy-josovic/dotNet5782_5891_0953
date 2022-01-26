@@ -288,6 +288,21 @@ namespace PL
                 AddDrone.DataContext = drone;
             }));
 
+            parcelGrid.Dispatcher.Invoke(new Action(delegate ()
+            {
+                parcelGrid.DataContext = drone.parcel;
+                if (drone.status == StatusOfDrone.Delivery)
+                {
+                    parcelGrid.Visibility = Visibility.Visible;
+                    parcelGridBorder.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    parcelGrid.Visibility = Visibility.Hidden;
+                    parcelGridBorder.Visibility = Visibility.Hidden;
+                }
+            }));
+
             refreshSimulatorEvent.RaiseEvent();
         }
 
@@ -314,12 +329,15 @@ namespace PL
                 DeliveryButton.IsEnabled = true;
                 UpdateButton.IsEnabled = true;
                 ChargingButton.IsEnabled = true;
+                parcelGrid.Visibility = Visibility.Hidden;
+                parcelGridBorder.Visibility = Visibility.Hidden;
             }
             if (drone.status == StatusOfDrone.Delivery)
             {
                 p = drone.parcel;
                 parcelGrid.DataContext = p;
                 parcelGrid.Visibility = Visibility.Visible;
+                parcelGridBorder.Visibility = Visibility.Visible;
                 if (!drone.parcel.PickedUp)
                 {
                     DeliveryButton.Content = PickupContent;
@@ -338,6 +356,8 @@ namespace PL
                 ChargingButton.Content = "Return Drone From Charging";
                 DeliveryButton.IsEnabled = false;
                 UpdateButton.IsEnabled = false;
+                parcelGrid.Visibility = Visibility.Hidden;
+                parcelGridBorder.Visibility = Visibility.Hidden;
             }
         }
     }
