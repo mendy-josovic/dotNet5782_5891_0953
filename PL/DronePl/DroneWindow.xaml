@@ -69,7 +69,7 @@
         <Label x:Name="x5" Content="Fill in the fields marked with *" HorizontalAlignment="Left" Margin="279,61,0,0" VerticalAlignment="Top" Foreground="Red"/>
         <Label x:Name="x6" Content="*" HorizontalAlignment="Left" Margin="284,228,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
         <Button x:Name="AutoButton" Content="Auto Mode" HorizontalAlignment="Left" Margin="211,373,0,0" VerticalAlignment="Top" Height="31" Width="158" FontSize="16" FontWeight="Bold" Click="AutoButton_Click"/>
-        <Button x:Name="ManualButton" Content="Manual Mode" HorizontalAlignment="Left" Margin="211,382,0,0" VerticalAlignment="Top" Height="31" Width="158" FontSize="16" FontWeight="Bold" Visibility="Hidden" Click="ManualButton_Click"/>
+        <Button x:Name="ManualButton" Content="Manual Mode" HorizontalAlignment="Left" Margin="211,373,0,0" VerticalAlignment="Top" Height="31" Width="158" FontSize="16" FontWeight="Bold" Visibility="Hidden" Click="ManualButton_Click"/>
         <Grid x:Name="parcelGrid" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="130" Margin="14,163,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
