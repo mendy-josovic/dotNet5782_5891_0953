@@ -1,6 +1,6 @@
 ﻿using System;
-using IBL.BO;
-using IBL;
+using BO;
+using BlApi;
 namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
@@ -16,6 +16,7 @@ namespace ConsoleUI_BL
                             Enter 'c' to add a customer
                             Enter 'd' to add a parcel 
                             Enter 'e' to exit");
+                    IBl bl = BlFactory.GetBl();
                     char.TryParse(Console.ReadLine(), out char ch1);
                     while (ch1 != 'e')
                     {
@@ -45,13 +46,13 @@ namespace ConsoleUI_BL
                                     station.ReadyStandsInStation = x;
                                     try
                                     {
-                                        BLObject.AddStation(station);
+                                        bl.AddStation(station);
                                     }
                                     catch (ConsoleBlException ex)
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
-                                    catch (IBL.BO.BlException ex)
+                                    catch (BO.BlException ex)
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
@@ -73,20 +74,20 @@ namespace ConsoleUI_BL
                                         Enter 1 for MEDIUM
                                         Enter 2 for HEAVY");
                                     Int32.TryParse(Console.ReadLine(), out x);
-                                    drone.MaxWeight = (WEIGHT)x;
+                                    drone.MaxWeight = (BO.Weight)x;
                                     Console.WriteLine("\nEnter the ID of the station to the first charging");
                                     Int32.TryParse(Console.ReadLine(), out x);
                                     if (x <= 0)
                                         throw new ConsoleBlException("Invalid value");
                                     try
                                     {
-                                        BLObject.AddDrone(drone, x);
+                                        ConsoleUI_BL.bl.AddDrone(drone, x);
                                     }
                                     catch (ConsoleBlException ex)
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
-                                    catch (IBL.BO.BlException ex)
+                                    catch (BO.BlException ex)
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
@@ -113,13 +114,13 @@ namespace ConsoleUI_BL
                                     customer.location.Latitude = y;
                                     try
                                     {
-                                        BLObject.AddCustomer(customer);  //sends to the func
+                                        ConsoleUI_BL.bl.AddCustomer(customer);  //sends to the func
                                     }
                                     catch (ConsoleBlException ex)
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
-                                    catch (IBL.BO.BlException ex)
+                                    catch (BO.BlException ex)
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
@@ -149,23 +150,23 @@ namespace ConsoleUI_BL
                                         Enter 1 for MEDIUM
                                         Enter 2 for HEAVY");
                                     int.TryParse(Console.ReadLine(), out x);
-                                    parcel.Weight = (WEIGHT)x;
+                                    parcel.Weight = (BO.Weight)x;
                                     Console.WriteLine(@"
                                         Choose the priority of the parcel:
                                         Enter 0 for REGULAR
                                         Enter 1 for FAST
                                         Enter 2 for EMERGENCY");
                                     int.TryParse(Console.ReadLine(), out x);
-                                    parcel.Priority = (PRIORITY)x;
+                                    parcel.Priority = (BO.Priority)x;
                                     try
                                     {
-                                        BLObject.AddParcel(parcel);
+                                        ConsoleUI_BL.bl.AddParcel(parcel);
                                     }
                                     catch (ConsoleBlException ex)
                                     {
                                         Console.WriteLine(ex.Message);
                                     }
-                                    catch (IBL.BO.BlException ex)
+                                    catch (BO.BlException ex)
                                     {
                                         Console.WriteLine(ex.Message);
                                     }

@@ -35,7 +35,7 @@ namespace ConsoleUI_BL
                                     throw new ConsoleBlException("Invalid Imput");
                                 Console.WriteLine("Enter A new Model Name: ");
                                 string str = Console.ReadLine();
-                                BLObject.UpdatDroneName(x, str);
+                                bl.UpdatDroneName(x, str);
                                 break;
                             }
                         case 'B':
@@ -49,7 +49,7 @@ namespace ConsoleUI_BL
                                 Int32.TryParse(Console.ReadLine(), out int j);
                                 if (j < 0)
                                     throw new ConsoleBlException("Invalid Imput");
-                                BLObject.UpdateStation(x, str, j);
+                                bl.UpdateStation(x, str, j);
                                 break;
                             }
                         case 'C':
@@ -61,7 +61,7 @@ namespace ConsoleUI_BL
                                 Console.WriteLine("Enter A new Customer Name And Phone (Choos one or two)");
                                 string str = Console.ReadLine();
                                 string j = Console.ReadLine();
-                                BLObject.UpdateCosomerInfo(x, str, j);
+                                bl.UpdateCosomerInfo(x, str, j);
                                 break;
                             }
                         case 'D':
@@ -70,7 +70,7 @@ namespace ConsoleUI_BL
                                 Int32.TryParse(Console.ReadLine(), out int x);
                                 if (x < 0)
                                     throw new ConsoleBlException("Invalid Imput");
-                                BLObject.SendDroneToCarge(x);
+                                bl.SendDroneToCarge(x);
                                 break;
                             }
                         case 'F':
@@ -83,7 +83,7 @@ namespace ConsoleUI_BL
                                 Int32.TryParse(Console.ReadLine(), out int j);
                                 if (j < 0)
                                     throw new ConsoleBlException("Invalid Imput");
-                                BLObject.ReturnDroneFromeCharging(x, j);
+                                bl.ReturnDroneFromeCharging(x, j);
                                 break;
                             }
                         case 'G':
@@ -92,7 +92,7 @@ namespace ConsoleUI_BL
                                 Int32.TryParse(Console.ReadLine(), out int x);
                                 if (x < 0)
                                     throw new ConsoleBlException("Invalid Imput");
-                                BLObject.AssignDronToParcel(x);
+                                bl.AssignDronToParcel(x);
                                 break;
                             }
                         case 'H':
@@ -101,7 +101,7 @@ namespace ConsoleUI_BL
                                 Int32.TryParse(Console.ReadLine(), out int x);
                                 if (x < 0)
                                     throw new ConsoleBlException("Invalid Imput");
-                                BLObject.PickUp(x);
+                                bl.PickUp(x);
                                 break;
                             }
                         case 'I':
@@ -110,7 +110,7 @@ namespace ConsoleUI_BL
                                 Int32.TryParse(Console.ReadLine(), out int x);
                                 if (x < 0)
                                     throw new ConsoleBlException("Invalid Imput");
-                                BLObject.Suuply(x);
+                                bl.Suuply(x);
                                 break;
                             }
                         default:

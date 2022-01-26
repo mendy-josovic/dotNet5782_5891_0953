@@ -47,12 +47,12 @@ namespace ConsoleUI_BL
                                                         Int32.TryParse(Console.ReadLine(), out int x);
                                                         if (x <= 0)
                                                             throw new ConsoleBlException("Invalid value");
-                                                        DO.Station station = BLObject.DisplayStation(x);
-                                                        BO.Station BLStation = BLObject.BLStation(station.Id);
-                                                        foreach (DroneToList drone in BLObject.BLDrones())
+                                                        DO.Station station = bl.DisplayStation(x);
+                                                        BO.Station BLStation = bl.BLStation(station.Id);
+                                                        foreach (DroneToList drone in bl.BLDrones())
                                                         {
                                                             if (drone.ThisLocation == BLStation.location)
-                                                                BLStation.ListOfDrones.Add(BLObject.BLDroneInCharging(drone));
+                                                                BLStation.ListOfDrones.Add(bl.BLDroneInCharging(drone));
                                                         }
                                                         Console.WriteLine(BLStation);
                                                         break;
@@ -63,8 +63,8 @@ namespace ConsoleUI_BL
                                                         Int32.TryParse(Console.ReadLine(), out int x);
                                                         if (x <= 0)
                                                             throw new ConsoleBlException("Invalid value");
-                                                        DroneToList drone = BLObject.DisplayDrone(x);
-                                                        BO.Drone BLDrone = BLObject.BLDrone(drone);
+                                                        DroneToList drone = bl.DisplayDrone(x);
+                                                        BO.Drone BLDrone = bl.BLDrone(drone);
                                                         Console.WriteLine(BLDrone);
                                                         break;
                                                     }
@@ -74,8 +74,8 @@ namespace ConsoleUI_BL
                                                         Int32.TryParse(Console.ReadLine(), out int x);
                                                         if (x <= 0)
                                                             throw new ConsoleBlException("Invalid value");
-                                                        DO.Customer customer = BLObject.DisplayCustomer(x);
-                                                        BO.Customer BLCustomer = BLObject.BLCustomer(customer.Id);
+                                                        DO.Customer customer = bl.DisplayCustomer(x);
+                                                        BO.Customer BLCustomer = bl.BLCustomer(customer.Id);
                                                         Console.WriteLine(BLCustomer);
                                                         break;
                                                     }
@@ -85,8 +85,8 @@ namespace ConsoleUI_BL
                                                         Int32.TryParse(Console.ReadLine(), out int x);
                                                         if (x <= 0)
                                                             throw new ConsoleBlException("Invalid value");
-                                                        DO.Parcel parcel = BLObject.DisplayParcel(x);
-                                                        BO.Parcel BLParcel = BLObject.BLParcel(parcel);
+                                                        DO.Parcel parcel = bl.DisplayParcel(x);
+                                                        BO.Parcel BLParcel = bl.BLParcel(parcel);
                                                         Console.WriteLine(BLParcel);
                                                         break;
                                                     }
@@ -129,7 +129,7 @@ namespace ConsoleUI_BL
                                             {
                                                 case 'a':
                                                     {
-                                                        List<StationToList> stations = BLObject.DisplayStationList();
+                                                        List<StationToList> stations = bl.DisplayStationList();
                                                         foreach (StationToList station in stations)
                                                         {
                                                             Console.WriteLine(station + "\n");
@@ -138,7 +138,7 @@ namespace ConsoleUI_BL
                                                     }
                                                 case 'b':
                                                     {
-                                                        List<DroneToList> drones = BLObject.DisplayDroneList();
+                                                        List<DroneToList> drones = bl.DisplayDroneList();
                                                         foreach (DroneToList drone in drones)
                                                         {
                                                             Console.WriteLine(drone + "\n");
@@ -147,7 +147,7 @@ namespace ConsoleUI_BL
                                                     }
                                                 case 'c':
                                                     {
-                                                        List<CustomerToList> customers = BLObject.DisplayCustomerList();
+                                                        List<CustomerToList> customers = bl.DisplayCustomerList();
                                                         foreach (CustomerToList customer in customers)
                                                         {
                                                             Console.WriteLine(customer + "\n");
@@ -156,7 +156,7 @@ namespace ConsoleUI_BL
                                                     }
                                                 case 'd':
                                                     {
-                                                        IEnumerable<ParcelToList> parcels = BLObject.DisplayParcelList();
+                                                        IEnumerable<ParcelToList> parcels = bl.DisplayParcelList();
                                                         foreach (ParcelToList parcel in parcels)
                                                         {
                                                             Console.WriteLine(parcel + "\n");
@@ -165,7 +165,7 @@ namespace ConsoleUI_BL
                                                     }
                                                 case 'f':
                                                     {
-                                                        IEnumerable<ParcelToList> parcels = BLObject.DisplayParcelList();
+                                                        IEnumerable<ParcelToList> parcels = bl.DisplayParcelList();
                                                         var notAssociated = parcels.Select(w => w.Status == StatusOfParcel.Created);
                                                         //foreach (ParcelToList parcel in notAssociated)
                                                         //{
@@ -175,7 +175,7 @@ namespace ConsoleUI_BL
                                                     }
                                                 case 'g':
                                                     {
-                                                        List<StationToList> stations = BLObject.DisplayStationList();
+                                                        List<StationToList> stations = bl.DisplayStationList();
                                                         var stationsWithReadyStands = stations.FindAll(w => w.ReadyStandsInStation > 0);
                                                         foreach (StationToList station in stationsWithReadyStands)
                                                         {

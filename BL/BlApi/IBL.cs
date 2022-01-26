@@ -51,7 +51,7 @@ namespace BlApi
         public void UpdateCosomerInfo(int Id, string Name, string Phone);
         public void UpdateStation(int Id, string Name, int numofCha);
         public void SendDroneToCarge(int DronId);
-        public void ReturnDroneFromeCharging(int DroneId, int Time);
+        public void ReturnDroneFromeCharging(int DroneId);
         public void AssignDronToParcel(int DroneId);
         public void PickUp(int DroneId);
         public void Suuply(int DroneId);

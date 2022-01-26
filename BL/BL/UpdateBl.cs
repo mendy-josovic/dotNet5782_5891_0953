@@ -7,6 +7,8 @@ using System.Linq;
 using System.Collections;
 using BlApi;
 using DO;
+using System.Runtime;
+
 using System.Runtime.CompilerServices;
 namespace BL
 {
@@ -147,7 +149,7 @@ namespace BL
         /// <param name="Time"></param>
         /// 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void ReturnDroneFromeCharging(int DroneId,int Time)
+        public void ReturnDroneFromeCharging(int DroneId)
         {
             lock (Data)
             {
@@ -158,8 +160,11 @@ namespace BL
                         throw new BlException("Drone doesn't exsit");
                     if (!(DroneList[i].status == BO.StatusOfDrone.InMaintenance))
                         throw new BlException("ERROR: Dron Not In Cargong Mode");
+                    DroneCharge dronech = Data.DisplayDroneCharge(DroneId);
+                    DateTime time1 = DateTime.Now;               
+                    TimeSpan Time= time1.Subtract(dronech.EntryTimeForLoading);
                     DroneList[i].status = BO.StatusOfDrone.Available;
-                    DroneList[i].Battery += Time * batteryConfig[4];
+                    DroneList[i].Battery += Time.TotalSeconds* batteryConfig[4];
                     if (DroneList[i].Battery > 100)//stoping the recharging in 100%
                         DroneList[i].Battery = 100;
                     DO.DroneCharge droneCharge = Data.DisplayDroneCharge(DroneId);

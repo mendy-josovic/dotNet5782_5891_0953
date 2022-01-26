@@ -116,7 +116,7 @@ namespace DalXml
             XElement CustomerElem = new XElement("Customer",//adding the info
                                  new XElement("Id", cst.Id),
                                  new XElement("Name", cst.Name),
-                                 new XElement("PhoneNumber", cst.Phone),
+                                 new XElement("Phone", cst.Phone),
                                  new XElement("Longitude", cst.Longitude),
                                  new XElement("Latitude", cst.Latitude));
 
@@ -183,13 +183,9 @@ namespace DalXml
                                                  Longitude = double.Parse(cus.Element("Longitude").Value),
                                                  Latitude = double.Parse(cus.Element("Latitude").Value)
                                              };
-            //Id = int.Parse(cus.Element("Id").Value),
-            //                                 Name = cus.Element("Name").Value,
-            //                                 PhoneNumber = cus.Element("PhoneNumber").Value,
-            //                                 Longitude = double.Parse(cus.Element("Longitude").Value),
-            //                                 Latitude = double.Parse(cus.Element("Latitude").Value)
 
-            return customer.Select(x => x);            
+
+            return customer.Where(x => predicate == null ? true : predicate(x));            
         }
 
         #endregion
