@@ -25,11 +25,12 @@ namespace PL
         bool isManualModePressed;
         BackgroundWorker worker;
         RefreshSimulatorEvent refreshSimulatorEvent = new();
+
         /// <summary>
-        /// 
+        /// A window ctor that shows drone details and gives update options 
         /// </summary>
-        /// <param name="blObject"></param>
-        /// <param name="dro"></param>
+        /// <param name="blObject">object of BL</param>
+        /// <param name="dro">the drone of this window</param>
         public DroneWindow(IBl blObject, Drone dro)
         {
             InitializeComponent();
@@ -51,12 +52,12 @@ namespace PL
             drone = dro;
             AddDrone.DataContext = drone;
             LongitudeTextBox.Text = ConvertToSexagesimal(drone.ThisLocation.Longitude);
-
             InitializeButtons(drone);
             AddDroneLabel.Content = String.Format("Drone {0}",dro.Id);
         }
+
         /// <summary>
-        /// 
+        /// sends or returns drone from charging
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -89,6 +90,12 @@ namespace PL
             }
         }
 
+
+        /// <summary>
+        /// Sends the drone for delivery
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Delivery_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -135,6 +142,12 @@ namespace PL
             }
         }
 
+
+        /// <summary>
+        /// updates the drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -160,12 +173,22 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Updates controls at the touch of a button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             DeliveryButton.IsEnabled = true;
             ChargingButton.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Updates controls at the touch of a button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ManualButton_Click(object sender, RoutedEventArgs e)
         {
             isManualModePressed = true;
@@ -178,6 +201,11 @@ namespace PL
             worker.CancelAsync();
         }
 
+        /// <summary>
+        /// Turns on the backgroundWorker and updates controls at the touch of a button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AutoButton_Click(object sender, RoutedEventArgs e)
         {
             ManualButton.Visibility = Visibility.Visible;
@@ -196,6 +224,11 @@ namespace PL
             worker.RunWorkerAsync();
         }
 
+        /// <summary>
+        /// Dowork of the worker
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             int droneId = 0;
@@ -208,6 +241,11 @@ namespace PL
             blObject.RunSimulator(droneId, workerProgress, cancelWorker);
         }
 
+        /// <summary>
+        /// Closes the dorne window when the worker completed (the manual button pressed)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (isManualModePressed)
@@ -217,6 +255,10 @@ namespace PL
             }
         }
 
+
+        /// <summary>
+        /// updates the windows when simulator does changes
+        /// </summary>
         private void WorkerProgress()
         {
             int droneId = 0;
@@ -235,11 +277,20 @@ namespace PL
             refreshSimulatorEvent.RaiseEvent();
         }
 
+
+        /// <summary>
+        /// The function returns true if the button to stop the simulator is pressed
+        /// </summary>
+        /// <returns></returns>
         private bool CancelWorker()
         {
             return isManualModePressed;
         }
 
+        /// <summary>
+        /// Updates the buttons according to the drone position
+        /// </summary>
+        /// <param name="drone"></param>
         private void InitializeButtons(Drone drone)
         {
             if (drone.status == StatusOfDrone.Available)
@@ -272,7 +323,5 @@ namespace PL
                 UpdateButton.IsEnabled = false;
             }
         }
-
-
     }
 }
