@@ -35,7 +35,7 @@ namespace BL
             {
                 lock (this.bl)
                 {
-                    this.bl.ReturnDroneFromeCharging(droneId, 1);
+                    this.bl.ReturnDroneFromeCharging(droneId);
                     drone = bl.BLDrone(bl.DisplayDrone(droneId));
                 }
                 RunProgress(simulatorProgress);
@@ -91,7 +91,7 @@ namespace BL
                         RunProgress(simulatorProgress);
                         lock (this.bl)
                         {
-                            bl.ReturnDroneFromeCharging(droneId, 1);
+                            bl.ReturnDroneFromeCharging(droneId);
                             drone = bl.BLDrone(bl.DisplayDrone(droneId));
                         }
                         RunProgress(simulatorProgress);
