@@ -88,6 +88,7 @@ namespace PL
         {
             this.Dispatcher.Invoke(new Action(DisplayListBySelectors));
         }
+
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DisplayListBySelectors();

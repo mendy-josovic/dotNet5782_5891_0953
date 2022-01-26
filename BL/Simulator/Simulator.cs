@@ -61,13 +61,14 @@ namespace Simulator
                                     drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
                                 }
                             }
-                            RunProgress(simulatorProgress);
+                            
                             break;
                         default:
                             break;
 
                     }
-                    
+                    RunProgress(simulatorProgress);
+
                 }
                 catch(BlException ex)
                 {
