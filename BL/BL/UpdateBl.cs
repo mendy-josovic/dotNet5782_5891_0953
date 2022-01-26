@@ -201,7 +201,7 @@ namespace BL
 
                     //get only the relevent for us
                     List<DO.Parcel> tempDataParcels = Data.PrintParcelList(w => (int)w.Weigh <= (int)DroneList[i].MaxWeight
-                    && w.Scheduled == null && GetBatteryUseAndRootFeasibility(DroneList[i], w) == true).ToList();
+                    && w.Scheduled == null && GetBatteryUseAndRootFeasibility(DroneList.Find(w => w.Id == DroneId), w) == true).ToList();
 
                     //remove all tht cant do the root (because of the battery consemption)
                     tempDataParcels.OrderByDescending(w => w.Priority).ThenByDescending(w => w.Weigh).
@@ -210,9 +210,9 @@ namespace BL
                     //sorting acourding to priyuorty
                     if (tempDataParcels.Count == 0)
                         throw new BlException("Assignment Not Possible");
-                    DroneList[i].status = BO.StatusOfDrone.Delivery;
-                    DroneList[i].ParcelId = tempDataParcels[0].Id;
-                    Data.UpdatParcel(tempDataParcels[0].Id, 0, 0, DroneList[i].Id, 0, 0, 0, 1);//we updating the first parcel in the list
+                    DroneList.Find(w => w.Id == DroneId).status = BO.StatusOfDrone.Delivery;
+                    DroneList.Find(w => w.Id == DroneId).ParcelId = tempDataParcels[0].Id;
+                    Data.UpdatParcel(tempDataParcels[0].Id, 0, 0, DroneList.Find(w => w.Id == DroneId).Id, 0, 0, 0, 1);//we updating the first parcel in the list
                 }
                 catch (DO.DalExceptions ex)
                 {
