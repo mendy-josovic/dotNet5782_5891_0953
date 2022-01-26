@@ -93,6 +93,14 @@ namespace DalApi
         /// <param name="id"></param>
         /// <returns></returns>
         public Parcel PrintParcel(int id);
+        /// 
+        /// <summary>
+        /// we finde the place with the station and the dronr we need 
+        /// </summary>
+        /// <param name="DroneId"></param>
+        /// <param name="StationId"></param>
+        /// <returns></returns>
+        /// 
         public DroneCharge DisplayDroneCharge(int DroneId = 0);
         /// <summary>
         /// returns a Ienumrable that is with a predicet
@@ -113,10 +121,15 @@ namespace DalApi
         /// <param name="predicate"></param>
         /// <returns></returns>
         public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null);      
+        /// <summary>
+        /// displaying the drobe charg
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<DroneCharge> DisplayDronesInCharging(Predicate<DroneCharge> predicate = null);
         public double[] Consumption();
         /// <summary>
-        /// 
+        /// returns the runing numbner
         /// </summary>
         /// <returns></returns>
         public int GetRuningNumber();

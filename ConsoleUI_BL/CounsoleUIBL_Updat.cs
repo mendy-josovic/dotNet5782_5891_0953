@@ -79,11 +79,7 @@ namespace ConsoleUI_BL
                                 Int32.TryParse(Console.ReadLine(), out int x);
                                 if (x < 0)
                                     throw new ConsoleBlException("Invalid Imput");
-                                Console.WriteLine("Enter Time in Charging: ");
-                                Int32.TryParse(Console.ReadLine(), out int j);
-                                if (j < 0)
-                                    throw new ConsoleBlException("Invalid Imput");
-                                bl.ReturnDroneFromeCharging(x, j);
+                                bl.ReturnDroneFromeCharging(x);
                                 break;
                             }
                         case 'G':

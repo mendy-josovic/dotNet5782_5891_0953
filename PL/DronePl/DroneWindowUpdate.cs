@@ -69,7 +69,7 @@ namespace PL
                     blObject.SendDroneToCarge(drone.Id);
                 else
                 {
-                    blObject.ReturnDroneFromeCharging(drone.Id,1);
+                    blObject.ReturnDroneFromeCharging(drone.Id);
                 }
                 drone = blObject.BLDrone(blObject.DisplayDrone(drone.Id));
                 AddDrone.DataContext = drone;

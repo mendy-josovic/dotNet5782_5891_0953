@@ -373,14 +373,14 @@ namespace DalXml
         }
         public int GetRuningNumber()
         {
-            List<string> Run = XmlToolKit.LoadListFromXMLSerializer<string>(ConfigXml);// geting the runing number (was stored as a string)
-            int run2 = int.Parse(Run[0]);//convert to int
-            run2++;//+1
-            Run[0] = run2.ToString();//convert back to string
-            XmlToolKit.SaveListToXMLSerializer<string>(Run, ConfigXml);//stor
-            return run2;//return...
+            List<string> conf = XmlToolKit.LoadListFromXMLSerializer<string>(ConfigXml);
+            int run = int.Parse(conf[0]);
+            run++;
+            conf[0] = run.ToString();
+            XmlToolKit.SaveListToXMLSerializer<string>(conf, ConfigXml);
+            return run;//return...
         }
-        #endregion
+     #endregion
 
     }
 }
