@@ -24,6 +24,10 @@ namespace PL
         IEnumerable<BO.CustomerToList> CustomerLists;
         bool isCloseButtonPressed;
         RefreshSimulatorEvent refreshSimulatorEvent = new();
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="blObject"></param>
         public CustomerListWindow(IBl blObject)
         {
             refreshSimulatorEvent.AddEventHandler(new Action(RefreshEventHandler));
@@ -34,7 +38,7 @@ namespace PL
             CustomerListView.ItemsSource = CustomerLists;
         }
 
-        private void RefreshEventHandler()
+        private void RefreshEventHandler()//event for the simulator
         {
             this.Dispatcher.Invoke(new Action(delegate ()
             {
@@ -42,19 +46,22 @@ namespace PL
                 CustomerListView.ItemsSource = CustomerLists;
             }));
         }
-
-        private void CustomerListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// opening the window osf customer if we woant to add
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(blObjects).ShowDialog();
             CustomerLists = blObjects.DisplayCustomerList();
             CustomerListView.ItemsSource = CustomerLists;
         }
-
+        /// <summary>
+        /// if we click from a item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {           
             new CustomerWindow(blObjects, blObjects.BLCustomer(CustomerLists.First(x => x == CustomerListView.SelectedItem).Id)).ShowDialog();
