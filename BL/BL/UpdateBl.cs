@@ -8,7 +8,6 @@ using System.Collections;
 using BlApi;
 using DO;
 using System.Runtime;
-
 using System.Runtime.CompilerServices;
 namespace BL
 {
@@ -90,7 +89,7 @@ namespace BL
                     int i = DroneList.FindIndex(w => w.Id == DronId);
                     if (i < 0)
                         throw new BlException("Drone doesn't exist");
-                    IEnumerable<DO.Station> stations = Data.PrintStationList(x => x.ReadyChargeStands > 0 && DroneList[i].Battery - (int)Consumption(DroneList[i].ThisLocation, Location(x.Longitude, x.Latitude), BO.ModeOfDroneInMoving.Available) > 0);
+                    IEnumerable<DO.Station> stations = Data.PrintStationList(x => x.ReadyChargeStands>0 && DroneList[i].Battery - (int)Consumption(DroneList[i].ThisLocation, Location(x.Longitude, x.Latitude), BO.ModeOfDroneInMoving.Available) > 0);
                     if (stations.Count() == 0)
                         throw new BlException("Charging Not Possible (Station Charging slots are full, Not Enough Battery)");
                     int j = GetClosestStation(DroneList[i].ThisLocation, stations);//geting the id of station that we need to charge 
@@ -221,7 +220,7 @@ namespace BL
                         throw new BlException("cannot supply sumthig is wrong");
                     double batteryuse = Consumption(DroneList[i].ThisLocation, GetReceiverLo(parcel), (ModeOfDroneInMoving)parcel.Weigh);
                     DroneList[i].Battery -= batteryuse;
-                    DroneList[i].ThisLocation = GetSenderLo(parcel);
+                    DroneList[i].ThisLocation = GetReceiverLo(parcel);
                     Data.UpdatParcel(parcel.Id, 0, 0, 0, 0, 0, 0, 0, 0, 1);//updating the parcel in the drond
                     DroneList[i].status = StatusOfDrone.Available;
                 }

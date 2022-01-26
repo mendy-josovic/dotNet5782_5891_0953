@@ -8,7 +8,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-        static IBl bl = BlFactory.GetBl();
+        static IBl bl = BlFactory.GetBl();//singelton
         static void Main(string[] args)
         {
             Console.WriteLine(@"Welcome:
