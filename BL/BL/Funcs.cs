@@ -5,8 +5,8 @@ using System.Linq;
 using System.Collections.Generic;
 using DalApi;
 using DO;
-using Simulator;
 using System.Runtime.CompilerServices;
+
 namespace BL
 {
     internal partial class BL : IBl
@@ -655,7 +655,7 @@ namespace BL
 
         public void RunSimulator(int droneId, Action simulatorProgress, Func<bool> cancelSimulator)
         {
-            Simulator.Simulator simulator = new Simulator.Simulator(this, droneId, simulatorProgress, cancelSimulator);
+            Simulator simulator = new Simulator(this, droneId, simulatorProgress, cancelSimulator);
         }
     }
 }

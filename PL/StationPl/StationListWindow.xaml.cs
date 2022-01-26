@@ -24,14 +24,21 @@ namespace PL
         IBl blObject;
         bool isCloseButtonPressed;
         RefreshSimulatorEvent refreshSimulatorEvent = new();
+
         /// <summary>
-        /// elemnt named dronetolists that is alredy grooped
+        /// elemnt named ListOfStations that is alredy grooped
         /// </summary>
         IEnumerable<IGrouping<int, StationToList>> ListOfStations { get; set; }
 
+        /// <summary>
+        /// ctor of stationsList window
+        /// </summary>
+        /// <param name="blObject">object of BL</param>
         public StationListWindow(IBl blObject)
         {
+            //Write down the function for the event
             refreshSimulatorEvent.AddEventHandler(new Action(RefreshEventHandler));
+
             InitializeComponent();
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -43,20 +50,31 @@ namespace PL
             GroupedStationsListView.Visibility = Visibility.Hidden;
             StationsListView.Visibility = Visibility.Visible;
 
-
             GroupByComboBox.Items.Add("Has free stations");
             GroupByComboBox.Items.Add("# ready stands");
         }
+
+        /// <summary>
+        /// Writes down DisplayListBySelectors function for the event
+        /// </summary>
         private void RefreshEventHandler()
         {
             this.Dispatcher.Invoke(new Action(DisplayListBySelector));
         }
 
+        /// <summary>
+        /// Groups the stations list by the choose at the combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GroupByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DisplayListBySelector();
         }
 
+        /// <summary>
+        /// Display list of drones by selection of selectors
+        /// </summary>
         private void DisplayListBySelector()
         {
             if (GroupByComboBox.SelectedIndex == -1)
@@ -100,6 +118,11 @@ namespace PL
                 ClearButton.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Deselect item in the selector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             GroupByComboBox.SelectedIndex = -1;
@@ -109,12 +132,22 @@ namespace PL
             StationsListView.ItemsSource = ListOfStations.SelectMany(x => x);
         }
 
+        /// <summary>
+        /// Deselect item in the selector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GroupByComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             GroupByComboBox.SelectedIndex = -1;
             ClearButton.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Opens the window of the station that choosed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ValueStationsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ListView selectedListView = sender as ListView;
@@ -125,17 +158,32 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Checks if the window can be closed as requested
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !isCloseButtonPressed;
         }
 
+        /// <summary>
+        /// CLoses the window by click the CloseButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             isCloseButtonPressed = true;
             this.Close();
         }
 
+        /// <summary>
+        /// Opens a new station window for adding
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow(blObject).ShowDialog();

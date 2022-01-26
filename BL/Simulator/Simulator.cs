@@ -6,29 +6,37 @@ using System.Threading;
 using BO;
 using static BL.BL;
 
-namespace Simulator
+namespace BL
 {
     internal class Simulator
     {
         double droneSpeed;
         int timerDelay;
         Drone drone;
-        BL.BL bl;
-        public Simulator(BL.BL blObject, int droneId, Action simulatorProgress, Func<bool> cancelSimulator)
+        BL bl;
+
+        /// <summary>
+        /// ctor of simulator
+        /// </summary>
+        /// <param name="blObject">object of BL</param>
+        /// <param name="droneId">ID of this drone</param>
+        /// <param name="simulatorProgress">delegate of function that updates the PL with the simulator progress</param>
+        /// <param name="cancelSimulator">delegate of boolean function that determines when to stop the simulator</param>
+        public Simulator(BL blObject, int droneId, Action simulatorProgress, Func<bool> cancelSimulator)
         {
             this.droneSpeed = 10;
-            this.timerDelay = 500;
-            bl = blObject;
-            lock (bl)
+            this.timerDelay = 1000;
+            this.bl = blObject;
+            lock (this.bl)
             {
-                drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
+                drone = bl.BLDrone(bl.DisplayDrone(droneId));
             }
             if (drone.status == StatusOfDrone.InMaintenance)
             {
-                lock (bl)
+                lock (this.bl)
                 {
-                    bl.ReturnDroneFromeCharging(droneId, 1);
-                    drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
+                    this.bl.ReturnDroneFromeCharging(droneId, 1);
+                    drone = bl.BLDrone(bl.DisplayDrone(droneId));
                 }
                 RunProgress(simulatorProgress);
             }
@@ -39,26 +47,26 @@ namespace Simulator
                     switch (drone.status)
                     {
                         case StatusOfDrone.Available:
-                            lock (bl)
+                            lock (this.bl)
                             {
-                                blObject.AssignDronToParcel(droneId);
-                                drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
+                                bl.AssignDronToParcel(droneId);
+                                drone = bl.BLDrone(bl.DisplayDrone(droneId));
                             }
                             break;
 
                         case StatusOfDrone.Delivery:
-                            lock (bl)
+                            lock (this.bl)
                             {
-                                DO.Parcel parcel = blObject.DisplayParcel(drone.parcel.Id);
+                                DO.Parcel parcel = bl.DisplayParcel(drone.parcel.Id);
                                 if (parcel.PickedUp == null)
                                 {
-                                    blObject.PickUp(droneId);
-                                    drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
+                                    bl.PickUp(droneId);
+                                    drone = bl.BLDrone(bl.DisplayDrone(droneId));
                                 }
                                 else if (parcel.Delivered == null)
                                 {
-                                    blObject.Suuply(droneId);
-                                    drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
+                                    bl.Suuply(droneId);
+                                    drone = bl.BLDrone(bl.DisplayDrone(droneId));
                                 }
                             }
                             
@@ -75,24 +83,27 @@ namespace Simulator
                     
                     while (drone.Battery != 100)
                     {
-                        lock (bl)
+                        lock (this.bl)
                         {
-                            blObject.SendDroneToCarge(droneId);
-                            drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
+                            bl.SendDroneToCarge(droneId);
+                            drone = bl.BLDrone(bl.DisplayDrone(droneId));
                         }
                         RunProgress(simulatorProgress);
-                        lock (bl)
+                        lock (this.bl)
                         {
-                            blObject.ReturnDroneFromeCharging(droneId, 1);
-                            drone = blObject.BLDrone(blObject.DisplayDrone(droneId));
+                            bl.ReturnDroneFromeCharging(droneId, 1);
+                            drone = bl.BLDrone(bl.DisplayDrone(droneId));
                         }
                         RunProgress(simulatorProgress);
-                    }
-                    Thread.Sleep(timerDelay);
+                    }                    
                 }
             }
         }
 
+        /// <summary>
+        /// Updates the PL with the simulator progress
+        /// </summary>
+        /// <param name="simulatorProgress">delegate of function that updates the PL with the simulator progress</param>
         private void RunProgress(Action simulatorProgress)
         {
             Thread.Sleep(timerDelay);

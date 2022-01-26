@@ -26,6 +26,11 @@ namespace PL
         IBl blObject;
         Drone drone = new();
         bool isCloseRequired;
+
+        /// <summary>
+        /// A window ctor for adding a drone
+        /// </summary>
+        /// <param name="blObject">object of BL</param>
         public DroneWindow(IBl blObject)
         {
             InitializeComponent();
@@ -44,17 +49,11 @@ namespace PL
             UpdateButton.Visibility = Visibility.Hidden;
         }
 
-        private void IDTextBox_MouseEnter(object sender, MouseEventArgs e)
-        {
-            TextBox t = sender as TextBox;
-            if (t != null)
-            {
-                ToolTip tt = new ToolTip();
-                tt.Content = "The ID is automatically given";
-                t.ToolTip = tt;
-            }
-        }
-
+        /// <summary>
+        /// A toolTip that the battery field is automatically given
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BatteryProgressBar_MouseEnter(object sender, MouseEventArgs e)
         {
             if (AddADroneButton.Visibility == Visibility.Visible)
@@ -69,6 +68,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Add a drone and write a messageBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddADroneButton_Click(object sender, RoutedEventArgs e)
         {
             StationToList station = ListOfStationsSelector.SelectedItem as StationToList;
@@ -101,24 +105,44 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Allows to enter numbers only to ID textBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[0-9]*$");
             e.Handled = !regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Allows to enter numbers and letters only to Model textBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ModelTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[a-zA-Z0-9 ]*$");
             e.Handled = !regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Closes this window when close-button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             isCloseRequired = true;
             this.Close();
         }
 
+        /// <summary>
+        /// Updates the location according to the station where the drone is located
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListOfStationsSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             StationToList s = (StationToList)ListOfStationsSelector.SelectedItem;
@@ -126,16 +150,31 @@ namespace PL
             LatitudeTextBox.Text = blObject.GetLocationOfStation(s).Latitude.ToString();
         }
 
+
+        /// <summary>
+        /// Deselect item in Max-weight selector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MaxWeightSelector_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             MaxWeightSelector.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Checks if the window can be closed as requested
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !isCloseRequired;
         }
 
+        /// <summary>
+        /// Checks whether a valid value has been obtained (not consumed because '-' cannot be inserted)
+        /// </summary>
+        /// <returns></returns>
         private bool isInputValid()
         {
             IDTextBox.BorderBrush = Brushes.Black;
@@ -150,16 +189,13 @@ namespace PL
             }
 
             return valid;
-
         }
 
-        private void DeliveryTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            //int.TryParse(DeliveryTextBox.Text, out int x);
-            //if (DeliveryTextBox.Text != "")
-            //    new ParcelWindow(blObject, blObject.BLParcel(x)).Show();
-        }
-
+        /// <summary>
+        /// Convet for view the location in a sexagesimal form
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         public string ConvertToSexagesimal(double? point)
         {
             if (point == null)

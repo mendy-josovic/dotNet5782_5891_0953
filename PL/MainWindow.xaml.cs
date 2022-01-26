@@ -19,22 +19,35 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// ctor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
+        /// <summary>
+        /// Opens the management window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ManagementButton_Click(object sender, RoutedEventArgs e)
         {
             new CodeWindow().Show();
-            //this.Close();
+            this.Close();
         }
 
+        /// <summary>
+        /// Opens the customer window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CustomerButton_Click(object sender, RoutedEventArgs e)
         {
             new CustomerCode().Show();
-            //this.Close();
+            this.Close();
         }
     }
 }

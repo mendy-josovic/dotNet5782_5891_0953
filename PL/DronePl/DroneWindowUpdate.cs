@@ -185,6 +185,18 @@ namespace PL
         }
 
         /// <summary>
+        /// Opens the window of the parcel that in delvery by this drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeliveryTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int.TryParse(DeliveryTextBox.Text, out int x);
+            if (DeliveryTextBox.Text != "")
+                new ParcelWindow(blObject, x).Show();
+        }
+
+        /// <summary>
         /// Updates controls at the touch of a button
         /// </summary>
         /// <param name="sender"></param>

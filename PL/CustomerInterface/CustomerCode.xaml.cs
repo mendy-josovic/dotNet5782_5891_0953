@@ -23,6 +23,9 @@ namespace PL
     {
         IBl blObject;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
         public CustomerCode()
         {
             blObject = BlFactory.GetBl();
@@ -30,6 +33,11 @@ namespace PL
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
+        /// <summary>
+        /// Opens the window of the customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             if (IDTextBox.Text != null && IDTextBox.Text != "")
@@ -49,6 +57,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Opens a window to ad a new customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(blObject).ShowDialog();

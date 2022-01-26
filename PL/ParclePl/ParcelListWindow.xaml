@@ -21,7 +21,7 @@
             <ColumnDefinition Width="70*"/>
             <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="ParcelLiastView" Background="Transparent" MouseDoubleClick="ParcelLiastView_MouseDoubleClick" Margin="5,39,-5,6" Grid.RowSpan="2">
+        <ListView x:Name="ParcelLiastView" BorderBrush="{x:Null}" Background="Transparent" MouseDoubleClick="ParcelLiastView_MouseDoubleClick" Margin="5,39,-5,6" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="90" DisplayMemberBinding="{Binding Id}"/>
@@ -53,7 +53,7 @@
         <Label Content="Priority" Grid.Column="1" HorizontalAlignment="Left" Margin="31,266,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <Button x:Name="FilterButton" Content="Search" Grid.Column="1" HorizontalAlignment="Left" Margin="95,299,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Click="FilterButton_Click" FontWeight="Bold"/>
         <Button x:Name="AddButton" Content="Add New Parcel" Grid.Column="1" HorizontalAlignment="Left" Margin="14,343,0,0" Grid.Row="1" VerticalAlignment="Top" Height="24" Width="122" Click="AddButton_Click" FontSize="12" FontWeight="Bold"/>
-        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Top" Height="24" Width="122" Grid.Row="1" FontSize="12" FontWeight="Bold" Click="CloseButton_Click" Grid.Column="1" Margin="0,380,104,0" />
+        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Top" Height="24" Width="122" Grid.Row="1" FontSize="12" FontWeight="Bold" Click="CloseButton_Click" Grid.Column="1" Margin="0,380,99,0" />
         <Label Content="Parcels" HorizontalAlignment="Left" Height="38" Margin="289,0,0,0" VerticalAlignment="Center" Width="200" FontWeight="Bold" FontSize="20"/>
         <Label Content="Search:" Grid.Column="1" HorizontalAlignment="Left" Margin="31,174,0,0" VerticalAlignment="Top" Width="105" FontWeight="Bold" Grid.Row="1"/>
     </Grid>

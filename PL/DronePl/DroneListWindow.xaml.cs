@@ -17,32 +17,6 @@ using BO;
 
 namespace PL
 {
-
-    /// <summary>
-    /// a class for the grooping... its a class from twe typs
-    /// </summary>
-    //public class StatusAndWeightOfDrone
-    //{
-    //    public WEIGHT Weight { get; set; }
-    //    public STATUS_OF_DRONE status { get; set; }
-
-    //    public override string ToString()
-    //    {
-    //        return $"{Weight}-{status}";
-    //    }
-
-    //    public override bool Equals(object obj)
-    //    {
-    //        StatusAndWeightOfDrone other = (StatusAndWeightOfDrone)obj;
-    //        return Weight == other.Weight && status == other.status;
-    //    }
-
-    //    public override int GetHashCode()
-    //    {
-    //        return 0;
-    //    }
-    //}
-
     /// <summary>
     /// Interaction logic for DroneList.xaml
     /// </summary>
@@ -53,18 +27,19 @@ namespace PL
         RefreshSimulatorEvent refreshSimulatorEvent = new();
 
         /// <summary>
-        /// elemnt named dronetolists that is alredy grooped
-        /// </summary>
-        ///         
+        /// Elemnt named dronetolists that is alredy grooped
+        /// </summary>     
         public IEnumerable<IGrouping<StatusOfDrone, DroneToList>> ListOfDrones { get; set; }
 
         IEnumerable<StationToList> stations;
+
         /// <summary>
         /// constractor
         /// </summary>
         /// <param name="blObject"></param>
         public DroneListWindow(IBl blObject)
         {
+            //Write down the function for the event
             refreshSimulatorEvent.AddEventHandler(new Action(RefreshEventHandler));
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -74,33 +49,53 @@ namespace PL
 
             InitializeComponent();
 
+            //A group with counter of items
             DronesListView.ItemsSource = ListOfDrones.Select(grp => new
             {
                 Key = grp.Key,
                 Value = grp.ToList(),
                 Count = grp.ToList().Count()
             });
+
             StatusSelector.ItemsSource = Enum.GetValues(typeof(StatusOfDrone));
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(Weight));
         }
 
+        /// <summary>
+        /// Writes down DisplayListBySelectors function for the event
+        /// </summary>
         private void RefreshEventHandler()
         {
             this.Dispatcher.Invoke(new Action(DisplayListBySelectors));
         }
 
+        /// <summary>
+        /// Display list of drones by selection in StatusSelector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DisplayListBySelectors();
             ClearButton1.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Display list of drones by selection in MaxWeightSelector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DisplayListBySelectors();
             ClearButton2.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Opens a new drone window for adding
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             stations = blObject.DisplayStationList(d => d.ReadyStandsInStation > 0);
@@ -115,6 +110,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Opens the window of the drone that choosed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ValueDronesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ListView selectedListView = sender as ListView;
@@ -125,22 +125,42 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// CLoses the window by click the CloseButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             isCloseButtonPressed = true;
             this.Close();
         }
 
+        /// <summary>
+        /// Deselect item in status selector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusSelector_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             StatusSelector.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Deselect item in Max-weight selector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MaxWeightSelector_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             MaxWeightSelector.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Deselect item in status selector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearButton1_Click(object sender, RoutedEventArgs e)
         {
             StatusSelector.SelectedIndex = -1;
@@ -148,6 +168,11 @@ namespace PL
             ClearButton1.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Deselect item in Max-weight selector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearButton2_Click(object sender, RoutedEventArgs e)
         {
             MaxWeightSelector.SelectedIndex = -1;
@@ -155,14 +180,18 @@ namespace PL
             ClearButton2.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Checks if the window can be closed as requested
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !isCloseButtonPressed;
         }
 
         /// <summary>
-        /// display list of drones by selection of sel67ectors
-        /// and its doing it thruh grooping
+        /// Display list of drones by selection of selectors
         /// </summary>
         private void DisplayListBySelectors()
         {
@@ -225,40 +254,45 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Refreshes the buttons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             DisplayListBySelectors();
         }
 
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
+        //public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        //{
+        //    if (depObj != null)
+        //    {
+        //        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+        //        {
+        //            DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+        //            if (child != null && child is T)
+        //            {
+        //                yield return (T)child;
+        //            }
 
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
-            }
-        }
+        //            foreach (T childOfChild in FindVisualChildren<T>(child))
+        //            {
+        //                yield return childOfChild;
+        //            }
+        //        }
+        //    }
+        //}
 
-        public static childItem FindVisualChild<childItem>(DependencyObject obj)
-            where childItem : DependencyObject
-        {
-            foreach (childItem child in FindVisualChildren<childItem>(obj))
-            {
-                return child;
-            }
+        //public static childItem FindVisualChild<childItem>(DependencyObject obj)
+        //    where childItem : DependencyObject
+        //{
+        //    foreach (childItem child in FindVisualChildren<childItem>(obj))
+        //    {
+        //        return child;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
     }
 }

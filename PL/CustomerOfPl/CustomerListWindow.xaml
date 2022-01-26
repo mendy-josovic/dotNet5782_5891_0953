@@ -19,11 +19,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
+            <RowDefinition Height="65*"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2">
         </Grid>
         <Grid Name="DownGrid" Height="auto" Grid.Row="1" Width="auto" Grid.ColumnSpan="2">
-            <ListView x:Name="CustomerListView" Background="Transparent"  Grid.ColumnSpan="2" Margin="0,0,0,0" Grid.RowSpan="2" ItemsSource="{Binding CustomerLists,UpdateSourceTrigger=LostFocus}" MouseDoubleClick="CustomerListView_MouseDoubleClick" >
+            <ListView x:Name="CustomerListView" BorderBrush="{x:Null}" Background="Transparent"  Grid.ColumnSpan="2" Margin="0,0,0,0" Grid.RowSpan="2" ItemsSource="{Binding CustomerLists,UpdateSourceTrigger=LostFocus}" MouseDoubleClick="CustomerListView_MouseDoubleClick" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}" />
@@ -38,7 +39,7 @@
             </ListView>
         </Grid>
         <Label Content="Customers" HorizontalAlignment="Left" Height="38" Margin="289,0,0,0" VerticalAlignment="Center" Width="200" FontWeight="Bold" FontSize="20"/>
-        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="140" Grid.Row="1" FontSize="16" FontWeight="Bold" Click="CloseButton_Click" Grid.Column="1" Margin="68,425,0,0" />
-        <Button x:Name="AddCustome" Content="Add A Customer" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Grid.Row="1" FontSize="16" RenderTransformOrigin="2.372,6.353" Width="140" Click="AddCustomer_Click" FontWeight="Bold" Grid.Column="1" Margin="0,364,49,0"/>
+        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Width="140" Grid.Row="2" FontSize="16" FontWeight="Bold" Click="CloseButton_Click" Grid.Column="1" Margin="0,0,48,0" />
+        <Button x:Name="AddCustome" Content="Add A Customer" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Grid.Row="2" Grid.Column="0" FontSize="16" RenderTransformOrigin="2.372,6.353" Width="140" Click="AddCustomer_Click" FontWeight="Bold" />
     </Grid>
 </Window>

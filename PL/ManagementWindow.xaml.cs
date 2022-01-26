@@ -23,6 +23,10 @@ namespace PL
     {
         IBl blObject;
         bool isExitPressed;
+
+        /// <summary>
+        /// ctor
+        /// </summary>
         public ManagementWindow()
         {
             InitializeComponent();
@@ -31,32 +35,62 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// Opens the drones-list window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneListButton_Click(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(blObject).Show();
         }
 
+        /// <summary>
+        /// Opens the customers-list window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CustomersListButton_Click(object sender, RoutedEventArgs e)
         {
             new CustomerListWindow(blObject).Show();
         }
 
+        /// <summary>
+        /// Opens the stations-list window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StationsListButton_Click(object sender, RoutedEventArgs e)
         {
             new StationListWindow(blObject).Show();
         }
 
+        /// <summary>
+        /// Opens the parcels-list window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ParcelsListButton_Click(object sender, RoutedEventArgs e)
         {
             new ParcelListWindow(blObject).Show();
         }
 
+        /// <summary>
+        /// Closes this window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             isExitPressed = true;
             this.Close();
         }
 
+        /// <summary>
+        /// Checks if the window can be closed as requested
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !isExitPressed;

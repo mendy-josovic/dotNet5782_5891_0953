@@ -19,6 +19,9 @@ namespace PL
     /// </summary>
     public partial class CodeWindow : Window
     {
+        /// <summary>
+        /// ctor
+        /// </summary>
         public CodeWindow()
         {
             InitializeComponent();
@@ -39,6 +42,9 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Checks if the correct code has been entered 
+        /// </summary>
         private void CheckPassword()
         {
             if (CodeTextBox.Password != "1234")

@@ -27,6 +27,10 @@ namespace PL
         IEnumerable<DroneInCharging> ListOfDrones; 
         bool isCloseRequired = false;
 
+        /// <summary>
+        /// ctor of station window for adding
+        /// </summary>
+        /// <param name="blObject">object of BL</param>
         public StationWindow(IBl blObject)
         {
             InitializeComponent();
@@ -34,7 +38,6 @@ namespace PL
             this.blObject = blObject;
             station = blObject.BLStation();
             ADrone.DataContext = station;
-           // ListOfDrones = blObject.DisplayDronesInCharging((w => blObject.GetDistance(station.location, blObject.DisplayDrone(w.Id).ThisLocation) == 0));
             StationLabel.Content = "Add a station";
             IDTextBox.IsReadOnly = false;
             LongitudeTextBox.IsReadOnly = false;
@@ -43,6 +46,11 @@ namespace PL
             UpDateButton.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// A window ctor that shows station details and gives update options  
+        /// </summary>
+        /// <param name="blObject"></param>
+        /// <param name="s"></param>
         public StationWindow(IBl blObject, Station s)
         {
             InitializeComponent();
@@ -61,17 +69,32 @@ namespace PL
             LatitudeTextBox.BorderBrush = null;
         }
 
+        /// <summary>
+        /// Checks if the window can be closed as requested
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !isCloseRequired;
         }
 
+        /// <summary>
+        /// CLoses the window by click the CloseButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             isCloseRequired = true;
             this.Close();
         }
 
+        /// <summary>
+        /// Opens the window of the drone that choosed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DronesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ListView selectedListView = sender as ListView;
@@ -83,12 +106,22 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Updates the update button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(NameTextBox.Text != station.Name)
                 UpDateButton.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Updates the station
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpDateButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -108,10 +141,14 @@ namespace PL
                     String message = String.Format("Something went wrong...\n{0}", ex2.Message);
                     MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-             
+            }            
         }
 
+        /// <summary>
+        /// Adds the new station by click the Add-button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -135,18 +172,33 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Allows to enter numbers only to ID textBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void IDTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[0-9]*$");
             e.Handled = !regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Allows to enter letters only to Name textBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NameTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[a-zA-Z]*$");
             e.Handled = !regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Allows to enter numbers and '.' only to location textBoxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LongitudeAndLatitudeTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[0-9.]*$");
