@@ -21,7 +21,7 @@ namespace BL
             {
                 try
                 {
-                    List<DO.Station> tempDataStations = new(Data.PrintStationList(w => w.Id == id));
+                    List<DO.Station> tempDataStations = new(Data.PrintStationList(w => w.Id == id));//finds the station
                     if (tempDataStations.Count == 0)
                         throw new BlException("Station does not exist");
                     return (Data.DisplayStation(id));
@@ -53,7 +53,7 @@ namespace BL
             {
                 try
                 {
-                    List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w => w.Id == id));
+                    List<DO.Customer> tempDataCustomers = new(Data.PrintCustomerList(w => w.Id == id));//findes it 
                     if (tempDataCustomers.Count == 0)
                         throw new BlException("Customer does not exist");
                     return Data.PrintCustomer(id);
@@ -66,7 +66,6 @@ namespace BL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-
         public DO.Parcel DisplayParcel(int id)
         {
             lock (Data)
@@ -106,20 +105,14 @@ namespace BL
                 }
             }
         }
-        /// <summary>
-        /// the func returns a Ienumrable of Bo parcels from Do Prcels
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        /// 
+ 
         [MethodImpl(MethodImplOptions.Synchronized)]
-
         public IEnumerable<BO.Parcel> DisplayParcelLists(Predicate<BO.Parcel> predicate = null)
         {
             lock (Data)
             {
                 IEnumerable<BO.Parcel> A;
-                IEnumerable<DO.Parcel> B = Data.PrintParcelList();
+                IEnumerable<DO.Parcel> B = Data.PrintParcelList();//converting all the parcel from Do to BO
                 A = B.Select(w => BLParcel(w));
                 return A.Where(x => predicate == null ? true : predicate(x));
             }
@@ -146,7 +139,7 @@ namespace BL
                 List<CustomerToList> customerList = new();
                 foreach (DO.Customer customer in tempDataCustomers)
                 {
-                    customerList.Add(BLCustomerToList(customer));
+                    customerList.Add(BLCustomerToList(customer));//convert from customer of DL to CustomerInList of BO
                 }
                 return customerList.FindAll(x => predicate == null ? true : predicate(x));
             }
@@ -161,7 +154,7 @@ namespace BL
                 List<ParcelToList> parcelList = new();
                 foreach (DO.Parcel parcel in tempDataParcels)
                 {
-                    parcelList.Add(BLParcelToList(parcel));
+                    parcelList.Add(BLParcelToList(parcel));//Convert from parcel in DO to parcelToList in BO
                 }
                 return parcelList.FindAll(x => predicate == null ? true : predicate(x));
             }
@@ -173,7 +166,7 @@ namespace BL
             lock (Data)
             {
                 IEnumerable<DO.DroneCharge> tempDataDronesInCharge = Data.DisplayDronesInCharging();
-                IEnumerable<DroneInCharging> DronesInChargingList = tempDataDronesInCharge.Select(w => BLDroneInCharging1(w.DroneId));
+                IEnumerable<DroneInCharging> DronesInChargingList = tempDataDronesInCharge.Select(w => BLDroneInCharging1(w.DroneId));//fines all the places
                 return DronesInChargingList.Where(x => predicate == null ? true : predicate(x));
             }
         }

@@ -39,14 +39,7 @@ namespace DalObject
             DataSource.droneCharges.Remove(tempDroneCharge);//removes the drone-charge
         }
 
-        /// 
-        /// <summary>
-        /// we finde the place with the station and the dronr we need 
-        /// </summary>
-        /// <param name="DroneId"></param>
-        /// <param name="StationId"></param>
-        /// <returns></returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge DisplayDroneCharge(int DroneId = 0)
         {        

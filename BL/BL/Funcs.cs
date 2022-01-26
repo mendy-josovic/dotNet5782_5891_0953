@@ -19,6 +19,7 @@ namespace BL
         /// <param name="mode">mode of the drone in moving: without a parcel, or with a parcel, and which mode of parcel</param>
         /// <returns>how much battery this moving need</returns>
         /// 
+
         public double Consumption(Location a, Location b, ModeOfDroneInMoving mode)
         {
             return GetDistance(a, b) * batteryConfig[(int)mode];
@@ -26,24 +27,23 @@ namespace BL
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]
+
         public bool GetBatteryUseAndRootFeasibility(BO.DroneToList dro,DO.Parcel prc)
         {
             lock (Data)
             {
                 try
                 {
-                    Location startingPiont = dro.ThisLocation;
-                    Location StapingPiont = GetSenderLo(prc);
+                    Location startingPiont = dro.ThisLocation;//strat
+                    Location StapingPiont = GetSenderLo(prc);//stoping piont
                     Location FinishingPiont = GetReceiverLo(prc);
                     DO.Customer sender = Data.PrintCustomer(prc.SenderId);
                     DO.Customer Receiver = Data.PrintCustomer(prc.TargetId);
                     DO.Station closeststation = Data.DisplayStation(GetClosestStation(FinishingPiont));
                     Location ClosestCarging = Location(closeststation.Longitude, closeststation.Latitude);
-                    double batteryUse = Consumption(startingPiont, StapingPiont, BO.ModeOfDroneInMoving.Available) + Consumption(StapingPiont, FinishingPiont, (BO.ModeOfDroneInMoving)prc.Weigh);
-                    if (dro.Battery - batteryUse < 20)
-                    {
-                        batteryUse += Consumption(FinishingPiont, ClosestCarging, BO.ModeOfDroneInMoving.Available);
-                        if (dro.Battery - batteryUse < 0)
+                    double batteryUse = Consumption(startingPiont, StapingPiont, BO.ModeOfDroneInMoving.Available) + Consumption(StapingPiont, FinishingPiont, (BO.ModeOfDroneInMoving)prc.Weigh) + Consumption(FinishingPiont, ClosestCarging, BO.ModeOfDroneInMoving.Available);//geting how much baterry is used in a root
+                    if (dro.Battery - batteryUse < 0)
+                    {                   
                             return false;
                     }
                     return true;
@@ -55,12 +55,6 @@ namespace BL
             }
 
         }
-        /// <summary>
-        /// the func returns location of thr sender 
-        /// </summary>
-        /// <param name="pr"></param>
-        /// <returns></returns>
-        /// 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Location GetSenderLo(DO.Parcel pr)
         {
@@ -78,12 +72,7 @@ namespace BL
                 }
             }
         }
-        /// <summary>
-        /// the func returns location of the rtraget
-        /// </summary>
-        /// <param name="pr"></param>
-        /// <returns></returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Location GetReceiverLo(DO.Parcel pr)
         {
@@ -101,13 +90,6 @@ namespace BL
                 }
             }
         }
-
-
-        /// <summary>
-        /// turn DroneList into IEnumerable DroneList
-        /// </summary>
-        /// <returns></returns>
-        /// 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> BLDrones(Predicate<DroneToList> predicate = null)
         {
@@ -116,19 +98,6 @@ namespace BL
                 return DroneList.FindAll(x => predicate == null ? true : predicate(x));
             }
         }
-
-        /// <summary>
-        /// the func hase  a option
-        /// to get the distenc with difrrentn pararmeters
-        /// </summary>
-        /// <param name="a">if its jest a location to a location</param>
-        /// <param name="b"></param>
-        /// <param name="longA">if we wont to mack the disenc with a long and lat</param>
-        /// <param name="latA"></param>
-        /// <param name="longB"></param>
-        /// <param name="latB"></param>
-        /// <returns></returns>
-        /// 
         public double GetDistance(Location a, Location b, double longA = 0, double latA = 0, double longB = 0, double latB = 0)
         {
             
@@ -142,16 +111,11 @@ namespace BL
                     b.Latitude = latB;
                     b.Longitude = longB;
                 }
-                return Math.Sqrt((Math.Pow(a.Longitude - b.Longitude, 2) + Math.Pow(a.Latitude - b.Latitude, 2)));
+                return Math.Sqrt((Math.Pow(a.Longitude - b.Longitude, 2) + Math.Pow(a.Latitude - b.Latitude, 2)));//using the ditance formula
             
         }
 
-        /// <summary>
-        /// return the ID of the closest station with ready stands to the location
-        /// </summary>
-        /// <param name="a">the location we want to get it closest station</param>
-        /// <returns>ID of the closest station</returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public int GetClosestStation(Location a, IEnumerable<DO.Station> stations=null)
@@ -165,19 +129,19 @@ namespace BL
                     double minimum = 0;
                     IEnumerable<DO.Station> tempDataStations;
                     if (stations == null)
-                        tempDataStations = Data.PrintStationList();
+                        tempDataStations = Data.PrintStationList();//if its not the empty one
                     else
                         tempDataStations = stations;
                     List<BO.Station> stationsBL = new();
                     foreach (DO.Station station in tempDataStations)
                     {
-                        stationsBL.Add(BLStation(station.Id));
+                        stationsBL.Add(BLStation(station.Id));//convertint to bl station
                     }
                     if (stationsBL.Count == 0)
                         return closestID;
                     while (i != stationsBL.Count)
                     {
-                        if (stationsBL[i].ReadyStandsInStation > 0)
+                        if (stationsBL[i].ReadyStandsInStation > 0)//only checking the ones with avelebale stands
                         {
                             closestID = stationsBL[0].Id;
                             minimum = GetDistance(a, stationsBL[0].location);
@@ -203,12 +167,6 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// get ID of a station and return it location
-        /// </summary>
-        /// <param name="ID">ID of station</param>
-        /// <returns>location of station</returns>
-        /// 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Location GetLocationOfStation(int ID)
         {
@@ -227,12 +185,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Turn a DAL station into a BL station
-        /// </summary>
-        /// <param name="s">DAL station</param>
-        /// <returns>BL station</returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station BLStation(int id)
         {
@@ -246,7 +199,7 @@ namespace BL
                 station.location.Latitude = s.Latitude;
                 station.location.Longitude = s.Longitude;
                 station.ReadyStandsInStation = s.ReadyChargeStands;
-                station.ListOfDrones = DisplayDronesInCharging((w => GetDistance(station.location, DisplayDrone(w.Id).ThisLocation) == 0)).ToList();
+                station.ListOfDrones = DisplayDronesInCharging((w => GetDistance(station.location, DisplayDrone(w.Id).ThisLocation) == 0)).ToList();//
                 return station;
             }
         }
@@ -259,12 +212,7 @@ namespace BL
             return station;
         }
 
-        /// <summary>
-        /// Turn a DroneToList drone into a BL Drone
-        /// </summary>
-        /// <param name="d">DroneToList drone</param>
-        /// <returns>BL Drone</returns>
-        /// 
+   
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Drone BLDrone(DroneToList d)
         {
@@ -286,13 +234,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Turn a DAL customer into a BL customer
-        /// gets int of the id
-        /// </summary>
-        /// <param name="c">DAL customer </param>
-        /// <returns>BL customer</returns>
-        /// 
+  
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Customer BLCustomer(int Id)
         {
@@ -331,12 +273,7 @@ namespace BL
             return customer;
         }
 
-        /// <summary>
-        /// Turn a DAL parcel into a BL parcel 
-        /// </summary>
-        /// <param name="p">DAL parcel </param>
-        /// <returns>BL parcel</returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Parcel BLParcel(DO.Parcel p)
         {
@@ -361,12 +298,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Turn a DroneToList drone into a DroneInParcel
-        /// </summary>
-        /// <param name="d">DroneToList</param>
-        /// <returns>DroneInParcel</returns>
-        /// 
+
         public DroneInParcel BLDroneInParcel(DroneToList d)
         {
             DroneInParcel drone = new();
@@ -376,13 +308,7 @@ namespace BL
             return drone;
         }
 
-        /// <summary>
-        /// Turn a DAL parcel into a BL ParcelAtCustomer
-        /// </summary>
-        /// <param name="p">DAL parcel</param>
-        /// <param name="sender">a flag if the customer of ParcelAtCustomer is the sender or the recipient</param>
-        /// <returns>BL ParcelAtCustomer</returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public ParcelAtCustomer BLParcelAtCustomer(DO.Parcel p, bool sender)
@@ -410,12 +336,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Turn a DAL parcel into a BL ParcelInTransfer
-        /// </summary>
-        /// <param name="p">DAL parcel</param>
-        /// <returns>BL ParcelInTransfer</returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public ParcelInTransfer BLParcelInTransfer(DO.Parcel p)
@@ -437,12 +358,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Turn a DAL customer into a BL CustomerInParcel
-        /// </summary>
-        /// <param name="DalCus">DAL customer</param>
-        /// <returns>BL CustomerInParcel</returns>
-        /// 
+
         public CustomerInParcel BLCustomerInParcel(DO.Customer DalCus)
         {
             CustomerInParcel c = new();
@@ -451,12 +367,7 @@ namespace BL
             return c;
         }
 
-        /// <summary>
-        /// Turn a DroneToList into a BL DroneInCharging
-        /// </summary>
-        /// <param name="d">DroneToList</param>
-        /// <returns>DroneInCharging</returns>
-        /// 
+
         public DroneInCharging BLDroneInCharging(DroneToList d)
         {
             DroneInCharging drone = new();
@@ -465,14 +376,8 @@ namespace BL
             return drone;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// 
-        [MethodImpl(MethodImplOptions.Synchronized)]
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneInCharging BLDroneInCharging1(int id)
         {
             lock (Data)
@@ -486,13 +391,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// create a Location
-        /// </summary>
-        /// <param name="lon">longitude point value</param>
-        /// <param name="lat">latitude point value</param>
-        /// <returns>Location</returns>
-        /// 
+
         public Location Location(double lon, double lat)
         {
             Location l = new();
@@ -501,13 +400,6 @@ namespace BL
             return l;
         }
 
-        /// <summary>
-        /// Turn a DAL station into a BL StationToList
-        /// </summary>
-        /// <param name="s">DAL station</param>
-        /// <param name="s">DAL station</param>
-        /// <returns>StationToList</returns>
-        /// 
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public StationToList BLStationToList(DO.Station s)
@@ -524,12 +416,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Turn a BL Drone into a DroneToList
-        /// </summary>
-        /// <param name="d"> BL Drone</param>
-        /// <returns>DroneToList</returns>
-        /// 
+ 
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public DroneToList BLDroneToList(BO.Drone d)
@@ -549,12 +436,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Turn a DAL customer into a CustomerToList
-        /// </summary>
-        /// <param name="c">DAL customer</param>
-        /// <returns>CustomerToList</returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public CustomerToList BLCustomerToList(DO.Customer c)
@@ -578,12 +460,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Turn a DAL parcel into a ParcelToList
-        /// </summary>
-        /// <param name="c">DAL parcel</param>
-        /// <returns>ParcelToList</returns>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public ParcelToList BLParcelToList(DO.Parcel c)

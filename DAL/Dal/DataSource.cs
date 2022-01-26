@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DalXml;
 using DO;
-using DalXml;
-
 namespace DalObject
 {
   public class DataSource
@@ -16,6 +14,7 @@ namespace DalObject
         internal static List<Parcel> parcels = new List<Parcel>();
         internal static List<Customer> customers = new List<Customer>();
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
+        internal static List<string> config = new();
         internal class Config
         {
             public static int RuningNumber { get; set; } = 1000;
@@ -23,11 +22,12 @@ namespace DalObject
             public static double LightWeightCarrier { get; set; } = 3;
             public static double MediumWeightCarrier { get; set; } = 4;
             public static double HeavyWeightCarrier  { get; set; } = 5;
-            public static double ChargingRate { get; set; } = 25;
+            public static double ChargingRate { get; set; } = 15;
         };
         public static Random r = new Random();
         internal static void Initialize()
         {
+            config.Add(Config.RuningNumber.ToString());
             for (int i = 0; i < 2; i++)  //initializing the stations
             {
                 Station sta = new Station();
@@ -92,12 +92,12 @@ namespace DalObject
                 tempParcel.Weigh = ((DO.Weight)r.Next(0, 3));
                 tempParcel.Requested = DateTime.Now;
                 parcels.Add(tempParcel);
-            }
+            }     
             DalXml.XmlToolKit.SaveListToXMLSerializer(drones, @"DroneXml.xml");
             DalXml.XmlToolKit.SaveListToXMLSerializer(stations, @"BaseStationXml.xml");
             DalXml.XmlToolKit.SaveListToXMLSerializer(customers, @"CustomerXml.xml");
             DalXml.XmlToolKit.SaveListToXMLSerializer(parcels, @"ParcelXml.xml");
-            DalXml.XmlToolKit.SaveListToXMLSerializer(Config.RuningNumber.ToString(), @"ConfigXml.xml");
+            DalXml.XmlToolKit.SaveListToXMLSerializer(config, @"ConfigXml.xml");
         }
     }
 }

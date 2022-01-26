@@ -30,14 +30,19 @@ namespace PL
         bool isCustomerReciever = false;
         bool isCloseButtonPressed = false;
 
+        /// <summary>
+        /// cunstrocter for aading and for alsow whene its from customer
+        /// </summary>
+        /// <param name="blObject"></param>
+        /// <param name="cus"></param>
         public ParcelWindow(IBl blObject, CustomerInParcel cus = null)
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();        
             this.BlObject = blObject;
-            IEnumerable<CustomerToList> customers = BlObject.DisplayCustomerList();
+            IEnumerable<CustomerToList> customers = BlObject.DisplayCustomerList();//customer list
             List<CustomerToList> customerNames = BlObject.DisplayCustomerList().ToList();
-            SenderComboBox.ItemsSource = customerNames;
+            SenderComboBox.ItemsSource = customerNames;//
             SenderComboBox.DisplayMemberPath = "Name";
             SenderComboBox.SelectedValuePath = "Id";
             RecipientComboBox.ItemsSource = customerNames;
@@ -53,6 +58,12 @@ namespace PL
             ButtonEnabler();
             VisibiltyIndicator();
         }
+        /// <summary>
+        /// constractor that gets id of a parcel and displays it
+        /// </summary>
+        /// <param name="blObject"></param>
+        /// <param name="Id"></param>
+        /// <param name="cus"></param>
 
         public ParcelWindow(IBl blObject, int Id, CustomerInParcel cus = null)
         {
@@ -77,7 +88,7 @@ namespace PL
             VisibiltyIndicator();
         }
         /// <summary>
-        /// 
+        /// adding after 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -90,7 +101,7 @@ namespace PL
             }
             else
             {
-                Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Int32.Parse(SenderComboBox.SelectedValue.ToString())));
+                Parcel.Sender = BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Int32.Parse(SenderComboBox.SelectedValue.ToString())));//sending to start
             }
             Parcel.Recipient= BlObject.BLCustomerInParcel(BlObject.DisplayCustomer(Int32.Parse(RecipientComboBox.SelectedValue.ToString())));
             Parcel.Weight = (Weight)WeightComboBox.SelectedItem;
@@ -134,7 +145,7 @@ namespace PL
             UpdateContollers();
         }
         /// <summary>
-        /// call the fuc in bl to delete
+        /// call the fuc in bl to delete parcel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -161,38 +172,36 @@ namespace PL
                 }
             }
         }
-
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
         /// <summary>
         /// sets the able and enable of the buttons
         /// </summary>
         public void ButtonEnabler()
         {
-            if (Parcel.Scheduled == null)
+            if (Parcel.Scheduled == null)// if it in a stage that its not scheduled
             {
                 DeleteButton.IsEnabled = true;
-                UpdateButton.IsEnabled = true;
+               
                 
             }
-            else if (Parcel.PickedUp == null || Parcel.Delivered == null)
+            else if (Parcel.PickedUp == null || Parcel.Delivered == null)//show
             {
                 DeleteButton.IsEnabled = false;
-                UpdateButton.IsEnabled = false;
+                
                 PickUpButton.IsEnabled = true;
             }
             else
             {
                 DeleteButton.IsEnabled = false;
-                UpdateButton.IsEnabled = false;
+             
             }
             if (Parcel.Drone == null)
             {
                 PickUpButton.IsEnabled = false;
             }
         }
+        /// <summary>
+        /// showing the visidilty of each combo box
+        /// </summary>
         public void VisibiltyIndicator()
         {
             if(Parcel.Id>0) // existing parcel
@@ -206,8 +215,7 @@ namespace PL
                     DroneTextBox.Visibility = Visibility.Visible;
                     WeightTextBox.Visibility = Visibility.Visible;
                     Drone.Visibility = Visibility.Visible;
-                    DeleteButton.Visibility = Visibility.Hidden;
-                    UpdateButton.Visibility = Visibility.Hidden;
+                    DeleteButton.Visibility = Visibility.Hidden;                  
                     AddButton.Visibility = Visibility.Hidden;
                     SenderComboBox.Visibility = Visibility.Hidden;
                     RecipientComboBox.Visibility = Visibility.Hidden;
@@ -258,8 +266,7 @@ namespace PL
                     DroneTextBox.Visibility = Visibility.Visible;
                     WeightTextBox.Visibility = Visibility.Visible;
                     Drone.Visibility = Visibility.Visible;
-                    DeleteButton.Visibility = Visibility.Visible;
-                    UpdateButton.Visibility = Visibility.Visible;
+                    DeleteButton.Visibility = Visibility.Visible;                
                     PickUpButton.Visibility = Visibility.Visible;
                     AddButton.Visibility = Visibility.Hidden;
                     SenderComboBox.Visibility = Visibility.Hidden;
@@ -297,8 +304,7 @@ namespace PL
                     WeightTextBox.Visibility = Visibility.Hidden;
                     PriorityTextBox.Visibility = Visibility.Hidden;
                     DroneTextBox.Visibility = Visibility.Hidden;
-                    DeleteButton.Visibility = Visibility.Hidden;
-                    UpdateButton.Visibility = Visibility.Hidden;
+                    DeleteButton.Visibility = Visibility.Hidden;         
                     PickUpButton.Visibility = Visibility.Hidden;
                     AddButton.Visibility = Visibility.Visible;
                     RecipientComboBox.Visibility = Visibility.Visible;
@@ -313,8 +319,7 @@ namespace PL
                     WeightTextBox.Visibility = Visibility.Hidden;
                     PriorityTextBox.Visibility = Visibility.Hidden;
                     DroneTextBox.Visibility = Visibility.Hidden;
-                    DeleteButton.Visibility = Visibility.Hidden;
-                    UpdateButton.Visibility = Visibility.Hidden;
+                    DeleteButton.Visibility = Visibility.Hidden;                
                     PickUpButton.Visibility = Visibility.Hidden;
                     AddButton.Visibility = Visibility.Visible;
                     SenderComboBox.Visibility = Visibility.Visible;
@@ -324,7 +329,11 @@ namespace PL
                 }
             }
         }
-
+        /// <summary>
+        /// showing the window of the sender a
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SenderTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (customer == null && Parcel.Sender != null)
@@ -355,7 +364,11 @@ namespace PL
                 SenderTextBox2.Text = customer.Name;
             }
         }
-
+        /// <summary>
+        /// same
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RecipientTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (customer == null && Parcel.Recipient != null)
@@ -381,11 +394,15 @@ namespace PL
             isCloseButtonPressed = true;
             this.Close();
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !isCloseButtonPressed;
         }
+        /// <summary>
+        /// opening the drone from the parcel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void DroneTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -395,7 +412,9 @@ namespace PL
                 UpdateContollers();
             }
         }
-
+        /// <summary>
+        /// updating the controlersw
+        /// </summary>
         private void UpdateContollers()
         {
             Parcel = BlObject.BLParcel(BlObject.DisplayParcel(Parcel.Id));

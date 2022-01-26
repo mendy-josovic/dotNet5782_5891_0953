@@ -82,7 +82,8 @@ namespace DalXml
             {
                 temp.ReadyChargeStands = NumOfCarg;
             }
-            stations.Where(x => x.Id == StationId).Select(x => x = temp);
+            int index = stations.FindIndex(x => x.Id == StationId);
+            stations[index] = temp;            
             XmlToolKit.SaveListToXMLSerializer(stations, BaseStationXml);
         }
 
@@ -115,7 +116,7 @@ namespace DalXml
             XElement CustomerElem = new XElement("Customer",//adding the info
                                  new XElement("Id", cst.Id),
                                  new XElement("Name", cst.Name),
-                                 new XElement("PhoneNumber", cst.Phone),
+                                 new XElement("Phone", cst.Phone),
                                  new XElement("Longitude", cst.Longitude),
                                  new XElement("Latitude", cst.Latitude));
 
@@ -182,6 +183,7 @@ namespace DalXml
                                                  Longitude = double.Parse(cus.Element("Longitude").Value),
                                                  Latitude = double.Parse(cus.Element("Latitude").Value)
                                              };
+
 
             return customer.Where(x => predicate == null ? true : predicate(x));            
         }
@@ -264,8 +266,9 @@ namespace DalXml
             List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
             if (!parcels.Exists(x => x.Id == id))
                 throw new DO.DalExceptions("Parcel Dose Not exsits");
-            Parcel parcel = parcels.Find(x => x.Id == id);
-            parcels.Remove(parcel);
+         int i = parcels.FindIndex(x => x.Id == id);
+
+            parcels.RemoveAt(i);
             XmlToolKit.SaveListToXMLSerializer<Parcel>(parcels, ParcelXml);
         }
         public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0, int DroneId = 0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0)
@@ -292,7 +295,8 @@ namespace DalXml
                 parcel.Scheduled = DateTime.Now;
             if (UpdateDeleverd != 0)
                 parcel.Delivered = DateTime.Now;
-            parcels.Where(x => x.Id == parclId).Select(x => parcel);
+            int i = parcels.FindIndex(x => x.Id == parclId);
+            parcels[i]=parcel;
             XmlToolKit.SaveListToXMLSerializer<Parcel>(parcels, ParcelXml);
         }
         public void DroneIdOfPArcel(int prcId, int drnId)
@@ -303,10 +307,12 @@ namespace DalXml
             List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
             if  (!parcels.Exists(x => x.Id == drnId))
                     throw new DalExceptions("Drone Dose Not exsits");
-
+         
             Parcel tempParcel = parcels.Find(x => x.Id == prcId);
             tempParcel.DroneId = drnId;
-            parcels.Where(x => x.Id == prcId).Select(x => tempParcel);
+            int i = parcels.FindIndex(x => x.Id == prcId);
+            parcels[i] = tempParcel;
+        
             XmlToolKit.SaveListToXMLSerializer<Parcel>(parcels, ParcelXml);
 
         }
@@ -337,7 +343,8 @@ namespace DalXml
             if (!drones.Exists(x => x.DroneId == drnId))
                 throw new DalExceptions("Drone doesn't in charging");
             DroneCharge drone = drones.Find(w => w.DroneId == drnId);
-            drones.Remove(drone);
+           int i= drones.FindIndex(w => w.DroneId == drnId);
+            drones.RemoveAt(i);
             XmlToolKit.SaveListToXMLSerializer(drones, DroneChargeXml);
         }
 
@@ -366,14 +373,14 @@ namespace DalXml
         }
         public int GetRuningNumber()
         {
-            List<string> Run = XmlToolKit.LoadListFromXMLSerializer<string>(ConfigXml);// geting the runing number (was stored as a string)
-            int run2 = int.Parse(Run[0]);//convert to int
-            run2++;//+1
-            Run[0] = run2.ToString();//convert back to string
-            XmlToolKit.SaveListToXMLSerializer<string>(Run, ConfigXml);//stor
-            return run2;//return...
+            List<string> conf = XmlToolKit.LoadListFromXMLSerializer<string>(ConfigXml);
+            int run = int.Parse(conf[0]);
+            run++;
+            conf[0] = run.ToString();
+            XmlToolKit.SaveListToXMLSerializer<string>(conf, ConfigXml);
+            return run;//return...
         }
-        #endregion
+     #endregion
 
     }
 }
