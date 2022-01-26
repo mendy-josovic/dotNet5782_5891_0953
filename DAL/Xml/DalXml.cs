@@ -244,7 +244,7 @@ namespace DalXml
 
             List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);         
             if (parcels.Exists(x=>x.Id==prc.Id))
-                throw new DO.DalExceptions("Parcel Alredy exsits");
+                throw new DO.DalExceptions("Parcel already exists");
             parcels.Add(prc);
             XmlToolKit.SaveListToXMLSerializer<Parcel>(parcels, ParcelXml);
         }
@@ -252,7 +252,7 @@ namespace DalXml
         {
             List<Parcel> parcels= XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
             if (!parcels.Exists(x => x.Id == id))
-                throw new DalExceptions("Parcel dose not exsit");
+                throw new DalExceptions("Parcel does not exist");
             return parcels.Find(w => w.Id == id);
         }
         public IEnumerable<Parcel> PrintParcelList(Predicate<Parcel> predicate = null)  //returns a new list of parcels
@@ -265,7 +265,7 @@ namespace DalXml
         {
             List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
             if (!parcels.Exists(x => x.Id == id))
-                throw new DO.DalExceptions("Parcel Dose Not exsits");
+                throw new DO.DalExceptions("Parcel does not exist");
          int i = parcels.FindIndex(x => x.Id == id);
 
             parcels.RemoveAt(i);
@@ -275,7 +275,7 @@ namespace DalXml
         {         
             List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
             if (!parcels.Exists(x => x.Id == parclId))
-                throw new DO.DalExceptions("Parcel Dose Not exsits");
+                throw new DO.DalExceptions("Parcel does not exist");
             Parcel parcel = parcels.Find(x => x.Id == parclId);  
             if (SenderId != 0)
                 parcel.SenderId = SenderId;
@@ -303,10 +303,10 @@ namespace DalXml
         {
             List<Parcel> parcels = XmlToolKit.LoadListFromXMLSerializer<Parcel>(ParcelXml);
             if (!parcels.Exists(x => x.Id == prcId))
-                throw new DalExceptions("Parcel Dose Not exsits");
+                throw new DalExceptions("Parcel does not exist");
             List<Drone> drones = XmlToolKit.LoadListFromXMLSerializer<Drone>(DroneXml);
             if  (!parcels.Exists(x => x.Id == drnId))
-                    throw new DalExceptions("Drone Dose Not exsits");
+                    throw new DalExceptions("Drone does not exist");
          
             Parcel tempParcel = parcels.Find(x => x.Id == prcId);
             tempParcel.DroneId = drnId;

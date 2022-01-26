@@ -23,6 +23,7 @@ namespace PL
         string PickupContent = "Pick-up at sender";
         string RecieverContent = "Recieve parcel";
         bool isManualModePressed;
+        ParcelInTransfer p = new();
         BackgroundWorker worker;
         RefreshSimulatorEvent refreshSimulatorEvent = new();
 
@@ -52,8 +53,9 @@ namespace PL
             drone = dro;
             AddDrone.DataContext = drone;
             LongitudeTextBox.Text = ConvertToSexagesimal(drone.ThisLocation.Longitude);
-            InitializeButtons(drone);
             AddDroneLabel.Content = String.Format("Drone {0}",dro.Id);
+            p = drone.parcel;
+            InitializeButtons(drone);
         }
 
         /// <summary>
@@ -315,6 +317,9 @@ namespace PL
             }
             if (drone.status == StatusOfDrone.Delivery)
             {
+                p = drone.parcel;
+                parcelGrid.DataContext = p;
+                parcelGrid.Visibility = Visibility.Visible;
                 if (!drone.parcel.PickedUp)
                 {
                     DeliveryButton.Content = PickupContent;

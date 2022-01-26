@@ -24,6 +24,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.5*"/>
@@ -38,16 +39,17 @@
         <Label Content="Name" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" FontSize="16" Width="54" FontWeight="Bold" Margin="37,0,0,0"/>
         <Label Content="Longitude" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Width="86" FontWeight="Bold" Margin="37,0,0,0"/>
         <Label Content="Latitude" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="37,0,0,0"/>
-        <Label x:Name="ListOfDronesLabel" Content="Drones in charging" HorizontalAlignment="Left" Margin="37,4,0,0" Grid.Row="5" VerticalAlignment="Top" FontSize="16" Width="152" FontWeight="Bold"/>
+        <Label Content="Free stands" HorizontalAlignment="Left" Margin="37,0,0,0" Grid.Row="5" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+        <Label x:Name="ListOfDronesLabel" Content="Drones in charging" HorizontalAlignment="Left" Margin="37,4,0,0" Grid.Row="6" VerticalAlignment="Top" FontSize="16" Width="152" FontWeight="Bold"/>
         <TextBox x:Name="IDTextBox" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="131" Height="32" FontSize="16" IsReadOnly="True" Grid.Column="1" PreviewTextInput="IDTextBox_PreviewTextInput"/>
         <TextBox x:Name="NameTextBox" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" TextChanged="TextBox_TextChanged" Grid.Column="1" PreviewTextInput="NameTextBox_PreviewTextInput"/>
         <TextBox x:Name="LongitudeTextBox" Text="{Binding location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource LocationConverter}}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" Grid.Column="1" PreviewTextInput="LongitudeAndLatitudeTextBox_PreviewTextInput"/>
         <TextBox x:Name="LatitudeTextBox" Text="{Binding location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource LocationConverter}}" Background="Transparent" HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Width="201" Height="32" FontSize="16" Grid.Column="1" PreviewTextInput="LongitudeAndLatitudeTextBox_PreviewTextInput"/>
-        <ListView x:Name="DronesListView" Background="Transparent" Grid.Row="5" Grid.ColumnSpan="2" Margin="1,16,128,19"  Grid.RowSpan="2" BorderBrush="{x:Null}" MouseDoubleClick="DronesListView_MouseDoubleClick" Grid.Column="1"/>
-        <Button x:Name="CloseButton" Content="Close" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Click="Button_Click" Margin="136,0,0,0" Width="89"/>
-        <Button x:Name="UpDateButton" Content="Update" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="6" VerticalAlignment="Top" Height="31" Width="89" FontSize="20" FontWeight="Bold" IsEnabled="False" Click="UpDateButton_Click"/>
-        <Button x:Name="AddButton" Content="Add" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="6" VerticalAlignment="Top" Height="31" Width="89" FontSize="20" FontWeight="Bold" Click="AddButton_Click">
-        <Button.Style>
+        <ListView x:Name="DronesListView" Background="Transparent" Grid.Row="7" Grid.ColumnSpan="2" Margin="1,16,128,19"  Grid.RowSpan="2" BorderBrush="{x:Null}" MouseDoubleClick="DronesListView_MouseDoubleClick" Grid.Column="1"/>
+        <Button x:Name="CloseButton" Content="Close" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Click="Button_Click" Margin="136,0,0,0" Width="89"/>
+        <Button x:Name="UpDateButton" Content="Update" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="7" VerticalAlignment="Top" Height="31" Width="89" FontSize="20" FontWeight="Bold" IsEnabled="False" Click="UpDateButton_Click"/>
+        <Button x:Name="AddButton" Content="Add" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="7" VerticalAlignment="Top" Height="31" Width="89" FontSize="20" FontWeight="Bold" Click="AddButton_Click">
+            <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="True" />
                     <Style.Triggers>

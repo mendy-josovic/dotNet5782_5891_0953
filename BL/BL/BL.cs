@@ -41,6 +41,8 @@ namespace BL
                 drone.Id = item.Id;
                 drone.Model = item.Model;
                 drone.MaxWeight = (BO.Weight)item.MaxWeight;
+                if (tempDataParcels.Exists(w => w.DroneId == (item.Id)))
+                    drone.ParcelId = tempDataParcels.Find(p => p.DroneId == drone.Id).Id;
                 //for all parcels that didn't delivered but associated to a drone
                 if (tempDataParcels.Exists(w => w.DroneId == (item.Id) && w.Delivered == null))
                 {
@@ -50,18 +52,21 @@ namespace BL
                     Location locOfSender = Location(sender.Longitude, sender.Latitude);
                     var target = Data.PrintCustomer(tempDataParcels[i].TargetId);
                     Location locOfTarget = Location(target.Longitude, target.Latitude);
-                    double minBattery = Consumption(drone.ThisLocation, locOfSender, ModeOfDroneInMoving.Available)
-                        + Consumption(locOfSender, locOfTarget, (ModeOfDroneInMoving)tempDataParcels[i].Weigh)
-                        + Consumption(locOfTarget, GetLocationOfStation(GetClosestStation(locOfTarget)), ModeOfDroneInMoving.Available);
                     if (tempDataParcels[i].PickedUp < DateTime.MinValue) //if parcel didn't pick up
                     {
                         Location locOfClosestStation = GetLocationOfStation(GetClosestStation(locOfSender));
                         drone.ThisLocation = locOfClosestStation;
+                        double minBattery = Consumption(drone.ThisLocation, locOfSender, ModeOfDroneInMoving.Available)
+                            + Consumption(locOfSender, locOfTarget, (ModeOfDroneInMoving)tempDataParcels[i].Weigh)
+                            + Consumption(locOfTarget, GetLocationOfStation(GetClosestStation(locOfTarget)), ModeOfDroneInMoving.Available);
                         drone.Battery = r.Next((int)(minBattery * 1000), 100 * 1000) / 1000;
                     }
                     else  //if parcel picked up but didn't delivered
                     {
                         drone.ThisLocation = locOfSender;
+                        double minBattery = Consumption(drone.ThisLocation, locOfSender, ModeOfDroneInMoving.Available)
+                            + Consumption(locOfSender, locOfTarget, (ModeOfDroneInMoving)tempDataParcels[i].Weigh)
+                            + Consumption(locOfTarget, GetLocationOfStation(GetClosestStation(locOfTarget)), ModeOfDroneInMoving.Available);
                         drone.Battery = r.Next((int)((minBattery - Consumption(drone.ThisLocation, locOfSender, ModeOfDroneInMoving.Available)) * 1000), 100 * 1000) / 1000;
                     }
                 }
