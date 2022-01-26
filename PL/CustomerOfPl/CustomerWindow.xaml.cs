@@ -23,7 +23,10 @@ namespace PL
         IBl blObject;
         Customer Customer1;
         bool isCloseRequired;
-
+        /// <summary>
+        /// constractor to add showing the needed
+        /// </summary>
+        /// <param name="blobject"></param>
         public CustomerWindow(IBl blobject)
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -37,6 +40,11 @@ namespace PL
             ParcelsSentLabel.Visibility = Visibility.Hidden;
             ParcelsReceivedLabel.Visibility = Visibility.Hidden;
         }
+        /// <summary>
+        /// constractor with a customer showing him
+        /// </summary>
+        /// <param name="blobjects"></param>
+        /// <param name="Customer"></param>
         public CustomerWindow(IBl blobjects, Customer Customer)
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -53,18 +61,22 @@ namespace PL
             CustomerWindowGrid.DataContext = Customer1;
             blObject = blobjects;
         }
-
+        /// <summary>
+        /// the same button dose all so it hAS TO DO WITH WHAT IS RETTEN on it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (AddCustomerButton.Content == "Update")
+                if (AddCustomerButton.Content == "Update")//sayes updat so we update
                 {
                     blObject.UpdateCosomerInfo(Customer1.Id, Customer1.Name, Customer1.Phone);
                     MessageBox.Show("Successfully updated Customer!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
                     InitializeComponent();
                 }
-                if (AddCustomerButton.Content == "Add")
+                if (AddCustomerButton.Content == "Add")//says add so add
                 {
                     blObject.AddCustomer(Customer1);
                     MessageBox.Show("Successfully added Customer!", "Congradulations!", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -78,12 +90,21 @@ namespace PL
                 MessageBox.Show(message, "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        /// <summary>
+        /// showing the parcels in the customer and then opening the one
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ParcelsSent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ParcelAtCustomer p = (ParcelAtCustomer)ParcelsSent.SelectedItem;
             new ParcelWindow(blObject, p.Id).Show();
         }
-
+        /// <summary>
+        /// same withe parcel thea r sent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ParcelsRecievd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ParcelAtCustomer p = (ParcelAtCustomer)ParcelsRecievd.SelectedItem;
