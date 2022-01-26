@@ -68,7 +68,7 @@ namespace DalApi
         /// <param name="UpdateDeleverd"></param>
         public void UpdatParcel(int parclId, int SenderId = 0, int TargetId = 0,int DroneId=0, Weight whihgt = 0, Priority priorty = 0, int Updatereqwested = 0, int UpdatSchedueld = 0, int UpdatPicedup = 0, int UpdateDeleverd = 0);
         /// <summary>
-        /// 
+        /// gets two id and crats a dron charg with both ids
         /// </summary>
         /// <param name="staId"></param>
         /// <param name="drnId"></param>

@@ -28,7 +28,7 @@ namespace BL
         {
             Data = DalFactory.GetDal("DalXml");
             DroneList = new();
-            batteryConfig = Data.Consumption();
+            batteryConfig = Data.Consumption();//intilizing evry fild in bl
             //Copies the lists from DAL
             List<DO.Drone> tempDataDrones = new(Data.DisplayDronesList());
             List<DO.Parcel> tempDataParcels = new(Data.PrintParcelList());

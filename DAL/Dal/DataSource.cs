@@ -25,9 +25,12 @@ namespace DalObject
             public static double ChargingRate { get; set; } = 15;
         };
         public static Random r = new Random();
+        /// <summary>
+        /// intelizing info
+        /// </summary>
         internal static void Initialize()
         {
-            config.Add(Config.RuningNumber.ToString());
+          
             for (int i = 0; i < 2; i++)  //initializing the stations
             {
                 Station sta = new Station();
@@ -92,7 +95,8 @@ namespace DalObject
                 tempParcel.Weigh = ((DO.Weight)r.Next(0, 3));
                 tempParcel.Requested = DateTime.Now;
                 parcels.Add(tempParcel);
-            }     
+            }
+            config.Add(Config.RuningNumber.ToString());
             DalXml.XmlToolKit.SaveListToXMLSerializer(drones, @"DroneXml.xml");
             DalXml.XmlToolKit.SaveListToXMLSerializer(stations, @"BaseStationXml.xml");
             DalXml.XmlToolKit.SaveListToXMLSerializer(customers, @"CustomerXml.xml");

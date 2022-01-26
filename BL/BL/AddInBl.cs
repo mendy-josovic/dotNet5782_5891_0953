@@ -11,11 +11,7 @@ namespace BL
 {
     internal partial class BL :IBl
     {
-        /// <summary>
-        /// gets a station of BL and adds a station to the data
-        /// </summary>
-        /// <param name="sta">the new station</param>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public void AddStation(BO.Station sta)
@@ -42,12 +38,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// gets a drone of BL and ID of a station where it charges in the begining and adds a drone to the data
-        /// </summary>
-        /// <param name="dro">the new drone</param>
-        /// <param name="IDOfStation">ID of station for first charging</param>
-        /// 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public void AddDrone(BO.Drone dro, int IDOfStation)
@@ -91,11 +82,6 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// gets a customer of BL and adds him to the data
-        /// </summary>
-        /// <param name="cus">the new customer</param>
-        /// 
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public void AddCustomer(BO.Customer cus)
@@ -122,11 +108,6 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// gets a parcel of BL and adds it to the data
-        /// </summary>
-        /// <param name="par">the new parcel</param>
-        /// 
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public void AddParcel(BO.Parcel par)
