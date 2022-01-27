@@ -54,19 +54,19 @@
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="True" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=IDTextBox, Path=Text}" Value="">
+                        <DataTrigger Binding="{Binding ElementName=IDTextBox, Path=Text}" Value="0">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=NameTextBox, Path=Text}" Value="">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=LongitudeTextBox, Path=Text}" Value="">
+                        <DataTrigger Binding="{Binding ElementName=LongitudeTextBox, Path=Text}" Value="0">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=LatitudeTextBox, Path=Text}" Value="">
+                        <DataTrigger Binding="{Binding ElementName=LatitudeTextBox, Path=Text}" Value="0">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=FreeStandsTextBox, Path=Text}" Value="">
+                        <DataTrigger Binding="{Binding ElementName=FreeStandsTextBox, Path=Text}" Value="0">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                     </Style.Triggers>

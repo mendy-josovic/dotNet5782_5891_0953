@@ -53,8 +53,10 @@ namespace PL
             AddCustomerButton.Content = "Update";
             x1.Visibility = Visibility.Hidden;
             x2.Visibility = Visibility.Hidden;
-            x5.Visibility = Visibility.Hidden;
             x3.Visibility = Visibility.Hidden;
+            x4.Visibility = Visibility.Hidden;
+            x5.Visibility = Visibility.Hidden;
+            x6.Visibility = Visibility.Hidden;
             IDTextBox.IsReadOnly = true;
             LongtitudeTextBox.IsReadOnly = true;
             LatitudeTextBox.IsReadOnly = true;
