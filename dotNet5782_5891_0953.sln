@@ -25,6 +25,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xmls", "Xmls", "{775AA0A3-3
 		PL\bin\Debug\net5.0-windows\ParcelXml.xml = PL\bin\Debug\net5.0-windows\ParcelXml.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89CA0794-D57D-4950-A335-58316C4A11E0}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Documents\לימודים\שנה ב\סמסטר א\מיני פרוייקט\כה שבט תשפב (1).docx = ..\..\..\..\Documents\לימודים\שנה ב\סמסטר א\מיני פרוייקט\כה שבט תשפב (1).docx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
